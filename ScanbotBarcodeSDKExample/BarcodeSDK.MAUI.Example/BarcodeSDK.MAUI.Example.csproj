@@ -1,0 +1,107 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net7.0-ios;net7.0-android</TargetFrameworks>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>BarcodeSDK.MAUI.Example</RootNamespace>
+        <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        
+        <!-- Display name -->
+        <ApplicationTitle>BarcodeSDK.MAUI.Example</ApplicationTitle>
+        
+        <!-- App Identifier -->
+        <ApplicationId>com.companyname.barcodeSDK.maui.example</ApplicationId>
+        <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
+        
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1.0</ApplicationVersion>
+        <!-- Supported Platforms -->
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-ios|AnyCPU'">
+        <MtouchLink>SdkOnly</MtouchLink>
+        <MtouchInterpreter>-all</MtouchInterpreter>
+        <CreatePackage>false</CreatePackage>
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>        
+    </PropertyGroup>
+    <!-- DEBUG CONFIGS -->
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+        <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android31.0|AnyCPU'">
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- App Icon -->
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        
+        <!-- Splash Screen -->
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        
+        <!-- Images -->
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+        
+        <!-- Custom Fonts -->
+        <MauiFont Include="Resources\Fonts\*" />
+        
+        <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+    <ItemGroup>
+        <MauiXaml Update="Pages\BarcodeResultPage.xaml">
+            <SubType></SubType>
+        </MauiXaml>
+        <MauiXaml Update="Pages\HomePage.xaml">
+            <SubType></SubType>
+        </MauiXaml>
+        <MauiXaml Update="App.xaml">
+            <SubType></SubType>
+        </MauiXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Pages\" />
+        <Folder Include="Common\" />
+        <Folder Include="Common\Utils\" />
+        <Folder Include="Models\" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Common\Helper\SBSDK.cs" />
+        <Compile Remove="Common\Services\IInternalServices.cs" />
+        <Compile Remove="Common\Services\IScanbotServices.cs" />
+        <Compile Remove="Common\Services\IBarcodeScanningServices.cs" />
+        <Compile Remove="Common\Models\InitializationOptions.cs" />
+        <Compile Remove="Common\Models\BarcodeResultBundle.cs" />
+        <Compile Remove="Common\Models\LicenseInfo.cs" />
+        <Compile Remove="Common\Models\BatchBarcodeScannerConfiguration.cs" />
+        <Compile Remove="Common\Models\BarcodeScannerConfiguration.cs" />
+        <Compile Remove="Common\Models\BarcodeScannerAdditionalParameters.cs" />
+        <Compile Remove="Common\Models\AspectRatio.cs" />
+        <Compile Remove="Common\Models\Result.cs" />
+        <Compile Remove="Common\Models\SelectionOverlayConfiguration.cs" />
+        <Compile Remove="Common\Models\Barcode.cs" />
+        <Compile Remove="Platforms\Android\Converters\BarcodeScannerConfigurationConverter.cs" />
+        <Compile Remove="Platforms\Android\Converters\CommonConverter.cs" />
+        <Compile Remove="Platforms\Android\Converters\BatchBarcodeScannerConfigurationConverter.cs" />
+        <Compile Remove="Platforms\Android\Models\BarcodeResultBundle.cs" />
+        <Compile Remove="Platforms\Android\Utils\BarcodeFormatConverter.cs" />
+        <Compile Remove="Platforms\Android\Utils\DocumentTypeConverter.cs" />
+        <Compile Remove="Platforms\Android\Utils\Extensions.cs" />
+        <Compile Remove="Platforms\Android\Utils\ImageUtils.cs" />
+        <Compile Remove="Platforms\Android\Utils\Exceptions.cs" />
+        <Compile Remove="Platforms\Android\Services\DependencyManager.cs" />
+        <Compile Remove="Platforms\Android\Services\InternalServices.cs" />
+        <Compile Remove="Platforms\Android\Services\ScanbotServices.cs" />
+        <Compile Remove="Platforms\Android\Services\ActivityService.cs" />
+        <Compile Remove="Platforms\Android\Services\BarcodeScanningServices.cs" />
+    </ItemGroup>
+    <!-- ===================== Android Project References =====================  -->
+    <ItemGroup>
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.6.0-local.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Models\" />
+    </ItemGroup>
+</Project>
