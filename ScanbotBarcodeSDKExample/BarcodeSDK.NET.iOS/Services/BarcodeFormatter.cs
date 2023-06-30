@@ -1,7 +1,6 @@
-﻿using System;
-using ScanbotBarcodeSDK.iOS;
+﻿using ScanbotBarcodeSDK.iOS;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeFormatter
     {

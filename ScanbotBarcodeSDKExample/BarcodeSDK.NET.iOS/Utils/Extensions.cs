@@ -1,5 +1,4 @@
-﻿using System;
-namespace BarcodeScannerExample.iOS
+﻿namespace BarcodeSDK.NET.iOS
 {
     public static class Extensions
     {

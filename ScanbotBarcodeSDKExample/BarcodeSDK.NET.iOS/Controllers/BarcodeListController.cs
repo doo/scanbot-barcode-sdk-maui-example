@@ -1,7 +1,4 @@
-﻿using System;
-using UIKit;
-
-namespace BarcodeScannerExample.iOS
+﻿namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeListController : UIViewController
     {

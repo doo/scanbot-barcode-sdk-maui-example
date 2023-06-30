@@ -5,6 +5,7 @@
         <RootNamespace>DocumentSDK.NET.iOS</RootNamespace>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
         
         <!-- Display name -->
         <ApplicationTitle>BarcodeSDK.NET.iOS</ApplicationTitle>
@@ -17,10 +18,8 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
         
-        <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
-        <MtouchLink>SdkOnly</MtouchLink>
-        <MtouchInterpreter>-all</MtouchInterpreter>
-        <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+		<SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+	    <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>Automatic</CodesignProvision>
         <CodesignKey>iPhone Developer</CodesignKey>
@@ -34,5 +33,6 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.6.0-local.2" />
+        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="1.0.0-local.2" />
     </ItemGroup>
 </Project>

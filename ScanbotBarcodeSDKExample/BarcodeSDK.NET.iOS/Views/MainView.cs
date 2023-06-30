@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CoreGraphics;
-using UIKit;
-
-namespace BarcodeScannerExample.iOS
+﻿namespace BarcodeSDK.NET.iOS
 {
     public class MainView : UIView
     {

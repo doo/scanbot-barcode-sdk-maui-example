@@ -1,8 +1,4 @@
-﻿
-using System.Text;
-using Android.App;
-using Android.OS;
-using Android.Widget;
+﻿using System.Text;
 using AndroidX.AppCompat.App;
 using AndroidX.ConstraintLayout.Widget;
 using IO.Scanbot.Barcodescanner.Model.BoardingPass;

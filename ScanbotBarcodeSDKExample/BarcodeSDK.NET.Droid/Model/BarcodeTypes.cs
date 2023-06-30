@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using IO.Scanbot.Sdk.Barcode.Entity;
+﻿using IO.Scanbot.Sdk.Barcode.Entity;
 
 namespace BarcodeSDK.NET.Droid
 {

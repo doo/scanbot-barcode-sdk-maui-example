@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ScanbotBarcodeSDK.iOS;
-using UIKit;
+﻿using ScanbotBarcodeSDK.iOS;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     public class ScanResultListController : UIViewController
     {

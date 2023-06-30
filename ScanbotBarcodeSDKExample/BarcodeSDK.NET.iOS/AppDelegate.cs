@@ -1,4 +1,4 @@
-﻿using BarcodeScannerExample.iOS;
+﻿using BarcodeSDK.NET.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 

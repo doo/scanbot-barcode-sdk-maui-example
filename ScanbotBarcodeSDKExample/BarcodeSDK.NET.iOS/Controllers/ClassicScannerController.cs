@@ -1,11 +1,6 @@
-﻿using System;
-using AVFoundation;
-using CoreGraphics;
-using Foundation;
-using ScanbotBarcodeSDK.iOS;
-using UIKit;
+﻿using ScanbotBarcodeSDK.iOS;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     public class ClassicScannerController : UIViewController
     {
@@ -48,7 +43,7 @@ namespace BarcodeScannerExample.iOS
         private void SetSelectionOverlayConfiguration()
         {
             scannerController.SelectionOverlayEnabled = true;
-            scannerController.AutomaticSelectionEnabled = true;
+            scannerController.AutomaticSelectionEnabled = false;
             scannerController.SelectionOverlayTextFormat = SBSDKBarcodeOverlayFormat.CodeAndType;
             scannerController.SelectionPolygonColor = UIColor.Yellow;
             scannerController.SelectionTextColor = UIColor.Yellow;

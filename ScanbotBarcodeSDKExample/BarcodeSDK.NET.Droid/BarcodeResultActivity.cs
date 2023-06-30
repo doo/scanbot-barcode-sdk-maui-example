@@ -1,9 +1,5 @@
-﻿
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Widget;
 using AndroidX.AppCompat.App;
 using IO.Scanbot.Sdk.Barcode.Entity;
 

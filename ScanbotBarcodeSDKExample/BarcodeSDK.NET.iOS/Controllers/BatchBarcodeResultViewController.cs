@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Foundation;
-using ScanbotBarcodeSDK.iOS;
-using UIKit;
-using static System.Net.Mime.MediaTypeNames;
+﻿using ScanbotBarcodeSDK.iOS;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     /// <summary>
     /// Barcode Source Interaction.

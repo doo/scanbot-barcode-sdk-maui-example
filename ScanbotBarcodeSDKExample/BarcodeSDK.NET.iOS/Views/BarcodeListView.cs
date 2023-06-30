@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CoreGraphics;
-using ScanbotBarcodeSDK.iOS;
-using UIKit;
+﻿using ScanbotBarcodeSDK.iOS;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeListView : UIScrollView
     {

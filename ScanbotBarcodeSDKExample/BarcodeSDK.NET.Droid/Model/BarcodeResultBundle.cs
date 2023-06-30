@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Graphics;
+﻿using Android.Graphics;
 using IO.Scanbot.Sdk.Barcode.Entity;
 
 namespace BarcodeSDK.NET.Droid

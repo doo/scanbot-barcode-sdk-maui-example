@@ -1,20 +1,14 @@
-﻿using System;
-using Android;
-using Android.App;
+﻿using Android;
 using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
-using Android.OS;
-using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
-using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
-using IO.Scanbot.Sdk.Camera;
 using IO.Scanbot.Sdk.UI.Camera;
 
 namespace BarcodeSDK.NET.Droid
@@ -50,6 +44,7 @@ namespace BarcodeSDK.NET.Droid
                 response.SetSaveCameraPreviewFrame(false);
                 response.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
             }));
+            
             barcodeScannerView.InitCamera(new CameraUiSettings(false));
             var resultHandler = new BarcodeResultDelegate();
             resultHandler.Success += OnBarcodeResult;

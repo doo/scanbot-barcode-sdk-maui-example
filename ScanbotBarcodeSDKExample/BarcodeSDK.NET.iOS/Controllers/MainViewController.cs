@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ImageIO;
+using Scanbot.ImagePicker.iOS;
 using ScanbotBarcodeSDK.iOS;
-using UIKit;
 
-namespace BarcodeScannerExample.iOS
+namespace BarcodeSDK.NET.iOS
 {
     /// <summary>
     /// BatchBarcode Interaction interface
@@ -118,20 +117,20 @@ namespace BarcodeScannerExample.iOS
 
         private async void OnLibraryButtonClick(object sender, EventArgs e)
         {
-            //if (!Alert.CheckLicense(this))
-            //{
-            //    return;
-            //}
-            //UIImage image = await Scanbot.ImagePicker.iOS.ImagePicker.Instance.Pick();
+            if (!Alert.CheckLicense(this))
+            {
+                return;
+            }
 
-            //if (image != null)
-            //{
-            //    var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes.ToArray());
-            //    SBSDKBarcodeScannerResult[] result = scanner.DetectBarCodesOnImage(image);
+            UIImage image = await ImagePicker.Instance.PickImageAsync();
+            if (image != null)
+            {
+                var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes.ToArray());
+                SBSDKBarcodeScannerResult[] result = scanner.DetectBarCodesOnImage(image);
 
-            //    var controller = new ScanResultListController(image, result);
-            //    NavigationController.PushViewController(controller, true);
-            //}
+                var controller = new ScanResultListController(image, result);
+                NavigationController.PushViewController(controller, true);
+            }
         }
 
         private void OnCodeTypeButtonClick(object sender, EventArgs e)

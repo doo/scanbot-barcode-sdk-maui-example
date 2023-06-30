@@ -1,10 +1,4 @@
-﻿using System;
-using BarcodeSDK.NET.iOS;
-using CoreGraphics;
-using Foundation;
-using UIKit;
-
-namespace BarcodeScannerExample.iOS
+﻿namespace BarcodeSDK.NET.iOS
 {
     public class FlashButton : UIView
     {

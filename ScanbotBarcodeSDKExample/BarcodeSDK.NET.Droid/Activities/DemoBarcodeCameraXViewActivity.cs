@@ -8,9 +8,11 @@ using AndroidX.Core.Content;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
+using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
 using IO.Scanbot.Sdk.UI.Camera;
+using static IO.Scanbot.Sdk.Barcode.BarcodeDetectorFrameHandler;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -50,6 +52,8 @@ namespace BarcodeSDK.NET.Droid
                 response.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
             }));
 
+            
+
             handler = BarcodeDetectorFrameHandler.Attach(cameraView, detector);
             handler.SetDetectionInterval(1000);
 
@@ -57,6 +61,16 @@ namespace BarcodeSDK.NET.Droid
             //var resultHandler = new BarcodeResultDelegate();
             //handler.AddResultHandler(resultHandler);
             //resultHandler.Success += OnBarcodeResult;
+
+            // cameraView.AddPictureCallback;
+            //cameraView.SetCameraOpenCallback()
+
+            var scannerViewCallback = new BarcodeScannerViewCallback();
+            scannerViewCallback.CameraOpen = OnCameraOpened;
+            scannerViewCallback.PictureTaken += OnPictureTaken;
+            //scannerViewCallback.SelectionOverlayBarcodeClicked += OnSelectionOverlayBarcodeClicked;
+
+            //BarcodeScannerViewWrapper.InitDetectionBehavior(cameraView, detector, resultHandler);
 
             var snappingcontroller = BarcodeAutoSnappingController.Attach(cameraView, handler);
             snappingcontroller.SetSensitivity(1f);

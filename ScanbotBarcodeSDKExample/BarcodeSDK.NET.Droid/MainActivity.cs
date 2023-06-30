@@ -15,6 +15,7 @@ namespace BarcodeSDK.NET.Droid;
 [Activity(MainLauncher = true, Theme = "@style/AppTheme")]
 public class MainActivity : Activity
 {
+    public const int IMPORT_IMAGE_REQUEST = 7777;
     View WarningView => FindViewById<View>(Resource.Id.warning_view);
 
     public static ScanbotBarcodeScannerSDK SDK;
@@ -88,26 +89,27 @@ public class MainActivity : Activity
 
     private async void OnImportClick(object sender, EventArgs e)
     {
-        //if (!Alert.CheckLicense(this, SDK))
-        //{
-        //    return;
-        //}
-        //Bitmap bitmap = await Scanbot.ImagePicker.Droid.ImagePicker.Instance.Pick();
+        if (!Alert.CheckLicense(this, SDK))
+        {
+            return;
+        }
 
-        //if (bitmap == null)
-        //{
-        //    return;
-        //}
+        Bitmap bitmap = await Scanbot.ImagePicker.Droid.ImagePicker.Instance.PickImageAsync();
 
-        //var result = SDK.CreateBarcodeDetector().DetectFromBitmap(bitmap, 0);
+        if (bitmap == null)
+        {
+            return;
+        }
 
-        //BarcodeResultBundle.Instance = new BarcodeResultBundle
-        //{
-        //    ScanningResult = result,
-        //    ResultBitmap = bitmap
-        //};
+        var result = SDK.CreateBarcodeDetector().DetectFromBitmap(bitmap, 0);
 
-        //StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
+        BarcodeResultBundle.Instance = new BarcodeResultBundle
+        {
+            ScanningResult = result,
+            ResultBitmap = bitmap
+        };
+
+        StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
     }
 
     private void OnSettingsClick(object sender, EventArgs e)
@@ -223,5 +225,17 @@ public class MainActivity : Activity
         {
             WarningView.Visibility = ViewStates.Gone;
         }
+    }
+
+    void StartImportActivity(int resultConstant)
+    {
+        var intent = new Intent();
+        intent.SetType("image/*");
+        intent.SetAction(Intent.ActionGetContent);
+        intent.PutExtra(Intent.ExtraLocalOnly, false);
+        intent.PutExtra(Intent.ExtraAllowMultiple, false);
+
+        var chooser = Intent.CreateChooser(intent, "Gallery");
+        StartActivityForResult(chooser, resultConstant);
     }
 }

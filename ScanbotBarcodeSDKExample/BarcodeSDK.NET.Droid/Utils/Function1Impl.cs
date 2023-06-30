@@ -1,5 +1,4 @@
-﻿using System;
-using Kotlin.Jvm.Functions;
+﻿using Kotlin.Jvm.Functions;
 
 namespace BarcodeSDK.NET.Droid
 {
