@@ -14,15 +14,15 @@ namespace BarcodeSDK.NET.iOS
             if (format is SBSDKVCardDocumentFormat)
                 return GetVCard(format as SBSDKVCardDocumentFormat);
             if (format is SBSDKAAMVADocumentFormat)
-                GetAAMVA(format as SBSDKAAMVADocumentFormat);
+                return GetAAMVA(format as SBSDKAAMVADocumentFormat);
             if (format is SBSDKIDCardPDF417DocumentFormat)
-                GetPDF417(format as SBSDKIDCardPDF417DocumentFormat);
+                return GetPDF417(format as SBSDKIDCardPDF417DocumentFormat);
             if (format is SBSDKBoardingPassDocumentFormat)
-                GetBoardingPass(format as SBSDKBoardingPassDocumentFormat);
+                return GetBoardingPass(format as SBSDKBoardingPassDocumentFormat);
             if (format is SBSDKMedicalCertificateDocumentFormat)
-                GetDC(format as SBSDKMedicalCertificateDocumentFormat);
+                return GetDC(format as SBSDKMedicalCertificateDocumentFormat);
             if (format is SBSDKSEPADocumentFormat)
-                GetSEPA(format as SBSDKSEPADocumentFormat);
+                return GetSEPA(format as SBSDKSEPADocumentFormat);
 
             return "";
         }

@@ -42,6 +42,20 @@ namespace BarcodeSDK.NET.Droid
         }
     }
 
+    class PictureResultDelegate : PictureCallback
+    {
+        public EventHandler<PictureTakenEventArgs> PictureTaken;
+
+        public override void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
+        {
+            if (!MainActivity.SDK.LicenseInfo.IsValid)
+            {
+                return;
+            }
+            PictureTaken?.Invoke(this, new PictureTakenEventArgs(image, captureInfo.ImageOrientation));
+        }
+    }
+
     internal class BarcodeScannerViewCallback : Java.Lang.Object, IBarcodeScannerViewCallback
     {
         public EventHandler<PictureTakenEventArgs> PictureTaken;
