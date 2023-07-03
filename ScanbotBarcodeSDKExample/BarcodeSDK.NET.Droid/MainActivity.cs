@@ -30,7 +30,7 @@ public class MainActivity : Activity
         SetContentView(Resource.Layout.activity_main);
 
         FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
-        //FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
+        FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
         FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
         FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
         FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;

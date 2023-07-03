@@ -10,7 +10,7 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.6.0-local.2" />
         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="1.0.0-local.2" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.6.0-alpha.1" />
     </ItemGroup>
 </Project>

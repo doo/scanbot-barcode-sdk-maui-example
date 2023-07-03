@@ -111,14 +111,6 @@ namespace BarcodeSDK.NET.Droid
             barcodeScannerView.ViewController.OnPause();
         }
 
-
-
-
-
-
-
-
-
         public void OnCameraOpened()
         {
             barcodeScannerView.PostDelayed(delegate

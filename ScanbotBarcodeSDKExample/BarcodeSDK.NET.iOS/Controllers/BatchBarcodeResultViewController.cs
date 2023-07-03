@@ -35,13 +35,13 @@ namespace BarcodeSDK.NET.iOS
         {
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
-            SetUpView();
+            SetupView();
         }
 
         /// <summary>
         /// Set up the view.
         /// </summary>
-        private void SetUpView()
+        private void SetupView()
         {
             var tableView = new UITableView();
             tableView.Source = new BatchBarcodeResultSource(this);

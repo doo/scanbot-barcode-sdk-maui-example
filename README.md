@@ -3,8 +3,8 @@
 This example app shows how to integrate the [Scanbot Barcode Scanner SDK](https://scanbot.io/developer/maui-barcode-scanner/), [Scanbot Document Scanner SDK](https://scanbot.io/developer/maui-document-scanner/), and [Scanbot Data Capture SDK](https://scanbot.io/developer/maui-data-capture/) for MAUI and .NET(Native iOS and Android platforms).
 
 The Scanbot SDK are available as a NuGet package for the MAUI and .NET platforms:
-[ScanbotSDK.MAUI](https://www.nuget.org/packages/ScanbotSDK.MAUI)
-[ScanbotSDK.NET](https://www.nuget.org/packages/ScanbotSDK.NET)
+[ScanbotBarcodeSDK.MAUI](https://www.nuget.org/packages/ScanbotBarcodeSDK.MAUI)
+[ScanbotBarcodeSDK.NET](https://www.nuget.org/packages/ScanbotBarcodeSDK.NET)
 
 ## What is the Scanbot SDK?
 
@@ -34,7 +34,7 @@ Developing native, cross-platform .NET Multi-platform App UI (.NET MAUI) apps re
 
 
 ## Documentation
-The documentation of the current Scanbot SDK Xamarin release can be found [here](https://docs.scanbot.io/document-scanner-sdk/maui/introduction/)
+The documentation of the current ScanbotBarcodeSDK.NET release can be found [here](https://docs.scanbot.io/document-scanner-sdk/maui/introduction/)
 
 
 ## Please note

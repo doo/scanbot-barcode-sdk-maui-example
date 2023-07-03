@@ -8,27 +8,16 @@ namespace BarcodeSDK.NET.iOS
 
         public UIImage BarcodeImage { get; private set; }
 
-        public NSUrl ImageUrl { get; private set; }
-
-        public bool HasImage => BarcodeImage != null;
-
-        public bool IsEmpty { get => !HasImage && Codes.Count == 0; }
+        public bool IsEmpty { get => Codes.Count == 0; }
 
         public UIViewController Controller { get; set; }
 
-        public ScannerEventArgs(List<SBSDKBarcodeScannerResult> codes, UIImage image, NSUrl imageUrl)
+        public ScannerEventArgs(List<SBSDKBarcodeScannerResult> codes, UIImage image)
         {
             Codes = codes;
             BarcodeImage = image;
-            ImageUrl = ImageUrl;
-        }
-
-        internal void Update(UIImage barcodeImage)
-        {
-            BarcodeImage = barcodeImage;
         }
     }
-
 
     public class ClassicScannerReceiver : SBSDKBarcodeScannerViewControllerDelegate
     {
@@ -37,14 +26,9 @@ namespace BarcodeSDK.NET.iOS
         public override void DidDetectBarcodes(
             SBSDKBarcodeScannerViewController controller, SBSDKBarcodeScannerResult[] codes)
         {
-            ResultReceived?.Invoke(this, new ScannerEventArgs(codes.ToList(), null, null));
+            var barcodeImage = codes?.First()?.SourceImage;
+            ResultReceived?.Invoke(this, new ScannerEventArgs(codes.ToList(), barcodeImage));
         }
-
-        //public override void DidCaptureBarcodeImage(
-        //    SBSDKBarcodeScannerViewController controller, UIImage barcodeImage)
-        //{
-        //    ResultReceived?.Invoke(this, new ScannerEventArgs(null, barcodeImage, null));
-        //}
 
         public override bool ShouldDetectBarcodes(SBSDKBarcodeScannerViewController controller)
         {
@@ -54,38 +38,21 @@ namespace BarcodeSDK.NET.iOS
 
     public class BarcodeResultReceiver : SBSDKUIBarcodeScannerViewControllerDelegate
     {
-        public bool WaitForImage { get; set; }
-
         public EventHandler<ScannerEventArgs> ResultsReceived;
-
-        public override void DidDetect(
-            SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
-        {
-            Invoke(viewController, barcodeResults, null, null);
-        }
-
         ScannerEventArgs args;
 
-        void Invoke(SBSDKUIBarcodeScannerViewController viewController,
-            SBSDKBarcodeScannerResult[] barcodeResults, UIImage barcodeImage, NSUrl imageURL)
+        public override void DidDetect(SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
         {
-            List<SBSDKBarcodeScannerResult> result = null;
+            Invoke(viewController, barcodeResults);
+        }
+
+        void Invoke(SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
+        {
             if (barcodeResults != null)
             {
-                result = barcodeResults.ToList();
-            }
-            args = new ScannerEventArgs(result, barcodeImage, imageURL);
-            args.Controller = viewController;
-
-            if (!WaitForImage)
-            {
-                ResultsReceived?.Invoke(this, args);
-            }
-            else
-            {
-                var sourceImage = barcodeResults?.First()?.SourceImage;
+                var barcodeImage = barcodeResults?.First()?.SourceImage;
+                args = new ScannerEventArgs(barcodeResults.ToList(), barcodeImage);
                 args.Controller = viewController;
-                args.Update(sourceImage);
                 ResultsReceived?.Invoke(this, args);
             }
         }

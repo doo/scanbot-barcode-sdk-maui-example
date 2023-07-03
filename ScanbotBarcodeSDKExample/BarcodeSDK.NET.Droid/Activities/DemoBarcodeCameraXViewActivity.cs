@@ -12,7 +12,6 @@ using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
 using IO.Scanbot.Sdk.UI.Camera;
-using static IO.Scanbot.Sdk.Barcode.BarcodeDetectorFrameHandler;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -42,42 +41,22 @@ namespace BarcodeSDK.NET.Droid
             cameraView = FindViewById<ScanbotCameraXView>(Resource.Id.camerax);
             resultView = FindViewById<ImageView>(Resource.Id.result);
 
-            cameraView.SetCameraOpenCallback(this);
-
             var SDK = new ScanbotBarcodeScannerSDK(this);
             var detector = SDK.CreateBarcodeDetector();
-
             detector.ModifyConfig(new Function1Impl<BarcodeScannerConfigBuilder>((response) => {
                 response.SetSaveCameraPreviewFrame(true);
                 response.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
             }));
+            var resultHandler = new BarcodeResultDelegate();
+            resultHandler.Success += OnBarcodeResult;
 
-            
+            var pictureDelegate = new PictureResultDelegate();
+            cameraView.AddPictureCallback(pictureDelegate);
+            pictureDelegate.PictureTaken += OnPictureTaken;
 
-            handler = BarcodeDetectorFrameHandler.Attach(cameraView, detector);
-            handler.SetDetectionInterval(1000);
+            cameraView.SetCameraOpenCallback(this);
 
-            // TODO: Discuss this with Marco and Ildar
-            //var resultHandler = new BarcodeResultDelegate();
-            //handler.AddResultHandler(resultHandler);
-            //resultHandler.Success += OnBarcodeResult;
-
-            // cameraView.AddPictureCallback;
-            //cameraView.SetCameraOpenCallback()
-
-            var scannerViewCallback = new BarcodeScannerViewCallback();
-            scannerViewCallback.CameraOpen = OnCameraOpened;
-            scannerViewCallback.PictureTaken += OnPictureTaken;
-            //scannerViewCallback.SelectionOverlayBarcodeClicked += OnSelectionOverlayBarcodeClicked;
-
-            //BarcodeScannerViewWrapper.InitDetectionBehavior(cameraView, detector, resultHandler);
-
-            var snappingcontroller = BarcodeAutoSnappingController.Attach(cameraView, handler);
-            snappingcontroller.SetSensitivity(1f);
-
-            //var pictureDelegate = new PictureResultDelegate();
-            //cameraView.AddPictureCallback(pictureDelegate);
-            //pictureDelegate.PictureTaken += OnPictureTaken;
+            ScanbotCameraViewWrapper.InitDetectionBehavior(cameraView, detector, resultHandler, Java.Lang.Long.ValueOf(1000));
 
             FindViewById<Button>(Resource.Id.flash).Click += delegate
             {
@@ -88,9 +67,12 @@ namespace BarcodeSDK.NET.Droid
 
         private void OnBarcodeResult(object sender, BarcodeEventArgs e)
         {
-            BarcodeResultBundle.Instance = new BarcodeResultBundle(e.Result);
-            StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
-            Finish();
+            if (e.Result != null)
+            {
+                BarcodeResultBundle.Instance = new BarcodeResultBundle(e.Result);
+                StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
+                Finish();
+            }
         }
 
         protected override void OnResume()
@@ -119,10 +101,13 @@ namespace BarcodeSDK.NET.Droid
 
         public void OnPictureTaken(object sender, PictureTakenEventArgs e)
         {
+            if (e?.Image == null)
+                return;
+
             var image = e.Image;
             var orientation = e.Orientation;
 
-            var bitmap = BitmapFactory.DecodeByteArray(image, 0, orientation);
+            var bitmap = BitmapFactory.DecodeByteArray(image, 0, image.Length);
 
             var matrix = new Matrix();
             matrix.SetRotate(orientation, bitmap.Width / 2, bitmap.Height / 2);

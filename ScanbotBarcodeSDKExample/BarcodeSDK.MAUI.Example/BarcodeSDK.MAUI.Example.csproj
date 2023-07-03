@@ -99,7 +99,7 @@
     </ItemGroup>
     <!-- ===================== Android Project References =====================  -->
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.6.0-local.2" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.6.0-alpha.1" />
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="1.0.0-local.2" />
     </ItemGroup>
     <ItemGroup>
