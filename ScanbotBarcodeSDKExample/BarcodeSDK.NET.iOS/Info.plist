@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>ScanbotSDK .NET</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.scanbot.example.sdk.xamarin.forms</string>
+	<string>io.scanbot.example.sdk.barcode.net</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>

@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>BarcodeSDK MAUI</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.scanbot.dev.maui</string>
+	<string>io.scanbot.example.sdk.barcode.maui</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>

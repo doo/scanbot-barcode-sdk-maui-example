@@ -196,8 +196,6 @@ namespace BarcodeSDK.NET.iOS
 
             configuration.UiConfiguration.FinderAspectRatio = new SBSDKAspectRatio(1, 1);
 
-            receiver.WaitForImage = behaviourConfiguration.BarcodeImageGenerationType == SBSDKBarcodeImageGenerationType.CapturedImage;
-
             // On result received handler
             receiver.ResultsReceived += OnScanResultReceived;
 
