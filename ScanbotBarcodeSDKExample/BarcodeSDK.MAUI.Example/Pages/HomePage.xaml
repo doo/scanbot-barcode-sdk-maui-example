@@ -18,27 +18,29 @@
                  />
         </StackLayout>
         <StackLayout Grid.Row="1">
-            <ListView x:Name="ListView_MenuItems"
+            <CollectionView x:Name="CollectionView_MenuItems"
                     ItemsSource="{Binding MenuItems}"
-                    ItemSelected="ListView_MenuItems_ItemSelected">
-                <ListView.ItemTemplate>
+                    SelectionChanged="CollectionView_MenuItems_ItemSelected"
+                    SelectionMode="Single">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
+                            <StackLayout HeightRequest="55"  Padding="10,0">
                                 <Label Text="{Binding .}"
                                    VerticalOptions="CenterAndExpand"
                                    HorizontalOptions="CenterAndExpand"
                                    FontSize="Default"/>
+                                 <StackLayout
+                                 BackgroundColor="LightGray"
+                                 HeightRequest="0.5" />
                             </StackLayout>
-                        </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.FooterTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.FooterTemplate>
                     <DataTemplate>
                         <Grid BackgroundColor="#c8193c" HeightRequest="50"/>
                     </DataTemplate>
-                </ListView.FooterTemplate>
-            </ListView>
+                </CollectionView.FooterTemplate>
+            </CollectionView>
         </StackLayout>
     </Grid>
 </ContentPage>

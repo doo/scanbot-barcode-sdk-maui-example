@@ -3,6 +3,7 @@ using BarcodeSDK.MAUI.Models;
 using BarcodeSDK.MAUI.Services;
 using BarcodeSDK.MAUI.Example.Common.Utils;
 using BarcodeSDK.MAUI.Configurations;
+using System;
 
 namespace BarcodeSDK.MAUI.Example.Pages
 {
@@ -49,9 +50,9 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void ListView_MenuItems_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectedItemChangedEventArgs e)
+        void CollectionView_MenuItems_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            var index = e?.SelectedItemIndex ?? -1;
+            var index = GetSelectedIndex(e);
             switch (index)
             {
                 case 0: // Scan Barcode
@@ -71,17 +72,30 @@ namespace BarcodeSDK.MAUI.Example.Pages
                     break;
 
                 case 4: // Set the Accepted barcode types
-                     SetAcceptedBarcodeTypes();
+                    SetAcceptedBarcodeTypes();
                     break;
 
                 case 5: // Scan Batch Barcode
-                       ViewLicenseInfo();
+                    ViewLicenseInfo();
                     break;
 
                 default: // Nothing
                     break;
             }
-            ListView_MenuItems.SelectedItem = null;
+            CollectionView_MenuItems.SelectedItem = null;
+        }
+
+        // Get the selected item from the list
+        private int GetSelectedIndex(SelectionChangedEventArgs e)
+        {
+            if (e?.CurrentSelection?.FirstOrDefault() is string selectedItem && selectedItem != null)
+            {
+                return MenuItems.IndexOf(selectedItem);
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         private void Navigate(ContentPage page)
