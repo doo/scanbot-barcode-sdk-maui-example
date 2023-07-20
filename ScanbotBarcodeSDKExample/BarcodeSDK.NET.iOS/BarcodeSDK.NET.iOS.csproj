@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net7.0-ios</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>DocumentSDK.NET.iOS</RootNamespace>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        
+        <!-- Display name -->
+        <ApplicationTitle>BarcodeSDK.NET.iOS</ApplicationTitle>
+        
+        <!-- App Identifier -->
+        <ApplicationId>com.companyname.barcodesdk.maui.example.native.ios</ApplicationId>
+        <ApplicationIdGuid>4653df0b-6b74-4bd0-a889-35f94efbbf0c</ApplicationIdGuid>
+        
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+        
+		<SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+	    <MtouchLink>SdkOnly</MtouchLink>
+        <CreatePackage>false</CreatePackage>
+        <CodesignProvision>Automatic</CodesignProvision>
+        <CodesignKey>iPhone Developer</CodesignKey>
+        <MtouchDebug>true</MtouchDebug>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-alpha.1" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.6.0-beta.1" />
+    </ItemGroup>
+</Project>

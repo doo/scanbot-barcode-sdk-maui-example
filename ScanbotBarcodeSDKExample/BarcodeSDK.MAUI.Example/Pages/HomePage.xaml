@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BarcodeSDK.MAUI.Example.Pages.HomePage"
+             Title="HomePage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="8.5*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0" BackgroundColor="#c8193c">
+            <Label Text="Scanbot SDK - MAUI"
+                 VerticalOptions="CenterAndExpand"
+                 HorizontalOptions="CenterAndExpand"
+                 TextColor="White"
+                 BackgroundColor="Transparent"
+                 FontSize="34"
+                 />
+        </StackLayout>
+        <StackLayout Grid.Row="1">
+            <CollectionView x:Name="CollectionView_MenuItems"
+                    ItemsSource="{Binding MenuItems}"
+                    SelectionChanged="CollectionView_MenuItems_ItemSelected"
+                    SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <StackLayout HeightRequest="55"  Padding="10,0">
+                                <Label Text="{Binding .}"
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="CenterAndExpand"
+                                   FontSize="Default"/>
+                                 <StackLayout
+                                 BackgroundColor="LightGray"
+                                 HeightRequest="0.5" />
+                            </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid BackgroundColor="#c8193c" HeightRequest="50"/>
+                    </DataTemplate>
+                </CollectionView.FooterTemplate>
+            </CollectionView>
+        </StackLayout>
+    </Grid>
+</ContentPage>

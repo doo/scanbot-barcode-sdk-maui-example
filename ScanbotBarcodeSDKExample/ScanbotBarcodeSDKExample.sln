@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.MAUI.Example", "BarcodeSDK.MAUI.Example\BarcodeSDK.MAUI.Example.csproj", "{FB3143CA-07AE-4914-9676-1F9FE52484ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.iOS", "BarcodeSDK.NET.iOS\BarcodeSDK.NET.iOS.csproj", "{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.Droid", "BarcodeSDK.NET.Droid\BarcodeSDK.NET.Droid.csproj", "{9A04E3DC-F75C-4142-925B-0B9346513924}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A04E3DC-F75C-4142-925B-0B9346513924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A04E3DC-F75C-4142-925B-0B9346513924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A04E3DC-F75C-4142-925B-0B9346513924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A04E3DC-F75C-4142-925B-0B9346513924}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+EndGlobal
