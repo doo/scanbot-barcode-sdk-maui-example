@@ -32,7 +32,7 @@
         <CreatePackage>false</CreatePackage>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-alpha.1" />
+        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-alpha.2" />
         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.6.0" />
     </ItemGroup>
 </Project>
