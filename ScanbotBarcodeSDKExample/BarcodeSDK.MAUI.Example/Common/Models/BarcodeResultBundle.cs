@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BarcodeSDK.MAUI.Example.Common.Models
+﻿namespace BarcodeSDK.MAUI.Example.Common.Models
 {
     public class BarcodeResultBundle : Result
     {

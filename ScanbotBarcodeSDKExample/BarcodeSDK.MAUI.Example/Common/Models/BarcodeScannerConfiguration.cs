@@ -1,5 +1,4 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Constants;
+﻿using BarcodeSDK.MAUI.Constants;
 
 namespace BarcodeSDK.MAUI.Example.Common.Models
 {
@@ -75,7 +74,7 @@ namespace BarcodeSDK.MAUI.Example.Common.Models
         /// Desired interface orientation (Portrait, Landscape or All).
         /// Default is 'All'.
         /// </summary>
-        public UIInterfaceOrientation? InterfaceOrientation { get; set; }
+        public InterfaceOrientation? InterfaceOrientation { get; set; }
 
         /// <summary>
         /// Whether scanner screen should make a sound on successful barcode or MRZ detection.

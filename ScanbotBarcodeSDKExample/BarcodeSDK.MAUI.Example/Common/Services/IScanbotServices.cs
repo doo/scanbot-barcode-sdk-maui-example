@@ -1,13 +1,11 @@
-﻿using System;
-using AndroidX.AppCompat.App;
-using BarcodeSDK.MAUI.Example.Common.Models;
+﻿using BarcodeSDK.MAUI.Example.Common.Models;
 
 namespace BarcodeSDK.MAUI.Example.Common.Services
 {
-	/// <summary>
-	/// Implement the IScanbot Service in all available platforms.
-	/// </summary>
-	public interface IScanbotServices
+    /// <summary>
+    /// Implement the IScanbot Service in all available platforms.
+    /// </summary>
+    public interface IScanbotServices
 	{
         /// <summary>
         /// Clear stored images
@@ -15,4 +13,3 @@ namespace BarcodeSDK.MAUI.Example.Common.Services
         Result ClearStorageDirectory();
     }
 }
-

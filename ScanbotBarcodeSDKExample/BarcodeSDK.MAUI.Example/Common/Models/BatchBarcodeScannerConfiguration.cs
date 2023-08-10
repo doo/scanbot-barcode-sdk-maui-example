@@ -1,6 +1,4 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Constants;
-
+﻿using BarcodeSDK.MAUI.Constants;
 namespace BarcodeSDK.MAUI.Example.Common.Models
 {
     /// <summary>
@@ -100,7 +98,7 @@ namespace BarcodeSDK.MAUI.Example.Common.Models
         /// Desired interface orientation (Portrait, Landscape or All).
         /// Default is 'All'.
         /// </summary>
-        public UIInterfaceOrientation? InterfaceOrientation { get; set; }
+        public InterfaceOrientation? InterfaceOrientation { get; set; }
 
         /// <summary>
         /// String to show that no barcodes were scanned yet.

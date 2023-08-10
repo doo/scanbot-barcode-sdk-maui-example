@@ -38,6 +38,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
             {
                 "SCAN BARCODES",
                 "SCAN BARCODES WITH IMAGE",
+                "SCAN BARCODE WITH CLASSIC COMPONENT",
                 "SCAN BATCH BARCODES",
                 "DETECT BARCODES ON IMAGE",
                 "SET ACCEPTED BARCODE TYPES",
@@ -63,19 +64,23 @@ namespace BarcodeSDK.MAUI.Example.Pages
                     _ = StartBarcodeScanning(true);
                     break;
 
-                case 2: // Scan Batch Barcode
+                case 2: // Scan Barcode with Image
+                    StartBarcodeScanningWithClassicComponent();
+                    break;
+
+                case 3: // Scan Batch Barcode
                     _ = StartBatchBarcodeScanner();
                     break;
 
-                case 3: // Detect Barcodes on Image
+                case 4: // Detect Barcodes on Image
                     _ = DetectBarcodesOnImage();
                     break;
 
-                case 4: // Set the Accepted barcode types
+                case 5: // Set the Accepted barcode types
                     SetAcceptedBarcodeTypes();
                     break;
 
-                case 5: // Scan Batch Barcode
+                case 6: // Scan Batch Barcode
                     ViewLicenseInfo();
                     break;
 
@@ -127,6 +132,14 @@ namespace BarcodeSDK.MAUI.Example.Pages
             {
                 Navigate(new BarcodeResultPage(result.Barcodes, withImage ? result.Image : result.ImagePath));
             }
+        }
+
+        /// <summary>
+        /// Navigate to the Classic Component.
+        /// </summary>
+        private void StartBarcodeScanningWithClassicComponent()
+        {
+            Navigate(new BarcodeClassicComponentPage());
         }
 
         /// <summary>

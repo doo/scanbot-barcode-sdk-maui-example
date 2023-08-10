@@ -1,9 +1,8 @@
-﻿using System;
-using BarcodeSDK.MAUI.Constants;
+﻿using BarcodeSDK.MAUI.Constants;
 
 namespace BarcodeSDK.MAUI.Example.Common.Utils
 {
-	public class BarcodeConfigurationHelper
+    public class BarcodeConfigurationHelper
 	{
         public List<BarcodeFormat> AllBarcodeTypes => Enum.GetValues(typeof(BarcodeFormat)).Cast<BarcodeFormat>().ToList();
     }

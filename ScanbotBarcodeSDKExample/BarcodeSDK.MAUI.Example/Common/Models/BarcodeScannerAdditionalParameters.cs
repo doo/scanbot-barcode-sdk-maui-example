@@ -1,5 +1,4 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Constants;
+﻿using BarcodeSDK.MAUI.Constants;
 
 namespace BarcodeSDK.MAUI.Example.Common.Models
 {
