@@ -1,9 +1,8 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Constants;
+﻿using BarcodeSDK.MAUI.Constants;
 
 namespace BarcodeSDK.MAUI.Example.Common.Models
 {
-	public class Result
+    public class Result
 	{
         /// <summary>
         /// Status of the operation
@@ -25,10 +24,9 @@ namespace BarcodeSDK.MAUI.Example.Common.Models
         {
             return new Result
             {
-                Status = OperationResult.Failed,
+                Status = OperationResult.Error,
                 Error = message
             };
         }
     }
 }
-

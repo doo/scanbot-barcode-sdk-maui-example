@@ -43,15 +43,15 @@ namespace BarcodeSDK.NET.iOS
         private void SetSelectionOverlayConfiguration()
         {
             scannerController.SelectionOverlayEnabled = true;
-            scannerController.AutomaticSelectionEnabled = false;
+            scannerController.AutomaticSelectionEnabled = true;
             scannerController.SelectionOverlayTextFormat = SBSDKBarcodeOverlayFormat.CodeAndType;
             scannerController.SelectionPolygonColor = UIColor.Yellow;
             scannerController.SelectionTextColor = UIColor.Yellow;
-            scannerController.SelectionTextContainerColor = UIColor.Yellow;
+            scannerController.SelectionTextContainerColor = UIColor.Black;
 
-            scannerController.SelectionHighlightedPolygonColor = UIColor.Yellow;
-            scannerController.SelectionHighlightedTextColor = UIColor.Yellow;
-            scannerController.SelectionHighlightedTextContainerColor = UIColor.Yellow;
+            scannerController.SelectionHighlightedPolygonColor = UIColor.Red;
+            scannerController.SelectionHighlightedTextColor = UIColor.Red;
+            scannerController.SelectionHighlightedTextContainerColor = UIColor.Black;
         }
 
         private void OnScanResultReceived(object sender, ScannerEventArgs e)

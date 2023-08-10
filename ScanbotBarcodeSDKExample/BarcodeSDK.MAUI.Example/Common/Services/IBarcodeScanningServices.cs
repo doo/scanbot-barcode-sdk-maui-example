@@ -1,13 +1,11 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Models;
-using BarcodeSDK.MAUI.Example.Platforms.Android.Service;
+﻿using BarcodeSDK.MAUI.Example.Common.Models;
 
 namespace BarcodeSDK.MAUI.Example.Common.Services
 {
-	/// <summary>
-	/// Barcode Scanning service provides us functions to scan single and multiple barcodes.
-	/// </summary>
-	public interface IBarcodeScanningServices
+    /// <summary>
+    /// Barcode Scanning service provides us functions to scan single and multiple barcodes.
+    /// </summary>
+    public interface IBarcodeScanningServices
 	{
         /// <summary>
         /// Scan Barcode from configuration.

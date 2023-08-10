@@ -1,7 +1,6 @@
-﻿using ObjCRuntime;
-using UIKit;
+﻿using UIKit;
 
-namespace BarcodeSDK.MAUI.Example.iOS;
+namespace BarcodeSDK.MAUI.Example;
 
 public class Program
 {

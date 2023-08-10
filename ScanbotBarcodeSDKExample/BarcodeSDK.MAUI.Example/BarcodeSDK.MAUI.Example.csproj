@@ -66,8 +66,10 @@
         <Folder Include="Common\" />
         <Folder Include="Common\Utils\" />
         <Folder Include="Models\" />
+        <Folder Include="ClassicComponent\" />
+        <Folder Include="Platforms\Android\Resources\layout\" />
     </ItemGroup>
-    <ItemGroup>
+   <!-- <ItemGroup>
         <Compile Remove="Common\Helper\SBSDK.cs" />
         <Compile Remove="Common\Services\IInternalServices.cs" />
         <Compile Remove="Common\Services\IScanbotServices.cs" />
@@ -96,13 +98,25 @@
         <Compile Remove="Platforms\Android\Services\ScanbotServices.cs" />
         <Compile Remove="Platforms\Android\Services\ActivityService.cs" />
         <Compile Remove="Platforms\Android\Services\BarcodeScanningServices.cs" />
+    </ItemGroup>-->
+        <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+        <Compile Remove="**\*.Android.cs" />
+        <None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    </ItemGroup>
+        <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true">
+        <Compile Remove="**\*.iOS.cs" />
+        <None Include="**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
     <!-- ===================== Android Project References =====================  -->
     <ItemGroup>
         <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.6.0" />
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-alpha.2" />
     </ItemGroup>
-    <ItemGroup>
+<!--    <ItemGroup>
         <None Remove="Models\" />
+        <None Remove="ClassicComponent\" />
+    </ItemGroup>-->
+    <ItemGroup>
+      <None Remove="Platforms\Android\Resources\layout\" />
     </ItemGroup>
 </Project>

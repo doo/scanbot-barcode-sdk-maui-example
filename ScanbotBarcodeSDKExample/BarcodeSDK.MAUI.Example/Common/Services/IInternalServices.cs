@@ -1,6 +1,4 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.Common.Models;
-using BarcodeSDK.MAUI.Example.Common.Constants;
+﻿using BarcodeSDK.MAUI.Example.Common.Models;
 
 namespace BarcodeSDK.MAUI.Example.Common.Services
 {
@@ -11,4 +9,3 @@ namespace BarcodeSDK.MAUI.Example.Common.Services
         public LicenseInfo GetLicenseInfo();
     }
 }
-
