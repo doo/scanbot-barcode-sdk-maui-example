@@ -14,4 +14,3 @@ public class MainActivity : MauiAppCompatActivity
         DependencyManager.RegisterActivity(this);
     }
 }
-

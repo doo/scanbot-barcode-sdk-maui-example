@@ -24,15 +24,24 @@
             <local:BarcodeCameraView
                 x:Name="cameraView"
                 HeightRequest="500"
+                WidthRequest="300"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill"
                 BackgroundColor="#1f1f1f" />
         </StackLayout>
-        <Label Grid.Row="2"
-            x:Name="lblResult"
-            Text="Result"
-            VerticalTextAlignment="Center"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Grid Grid.Row="2">
+            <Label 
+                x:Name="lblResult"
+                Text="Result"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+                <Button
+                    x:Name="StartScanningButton"
+                    Text="Start Scanning"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Clicked="StartScanningButton_Clicked"/>
+        </Grid>
     </Grid>
 </ContentPage>

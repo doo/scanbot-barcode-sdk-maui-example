@@ -13,7 +13,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>11.0</string>
+	<string>13.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -22,7 +22,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>armv64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -40,7 +40,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Camera Permissions Yow!</string>
+	<string>Please provide camera access.</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>

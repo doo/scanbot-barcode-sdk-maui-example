@@ -1,5 +1,4 @@
-﻿using System;
-using BarcodeSDK.MAUI.Example.ClassicComponent;
+﻿using BarcodeSDK.MAUI.Example.ClassicComponent;
 
 namespace BarcodeSDK.MAUI.Example
 {
@@ -17,7 +16,7 @@ namespace BarcodeSDK.MAUI.Example
                 }).ConfigureMauiHandlers(handlers =>
                 {
                     handlers.AddHandler(typeof(BarcodeCameraView), typeof(BarcodeCameraViewHandler));
-                }); ;
+                });
 
             return builder.Build();
         }

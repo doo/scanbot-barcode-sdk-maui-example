@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
+using BarcodeSDK.MAUI.Droid.Converters;
 using BarcodeSDK.MAUI.Droid.Utils;
 using BarcodeSDK.MAUI.Models;
 using IO.Scanbot.Sdk;
@@ -12,7 +13,6 @@ using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Camera;
-using IO.Scanbot.Sdk.UI.Camera;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
@@ -50,7 +50,7 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
                 response.SetSaveCameraPreviewFrame(false);
             }));
 
-            cameraViewDroid.InitCamera(new CameraUiSettings(false));
+            BarcodeScannerViewWrapper.InitCamera(cameraViewDroid);
             BarcodeScannerViewWrapper.InitDetectionBehavior(cameraViewDroid, detector, new SBResultHandler(HandleFrameHandlerResult), new BarcodeScannerViewCallback(VirtualView, cameraViewDroid));
         }
 
@@ -89,9 +89,11 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
 
         public static void MapStartDetectionHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
-            current?.CheckPermissions();
-            current?.cameraViewDroid?.ViewController.StartPreview();
-            current?.cameraViewDroid?.ViewController?.OnResume();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                current.CheckPermissions();
+                current.cameraViewDroid?.ViewController?.OnResume();
+            });
         }
 
         public static void MapOnPauseHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
@@ -132,6 +134,7 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             if (commonView.OverlayConfiguration?.Enabled == true)
             {
                 cameraViewDroid.SelectionOverlayController.SetEnabled(commonView.OverlayConfiguration.Enabled);
+                cameraViewDroid.SelectionOverlayController.SetTextFormat(commonView.OverlayConfiguration.OverlayTextFormat.ToNative());
                 cameraViewDroid.SelectionOverlayController.SetPolygonColor(commonView.OverlayConfiguration.PolygonColor.ToArgb());
                 cameraViewDroid.SelectionOverlayController.SetTextColor(commonView.OverlayConfiguration.TextColor.ToArgb());
                 cameraViewDroid.SelectionOverlayController.SetTextContainerColor(commonView.OverlayConfiguration.TextContainerColor.ToArgb());
@@ -155,7 +158,7 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
 
         private bool HandleFrameHandlerResult(BarcodeScanningResult result, IO.Scanbot.Sdk.SdkLicenseError error)
         {
-            if (result == null)
+            if (error != null)
             {
                 cameraViewDroid.Post(() => Toast.MakeText(Context.GetActivity(), "License has expired!", ToastLength.Long).Show());
                 return false;

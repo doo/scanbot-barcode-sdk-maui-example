@@ -11,24 +11,24 @@
         <ApplicationTitle>BarcodeSDK.MAUI.Example</ApplicationTitle>
         
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.barcodeSDK.maui.example</ApplicationId>
+        <ApplicationId>io.scanbot.barcodesdk.maui.example</ApplicationId>
         <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
         
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1.0</ApplicationVersion>
         <!-- Supported Platforms -->
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-ios|AnyCPU'">
+     <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-ios|ARM64'">
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
-        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>        
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     </PropertyGroup>
-    <!-- DEBUG CONFIGS -->
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+    <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'!='net7.0-ios|ARM64'">
+        <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android31.0|AnyCPU'">
@@ -69,54 +69,20 @@
         <Folder Include="ClassicComponent\" />
         <Folder Include="Platforms\Android\Resources\layout\" />
     </ItemGroup>
-   <!-- <ItemGroup>
-        <Compile Remove="Common\Helper\SBSDK.cs" />
-        <Compile Remove="Common\Services\IInternalServices.cs" />
-        <Compile Remove="Common\Services\IScanbotServices.cs" />
-        <Compile Remove="Common\Services\IBarcodeScanningServices.cs" />
-        <Compile Remove="Common\Models\InitializationOptions.cs" />
-        <Compile Remove="Common\Models\BarcodeResultBundle.cs" />
-        <Compile Remove="Common\Models\LicenseInfo.cs" />
-        <Compile Remove="Common\Models\BatchBarcodeScannerConfiguration.cs" />
-        <Compile Remove="Common\Models\BarcodeScannerConfiguration.cs" />
-        <Compile Remove="Common\Models\BarcodeScannerAdditionalParameters.cs" />
-        <Compile Remove="Common\Models\AspectRatio.cs" />
-        <Compile Remove="Common\Models\Result.cs" />
-        <Compile Remove="Common\Models\SelectionOverlayConfiguration.cs" />
-        <Compile Remove="Common\Models\Barcode.cs" />
-        <Compile Remove="Platforms\Android\Converters\BarcodeScannerConfigurationConverter.cs" />
-        <Compile Remove="Platforms\Android\Converters\CommonConverter.cs" />
-        <Compile Remove="Platforms\Android\Converters\BatchBarcodeScannerConfigurationConverter.cs" />
-        <Compile Remove="Platforms\Android\Models\BarcodeResultBundle.cs" />
-        <Compile Remove="Platforms\Android\Utils\BarcodeFormatConverter.cs" />
-        <Compile Remove="Platforms\Android\Utils\DocumentTypeConverter.cs" />
-        <Compile Remove="Platforms\Android\Utils\Extensions.cs" />
-        <Compile Remove="Platforms\Android\Utils\ImageUtils.cs" />
-        <Compile Remove="Platforms\Android\Utils\Exceptions.cs" />
-        <Compile Remove="Platforms\Android\Services\DependencyManager.cs" />
-        <Compile Remove="Platforms\Android\Services\InternalServices.cs" />
-        <Compile Remove="Platforms\Android\Services\ScanbotServices.cs" />
-        <Compile Remove="Platforms\Android\Services\ActivityService.cs" />
-        <Compile Remove="Platforms\Android\Services\BarcodeScanningServices.cs" />
-    </ItemGroup>-->
-        <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
-        <Compile Remove="**\*.Android.cs" />
-        <None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+        <Compile Remove="**\**\*.Android.cs" />
+        <None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
         <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true">
-        <Compile Remove="**\*.iOS.cs" />
-        <None Include="**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+        <Compile Remove="**\**\*.iOS.cs" />
+        <None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
     <!-- ===================== Android Project References =====================  -->
     <ItemGroup>
         <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.6.0" />
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-alpha.2" />
     </ItemGroup>
-<!--    <ItemGroup>
-        <None Remove="Models\" />
-        <None Remove="ClassicComponent\" />
-    </ItemGroup>-->
     <ItemGroup>
-      <None Remove="Platforms\Android\Resources\layout\" />
+      <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />
     </ItemGroup>
 </Project>
