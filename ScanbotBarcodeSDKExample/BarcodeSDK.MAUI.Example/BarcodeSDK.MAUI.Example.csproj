@@ -11,7 +11,7 @@
         <ApplicationTitle>BarcodeSDK.MAUI.Example</ApplicationTitle>
         
         <!-- App Identifier -->
-        <ApplicationId>io.scanbot.barcodesdk.maui.example</ApplicationId>
+        <ApplicationId>io.scanbot.example.sdk.barcode.maui</ApplicationId>
         <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
         
         <!-- Versions -->
