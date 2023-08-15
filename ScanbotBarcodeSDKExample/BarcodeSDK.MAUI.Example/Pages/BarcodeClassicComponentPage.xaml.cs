@@ -38,20 +38,27 @@ public partial class BarcodeClassicComponentPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (IsLicenseValid)
-        {
-            ShowTrialLicenseAlert();
-        }
-        else
+        if (!IsLicenseValid)
         {
             ShowExpiredLicenseAlert();
         }
-        cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
-
-        if (DevicePlatform.Android == DeviceInfo.Platform)
+        else if (string.IsNullOrEmpty(App.LicenseKey))
         {
-            cameraView.StartDetection();
+            ShowTrialLicenseAlert();
         }
+
+        cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
+        cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
+
+        if (DeviceInfo.Platform == DevicePlatform.iOS) {
+            StartScanningButton.IsVisible = false;
+        }
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        this.Navigation.PopAsync(true);
     }
 
     private void ShowExpiredLicenseAlert()
@@ -62,5 +69,11 @@ public partial class BarcodeClassicComponentPage : ContentPage
     private void ShowTrialLicenseAlert()
     {
         DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
+    }
+
+    void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+        cameraView.StartDetection();
+        StartScanningButton.IsVisible = false;
     }
 }

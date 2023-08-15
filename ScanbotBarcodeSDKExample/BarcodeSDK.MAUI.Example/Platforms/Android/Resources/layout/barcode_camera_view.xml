@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
     <io.scanbot.sdk.barcode.ui.BarcodeScannerView
         android:id="@+id/barcode_camera"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     />
