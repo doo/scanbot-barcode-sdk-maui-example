@@ -1,4 +1,4 @@
-﻿namespace BarcodeSDK.MAUI.Example.Platforms.iOS
+﻿namespace BarcodeSDK.MAUI.Example.Platforms.iOS.Utils
 {
     public static class Extensions
     {

@@ -4,6 +4,7 @@ using CoreGraphics;
 using ScanbotBarcodeSDK.iOS;
 using UIKit;
 using BarcodeSDK.MAUI.iOS.Utils;
+using BarcodeSDK.MAUI.Example.Platforms.iOS.Utils;
 
 namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
 {
@@ -16,7 +17,7 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
         internal async void ConnectHandler(BarcodeCameraViewHandler barcodeCameraViewHandler)
         {
             this.barcodeCameraViewHandler = barcodeCameraViewHandler;
-            var visibleViewController = await CheckViewControllerAvailable(barcodeCameraViewHandler);
+            var visibleViewController = await ViewUtils.TryGetTopViewControllerAsync(this);
             if (visibleViewController != null)
             {
                 cameraViewController = new SBSDKBarcodeScannerViewController(visibleViewController, barcodeCameraViewHandler.PlatformView);
@@ -27,22 +28,6 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
                 cameraViewController.BarcodeImageGenerationType = SBSDKBarcodeImageGenerationType.None;
                 SetConfigurations();
             }
-        }
-
-        private async Task<UIViewController> CheckViewControllerAvailable(BarcodeCameraViewHandler barcodeCameraViewHandler)
-        {
-            var retryCount = 5;
-
-            UIKit.UIViewController viewController = null;
-            do
-            {
-                await Task.Delay(500);
-                viewController = AppDelegate.ExtractViewController(barcodeCameraViewHandler?.PlatformView?.Window);
-                var message = viewController != null ? "available" : "unavailable";
-                System.Diagnostics.Debug.WriteLine("ViewController is " + message);
-                retryCount++;
-            } while (viewController == null || retryCount < 5);
-            return viewController;
         }
 
         #region Properties Implementation
@@ -143,7 +128,7 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
             }
             else
             {
-                (UIApplication.SharedApplication.Delegate as AppDelegate)?.ShowAlert("License Expired!", "Ok");
+                ViewUtils.ShowAlert("License Expired!", "Ok");
                 return false;
             }
         }

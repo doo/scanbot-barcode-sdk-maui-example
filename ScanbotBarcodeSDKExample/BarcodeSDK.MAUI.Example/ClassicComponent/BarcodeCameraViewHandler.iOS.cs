@@ -60,22 +60,15 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
 
         public static void MapOnPauseHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
-
+            // This is the common method declared in BarcodeCameraViewHandler, and it is useful for the Android native component only.
+            // Based on the MauiHandler concept, we have to define it on all the platforms.
         }
 
         public static void MapOnResumeHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
-
+            // This is the common method declared in BarcodeCameraViewHandler, and it is useful for the Android native component only.
+            // Based on the MauiHandler concept, we have to define it on all the platforms.
         }
-
-        private void CheckPermissions()
-        {
-
-        }
-
-        #endregion
-
-        #region Support Methods
 
         #endregion
     }
