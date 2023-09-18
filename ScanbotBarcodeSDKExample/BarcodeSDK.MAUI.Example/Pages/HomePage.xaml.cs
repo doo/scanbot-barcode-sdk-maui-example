@@ -1,9 +1,7 @@
 ﻿using BarcodeSDK.MAUI.Constants;
-using BarcodeSDK.MAUI.Models;
 using BarcodeSDK.MAUI.Services;
 using BarcodeSDK.MAUI.Example.Common.Utils;
 using BarcodeSDK.MAUI.Configurations;
-using System;
 
 namespace BarcodeSDK.MAUI.Example.Pages
 {
@@ -12,8 +10,6 @@ namespace BarcodeSDK.MAUI.Example.Pages
     /// </summary>
     public partial class HomePage : ContentPage
     {
-        private bool ShouldTestCloseView = true;
-
         /// <summary>
         /// List binding to UI ListView
         /// </summary>
@@ -51,40 +47,40 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void CollectionView_MenuItems_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+        async void CollectionView_MenuItems_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
             var index = GetSelectedIndex(e);
             switch (index)
             {
                 case 0: // Scan Barcode
-                    _ = StartBarcodeScanning(false);
+                    await StartBarcodeScanning(withImage: false);
                     break;
 
                 case 1: // Scan Barcode with Image
-                    _ = StartBarcodeScanning(true);
+                    await StartBarcodeScanning(withImage: true);
                     break;
 
-                case 2: // Scan Barcode with Image
-                    StartBarcodeScanningWithClassicComponent();
+                case 2:
+                    await Navigation.PushAsync(new BarcodeClassicComponentPage());
                     break;
 
-                case 3: // Scan Batch Barcode
-                    _ = StartBatchBarcodeScanner();
+                case 3:
+                    await StartBatchBarcodeScanner();
                     break;
 
-                case 4: // Detect Barcodes on Image
-                    _ = DetectBarcodesOnImage();
+                case 4:
+                    await DetectBarcodesOnImage();
                     break;
 
-                case 5: // Set the Accepted barcode types
-                    SetAcceptedBarcodeTypes();
+                case 5:
+                    await Navigation.PushAsync(new BarcodeSelectionPage());
                     break;
 
-                case 6: // Scan Batch Barcode
+                case 6:
                     ViewLicenseInfo();
                     break;
 
-                default: // Nothing
+                default:
                     break;
             }
             CollectionView_MenuItems.SelectedItem = null;
@@ -103,43 +99,48 @@ namespace BarcodeSDK.MAUI.Example.Pages
             }
         }
 
-        private void Navigate(ContentPage page)
-        {
-            MainThread.InvokeOnMainThreadAsync(async () => await Navigation.PushAsync(page));
-        }
-
         /// <summary>
         /// Starts the Barcode scanning.
         /// </summary>
         private async Task StartBarcodeScanning(bool withImage)
         {
-            var configuration = new BarcodeScannerConfiguration();
-            configuration.BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes;
-            configuration.OverlayConfiguration = new SelectionOverlayConfiguration(true, OverlayFormat.CodeAndType, Colors.Yellow, Colors.Yellow, Colors.Black,
-                Colors.Red, Colors.Red, Colors.Black);
-            configuration.CodeDensity = BarcodeDensity.High;
-            configuration.EngineMode = EngineMode.NextGen;
-            configuration.SuccessBeepEnabled = true;
+            var configuration = new BarcodeScannerConfiguration
+            {
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                CodeDensity = BarcodeDensity.High,
+                EngineMode = EngineMode.NextGen,
+                
+            };
+            
 
             if (withImage)
             {
                 configuration.BarcodeImageGenerationType = BarcodeImageGenerationType.FromVideoFrame;
             }
 
-            var result = await ScanbotBarcodeSDK.BarcodeService?.OpenBarcodeScannerView(configuration);
+            configuration.OverlayConfiguration = new SelectionOverlayConfiguration(
+                        automaticSelectionEnabled: true,
+                        overlayFormat: BarcodeTextFormat.Code,
+                        polygon: Colors.Yellow,
+                        text: Colors.Yellow,
+                        textContainer: Colors.Black);
+
+            // To see the confirmation dialog in action, uncomment the below and comment out the config.OverlayConfiguration line above.
+            //config.ConfirmationDialogConfiguration = new BarcodeConfirmationDialogConfiguration
+            //{
+            //    Title = "Barcode Detected!",
+            //    Message = "A barcode was found.",
+            //    ConfirmButtonTitle = "Continue",
+            //    RetryButtonTitle = "Try again",
+            //    TextFormat = BarcodeTextFormat.CodeAndType
+            //};
+
+            var result = await ScanbotBarcodeSDK.BarcodeService.OpenBarcodeScannerView(configuration);
 
             if (result.Status == OperationResult.Ok)
             {
-                Navigate(new BarcodeResultPage(result.Barcodes, withImage ? result.Image : result.ImagePath));
+                await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes, withImage ? result.Image : result.ImagePath));
             }
-        }
-
-        /// <summary>
-        /// Navigate to the Classic Component.
-        /// </summary>
-        private void StartBarcodeScanningWithClassicComponent()
-        {
-            Navigate(new BarcodeClassicComponentPage());
         }
 
         /// <summary>
@@ -147,17 +148,27 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         private async Task StartBatchBarcodeScanner()
         {
-            var configuration = new BatchBarcodeScannerConfiguration();
-            configuration.BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes;
-            configuration.OverlayConfiguration = new SelectionOverlayConfiguration(true, OverlayFormat.Code, Colors.Yellow, Colors.Yellow, Colors.Black,
-                Colors.Red, Colors.Red, Colors.Black);
-            configuration.SuccessBeepEnabled = true;
-            configuration.CodeDensity = BarcodeDensity.High;
-            configuration.EngineMode = EngineMode.NextGen;
+            var configuration = new BatchBarcodeScannerConfiguration
+            {
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                OverlayConfiguration = new SelectionOverlayConfiguration(
+                    automaticSelectionEnabled: true,
+                    overlayFormat: BarcodeTextFormat.Code,
+                    polygon: Colors.Yellow,
+                    text: Colors.Yellow,
+                    textContainer: Colors.Black,
+                    highlightedPolygonColor: Colors.Red,
+                    highlightedTextColor: Colors.Red,
+                    highlightedTextContainerColor: Colors.Black),
+                SuccessBeepEnabled = true,
+                CodeDensity = BarcodeDensity.High,
+                EngineMode = EngineMode.NextGen
+            };
+            
             var result = await ScanbotBarcodeSDK.BarcodeService?.OpenBatchBarcodeScannerView(configuration);
             if (result.Status == OperationResult.Ok)
             {
-                Navigate(new BarcodeResultPage(result.Barcodes, ""));
+                await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes, ""));
             }
         }
 
@@ -167,55 +178,23 @@ namespace BarcodeSDK.MAUI.Example.Pages
         private async Task DetectBarcodesOnImage()
         {
             var imageSource = await ScanbotBarcodeSDK.PickerService?.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
-            var configuration = new BarcodeDetectionConfiguration();
-            configuration.BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes;
-            configuration.EngineMode = EngineMode.NextGen;
-            configuration.AdditionalParameters = new BarcodeScannerAdditionalParameters
+            var configuration = new BarcodeDetectionConfiguration
             {
-                CodeDensity = BarcodeDensity.High,
-                LowPowerMode = false,
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                EngineMode = EngineMode.NextGen,
+                AdditionalParameters = new BarcodeScannerAdditionalParameters
+                {
+                    CodeDensity = BarcodeDensity.High,
+                    LowPowerMode = false,
+                }
             };
 
             var barcodes = await ScanbotBarcodeSDK.DetectionService?.DetectBarcodesFrom(imageSource, configuration);
 
             if (barcodes?.Count > 0)
             {
-                Navigate(new BarcodeResultPage(barcodes, imageSource));
+                await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
             }
-        }
-
-        /// <summary>
-        /// Test the force closing of Barcode scanning view.
-        /// </summary>
-        /// <param name="isBatchBarcode"></param>
-        /// <returns></returns>
-        private void TestCloseView(bool isBatchBarcode)
-        {
-            if (!ShouldTestCloseView) return;
-            Task.Run(async () =>
-            {
-                await Task.Delay(7000);
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    if (isBatchBarcode)
-                    {
-                        ScanbotBarcodeSDK.BarcodeService.CloseBatchBarcodeScannerView();
-                    }
-                    else
-                    {
-                        ScanbotBarcodeSDK.BarcodeService.CloseBatchBarcodeScannerView();
-                    }
-                });
-            });
-        }
-
-        /// <summary>
-        /// Set the Accepted barcode types.
-        /// </summary>
-        private void SetAcceptedBarcodeTypes()
-        {
-            if (!ShouldTestCloseView) return;
-            Navigate(new BarcodeSelectionPage());
         }
 
         /// <summary>
@@ -250,7 +229,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
 
             if (info.IsValid)
             {
-                message += $" until {info.ExpirationDate.ToString()}";
+                message += $" until {info.ExpirationDate}";
             }
 
             Utils.Alert(this, "Info", message);
