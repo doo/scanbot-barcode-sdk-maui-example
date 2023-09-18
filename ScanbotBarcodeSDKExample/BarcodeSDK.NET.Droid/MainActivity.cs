@@ -47,6 +47,7 @@ public class MainActivity : Activity
             return;
         }
         var intent = new Intent(this, typeof(DemoBarcodeCameraViewActivity));
+        intent.PutExtra("useCameraX", false);
         StartActivity(intent);
     }
 
@@ -56,7 +57,8 @@ public class MainActivity : Activity
         {
             return;
         }
-        var intent = new Intent(this, typeof(DemoBarcodeCameraXViewActivity));
+        var intent = new Intent(this, typeof(DemoBarcodeCameraViewActivity));
+        intent.PutExtra("useCameraX", true);
         StartActivity(intent);
     }
 
