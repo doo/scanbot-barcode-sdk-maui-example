@@ -5,6 +5,19 @@ using BarcodeSDK.MAUI.Configurations;
 
 namespace BarcodeSDK.MAUI.Example.Pages
 {
+    public struct HomePageMenuItem
+    {
+        public HomePageMenuItem(string title, Func<Task> action)
+        {
+            Title = title;
+            NavigationAction = action;
+        }
+
+        public string Title { get; private set; }
+
+        public Func<Task> NavigationAction { get; private set; }
+    }
+
     /// <summary>
     /// Home Page of the Application
     /// </summary>
@@ -13,7 +26,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// <summary>
         /// List binding to UI ListView
         /// </summary>
-        public List<string> MenuItems { get; set; }
+        public List<HomePageMenuItem> MenuItems { get; set; }
 
         /// <summary>
         /// Constructor
@@ -30,15 +43,15 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         private void InitMenuItems()
         {
-            MenuItems = new List<string>
+            MenuItems = new List<HomePageMenuItem>
             {
-                "SCAN BARCODES",
-                "SCAN BARCODES WITH IMAGE",
-                "SCAN BARCODE WITH CLASSIC COMPONENT",
-                "SCAN BATCH BARCODES",
-                "DETECT BARCODES ON IMAGE",
-                "SET ACCEPTED BARCODE TYPES",
-                "VIEW LICENSE INFO"
+                new HomePageMenuItem("SCAN BARCODES", () => StartBarcodeScanning(withImage: false)),
+                new HomePageMenuItem("SCAN BARCODES WITH IMAGE", () => StartBarcodeScanning(withImage: true)),
+                new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
+                new HomePageMenuItem("DETECT BARCODES ON IMAGE", DetectBarcodesOnImage),
+                new HomePageMenuItem("SET ACCEPTED BARCODE TYPES", () => Navigation.PushAsync(new BarcodeSelectionPage())),
+                new HomePageMenuItem("VIEW LICENSE INFO", () => Task.FromResult(ViewLicenseInfo()))
             };
         }
 
@@ -47,56 +60,18 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void CollectionView_MenuItems_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+        private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            var index = GetSelectedIndex(e);
-            switch (index)
+            if (!Utils.CheckLicense(this))
             {
-                case 0: // Scan Barcode
-                    await StartBarcodeScanning(withImage: false);
-                    break;
+                return;
+            }
 
-                case 1: // Scan Barcode with Image
-                    await StartBarcodeScanning(withImage: true);
-                    break;
-
-                case 2:
-                    await Navigation.PushAsync(new BarcodeClassicComponentPage());
-                    break;
-
-                case 3:
-                    await StartBatchBarcodeScanner();
-                    break;
-
-                case 4:
-                    await DetectBarcodesOnImage();
-                    break;
-
-                case 5:
-                    await Navigation.PushAsync(new BarcodeSelectionPage());
-                    break;
-
-                case 6:
-                    ViewLicenseInfo();
-                    break;
-
-                default:
-                    break;
+            if (e?.CurrentSelection?.FirstOrDefault() is HomePageMenuItem selectedItem)
+            {
+                await selectedItem.NavigationAction();
             }
             CollectionView_MenuItems.SelectedItem = null;
-        }
-
-        // Get the selected item from the list
-        private int GetSelectedIndex(SelectionChangedEventArgs e)
-        {
-            if (e?.CurrentSelection?.FirstOrDefault() is string selectedItem && selectedItem != null)
-            {
-                return MenuItems.IndexOf(selectedItem);
-            }
-            else
-            {
-                return -1;
-            }
         }
 
         /// <summary>
@@ -126,7 +101,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                         textContainer: Colors.Black);
 
             // To see the confirmation dialog in action, uncomment the below and comment out the config.OverlayConfiguration line above.
-            //config.ConfirmationDialogConfiguration = new BarcodeConfirmationDialogConfiguration
+            //configuration.ConfirmationDialogConfiguration = new BarcodeConfirmationDialogConfiguration
             //{
             //    Title = "Barcode Detected!",
             //    Message = "A barcode was found.",
@@ -189,6 +164,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                 }
             };
 
+
             var barcodes = await ScanbotBarcodeSDK.DetectionService?.DetectBarcodesFrom(imageSource, configuration);
 
             if (barcodes?.Count > 0)
@@ -222,17 +198,18 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// <summary>
         /// View Current License Information
         /// </summary>
-        private void ViewLicenseInfo()
+        private MAUI.Models.LicenseInfo ViewLicenseInfo()
         {
             var info = ScanbotBarcodeSDK.LicenseInfo;
             var message = $"License status {info.Status}";
 
             if (info.IsValid)
             {
-                message += $" until {info.ExpirationDate}";
+                message += $" until {info.ExpirationDate?.ToLocalTime()}";
             }
 
             Utils.Alert(this, "Info", message);
+            return info;
         }
     }
 }
