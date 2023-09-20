@@ -30,7 +30,7 @@ public partial class BarcodeClassicComponentPage : ContentPage
                 lblResult.Text = text;
             });
         };
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, OverlayFormat.CodeAndType,
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
                                                                             Colors.Yellow, Colors.Yellow, Colors.Black,
                                                                             Colors.Red, Colors.Red, Colors.Black);
     }

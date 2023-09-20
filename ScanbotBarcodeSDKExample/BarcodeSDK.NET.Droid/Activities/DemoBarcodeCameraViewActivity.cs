@@ -44,8 +44,10 @@ namespace BarcodeSDK.NET.Droid
                 response.SetSaveCameraPreviewFrame(false);
                 response.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
             }));
-            
-            barcodeScannerView.InitCamera(new CameraUiSettings(false));
+
+            var useCameraX = Intent.GetBooleanExtra("useCameraX", false);
+
+            barcodeScannerView.InitCamera(new CameraUiSettings(useCameraX));
             var resultHandler = new BarcodeResultDelegate();
             resultHandler.Success += OnBarcodeResult;
 

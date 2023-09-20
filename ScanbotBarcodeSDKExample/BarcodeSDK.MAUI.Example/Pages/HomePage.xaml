@@ -20,12 +20,12 @@
         <StackLayout Grid.Row="1">
             <CollectionView x:Name="CollectionView_MenuItems"
                     ItemsSource="{Binding MenuItems}"
-                    SelectionChanged="CollectionView_MenuItems_ItemSelected"
+                    SelectionChanged="MenuItemSelected"
                     SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                             <StackLayout HeightRequest="55"  Padding="10,0">
-                                <Label Text="{Binding .}"
+                                <Label Text="{Binding Title}"
                                    VerticalOptions="CenterAndExpand"
                                    HorizontalOptions="CenterAndExpand"
                                    FontSize="Default"/>

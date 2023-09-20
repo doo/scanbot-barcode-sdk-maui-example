@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BarcodeSDK.MAUI.Constants;
+﻿using BarcodeSDK.MAUI.Constants;
 
 namespace BarcodeSDK.MAUI.Example.Models
 {
