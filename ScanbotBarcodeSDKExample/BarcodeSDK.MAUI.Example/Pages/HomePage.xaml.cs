@@ -84,7 +84,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen,
-                
+                SuccessBeepEnabled = true
             };
             
 
@@ -100,7 +100,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                         text: Colors.Yellow,
                         textContainer: Colors.Black);
 
-            // To see the confirmation dialog in action, uncomment the below and comment out the config.OverlayConfiguration line above.
+            // To see the confirmation dialog in action, uncomment the below and comment out the configuration.OverlayConfiguration line above.
             //configuration.ConfirmationDialogConfiguration = new BarcodeConfirmationDialogConfiguration
             //{
             //    Title = "Barcode Detected!",
