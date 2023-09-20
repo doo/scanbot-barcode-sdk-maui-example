@@ -14,7 +14,7 @@ namespace BarcodeSDK.NET.iOS
         {
             base.ViewDidLoad();
 
-            Title = "CLASSICAL COMPONENT";
+            Title = "CLASSIC COMPONENT";
 
             scannerController = new SBSDKBarcodeScannerViewController(this, View);
             SetSelectionOverlayConfiguration();

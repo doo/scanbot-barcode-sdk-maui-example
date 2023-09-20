@@ -21,7 +21,7 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {
-        // Classical component
+        // Classic component
         protected BarcodeScannerView cameraViewDroid;
         private readonly int REQUEST_PERMISSION_CODE = 200;
 
