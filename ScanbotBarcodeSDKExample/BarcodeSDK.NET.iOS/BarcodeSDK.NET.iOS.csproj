@@ -16,9 +16,8 @@
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
-        
-		<SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
-	    <MtouchLink>SdkOnly</MtouchLink>
+        <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+        <MtouchLink>None</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>Automatic</CodesignProvision>
         <CodesignKey>iPhone Developer</CodesignKey>
@@ -31,7 +30,7 @@
         <CreatePackage>false</CreatePackage>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-alpha.2" />
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.7.0-beta-17" />
+        <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.7.0-beta-19" />
     </ItemGroup>
 </Project>
