@@ -45,10 +45,10 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
         {
             if (cameraViewController == null) return;
             var config = commonView.OverlayConfiguration;
-            if (config.Enabled == true)
+            if (config?.Enabled == true)
             {
                 cameraViewController.SelectionOverlayEnabled = true;
-
+                cameraViewController.AutomaticSelectionEnabled = config.AutomaticSelectionEnabled;
                 cameraViewController.SelectionPolygonColor = config.PolygonColor.ToNative();
                 cameraViewController.SelectionTextColor = config.TextColor.ToNative();
                 cameraViewController.SelectionTextContainerColor = config.TextContainerColor.ToNative();
@@ -114,7 +114,6 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
     {
         public delegate void OnDetectHandler(SBSDKBarcodeScannerResult[] codes);
         public OnDetectHandler OnDetect;
-
         public override void DidDetectBarcodes(SBSDKBarcodeScannerViewController controller, SBSDKBarcodeScannerResult[] codes)
         {
             OnDetect?.Invoke(codes);
@@ -131,6 +130,11 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
                 ViewUtils.ShowAlert("License Expired!", "Ok");
                 return false;
             }
+        }
+
+        public override bool ShouldHighlightResult(SBSDKBarcodeScannerViewController controller, SBSDKBarcodeScannerResult code)
+        {
+            return controller.AutomaticSelectionEnabled;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using BarcodeSDK.MAUI.Constants;
 using BarcodeSDK.MAUI.Services;
-using BarcodeSDK.MAUI.Example.Common.Utils;
 using BarcodeSDK.MAUI.Configurations;
+using BarcodeSDK.MAUI.Example.Utils;
 
 namespace BarcodeSDK.MAUI.Example.Pages
 {
@@ -23,6 +23,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
     /// </summary>
     public partial class HomePage : ContentPage
     {
+        public bool IsLicenseValid => ScanbotBarcodeSDK.SDKService?.GetLicenseInfo()?.IsValid ?? false;
         /// <summary>
         /// List binding to UI ListView
         /// </summary>
@@ -62,7 +63,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// <param name="e"></param>
         private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            if (!Utils.CheckLicense(this))
+            if (!IsLicenseValid)
             {
                 return;
             }
@@ -94,7 +95,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
             }
 
             configuration.OverlayConfiguration = new SelectionOverlayConfiguration(
-                        automaticSelectionEnabled: true,
+                        automaticSelectionEnabled: false,
                         overlayFormat: BarcodeTextFormat.Code,
                         polygon: Colors.Yellow,
                         text: Colors.Yellow,
@@ -178,7 +179,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         private void ClearStorage()
         {
-            if (!Utils.CheckLicense(this))
+            if (!IsLicenseValid)
             {
                 return;
             }
@@ -187,11 +188,11 @@ namespace BarcodeSDK.MAUI.Example.Pages
 
             if (result.Status == OperationResult.Ok)
             {
-                Utils.Alert(this, "Success!", "Cleared image storage");
+                CommonUtils.Alert(this, "Success!", "Cleared image storage");
             }
             else
             {
-                Utils.Alert(this, "Oops!", result.Error);
+                CommonUtils.Alert(this, "Oops!", result.Error);
             }
         }
 
@@ -208,7 +209,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                 message += $" until {info.ExpirationDate?.ToLocalTime()}";
             }
 
-            Utils.Alert(this, "Info", message);
+            CommonUtils.Alert(this, "Info", message);
             return info;
         }
     }
