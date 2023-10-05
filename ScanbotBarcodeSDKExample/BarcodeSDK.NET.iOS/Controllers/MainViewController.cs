@@ -185,8 +185,9 @@ namespace BarcodeSDK.NET.iOS
             selectionOverlayConfiguration.PolygonColor = UIColor.Yellow;
             selectionOverlayConfiguration.TextContainerColor = UIColor.Black;
 
-            behaviourConfiguration.AcceptedMachineCodeTypes = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+            behaviourConfiguration.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes.ToArray();
             behaviourConfiguration.AdditionalParameters = new SBSDKBarcodeAdditionalParameters { MinimumTextLength = 6 };
+
             var configuration = new SBSDKUIBarcodeScannerConfiguration(uiConfiguration, textConfiguration, behaviourConfiguration, cameraConfiguration, selectionOverlayConfiguration);
             if (withImage)
             {
@@ -233,7 +234,7 @@ namespace BarcodeSDK.NET.iOS
             var configuration = new SBSDKUIBarcodesBatchScannerConfiguration(uiConfiguration, textConfiguration, behaviourConfiguration, cameraConfiguration, selectionOverlayConfiguration);
 
             configuration.UiConfiguration.FinderAspectRatio = new SBSDKAspectRatio(1, 0.5);
-            configuration.BehaviorConfiguration.AcceptedMachineCodeTypes = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+            configuration.BehaviorConfiguration.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes.ToArray();
 
             batchBarcode.OpenBatchBarcodeScannerView(configuration);
         }

@@ -1,8 +1,7 @@
-﻿using System;
-namespace BarcodeSDK.MAUI.Example.Common.Utils
+﻿namespace BarcodeSDK.MAUI.Example.Utils
 {
-	public class Utils
-	{
+    public static class CommonUtils
+    {
         public static bool CheckLicense(ContentPage context)
         {
             if (!ScanbotBarcodeSDK.LicenseInfo.IsValid)
@@ -28,4 +27,3 @@ namespace BarcodeSDK.MAUI.Example.Common.Utils
         }
     }
 }
-

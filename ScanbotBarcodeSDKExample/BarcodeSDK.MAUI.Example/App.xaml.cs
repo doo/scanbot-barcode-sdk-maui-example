@@ -6,7 +6,7 @@ namespace BarcodeSDK.MAUI.Example {
     /// </summary>
     public partial class App : Application
     {
-        private const string LicenseKey = null;
+        public const string LicenseKey = null;
 
         public App()
         {
@@ -27,4 +27,3 @@ namespace BarcodeSDK.MAUI.Example {
         }
     }
 }
-
