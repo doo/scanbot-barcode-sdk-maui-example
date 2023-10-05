@@ -65,6 +65,8 @@ namespace BarcodeSDK.MAUI.Example.Pages
         {
             if (!IsLicenseValid)
             {
+                CommonUtils.Alert(this, "Alert", "The license is expired.");
+                CollectionView_MenuItems.SelectedItem = null;
                 return;
             }
 
