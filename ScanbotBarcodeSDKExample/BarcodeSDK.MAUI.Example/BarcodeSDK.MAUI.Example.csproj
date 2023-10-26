@@ -22,16 +22,19 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     </PropertyGroup>
      <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-ios|ARM64'">
-        <MtouchLink>SdkOnly</MtouchLink>
+        <MtouchLink>None</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
-        <CreatePackage>false</CreatePackage>
+        <CreatePackage>false</CreatePackage> 
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     </PropertyGroup>
     <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'!='net7.0-ios|ARM64'">
-        <MtouchLink>SdkOnly</MtouchLink>
+        <MtouchLink>None</MtouchLink>
         <CreatePackage>false</CreatePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android31.0|AnyCPU'">
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+      <MtouchLink>None</MtouchLink>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
@@ -69,6 +72,7 @@
         <Folder Include="Platforms\iOS\Utils\" />
         <Folder Include="Common\" />
     </ItemGroup>
+      <!-- ===================== Classic component dependency =====================  -->
     <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
         <Compile Remove="**\**\*.Android.cs" />
         <None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
@@ -77,9 +81,9 @@
         <Compile Remove="**\**\*.iOS.cs" />
         <None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
-    <!-- ===================== Android Project References =====================  -->
+    <!-- ===================== Common Project References =====================  -->
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.7.0" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="3.7.1-alpha.1" />
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
     </ItemGroup>
     <ItemGroup>
