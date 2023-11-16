@@ -8,6 +8,8 @@ namespace BarcodeSDK.NET.Droid
     [Activity(Theme = "@style/AppTheme")]
     public class BarcodeResultActivity : AppCompatActivity
     {
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -17,27 +19,29 @@ namespace BarcodeSDK.NET.Droid
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
+            var barcodeResult = BarcodeResult.CreateFromBundle(Intent.GetBundleExtra(nameof(BarcodeResult)));
+
             string imagePath = null;
 
-            if (BarcodeResultBundle.Instance.PreviewPath != null)
+            if (barcodeResult.PreviewPath != null)
             {
-                imagePath = BarcodeResultBundle.Instance.PreviewPath;
+                imagePath = barcodeResult.PreviewPath;
             }
-            else if (BarcodeResultBundle.Instance.ImagePath != null)
+            else if (barcodeResult.ImagePath != null)
             {
-                imagePath = BarcodeResultBundle.Instance.ImagePath;
+                imagePath = barcodeResult.ImagePath;
             }
 
             if (imagePath != null)
             {
                 ShowSnapImageFromPath(imagePath);
             }
-            else if (BarcodeResultBundle.Instance.ResultBitmap != null)
+            else if (barcodeResult.ResultBitmap != null)
             {
-                ShowSnapImageFromBitmap();
+                ShowSnapImageFromBitmap(barcodeResult);
             }
 
-            ShowBarcodeResult(BarcodeResultBundle.Instance.ScanningResult);
+            ShowBarcodeResult(barcodeResult.ScanningResult);
         }
 
         void ShowSnapImageFromPath(string path)
@@ -45,9 +49,9 @@ namespace BarcodeSDK.NET.Droid
             AddImageView().SetImageURI(Android.Net.Uri.Parse(path));
         }
 
-        void ShowSnapImageFromBitmap()
+        void ShowSnapImageFromBitmap(BarcodeResult barcodeResult)
         {
-            var original = BarcodeResultBundle.Instance.ResultBitmap;
+            var original = barcodeResult.ResultBitmap;
             Bitmap scaled = Bitmap.CreateScaledBitmap(original, 200, 200, true);
             AddImageView().SetImageBitmap(scaled);
         }
@@ -100,9 +104,10 @@ namespace BarcodeSDK.NET.Droid
 
                 child.Click += delegate
                 {
-                    BarcodeResultBundle.SelectedBarcodeItem = item;
                     var intent = new Intent(this, typeof(DetailedItemDataActivity));
-                    StartActivity(intent);
+                    var bundle = new Bundle();
+                    bundle.PutParcelable("SelectedBarcodeItem", item);
+                    StartActivity(intent, bundle);
                 };
 
                 parent.AddView(child);

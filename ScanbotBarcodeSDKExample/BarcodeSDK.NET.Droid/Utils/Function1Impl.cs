@@ -10,6 +10,11 @@ namespace BarcodeSDK.NET.Droid
     {
         private readonly Action<T> OnInvoked;
 
+        public static Function1Impl<T> From(Action<T> onInvoked)
+        {
+            return new Function1Impl<T>(onInvoked);
+        }
+
         public Function1Impl(Action<T> onInvoked)
         {
             this.OnInvoked = onInvoked;

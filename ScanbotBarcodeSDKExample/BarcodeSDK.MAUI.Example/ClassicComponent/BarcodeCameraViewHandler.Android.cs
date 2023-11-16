@@ -5,9 +5,9 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
-using BarcodeSDK.MAUI.Droid.Converters;
-using BarcodeSDK.MAUI.Droid.Utils;
-using BarcodeSDK.MAUI.Models;
+using ScanbotSDK.MAUI.Droid.Converters;
+using ScanbotSDK.MAUI.Droid.Utils;
+using ScanbotSDK.MAUI.Models;
 using IO.Scanbot.Sdk;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
@@ -17,15 +17,13 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
 
-namespace BarcodeSDK.MAUI.Example.ClassicComponent
+namespace ScanbotSDK.MAUI.Example.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {
         // Classic component
         protected BarcodeScannerView cameraViewDroid;
         private readonly int REQUEST_PERMISSION_CODE = 200;
-
-        #region Handler Overrides
 
         protected override FrameLayout CreatePlatformView()
         {
@@ -69,10 +67,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             base.SetupContainer();
         }
 
-        #endregion
-
-        #region Properties Implementation
-
         public static void MapOverlayConfiguration(BarcodeCameraViewHandler current, BarcodeCameraView commonView)
         {
             current.SetSelectionOverlayConfiguration(commonView);
@@ -82,10 +76,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         {
             current.cameraViewDroid.ViewController.UseFlash(commonView.IsFlashEnabled);
         }
-
-        #endregion
-
-        #region Event Handlers Implementation
 
         public static void MapStartDetectionHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
@@ -125,9 +115,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
                 ActivityCompat.RequestPermissions(activity, new string[] { Manifest.Permission.Camera }, REQUEST_PERMISSION_CODE);
             }
         }
-        #endregion
-
-        #region Support Methods
 
         public void SetSelectionOverlayConfiguration(BarcodeCameraView commonView)
         {
@@ -182,8 +169,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         {
             viewGroup.SetOnHierarchyChangeListener(new HierarchyChangeListener(viewGroup));
         }
-
-        #endregion
     }
 
     internal class SBResultHandler : BarcodeDetectorResultHandlerWrapper

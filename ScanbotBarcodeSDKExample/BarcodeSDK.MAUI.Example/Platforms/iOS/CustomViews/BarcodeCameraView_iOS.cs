@@ -1,12 +1,13 @@
-﻿using BarcodeSDK.MAUI.Models;
-using BarcodeSDK.MAUI.Example.ClassicComponent;
+﻿using ScanbotSDK.MAUI.Models;
+using ScanbotSDK.MAUI.Example.ClassicComponent;
 using CoreGraphics;
 using ScanbotBarcodeSDK.iOS;
 using UIKit;
-using BarcodeSDK.MAUI.iOS.Utils;
-using BarcodeSDK.MAUI.Example.Platforms.iOS.Utils;
+using ScanbotSDK.MAUI.iOS.Utils;
+using ScanbotSDK.MAUI.Example.Platforms.iOS.Utils;
 
-namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
+
+namespace ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews
 {
     public class BarcodeCameraView_iOS : UIView
 	{
@@ -29,8 +30,6 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
                 SetConfigurations();
             }
         }
-
-        #region Properties Implementation
 
         internal void MapIsFlashEnabled(bool isFlashEnabled)
         {
@@ -69,10 +68,6 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
             }
         }
 
-        #endregion
-
-        #region Event Handlers Implementation
-
         internal void MapStartDetectionHandler()
         {
             if (cameraViewController == null) return;
@@ -95,8 +90,6 @@ namespace BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews
                 Barcodes = codes?.ToFormsBarcodes()
             });
         }
-
-        #endregion
 
         /// <summary>
         /// Set the configuration again after the view is initialised.

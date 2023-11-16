@@ -4,9 +4,9 @@ namespace BarcodeSDK.NET.iOS
 {
     public class ClassicScannerController : UIViewController
     {
-        SBSDKBarcodeScannerViewController scannerController;
+        private SBSDKBarcodeScannerViewController scannerController;
 
-        ClassicScannerReceiver receiver;
+        private ClassicBarcodeDelegate receiver;
 
         public FlashButton Flash { get; set; }
 
@@ -17,12 +17,26 @@ namespace BarcodeSDK.NET.iOS
             Title = "CLASSIC COMPONENT";
 
             scannerController = new SBSDKBarcodeScannerViewController(this, View);
-            SetSelectionOverlayConfiguration();
-            scannerController.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+            scannerController.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes;
+            scannerController.AdditionalDetectionParameters = new SBSDKBarcodeAdditionalParameters
+            {
+                CodeDensity = SBSDKBarcodeDensity.High
+            };
+            scannerController.EngineMode = SBSDKBarcodeEngineMode.NextGen;
 
-            receiver = new ClassicScannerReceiver();
+            scannerController.SelectionOverlayEnabled = true;
+            scannerController.AutomaticSelectionEnabled = false;
+            scannerController.SelectionOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
+            scannerController.SelectionPolygonColor = UIColor.Yellow;
+            scannerController.SelectionTextColor = UIColor.Yellow;
+            scannerController.SelectionTextContainerColor = UIColor.Black;
+
+            scannerController.SelectionHighlightedPolygonColor = UIColor.Red;
+            scannerController.SelectionHighlightedTextColor = UIColor.Red;
+            scannerController.SelectionHighlightedTextContainerColor = UIColor.Black;
+
+            receiver = new ClassicBarcodeDelegate(NavigationController);
             scannerController.Delegate = receiver;
-            receiver.ResultReceived += OnScanResultReceived;
             
             Flash = new FlashButton();
             View.AddSubview(Flash);
@@ -37,39 +51,30 @@ namespace BarcodeSDK.NET.iOS
             };
         }
 
-        /// <summary>
-        /// Selection Overlay Configuration.
-        /// </summary>
-        private void SetSelectionOverlayConfiguration()
+        private class ClassicBarcodeDelegate : SBSDKBarcodeScannerViewControllerDelegate
         {
-            scannerController.SelectionOverlayEnabled = true;
-            scannerController.AutomaticSelectionEnabled = true;
-            scannerController.SelectionOverlayTextFormat = SBSDKBarcodeOverlayFormat.CodeAndType;
-            scannerController.SelectionPolygonColor = UIColor.Yellow;
-            scannerController.SelectionTextColor = UIColor.Yellow;
-            scannerController.SelectionTextContainerColor = UIColor.Black;
+            private UINavigationController navigationController;
 
-            scannerController.SelectionHighlightedPolygonColor = UIColor.Red;
-            scannerController.SelectionHighlightedTextColor = UIColor.Red;
-            scannerController.SelectionHighlightedTextContainerColor = UIColor.Black;
-        }
-
-        private void OnScanResultReceived(object sender, ScannerEventArgs e)
-        {
-            Console.WriteLine("Results received");
-            receiver.ResultReceived -= OnScanResultReceived;
-
-            SBSDKBarcodeScannerResult[] codes = null;
-            if (e.Codes != null)
+            public ClassicBarcodeDelegate(UINavigationController navigationController)
             {
-                codes = e.Codes.ToArray();
+                this.navigationController = navigationController;
             }
-            var controller = new ScanResultListController(e.BarcodeImage, codes);
 
-            var navigation = NavigationController;
 
-            navigation.PopViewController(false);
-            navigation.PushViewController(controller, true);
+            public override void DidDetectBarcodes(
+                SBSDKBarcodeScannerViewController _, SBSDKBarcodeScannerResult[] codes)
+            {
+
+                var controller = new ScanResultListController(codes.First().SourceImage, codes);
+
+                navigationController.PopViewController(animated: false);
+                navigationController.PushViewController(controller, animated: true);
+            }
+
+            public override bool ShouldDetectBarcodes(SBSDKBarcodeScannerViewController controller)
+            {
+                return true;
+            }
         }
     }
 }

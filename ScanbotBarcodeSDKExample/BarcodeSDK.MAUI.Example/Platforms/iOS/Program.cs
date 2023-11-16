@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace BarcodeSDK.MAUI.Example;
+namespace ScanbotSDK.MAUI.Example;
 
 public class Program
 {

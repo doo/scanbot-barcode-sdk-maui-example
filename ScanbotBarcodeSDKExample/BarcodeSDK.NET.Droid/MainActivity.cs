@@ -46,7 +46,7 @@ public class MainActivity : Activity
         {
             return;
         }
-        var intent = new Intent(this, typeof(DemoBarcodeCameraViewActivity));
+        var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
         intent.PutExtra("useCameraX", false);
         StartActivity(intent);
     }
@@ -57,7 +57,7 @@ public class MainActivity : Activity
         {
             return;
         }
-        var intent = new Intent(this, typeof(DemoBarcodeCameraViewActivity));
+        var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
         intent.PutExtra("useCameraX", true);
         StartActivity(intent);
     }
@@ -68,7 +68,7 @@ public class MainActivity : Activity
         {
             return;
         }
-        StartBarcodeScannerActivity(BarcodeImageGenerationType.None);
+        StartBarcodeScannerActivity(withImage: false);
     }
 
     private void OnRTUUIImageClick(object sender, EventArgs e)
@@ -77,7 +77,7 @@ public class MainActivity : Activity
         {
             return;
         }
-        StartBarcodeScannerActivity(BarcodeImageGenerationType.VideoFrame);
+        StartBarcodeScannerActivity(withImage: true);
     }
 
     private void OnBatchRTUUIClick(object sender, EventArgs e)
@@ -105,13 +105,7 @@ public class MainActivity : Activity
 
         var result = SDK.CreateBarcodeDetector().DetectFromBitmap(bitmap, 0);
 
-        BarcodeResultBundle.Instance = new BarcodeResultBundle
-        {
-            ScanningResult = result,
-            ResultBitmap = bitmap
-        };
-
-        StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
+        StartActivity(new Intent(this, typeof(BarcodeResultActivity)), new BarcodeResult(result, bitmap).ToBundle());
     }
 
     private void OnSettingsClick(object sender, EventArgs e)
@@ -148,15 +142,58 @@ public class MainActivity : Activity
         Alert.ShowInfoDialog(this, "License Info", message);
     }
 
-    void StartBarcodeScannerActivity(BarcodeImageGenerationType type)
+    private static BarcodeScannerAdditionalConfiguration CreateAdditionalConfiguration(BarcodeDensity density)
+    {
+        var additionalDefaults = new BarcodeScannerAdditionalConfiguration();
+        return new BarcodeScannerAdditionalConfiguration(
+            minimumTextLength: additionalDefaults.MinimumTextLength,
+            maximumTextLength: additionalDefaults.MaximumTextLength,
+            minimum1DQuietZoneSize: additionalDefaults.Minimum1DQuietZoneSize,
+            gs1DecodingEnabled: additionalDefaults.Gs1DecodingEnabled,
+            msiPlesseyChecksumAlgorithms: additionalDefaults.MsiPlesseyChecksumAlgorithms,
+            stripCheckDigits: additionalDefaults.StripCheckDigits,
+            lowPowerMode: additionalDefaults.LowPowerMode,
+            codeDensity: density);
+    }
+
+    void StartBarcodeScannerActivity(bool withImage)
     {
         var configuration = new BarcodeScannerConfiguration();
-        var list = BarcodeTypes.Instance.AcceptedTypes;
-        configuration.SetBarcodeFormatsFilter(list);
-        configuration.SetBarcodeImageGenerationType(type);
-        configuration.SetSelectionOverlayConfiguration(new IO.Scanbot.Sdk.UI.View.Barcode.SelectionOverlayConfiguration(true,
-            true, IO.Scanbot.Sdk.Barcode.UI.BarcodeOverlayTextFormat.Code, 
-            Color.Yellow, Color.Yellow, Color.Black, Color.Pink, Color.Purple));
+
+        configuration.SetBarcodeFormatsFilter(
+            BarcodeTypes.Instance.AcceptedTypes);
+        configuration.SetAdditionalDetectionParameters(
+            CreateAdditionalConfiguration(BarcodeDensity.High));
+        configuration.SetEngineMode(EngineMode.NextGen);
+        configuration.SetSuccessBeepEnabled(true);
+
+        if (withImage)
+        {
+            configuration.SetBarcodeImageGenerationType(BarcodeImageGenerationType.VideoFrame);
+        }
+
+        configuration.SetSelectionOverlayConfiguration(
+            new IO.Scanbot.Sdk.UI.View.Barcode.SelectionOverlayConfiguration(
+                overlayEnabled: true,
+                automaticSelectionEnabled: false,
+                textFormat: IO.Scanbot.Sdk.Barcode.UI.BarcodeOverlayTextFormat.Code,
+                polygonColor: Color.Yellow,
+                textColor: Color.Yellow,
+                textContainerColor: Color.Black));
+
+
+        // To see the confirmation dialog in action, uncomment the below and comment out the configuration.SetConfirmationDialogConfiguration line above.
+        //configuration.SetConfirmationDialogConfiguration(new BarcodeConfirmationDialogConfiguration(
+        //    resultWithConfirmationEnabled: true,
+        //    title: "Barcode Detected!",
+        //    message: "A barcode was found.",
+        //    confirmButtonTitle: "Continue",
+        //    retryButtonTitle: "Try again",
+        //    dialogTextFormat: BarcodeDialogFormat.TypeAndCode,
+        //    buttonsAccentColor: null,
+        //    isConfirmButtonFilled: false,
+        //    filledConfirmButtonTextColor: null
+        //    ));
 
         var intent = BarcodeScannerActivity.NewIntent(this, configuration);
         StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
@@ -178,36 +215,25 @@ public class MainActivity : Activity
     {
         base.OnActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != Result.Ok)
+        if (resultCode != Result.Ok && !Alert.CheckLicense(this, SDK))
         {
-            return;
+           return;
         }
 
-        if (!SDK.LicenseInfo.IsValid)
+        if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE &&
+            data?.GetParcelableExtra(
+                RtuConstants.ExtraKeyRtuResult) is BarcodeScanningResult barcode)
         {
-            WarningView.Visibility = ViewStates.Visible;
-            var text = "License invalid, unable to perform action";
-            Toast.MakeText(this, text, ToastLength.Long);
-            return;
-        }
-
-        if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
-        {
-            var barcode = (BarcodeScanningResult)data.GetParcelableExtra(
-                RtuConstants.ExtraKeyRtuResult);
             var imagePath = data.GetStringExtra(
                 BarcodeScannerActivity.ScannedBarcodeImagePathExtra);
             var previewPath = data.GetStringExtra(
                 BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
 
-            BarcodeResultBundle.Instance = new BarcodeResultBundle
-            {
-                ScanningResult = barcode,
-                ImagePath = imagePath,
-                PreviewPath = previewPath
-            };
+            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            var bundle = new BarcodeResult(barcode, imagePath, previewPath).ToBundle();
+            intent.PutExtra(nameof(BarcodeResult), bundle);
 
-            StartActivity(new Intent(this, typeof(BarcodeResultActivity)));
+            StartActivity(intent);
         }
     }
 
@@ -227,17 +253,5 @@ public class MainActivity : Activity
         {
             WarningView.Visibility = ViewStates.Gone;
         }
-    }
-
-    void StartImportActivity(int resultConstant)
-    {
-        var intent = new Intent();
-        intent.SetType("image/*");
-        intent.SetAction(Intent.ActionGetContent);
-        intent.PutExtra(Intent.ExtraLocalOnly, false);
-        intent.PutExtra(Intent.ExtraAllowMultiple, false);
-
-        var chooser = Intent.CreateChooser(intent, "Gallery");
-        StartActivityForResult(chooser, resultConstant);
     }
 }

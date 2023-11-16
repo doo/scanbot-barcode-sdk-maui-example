@@ -12,16 +12,7 @@ namespace BarcodeSDK.NET.Droid
         {
             get
             {
-                var result = new List<BarcodeFormat>();
-                foreach (var item in List)
-                {
-                    if (item.Value)
-                    {
-                        result.Add(item.Key);
-                    }
-                }
-
-                return result;
+                return List.Where(t => t.Value).Select(t => t.Key).ToList();
             }
         }
 

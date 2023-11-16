@@ -1,9 +1,7 @@
-﻿using BarcodeSDK.MAUI.Models;
+﻿using ScanbotSDK.MAUI.Models;
 
-namespace BarcodeSDK.MAUI.Example {
-    /// <summary>
-    /// Application class
-    /// </summary>
+namespace ScanbotSDK.MAUI.Example
+{
     public partial class App : Application
     {
         public const string LicenseKey = null;

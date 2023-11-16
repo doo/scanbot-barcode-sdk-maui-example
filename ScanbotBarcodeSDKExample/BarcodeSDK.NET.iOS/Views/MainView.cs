@@ -18,7 +18,7 @@
 
         public UIButton LicenseInfoButton { get; private set; }
 
-        readonly List<UIButton> buttons = new List<UIButton>();
+        private readonly List<UIButton> buttons = new List<UIButton>();
 
         public MainView()
         {
@@ -59,7 +59,7 @@
             }
         }
 
-        UIButton CreateButton(string text)
+        private UIButton CreateButton(string text)
         {
             var button = new UIButton();
             button.SetTitle(text, UIControlState.Normal);

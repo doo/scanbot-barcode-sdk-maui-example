@@ -1,6 +1,6 @@
-﻿using BarcodeSDK.MAUI.Example.ClassicComponent;
+﻿using ScanbotSDK.MAUI.Example.ClassicComponent;
 
-namespace BarcodeSDK.MAUI.Example
+namespace ScanbotSDK.MAUI.Example
 {
     public static class MauiProgram
     {
