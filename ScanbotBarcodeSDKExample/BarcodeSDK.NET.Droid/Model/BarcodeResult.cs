@@ -13,6 +13,8 @@ namespace BarcodeSDK.NET.Droid
 
         public string PreviewPath { get; private set; }
 
+        private readonly MemoryStream resultOutputStream;
+
         public BarcodeResult(BarcodeScanningResult result)
         {
             ScanningResult = result;
@@ -29,6 +31,7 @@ namespace BarcodeSDK.NET.Droid
         {
             ScanningResult = result;
             ResultBitmap = resultBitmap;
+            resultOutputStream = new MemoryStream();
         }
 
         private BarcodeResult()
@@ -38,7 +41,22 @@ namespace BarcodeSDK.NET.Droid
         public Bundle ToBundle()
         {
             var bundle = new Bundle();
-            bundle.PutParcelable(nameof(ResultBitmap), ResultBitmap);
+
+            if (resultOutputStream != null &&
+                ResultBitmap != null)
+            {
+                // In real life, consider storing your images instead.
+                const int maxImageSize = 1 * 1024 * 1024;
+                var compressionSizeEstimate = 100 * ((float)maxImageSize / ResultBitmap.ByteCount);
+
+                ResultBitmap.Compress(Bitmap.CompressFormat.Jpeg, Math.Clamp((int)compressionSizeEstimate, 25, 100), resultOutputStream);
+                bundle.PutByteArray(nameof(ResultBitmap), resultOutputStream.ToArray());
+            }
+            else
+            {
+                bundle.PutByteArray(nameof(ResultBitmap), Array.Empty<byte>());
+            }
+            
             bundle.PutParcelable(nameof(ScanningResult), ScanningResult);
             bundle.PutString(nameof(ImagePath), ImagePath);
             bundle.PutString(nameof(PreviewPath), PreviewPath);
@@ -53,7 +71,13 @@ namespace BarcodeSDK.NET.Droid
         public BarcodeResult FromBundle(Bundle bundle)
         {
             ScanningResult = bundle?.GetParcelable(nameof(ScanningResult)) as BarcodeScanningResult;
-            ResultBitmap = bundle?.GetParcelable(nameof(ResultBitmap)) as Bitmap;
+
+            var rawBitmapBytes = bundle?.GetByteArray(nameof(ResultBitmap)) ?? Array.Empty<byte>();
+
+            if (rawBitmapBytes.Length > 0)
+            {
+                ResultBitmap = BitmapFactory.DecodeByteArray(rawBitmapBytes, 0, rawBitmapBytes.Length);
+            }
             ImagePath = bundle?.GetString(nameof(ImagePath));
             PreviewPath = bundle?.GetString(nameof(PreviewPath));
 

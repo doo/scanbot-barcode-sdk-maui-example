@@ -8,8 +8,6 @@ namespace BarcodeSDK.NET.Droid
     [Activity(Theme = "@style/AppTheme")]
     public class BarcodeResultActivity : AppCompatActivity
     {
-
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -105,9 +103,8 @@ namespace BarcodeSDK.NET.Droid
                 child.Click += delegate
                 {
                     var intent = new Intent(this, typeof(DetailedItemDataActivity));
-                    var bundle = new Bundle();
-                    bundle.PutParcelable("SelectedBarcodeItem", item);
-                    StartActivity(intent, bundle);
+                    intent.PutExtra("SelectedBarcodeItem", item);
+                    StartActivity(intent);
                 };
 
                 parent.AddView(child);

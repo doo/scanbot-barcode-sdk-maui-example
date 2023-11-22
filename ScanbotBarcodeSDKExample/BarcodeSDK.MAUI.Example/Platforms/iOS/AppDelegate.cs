@@ -1,12 +1,13 @@
 ﻿using Foundation;
 using UIKit;
 
-namespace ScanbotSDK.MAUI.Example;
-
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace ScanbotSDK.MAUI.Example
 {
-    public static UIWindow RootWindow => (UIApplication.SharedApplication.Delegate as AppDelegate).Window;
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
+    {
+        public static UIWindow RootWindow => (UIApplication.SharedApplication.Delegate as AppDelegate).Window;
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    }
 }

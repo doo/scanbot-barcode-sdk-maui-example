@@ -18,27 +18,13 @@ namespace BarcodeSDK.NET.Droid
     [Activity(Theme = "@style/AppTheme")]
     public class BarcodeClassicComponentActivity : AppCompatActivity
     {
-        BarcodeScannerView barcodeScannerView;
-        ImageView resultView;
+        private BarcodeScannerView barcodeScannerView;
+        private ImageView resultView;
 
         private const int REQUEST_PERMISSION_CODE = 200;
         private static readonly string[] permissions = new string[] { Manifest.Permission.Camera };
 
-        bool flashEnabled = false;
-
-        private static BarcodeScannerAdditionalConfig CreateAdditionalConfiguration(BarcodeDensity density)
-        {
-            var additionalDefaults = new BarcodeScannerAdditionalConfig();
-            return new BarcodeScannerAdditionalConfig(
-                minimumTextLength: additionalDefaults.MinimumTextLength,
-                maximumTextLength: additionalDefaults.MaximumTextLength,
-                minimum1DQuietZoneSize: additionalDefaults.Minimum1DQuietZoneSize,
-                gs1DecodingEnabled: additionalDefaults.Gs1DecodingEnabled,
-                msiPlesseyChecksumAlgorithms: additionalDefaults.MsiPlesseyChecksumAlgorithms,
-                stripCheckDigits: additionalDefaults.StripCheckDigits,
-                lowPowerMode: additionalDefaults.LowPowerMode,
-                codeDensity: density);
-        }
+        private bool flashEnabled = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -47,44 +33,40 @@ namespace BarcodeSDK.NET.Droid
 
             SetContentView(Resource.Layout.barcode_classic_activity);
 
-            barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
-            resultView = FindViewById<ImageView>(Resource.Id.result);
-
-            var SDK = new ScanbotBarcodeScannerSDK(this);
-            var detector = SDK.CreateBarcodeDetector();
-
-            var resultHandler = new BarcodeResultHandler();
-            resultHandler.BarcodeScanned += OnBarcodeResult;
-
-            var scannerViewCallback = new BarcodeScannerViewCallback();
-            scannerViewCallback.CameraOpen += OnCameraOpened;
-            scannerViewCallback.PictureTaken += OnPictureTaken;
-            scannerViewCallback.SelectionOverlayBarcodeClicked += OnSelectionOverlayBarcodeClicked;
-
-            barcodeScannerView.InitCamera(new CameraUiSettings(Intent.GetBooleanExtra("useCameraX", false)));
-            BarcodeScannerViewWrapper.InitDetectionBehavior(barcodeScannerView, detector, resultHandler, scannerViewCallback);
-
-            detector.ModifyConfig(Function1Impl<BarcodeScannerConfigBuilder>.From(detectorConfig => {
+            var barcodeDetector = new ScanbotBarcodeScannerSDK(this).CreateBarcodeDetector();
+            barcodeDetector.ModifyConfig(detectorConfig =>
+            {
+                var defaultConfig = new BarcodeScannerAdditionalConfig();
                 detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
-                detectorConfig.SetAdditionalConfig(CreateAdditionalConfiguration(BarcodeDensity.High));
+                detectorConfig.SetAdditionalConfig(defaultConfig.Copy(codeDensity: BarcodeDensity.High));
                 detectorConfig.SetEngineMode(EngineMode.NextGen);
                 detectorConfig.SetSaveCameraPreviewFrame(false);
-            }));
+            });
 
-            // set to true to go to the results page for the first valid barcode scanned
+            barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
+            barcodeScannerView.InitCamera(new CameraUiSettings(Intent.GetBooleanExtra("useCameraX", false)));
+            barcodeScannerView.InitDetectionBehavior(barcodeDetector, OnBarcodeResult, (
+                onCameraOpen: OnCameraOpened,
+                onPictureTaken: OnPictureTaken,
+                onSelectionOverlayBarcodeClicked: OnSelectionOverlayBarcodeClicked
+            ));
+
             barcodeScannerView.ViewController.AutoSnappingEnabled = false;
             barcodeScannerView.ViewController.SetAutoSnappingSensitivity(1f);
-
             barcodeScannerView.SelectionOverlayController.SetEnabled(true);
-            barcodeScannerView.SelectionOverlayController.SetTextFormat(BarcodeOverlayTextFormat.Code);
-            barcodeScannerView.SelectionOverlayController.SetPolygonColor(Color.Yellow);
-            barcodeScannerView.SelectionOverlayController.SetTextColor(Color.Yellow);
-            barcodeScannerView.SelectionOverlayController.SetTextContainerColor(Color.Black);
+            barcodeScannerView.SelectionOverlayController.SetBarcodeAppearanceDelegate(
+            (
+                getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
+                    fillColor: Color.Yellow,
+                    strokeColor: Color.Yellow
+                    ),
+                getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(
+                    textColor: Color.Yellow,
+                    textContainerColor: Color.Black
+                   )
+            ));
 
-            barcodeScannerView.SelectionOverlayController.SetPolygonHighlightedColor(Color.Red);
-            barcodeScannerView.SelectionOverlayController.SetTextHighlightedColor(Color.Red);
-            barcodeScannerView.SelectionOverlayController.SetTextContainerHighlightedColor(Color.Yellow);
-
+            resultView = FindViewById<ImageView>(Resource.Id.result);
             FindViewById<Button>(Resource.Id.flash).Click += delegate
             {
                 flashEnabled = !flashEnabled;
@@ -101,8 +83,13 @@ namespace BarcodeSDK.NET.Droid
             Finish();
         }
 
-        private void OnBarcodeResult(BarcodeScanningResult result)
+        private bool OnBarcodeResult(BarcodeScanningResult result, IO.Scanbot.Sdk.SdkLicenseError _)
         {
+            if (!MainActivity.SDK.LicenseInfo.IsValid)
+            {
+                return false;
+            }
+
             if (barcodeScannerView.ViewController.AutoSnappingEnabled && result != null)
             {
                 var intent = new Intent(this, typeof(BarcodeResultActivity));
@@ -110,12 +97,16 @@ namespace BarcodeSDK.NET.Droid
                 StartActivity(intent);
                 Finish();
             }
+
+            return false;
         }
 
         protected override void OnResume()
         {
             base.OnResume();
             barcodeScannerView.ViewController.OnResume();
+
+            // Additional logic
             var status = ContextCompat.CheckSelfPermission(this, permissions[0]);
             if (status != Permission.Granted)
             {
@@ -138,9 +129,14 @@ namespace BarcodeSDK.NET.Droid
             }, 300);
         }
 
-        public void OnPictureTaken(byte[] image, int orientation)
+        public void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
         {
-            var bitmap = BitmapFactory.DecodeByteArray(image, 0, orientation);
+            if (!MainActivity.SDK.LicenseInfo.IsValid)
+            {
+                return;
+            }
+
+            var bitmap = BitmapFactory.DecodeByteArray(image, 0, captureInfo.ImageOrientation);
 
             if (bitmap == null)
             {
@@ -148,7 +144,7 @@ namespace BarcodeSDK.NET.Droid
             }
 
             var matrix = new Matrix();
-            matrix.SetRotate(orientation, bitmap.Width / 2, bitmap.Height / 2);
+            matrix.SetRotate(captureInfo.ImageOrientation, bitmap.Width / 2, bitmap.Height / 2);
 
             var result = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, false);
 
@@ -158,47 +154,6 @@ namespace BarcodeSDK.NET.Droid
                 barcodeScannerView.ViewController.ContinuousFocus();
                 barcodeScannerView.ViewController.StartPreview();
             });
-        }
-
-        private class BarcodeResultHandler : BarcodeDetectorResultHandlerWrapper
-        {
-            public event Action<BarcodeScanningResult> BarcodeScanned;
-
-            public override bool HandleResult(BarcodeScanningResult result, IO.Scanbot.Sdk.SdkLicenseError error)
-            {
-                if (!MainActivity.SDK.LicenseInfo.IsValid)
-                {
-                    return false;
-                }
-                BarcodeScanned?.Invoke(result);
-                return false;
-            }
-        }
-
-        private class BarcodeScannerViewCallback : Java.Lang.Object, IBarcodeScannerViewCallback
-        {
-            public event Action<byte[], int> PictureTaken;
-            public event Action CameraOpen;
-            public event Action<BarcodeItem> SelectionOverlayBarcodeClicked;
-
-            public void OnSelectionOverlayBarcodeClicked(BarcodeItem barcodeItem)
-            {
-                SelectionOverlayBarcodeClicked?.Invoke(barcodeItem);
-            }
-
-            public void OnCameraOpen()
-            {
-                CameraOpen?.Invoke();
-            }
-
-            public void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
-            {
-                if (!MainActivity.SDK.LicenseInfo.IsValid)
-                {
-                    return;
-                }
-                PictureTaken?.Invoke(image, captureInfo.ImageOrientation);
-            }
         }
     }
 }

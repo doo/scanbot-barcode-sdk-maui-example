@@ -7,6 +7,8 @@ namespace BarcodeSDK.NET.iOS
     {
         private MainView contentView;
 
+        internal static UIColor ScanbotRed => FlashButton.ScanbotRed;
+
         public UIViewController ViewController => this;
 
         public override void ViewDidLoad()
@@ -53,7 +55,7 @@ namespace BarcodeSDK.NET.iOS
             {
                 return;
             }
-            NavigationController.PushViewController(new ClassicScannerController(), animated: true);
+            NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
         }
 
         private void OnRTUUIButtonClick(object sender, EventArgs e)
@@ -81,15 +83,30 @@ namespace BarcodeSDK.NET.iOS
                 return;
             }
 
+            // Optain an image from somewhere.
+            // In this case, the user picks an image with our helper.
             UIImage image = await ImagePicker.Instance.PickImageAsync();
-            if (image != null)
-            {
-                var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes);
-                SBSDKBarcodeScannerResult[] result = scanner.DetectBarCodesOnImage(image);
 
-                var controller = new ScanResultListController(image, result);
-                NavigationController.PushViewController(controller, animated: true);
+            if (image == null)
+            {
+                return;
             }
+
+            // Configure the barcode detector for detecting many barcodes in one image.
+            var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes)
+            {
+                EngineMode = SBSDKBarcodeEngineMode.NextGen,
+                AdditionalParameters = new SBSDKBarcodeAdditionalParameters
+                {
+                    CodeDensity = SBSDKBarcodeDensity.High,
+                }
+             };
+
+            var result = scanner.DetectBarCodesOnImage(image);
+
+            // Handle the result in your app as needed.
+            var controller = new ScanResultListController(image, result);
+            NavigationController.PushViewController(controller, animated: true);
         }
 
         private void OnCodeTypeButtonClick(object sender, EventArgs e)
@@ -115,8 +132,8 @@ namespace BarcodeSDK.NET.iOS
 
         private void OnLicenseInfoButtonClick(object sender, EventArgs e)
         {
-            var status = ScanbotSDK.LicenseStatus;
-            var date = ScanbotSDK.LicenseExpirationDate;
+            var status = ScanbotSDKGlobal.LicenseStatus;
+            var date = ScanbotSDKGlobal.LicenseExpirationDate;
 
             var message = $"License status is {status}";
 
@@ -145,12 +162,20 @@ namespace BarcodeSDK.NET.iOS
                     SBSDKBarcodeImageGenerationType.CapturedImage;
             }
 
-            configuration.SelectionOverlayConfiguration.OverlayEnabled = true;
-            configuration.SelectionOverlayConfiguration.AutomaticSelectionEnabled = false;
-            configuration.SelectionOverlayConfiguration.OverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
-            configuration.SelectionOverlayConfiguration.TextContainerColor = UIColor.Black;
-            configuration.SelectionOverlayConfiguration.TextColor = UIColor.Yellow;
-            configuration.SelectionOverlayConfiguration.PolygonColor = UIColor.Yellow;
+            configuration.TrackingOverlayConfiguration.OverlayEnabled = true;
+            configuration.TrackingOverlayConfiguration.AutomaticSelectionEnabled = false;
+            configuration.TrackingOverlayConfiguration.OverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
+            configuration.TrackingOverlayConfiguration.TextContainerColor = UIColor.Black;
+            configuration.TrackingOverlayConfiguration.TextColor = UIColor.Yellow;
+            configuration.TrackingOverlayConfiguration.PolygonColor = UIColor.Yellow;
+
+            // To see the confirmation dialog in action, uncomment the below and comment out the configuration.TrackingOverlayConfiguration lines above.
+            //configuration.TextConfiguration.ConfirmationDialogTitle = "Barcode Detected!";
+            //configuration.TextConfiguration.ConfirmationDialogMessage = "A barcode was found.";
+            //configuration.TextConfiguration.ConfirmationDialogConfirmButtonTitle = "Continue";
+            //configuration.TextConfiguration.ConfirmationDialogRetryButtonTitle = "Try again";
+            //configuration.BehaviorConfiguration.ResultWithConfirmationEnabled = true;
+            //configuration.BehaviorConfiguration.DialogTextFormat = SBSDKBarcodeDialogFormat.TypeAndCode;
 
             SBSDKUIBarcodeScannerViewController.PresentOn(this, configuration, new BarcodeDelegate(NavigationController));
         }
@@ -169,7 +194,6 @@ namespace BarcodeSDK.NET.iOS
 
                 if (barcodeResults == null || barcodeResults?.Length == 0)
                 {
-                    Console.WriteLine("Result is empty, returning");
                     return;
                 }
 
@@ -195,15 +219,15 @@ namespace BarcodeSDK.NET.iOS
             {
                 CodeDensity = SBSDKBarcodeDensity.High
             };
-            configuration.SelectionOverlayConfiguration.OverlayEnabled = true;
-            configuration.SelectionOverlayConfiguration.AutomaticSelectionEnabled = true;
-            configuration.SelectionOverlayConfiguration.OverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
-            configuration.SelectionOverlayConfiguration.TextColor = UIColor.Yellow;
-            configuration.SelectionOverlayConfiguration.TextContainerColor = UIColor.Black;
-            configuration.SelectionOverlayConfiguration.HighlightedPolygonColor = UIColor.Red;
-            configuration.SelectionOverlayConfiguration.HighlightedTextColor = UIColor.Red;
-            configuration.SelectionOverlayConfiguration.HighlightedTextContainerColor = UIColor.Black;
-            configuration.SelectionOverlayConfiguration.PolygonColor = UIColor.Yellow;
+            configuration.TrackingOverlayConfiguration.OverlayEnabled = true;
+            configuration.TrackingOverlayConfiguration.AutomaticSelectionEnabled = true;
+            configuration.TrackingOverlayConfiguration.OverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
+            configuration.TrackingOverlayConfiguration.TextColor = UIColor.Yellow;
+            configuration.TrackingOverlayConfiguration.TextContainerColor = UIColor.Black;
+            configuration.TrackingOverlayConfiguration.HighlightedPolygonColor = UIColor.Red;
+            configuration.TrackingOverlayConfiguration.HighlightedTextColor = UIColor.Red;
+            configuration.TrackingOverlayConfiguration.HighlightedTextContainerColor = UIColor.Black;
+            configuration.TrackingOverlayConfiguration.PolygonColor = UIColor.Yellow;
 
             SBSDKUIBarcodesBatchScannerViewController.PresentOn(this, configuration, new BatchBarcodeDelegate(NavigationController));
         }

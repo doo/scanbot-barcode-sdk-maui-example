@@ -4,7 +4,9 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class App : Application
     {
-        public const string LicenseKey = null;
+        // Without a license key, the Scanbot Barcode SDK will work for 1 minute.
+        // To scan longer, register for a trial license key here: https://scanbot.io/trial/
+        internal const string LicenseKey = "";
 
         public App()
         {
@@ -12,7 +14,7 @@ namespace ScanbotSDK.MAUI.Example
 
             MainPage = new NavigationPage(new Pages.HomePage());
 
-            var options = new InitializationOptions
+            ScanbotBarcodeSDK.Initialize(new InitializationOptions
             {
                 LicenseKey = LicenseKey,
                 LoggingEnabled = true,
@@ -20,8 +22,7 @@ namespace ScanbotSDK.MAUI.Example
                 {
                     Console.WriteLine($"License error: {status}, {feature}");
                 }
-            };
-            ScanbotBarcodeSDK.Initialize(options);
+            });
         }
     }
 }

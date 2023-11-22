@@ -1,44 +1,40 @@
 ﻿using BarcodeSDK.NET.iOS;
 
-namespace BarcodeSDK.NET.iOS;
-
-[Register ("AppDelegate")]
-public class AppDelegate : UIApplicationDelegate
+namespace BarcodeSDK.NET.iOS
 {
-    public static readonly UIColor ScanbotRed = UIColor.FromRGB(200, 25, 60);
-
-    public UINavigationController Controller { get; set; }
-
-    public override UIWindow Window { get; set; }
-
-    public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
+    [Register("AppDelegate")]
+    public class AppDelegate : UIApplicationDelegate
     {
-        ScanbotBarcodeSDK.iOS.ScanbotSDK.SetLoggingEnabled(true);
-        // TODO: Initialize SDK with correct license
-        //ScanbotSDK.SetLicense("");
+        // Without a license key, the Scanbot Barcode SDK will work for 1 minute.
+        // To scan longer, register for a trial license key here: https://scanbot.io/trial/
+        private const string LicenseKey = "";
 
-        UIViewController initial = new MainViewController();
-        Controller = new UINavigationController(initial);
+        public override UIWindow Window { get; set; }
 
-        // Navigation bar background color
-        Controller.NavigationBar.BarTintColor = ScanbotRed;
-        // Back button color
-        Controller.NavigationBar.TintColor = UIColor.White;
-        // Title color
-        Controller.NavigationBar.TitleTextAttributes = new UIStringAttributes
+        public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            ForegroundColor = UIColor.White,
-            Font = UIFont.FromName("HelveticaNeue", 16),
-        };
-        Controller.NavigationBar.Translucent = false;
-        Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            ScanbotBarcodeSDK.iOS.ScanbotSDKGlobal.SetLoggingEnabled(true);
 
-        Window.RootViewController = Controller;
+            if (!string.IsNullOrEmpty(LicenseKey))
+            {
+                ScanbotBarcodeSDK.iOS.ScanbotSDKGlobal.SetLicense(LicenseKey);
+            }
 
-        Window.MakeKeyAndVisible();
+            var rootController = new UINavigationController(new MainViewController());
+            rootController.NavigationBar.BarTintColor = MainViewController.ScanbotRed;
+            rootController.NavigationBar.TintColor = UIColor.White;
+            rootController.NavigationBar.Translucent = false;
+            rootController.NavigationBar.TitleTextAttributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.White,
+                Font = UIFont.FromName("HelveticaNeue", 16),
+            };
 
-        return true;
+            Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            Window.RootViewController = rootController;
+            Window.MakeKeyAndVisible();
+
+            return true;
+        }
     }
-
 }
-

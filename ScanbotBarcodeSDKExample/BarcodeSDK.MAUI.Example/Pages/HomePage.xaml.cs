@@ -149,29 +149,34 @@ namespace ScanbotSDK.MAUI.Example.Pages
         }
 
         /// <summary>
-        /// Starts the Batch Barcode Scanning.
+        /// Detects barcodes on an image selected by the user.
         /// </summary>
         private async Task DetectBarcodesOnImage()
         {
+            // Optain an image from somewhere.
+            // In this case, the user picks an image with our helper.
             var imageSource = await ScanbotBarcodeSDK.PickerService.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
+
+            if (imageSource == null)
+            {
+                return;
+            }
+
+            // Configure the barcode detector for detecting many barcodes in one image.
             var configuration = new BarcodeDetectionConfiguration
             {
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
                 EngineMode = EngineMode.NextGen,
                 AdditionalParameters = new BarcodeScannerAdditionalParameters
                 {
-                    CodeDensity = BarcodeDensity.High,
-                    LowPowerMode = false,
+                    CodeDensity = BarcodeDensity.High
                 }
             };
 
-
             var barcodes = await ScanbotBarcodeSDK.DetectionService.DetectBarcodesFrom(imageSource, configuration);
 
-            if (barcodes?.Count > 0)
-            {
-                await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
-            }
+            // Handle the result in your app as needed.
+            await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
         }
 
         /// <summary>
