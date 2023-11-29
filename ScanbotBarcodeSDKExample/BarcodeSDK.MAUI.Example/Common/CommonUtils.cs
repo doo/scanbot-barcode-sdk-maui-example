@@ -1,4 +1,4 @@
-﻿namespace BarcodeSDK.MAUI.Example.Utils
+﻿namespace ScanbotSDK.MAUI.Example.Utils
 {
     public static class CommonUtils
     {

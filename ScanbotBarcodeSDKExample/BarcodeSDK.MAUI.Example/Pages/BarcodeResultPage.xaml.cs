@@ -1,6 +1,6 @@
-﻿using BarcodeItem = BarcodeSDK.MAUI.Models.Barcode;
+﻿using BarcodeItem = ScanbotSDK.MAUI.Models.Barcode;
 
-namespace BarcodeSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeResultPage : ContentPage
     {

@@ -1,64 +1,83 @@
 ﻿using ScanbotBarcodeSDK.iOS;
+using UIKit;
 
 namespace BarcodeSDK.NET.iOS
 {
     public class ScanResultListView : UIView
     {
-        public UITableView TableView { get; private set; }
+        private UITableView tableView;
+        private ScanResultListSource listSource;
 
-        public ScanResultListSource Source { get; private set; }
-
-        public ScanResultListView()
+        public ScanResultListView(SBSDKBarcodeScannerResult[] items)
         {
-            TableView = new UITableView();
-            TableView.RegisterClassForCellReuse(typeof(ScanResultCell), ScanResultCell.Identifier);
-            AddSubview(TableView);
+            tableView = new UITableView();
+            tableView.RegisterClassForCellReuse(typeof(ScanResultCell), ScanResultCell.Identifier);
+            tableView.Source = listSource = new ScanResultListSource(items);
 
-            Source = new ScanResultListSource();
-            TableView.Source = Source;
+            if (items.Length > 0)
+            {
+                tableView.ReloadData();
+            }
+            AddSubview(tableView);
+        }
+
+        public event EventHandler<EventArgs> ItemClick
+        {
+            add
+            {
+                listSource.itemClick += value;
+            }
+            remove
+            {
+                listSource.itemClick -= value;
+            }
         }
 
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
 
-            TableView.Frame = Bounds;
+            tableView.Frame = Bounds;
         }
-    }
 
-    public class ScanResultListSource : UITableViewSource
-    {
-        public EventHandler<EventArgs> ItemClick;
-
-        public List<SBSDKBarcodeScannerResult> Items { get; set; }
-
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        private class ScanResultListSource : UITableViewSource
         {
-            var cell = (ScanResultCell)tableView.DequeueReusableCell(ScanResultCell.Identifier);
+            internal EventHandler<EventArgs> itemClick;
+            private SBSDKBarcodeScannerResult[] items;
 
-            if (cell == null)
+            public ScanResultListSource(SBSDKBarcodeScannerResult[] items)
             {
-                cell = new ScanResultCell();
+                this.items = items;
             }
 
-            cell.Update(Items[indexPath.Row]);
+            public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+            {
+                var cell = (ScanResultCell)tableView.DequeueReusableCell(ScanResultCell.Identifier);
 
-            return cell;
-        }
+                if (cell == null)
+                {
+                    cell = new ScanResultCell();
+                }
 
-        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            ItemClick?.Invoke(Items[indexPath.Row], new EventArgs());
-        }
+                cell.Update(items[indexPath.Row]);
 
-        public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
-        {
-            return 100;
-        }
+                return cell;
+            }
 
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return Items.Count;
+            public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+            {
+                itemClick?.Invoke(items[indexPath.Row], new EventArgs());
+            }
+
+            public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+            {
+                return 100;
+            }
+
+            public override nint RowsInSection(UITableView tableview, nint section)
+            {
+                return items.Length;
+            }
         }
     }
 }

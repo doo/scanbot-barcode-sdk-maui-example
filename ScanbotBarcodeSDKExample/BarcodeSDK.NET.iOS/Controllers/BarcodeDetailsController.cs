@@ -4,13 +4,11 @@ namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeDetailsController : UIViewController
     {
-        public BarcodeDetailsView ContentView { get; set; }
+        private SBSDKBarcodeScannerResult barcode;
 
-        public SBSDKBarcodeScannerResult Barcode { get; set; }
-
-        public BarcodeDetailsController(SBSDKBarcodeScannerResult result)
+        public BarcodeDetailsController(SBSDKBarcodeScannerResult barcode)
         {
-            Barcode = result;
+            this.barcode = barcode;
 
             Title = "DETAILS";
         }
@@ -18,9 +16,7 @@ namespace BarcodeSDK.NET.iOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            ContentView = new BarcodeDetailsView(Barcode);
-            View = ContentView;
+            View = new BarcodeDetailsView(barcode);
         }
 
         public override void ViewWillAppear(bool animated)

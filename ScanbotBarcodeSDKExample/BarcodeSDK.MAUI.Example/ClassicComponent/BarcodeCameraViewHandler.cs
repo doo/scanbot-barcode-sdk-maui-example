@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Handlers;
 
-namespace BarcodeSDK.MAUI.Example.ClassicComponent
+namespace ScanbotSDK.MAUI.Example.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler
     {

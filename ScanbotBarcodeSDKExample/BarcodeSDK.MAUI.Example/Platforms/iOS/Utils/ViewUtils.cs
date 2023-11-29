@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace BarcodeSDK.MAUI.Example.Platforms.iOS.Utils
+namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
 {
     public static class ViewUtils
     {

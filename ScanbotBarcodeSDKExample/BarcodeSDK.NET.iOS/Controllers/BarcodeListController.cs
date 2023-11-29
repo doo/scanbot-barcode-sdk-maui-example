@@ -2,25 +2,22 @@
 {
     public class BarcodeListController : UIViewController
     {
-        public BarcodeListView ContentView { get; set; }
+        private BarcodeListView listView;
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
-            ContentView = new BarcodeListView();
-            View = ContentView;
-
+            View = listView = new BarcodeListView();
             Title = "ACCEPTED TYPES";
-
-            ContentView.AddButtons(BarcodeTypes.Instance.List);
+            listView.AddButtons(BarcodeTypes.Instance.List);
         }
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-            foreach (var button in ContentView.Buttons)
+            foreach (var button in listView.Buttons)
             {
                 button.Click += OnButtonClick;
             }
@@ -30,7 +27,7 @@
         {
             base.ViewWillDisappear(animated);
 
-            foreach (var button in ContentView.Buttons)
+            foreach (var button in listView.Buttons)
             {
                 button.Click -= OnButtonClick;
             }

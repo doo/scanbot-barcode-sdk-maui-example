@@ -2,6 +2,8 @@
 {
     public class FlashButton : UIView
     {
+        internal static readonly UIColor ScanbotRed = UIColor.FromRGB(200, 25, 60);
+
         UIImage flashOn = UIImage.FromFile("flash_on_white");
         UIImage flashOff = UIImage.FromFile("flash_off_white");
 
@@ -14,7 +16,7 @@
             flashIcon.Image = flashOff;
             AddSubview(flashIcon);
 
-            Layer.BackgroundColor = AppDelegate.ScanbotRed.CGColor;
+            Layer.BackgroundColor = ScanbotRed.CGColor;
         }
 
         public override void LayoutSubviews()
@@ -28,7 +30,7 @@
             Layer.CornerRadius = Bounds.Height / 2;
         }
 
-        public EventHandler<FlashEventArgs> Click;
+        public event EventHandler<FlashEventArgs> Click;
 
         public void Toggle()
         {

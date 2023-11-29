@@ -1,6 +1,6 @@
-﻿using BarcodeSDK.MAUI.Constants;
+﻿using ScanbotSDK.MAUI.Constants;
 
-namespace BarcodeSDK.MAUI.Example.Models
+namespace ScanbotSDK.MAUI.Example.Models
 {
     public class BarcodeTypes
     {

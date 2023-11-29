@@ -2,49 +2,21 @@
 
 namespace BarcodeSDK.NET.iOS
 {
-    /// <summary>
-    /// Barcode Source Interaction.
-    /// </summary>
-    interface IBatchBarcodeSourceInteraction
+    public class BatchBarcodeResultViewController : UIViewController
     {
-        /// <summary>
-        /// Barcode result list.
-        /// </summary>
-        List<SBSDKUIBarcodeMappedResult> BarcodeResultList { get; }
-    }
-
-    public class BatchBarcodeResultViewController : UIViewController, IBatchBarcodeSourceInteraction
-    {
-        private List<SBSDKUIBarcodeMappedResult> _barcodeResultList;
-        public List<SBSDKUIBarcodeMappedResult> BarcodeResultList => _barcodeResultList;
-
-        public BatchBarcodeResultViewController()
+        private SBSDKUIBarcodeMappedResult[] barcodeResults;
+        
+        public BatchBarcodeResultViewController(SBSDKUIBarcodeMappedResult[] barcodeResults)
         {
-        }
-
-        /// <summary>
-        /// Populated from the previous page.
-        /// </summary>
-        /// <param name="barcodeResultList"></param>
-        internal void NavigateData(List<SBSDKUIBarcodeMappedResult> barcodeResultList)
-        {
-            this._barcodeResultList = barcodeResultList;
+            this.barcodeResults = barcodeResults;
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            // Perform any additional setup after loading the view, typically from a nib.
-            SetupView();
-        }
 
-        /// <summary>
-        /// Set up the view.
-        /// </summary>
-        private void SetupView()
-        {
             var tableView = new UITableView();
-            tableView.Source = new BatchBarcodeResultSource(this);
+            tableView.Source = new BatchBarcodeResultSource(barcodeResults);
             tableView.TableFooterView = new UIView();
 
             View.AddSubview(tableView);
@@ -55,74 +27,49 @@ namespace BarcodeSDK.NET.iOS
             var bottomContraint = NSLayoutConstraint.Create(tableView, NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1, 0);
 
             View.AddConstraints(new NSLayoutConstraint[] { leftConstraint, topConstraint, rightConstraint, bottomContraint });
-
-        }
-    }
-
-    /// <summary>
-    /// Batch Barcode TableViewSource class
-    /// </summary>
-    internal class BatchBarcodeResultSource : UITableViewSource
-    {
-        IBatchBarcodeSourceInteraction _interaction;
-        private BatchBarcodeResultViewController batchBarcodeResultViewController;
-
-        /// <summary>
-        /// Source Constructor
-        /// </summary>
-        /// <param name="interaction"></param>
-        public BatchBarcodeResultSource(IBatchBarcodeSourceInteraction interaction)
-        {
-            this._interaction = interaction;
         }
 
-        /// <summary>
-        ///  Get the Cell.
-        /// </summary>
-        /// <param name="tableView"></param>
-        /// <param name="indexPath"></param>
-        /// <returns></returns>
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        private class BatchBarcodeResultSource : UITableViewSource
         {
-            var cell = (ScanResultCell)tableView.DequeueReusableCell(ScanResultCell.Identifier);
-            var item = GetItem(indexPath.Row);
+            private SBSDKUIBarcodeMappedResult[] barcodes;
 
-            if (cell == null)
+            public BatchBarcodeResultSource(SBSDKUIBarcodeMappedResult[] barcodes)
             {
-                cell = new ScanResultCell();
+                this.barcodes = barcodes;
             }
 
-            if (item?.Barcode != null)
+            public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
             {
-                cell.Update(item.Barcode);
+                var cell = (ScanResultCell)tableView.DequeueReusableCell(ScanResultCell.Identifier); 
+
+                if (cell == null)
+                {
+                    cell = new ScanResultCell();
+                }
+
+                var item = GetItem(indexPath.Row);
+
+                if (item?.Barcode != null)
+                {
+                    cell.Update(item.Barcode);
+                }
+
+                return cell;
             }
 
-            return cell;
-        }
-
-        /// <summary>
-        /// NUmber of rows
-        /// </summary>
-        /// <param name="tableview"></param>
-        /// <param name="section"></param>
-        /// <returns></returns>
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return _interaction?.BarcodeResultList?.Count ?? 0;
-        }
-
-        /// <summary>
-        /// Get the selected item from list
-        /// </summary>
-        /// <param name="row"></param>
-        /// <returns></returns>
-        private SBSDKUIBarcodeMappedResult GetItem(int row)
-        {
-            if (_interaction?.BarcodeResultList?.Count > row)
+            public override nint RowsInSection(UITableView tableview, nint section)
             {
-                return _interaction.BarcodeResultList[row];
+                return barcodes.Length;
             }
-            return null;
+
+            private SBSDKUIBarcodeMappedResult GetItem(int row)
+            {
+                if (barcodes.Length > row)
+                {
+                    return barcodes[row];
+                }
+                return null;
+            }
         }
     }
 }

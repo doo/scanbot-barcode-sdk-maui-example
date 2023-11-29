@@ -1,22 +1,13 @@
-﻿using BarcodeSDK.MAUI.iOS.Services;
-using Foundation;
+﻿using Foundation;
 using UIKit;
 
-namespace BarcodeSDK.MAUI.Example;
-
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace ScanbotSDK.MAUI.Example
 {
-    /// <summary>
-    /// Returns the Root Window of the application.
-    /// </summary>
-    public static UIWindow RootWindow => (UIApplication.SharedApplication.Delegate as AppDelegate).Window;
-
-    protected override MauiApp CreateMauiApp() => CreateMAuiApplication();
-
-    private MauiApp CreateMAuiApplication()
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
     {
-        DependencyManager.Register();
-        return MauiProgram.CreateMauiApp();
+        public static UIWindow RootWindow => (UIApplication.SharedApplication.Delegate as AppDelegate).Window;
+
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
     }
 }

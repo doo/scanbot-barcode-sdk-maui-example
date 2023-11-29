@@ -8,20 +8,11 @@ namespace BarcodeSDK.NET.iOS
 
         public Dictionary<SBSDKBarcodeType, bool> List { get; private set; } = new Dictionary<SBSDKBarcodeType, bool>();
 
-        public List<SBSDKBarcodeType> AcceptedTypes
+        public SBSDKBarcodeType[] AcceptedTypes
         {
             get
             {
-                var result = new List<SBSDKBarcodeType>();
-                foreach (var item in List)
-                {
-                    if (item.Value)
-                    {
-                        result.Add(item.Key);
-                    }
-                }
-
-                return result;
+                return List.Where(t => t.Value).Select(t => t.Key).ToArray();
             }
         }
 

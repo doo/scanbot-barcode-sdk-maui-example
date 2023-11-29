@@ -5,9 +5,9 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
-using BarcodeSDK.MAUI.Droid.Converters;
-using BarcodeSDK.MAUI.Droid.Utils;
-using BarcodeSDK.MAUI.Models;
+using ScanbotSDK.MAUI.Droid.Converters;
+using ScanbotSDK.MAUI.Droid.Utils;
+using ScanbotSDK.MAUI.Models;
 using IO.Scanbot.Sdk;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
@@ -16,16 +16,15 @@ using IO.Scanbot.Sdk.Camera;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
+using static IO.Scanbot.Sdk.Barcode.UI.BarcodePolygonsViewExtensions;
 
-namespace BarcodeSDK.MAUI.Example.ClassicComponent
+namespace ScanbotSDK.MAUI.Example.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {
         // Classic component
         protected BarcodeScannerView cameraViewDroid;
         private readonly int REQUEST_PERMISSION_CODE = 200;
-
-        #region Handler Overrides
 
         protected override FrameLayout CreatePlatformView()
         {
@@ -45,10 +44,10 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             base.ConnectHandler(platformView);
 
             var detector = new SBSDK(Context.GetActivity()).CreateBarcodeDetector();
-            detector.ModifyConfig(new Function1Impl<BarcodeScannerConfigBuilder>((response) =>
+            detector.ModifyConfig((response) =>
             {
                 response.SetSaveCameraPreviewFrame(false);
-            }));
+            });
 
             BarcodeScannerViewWrapper.InitCamera(cameraViewDroid);
             BarcodeScannerViewWrapper.InitDetectionBehavior(cameraViewDroid, detector, new SBResultHandler(HandleFrameHandlerResult), new BarcodeScannerViewCallback(VirtualView, cameraViewDroid));
@@ -69,10 +68,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             base.SetupContainer();
         }
 
-        #endregion
-
-        #region Properties Implementation
-
         public static void MapOverlayConfiguration(BarcodeCameraViewHandler current, BarcodeCameraView commonView)
         {
             current.SetSelectionOverlayConfiguration(commonView);
@@ -82,10 +77,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         {
             current.cameraViewDroid.ViewController.UseFlash(commonView.IsFlashEnabled);
         }
-
-        #endregion
-
-        #region Event Handlers Implementation
 
         public static void MapStartDetectionHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
@@ -125,34 +116,26 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
                 ActivityCompat.RequestPermissions(activity, new string[] { Manifest.Permission.Camera }, REQUEST_PERMISSION_CODE);
             }
         }
-        #endregion
-
-        #region Support Methods
 
         public void SetSelectionOverlayConfiguration(BarcodeCameraView commonView)
         {
             if (commonView.OverlayConfiguration?.Enabled == true)
             {
-                cameraViewDroid.SelectionOverlayController.SetEnabled(commonView.OverlayConfiguration.Enabled);
-                cameraViewDroid.SelectionOverlayController.SetTextFormat(commonView.OverlayConfiguration.OverlayTextFormat.ToNative());
-                cameraViewDroid.SelectionOverlayController.SetPolygonColor(commonView.OverlayConfiguration.PolygonColor.ToArgb());
-                cameraViewDroid.SelectionOverlayController.SetTextColor(commonView.OverlayConfiguration.TextColor.ToArgb());
-                cameraViewDroid.SelectionOverlayController.SetTextContainerColor(commonView.OverlayConfiguration.TextContainerColor.ToArgb());
-
-                if (commonView.OverlayConfiguration.HighlightedPolygonColor != null)
-                {
-                    cameraViewDroid.SelectionOverlayController.SetPolygonHighlightedColor(commonView.OverlayConfiguration.HighlightedPolygonColor.ToArgb());
-                }
-
-                if (commonView.OverlayConfiguration.HighlightedTextColor != null)
-                {
-                    cameraViewDroid.SelectionOverlayController.SetTextHighlightedColor(commonView.OverlayConfiguration.HighlightedTextColor.ToArgb());
-                }
-
-                if (commonView.OverlayConfiguration.HighlightedTextContainerColor != null)
-                {
-                    cameraViewDroid.SelectionOverlayController.SetTextContainerHighlightedColor(commonView.OverlayConfiguration.HighlightedTextContainerColor.ToArgb());
-                }
+                var config = commonView.OverlayConfiguration;
+                cameraViewDroid.SelectionOverlayController.SetEnabled(config.Enabled);
+                cameraViewDroid.SelectionOverlayController.SetBarcodeAppearanceDelegate(
+                (
+                    getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
+                                                    fillColor: config.PolygonColor.ToPlatform(),
+                                                    fillHighlightedColor: config.HighlightedPolygonColor?.ToPlatform()),
+                    getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(
+                            textFormat: config.OverlayTextFormat.ToNative(),
+                            textColor: config.TextColor.ToPlatform(),
+                            textContainerColor: config.TextContainerColor.ToPlatform(),
+                            textHighlightedColor: config.HighlightedTextColor?.ToPlatform(),
+                            textContainerHighlightedColor: config.HighlightedTextContainerColor?.ToPlatform()
+                            )
+                ));
             }
         }
 
@@ -182,8 +165,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         {
             viewGroup.SetOnHierarchyChangeListener(new HierarchyChangeListener(viewGroup));
         }
-
-        #endregion
     }
 
     internal class SBResultHandler : BarcodeDetectorResultHandlerWrapper
@@ -259,36 +240,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         public void OnChildViewRemoved(Android.Views.View parent, Android.Views.View child)
         {
 
-        }
-    }
-
-    /**
-    * Snippet from: 
-    * https://stackoverflow.com/questions/64013415/pass-lambda-function-to-c-sharp-generated-code-of-kotlin-in-xamarin-android-bind
-    */
-    class Function1Impl<T> : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1 where T : Java.Lang.Object
-    {
-        private readonly Action<T> OnInvoked;
-
-        public Function1Impl(Action<T> onInvoked)
-        {
-            this.OnInvoked = onInvoked;
-        }
-
-        public Java.Lang.Object Invoke(Java.Lang.Object objParameter)
-        {
-            try
-            {
-                T parameter = (T)objParameter;
-                OnInvoked?.Invoke(parameter);
-                return null;
-            }
-            catch (Exception ex)
-            {
-                // Exception handling, if needed
-            }
-
-            return null;
         }
     }
 }

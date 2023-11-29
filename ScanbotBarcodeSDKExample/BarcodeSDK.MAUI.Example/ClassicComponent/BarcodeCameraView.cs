@@ -1,7 +1,7 @@
-﻿using BarcodeSDK.MAUI.Configurations;
-using BarcodeSDK.MAUI.Models;
+﻿using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Models;
 
-namespace BarcodeSDK.MAUI.Example.ClassicComponent
+namespace ScanbotSDK.MAUI.Example.ClassicComponent
 {        /*
             This is the View that will be referenced in the XAML to integrate our native Camera View.
             The class itself does not provide any specific implementation; the actual implementation
