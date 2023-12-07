@@ -25,6 +25,8 @@ namespace BarcodeSDK.NET.Droid
         private static readonly string[] permissions = new string[] { Manifest.Permission.Camera };
 
         private bool flashEnabled = false;
+        private readonly bool selectionOverlayEnabled = true;
+        private readonly bool autoSelectionEnabled = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -51,9 +53,7 @@ namespace BarcodeSDK.NET.Droid
                 onSelectionOverlayBarcodeClicked: OnSelectionOverlayBarcodeClicked
             ));
 
-            barcodeScannerView.ViewController.AutoSnappingEnabled = false;
-            barcodeScannerView.ViewController.SetAutoSnappingSensitivity(1f);
-            barcodeScannerView.SelectionOverlayController.SetEnabled(true);
+            barcodeScannerView.SelectionOverlayController.SetEnabled(selectionOverlayEnabled);
             barcodeScannerView.SelectionOverlayController.SetBarcodeAppearanceDelegate(
             (
                 getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
@@ -90,7 +90,9 @@ namespace BarcodeSDK.NET.Droid
                 return false;
             }
 
-            if (barcodeScannerView.ViewController.AutoSnappingEnabled && result != null)
+            var shouldHandleBarcode = selectionOverlayEnabled ? autoSelectionEnabled : true;
+
+            if (shouldHandleBarcode && result != null)
             {
                 var intent = new Intent(this, typeof(BarcodeResultActivity));
                 intent.PutExtra(nameof(BarcodeResult), new BarcodeResult(result).ToBundle());
