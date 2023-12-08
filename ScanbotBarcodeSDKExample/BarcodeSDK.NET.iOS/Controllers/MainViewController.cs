@@ -197,8 +197,13 @@ namespace BarcodeSDK.NET.iOS
                     return;
                 }
 
+                if (navigationController.TopViewController is ScanResultListController)
+                {
+                    return;
+                }
+
                 var controller = new ScanResultListController(barcodeResults.First().BarcodeImage, barcodeResults);
-                navigationController.PushViewController(controller, true);
+                navigationController.PushViewController(controller, animated: true);
             }
         }
 
@@ -243,7 +248,7 @@ namespace BarcodeSDK.NET.iOS
             public override void DidDetect(SBSDKUIBarcodesBatchScannerViewController viewController, SBSDKUIBarcodeMappedResult[] barcodeResults)
             {
                 var resultViewController = new BatchBarcodeResultViewController(barcodeResults ?? new SBSDKUIBarcodeMappedResult[] { });
-                navigationController.PushViewController(resultViewController, true);
+                navigationController.PushViewController(resultViewController, animated: true);
             }
         }
 
