@@ -82,7 +82,10 @@ namespace BarcodeSDK.NET.iOS
             public override void DidDetectBarcodes(
                 SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeScannerResult[] codes)
             {
-                if (!barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled)
+                var shouldHandleBarcode = barcodeController.IsTrackingOverlayEnabled ?
+                                          barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled : true;
+
+                if (!shouldHandleBarcode)
                 {
                     return;
                 }
