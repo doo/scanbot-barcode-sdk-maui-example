@@ -90,6 +90,11 @@ namespace BarcodeSDK.NET.iOS
                     return;
                 }
 
+                if (navigationController.TopViewController is ScanResultListController)
+                {
+                    return;
+                }
+
                 var resultsController = new ScanResultListController(codes.First().SourceImage, codes);
 
                 navigationController.PopViewController(animated: false);
