@@ -1,0 +1,51 @@
+﻿<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="BarcodeScannerExample.Droid.BarcodeClassicComponentActivity">
+
+    <io.scanbot.sdk.barcode.ui.BarcodeScanAndCountView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <TextView
+        android:id="@+id/snapped_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:contentDescription="snapped_message" />
+
+    <Button
+        android:id="@+id/flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:text="Flash" />
+
+    <Button
+        android:id="@+id/startScanning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/continueScanning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:visibility="gone"
+        android:text="Continue" />
+
+    <TextView
+        android:id="@+id/result"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:layout_gravity="bottom|center"/>
+
+</FrameLayout>

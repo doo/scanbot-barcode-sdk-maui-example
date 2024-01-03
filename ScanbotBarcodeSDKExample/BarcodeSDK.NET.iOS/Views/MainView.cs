@@ -4,6 +4,8 @@
     {
         public UIButton ClassicButton { get; private set; }
 
+        public UIButton ClassicScanAndCountButton { get; private set; }
+
         public UIButton RTUUIButton { get; private set; }
 
         public UIButton RTUUIImageButton { get; private set; }
@@ -25,6 +27,8 @@
             BackgroundColor = UIColor.White;
 
             ClassicButton = CreateButton("CLASSIC COMPONENT");
+
+            ClassicScanAndCountButton = CreateButton("CLASSIC SCAN AND COUNT COMPONENT");
 
             RTUUIButton = CreateButton("RTU UI - BARCODE SCANNER");
 

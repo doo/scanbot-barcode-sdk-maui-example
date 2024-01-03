@@ -10,6 +10,7 @@ using IO.Scanbot.Sdk.UI.View.Barcode.Batch.Configuration;
 using IO.Scanbot.Sdk.UI.View.Barcode.Configuration;
 using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
+using BarcodeSDK.NET.Droid.Activities;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -29,6 +30,7 @@ namespace BarcodeSDK.NET.Droid
 
             FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
+            FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
             FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
             FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
             FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;
@@ -57,6 +59,16 @@ namespace BarcodeSDK.NET.Droid
             }
             var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
             intent.PutExtra("useCameraX", true);
+            StartActivity(intent);
+        }
+
+        private void OnBarcodeCameraScanAndCountClick(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            var intent = new Intent(this, typeof(BarcodeScanAndCountActivity));
             StartActivity(intent);
         }
 

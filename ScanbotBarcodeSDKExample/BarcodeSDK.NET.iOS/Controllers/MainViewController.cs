@@ -1,4 +1,5 @@
-﻿using Scanbot.ImagePicker.iOS;
+﻿using BarcodeSDK.NET.iOS.Controllers;
+using Scanbot.ImagePicker.iOS;
 using ScanbotBarcodeSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS
@@ -26,6 +27,7 @@ namespace BarcodeSDK.NET.iOS
             base.ViewWillAppear(animated);
 
             contentView.ClassicButton.TouchUpInside += OnClassicButtonClick;
+            contentView.ClassicScanAndCountButton.TouchUpInside += OnClassicScanAndCountButtonClick;
             contentView.RTUUIButton.TouchUpInside += OnRTUUIButtonClick;
             contentView.RTUUIImageButton.TouchUpInside += OnRTUUIImageButtonClick;
             contentView.LibraryButton.TouchUpInside += OnLibraryButtonClick;
@@ -40,6 +42,7 @@ namespace BarcodeSDK.NET.iOS
             base.ViewWillDisappear(animated);
 
             contentView.ClassicButton.TouchUpInside -= OnClassicButtonClick;
+            contentView.ClassicScanAndCountButton.TouchUpInside -= OnClassicScanAndCountButtonClick;
             contentView.RTUUIButton.TouchUpInside -= OnRTUUIButtonClick;
             contentView.RTUUIImageButton.TouchUpInside -= OnRTUUIImageButtonClick;
             contentView.LibraryButton.TouchUpInside -= OnLibraryButtonClick;
@@ -56,6 +59,15 @@ namespace BarcodeSDK.NET.iOS
                 return;
             }
             NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
+        }
+
+        private void OnClassicScanAndCountButtonClick(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this))
+            {
+                return;
+            }
+            NavigationController.PushViewController(new BarcodeScanAndCountComponentController(), animated: true);
         }
 
         private void OnRTUUIButtonClick(object sender, EventArgs e)
