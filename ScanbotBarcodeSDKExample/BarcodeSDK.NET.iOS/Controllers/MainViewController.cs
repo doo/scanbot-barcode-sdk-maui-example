@@ -1,4 +1,6 @@
 ﻿using BarcodeSDK.NET.iOS.Controllers;
+using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
+using BarcodeSDK.NET.iOS.Utils;
 using Scanbot.ImagePicker.iOS;
 using ScanbotBarcodeSDK.iOS;
 
@@ -67,7 +69,8 @@ namespace BarcodeSDK.NET.iOS
             {
                 return;
             }
-            NavigationController.PushViewController(new BarcodeScanAndCountComponentController(), animated: true);
+            var viewController = Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
+            this.NavigationController.PushViewController(viewController, true);
         }
 
         private void OnRTUUIButtonClick(object sender, EventArgs e)
