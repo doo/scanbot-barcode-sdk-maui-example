@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection.Emit;
+using System.Text;
 using ScanbotBarcodeSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers
@@ -9,6 +10,7 @@ namespace BarcodeSDK.NET.iOS.Controllers
         UIButton flash;
         UIButton start;
         UIButton continueScanning;
+        UILabel resultLabel;
 
         private SBSDKBarcodeScanAndCountViewController scannerController;
 
@@ -30,7 +32,6 @@ namespace BarcodeSDK.NET.iOS.Controllers
             scannerController.PolygonStyle.PolygonColor = UIColor.Yellow;
 
             scannerController.Delegate = new BarcodeDetectionDelegate(
-                NavigationController,
                 HandleDidStartScanning,
                 HandleDidDetectBarcodes);
 
@@ -39,16 +40,18 @@ namespace BarcodeSDK.NET.iOS.Controllers
             flash = new UIButton() { BackgroundColor = UIColor.Black };
             start = new UIButton() { BackgroundColor = UIColor.Black };
             continueScanning = new UIButton() { BackgroundColor = UIColor.Black, Hidden = true };
+            resultLabel = new UILabel() { Lines = 0, MinimumFontSize = 10, TextColor = UIColor.White, BackgroundColor = UIColor.Black, Hidden = true };
 
             flash.SetTitle("Flash", UIControlState.Normal);
             start.SetTitle("Start", UIControlState.Normal);
             continueScanning.SetTitle("Continue", UIControlState.Normal);
 
-            View.AddSubviews(flash, start, continueScanning);
+            View.AddSubviews(resultLabel, flash, start, continueScanning);
 
             flash.TranslatesAutoresizingMaskIntoConstraints = false;
             start.TranslatesAutoresizingMaskIntoConstraints = false;
             continueScanning.TranslatesAutoresizingMaskIntoConstraints = false;
+            resultLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
             nfloat buttonWidth = 100;
 
@@ -65,7 +68,9 @@ namespace BarcodeSDK.NET.iOS.Controllers
                 continueScanning.TrailingAnchor.ConstraintEqualTo(View.TrailingAnchor),
                 continueScanning.BottomAnchor.ConstraintEqualTo(View.LayoutMarginsGuide.BottomAnchor),
                 continueScanning.WidthAnchor.ConstraintEqualTo(buttonWidth),
+
             });
+
 
             flash.TouchUpInside += Flash_TouchUpInside;
             start.TouchUpInside += Start_TouchUpInside;
@@ -94,9 +99,28 @@ namespace BarcodeSDK.NET.iOS.Controllers
             continueScanning.Hidden = true;
         }
 
-        private void HandleDidDetectBarcodes(SBSDKBarcodeScannerResult[] obj)
+        private void HandleDidDetectBarcodes(SBSDKBarcodeScannerResult[] codes)
         {
-            Alert.Show(this, "Result:", $"Barcodes detected: {obj.Count()}");
+            var sb = new StringBuilder();
+
+            foreach(var code in codes)
+            {
+                var alreadyCountedBarcode = scannerController.CountedBarcodes?
+                    .FirstOrDefault(item => item.Code.Type == code.Type &&
+                                            item.Code.RawTextString == code.RawTextString);
+
+                alreadyCountedBarcode.ScanCount += 1;
+                alreadyCountedBarcode.Code.DateOfDetection = code.DateOfDetection;
+            }
+
+
+            foreach(var code in scannerController.CountedBarcodes)
+            {
+                sb.Append($"{code.Code.RawTextString} - {code.ScanCount} \n");
+            }
+
+            resultLabel.Text = sb.ToString();
+            resultLabel.Hidden = false;
         }
 
         private void HandleDidStartScanning()
@@ -106,16 +130,13 @@ namespace BarcodeSDK.NET.iOS.Controllers
 
         private class BarcodeDetectionDelegate : SBSDKBarcodeScanAndCountViewControllerDelegate
         {
-            private UINavigationController navigationController;
             private Action _didStartScanningAction;
             private Action<SBSDKBarcodeScannerResult[]> _didDetectBarcodesAction;
 
             public BarcodeDetectionDelegate(
-                UINavigationController navigationController,
                 Action didStartScanningAction,
                 Action<SBSDKBarcodeScannerResult[]> didDetectBarcodesAction)
             {
-                this.navigationController = navigationController;
                 _didStartScanningAction = didStartScanningAction;
                 _didDetectBarcodesAction = didDetectBarcodesAction;
 
@@ -129,6 +150,11 @@ namespace BarcodeSDK.NET.iOS.Controllers
             public override void DidDetectBarcodes(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeScannerResult[] codes)
             {
                 _didDetectBarcodesAction?.Invoke(codes);
+            }
+
+            public override UIView OverlayForBarcode(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeScannerResult code)
+            {
+                return new UIImageView(image: UIImage.FromBundle("Check"));
             }
         }
     }
