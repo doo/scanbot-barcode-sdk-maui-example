@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Barcode Scan And Count View Controller-->
+        <scene sceneID="xcx-C7-Lqe">
+            <objects>
+                <viewController storyboardIdentifier="BarcodeScanAndCountViewController" id="h6f-gz-MwY" customClass="BarcodeScanAndCountViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oQo-Uk-yiY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9zN-h2-fus">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMD-Ni-YGN" userLabel="containerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                    </view>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzX-az-FrE">
+                                        <rect key="frame" x="0.0" y="715" width="393" height="44"/>
+                                        <items>
+                                            <barButtonItem title=" " id="zBf-fj-dDu"/>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="gde-Ms-j4J"/>
+                                            <barButtonItem image="list.bullet" catalog="system" id="KRG-Un-Zeo">
+                                                <connections>
+                                                    <action selector="BtnShowResults_Action:" destination="h6f-gz-MwY" id="QeJ-hh-eL0"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="tMD-Ni-YGN" firstAttribute="leading" secondItem="9zN-h2-fus" secondAttribute="leading" id="4Nz-1l-62n"/>
+                                    <constraint firstAttribute="bottom" secondItem="MzX-az-FrE" secondAttribute="bottom" id="4Uh-Lt-uJf"/>
+                                    <constraint firstItem="MzX-az-FrE" firstAttribute="top" secondItem="tMD-Ni-YGN" secondAttribute="bottom" id="EjL-zj-BqU"/>
+                                    <constraint firstAttribute="trailing" secondItem="MzX-az-FrE" secondAttribute="trailing" id="KO1-XD-EBt"/>
+                                    <constraint firstAttribute="trailing" secondItem="tMD-Ni-YGN" secondAttribute="trailing" id="VaP-hp-5oh"/>
+                                    <constraint firstItem="tMD-Ni-YGN" firstAttribute="top" secondItem="9zN-h2-fus" secondAttribute="top" id="brB-Uo-PRR"/>
+                                    <constraint firstItem="MzX-az-FrE" firstAttribute="leading" secondItem="9zN-h2-fus" secondAttribute="leading" id="l62-LZ-X5C"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MBH-g3-5jf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9zN-h2-fus" firstAttribute="leading" secondItem="MBH-g3-5jf" secondAttribute="leading" id="6YI-fX-Q40"/>
+                            <constraint firstItem="9zN-h2-fus" firstAttribute="top" secondItem="MBH-g3-5jf" secondAttribute="top" id="Yit-hl-INp"/>
+                            <constraint firstItem="MBH-g3-5jf" firstAttribute="trailing" secondItem="9zN-h2-fus" secondAttribute="trailing" id="wKv-6H-vda"/>
+                            <constraint firstItem="MBH-g3-5jf" firstAttribute="bottom" secondItem="9zN-h2-fus" secondAttribute="bottom" id="zSO-jJ-yKF"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnBarcodeCount" destination="zBf-fj-dDu" id="gOL-zo-NBW"/>
+                        <outlet property="containerView" destination="tMD-Ni-YGN" id="dzY-DU-2BB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ngE-Pg-9D3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-413" y="99"/>
+        </scene>
+        <!--Barcode Scan And Count Result View Controller-->
+        <scene sceneID="Gjw-DT-Ngc">
+            <objects>
+                <viewController storyboardIdentifier="BarcodeScanAndCountResultViewController" id="Q8H-5R-EP9" customClass="BarcodeScanAndCountResultViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uZb-Ha-Xdp">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="14z-Du-ZCn">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" red="0.92158359290000003" green="0.92158359290000003" blue="0.92158359290000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BarcodeScanAndCountResultCell" id="9IK-8F-QtV" customClass="BarcodeScanAndCountResultCell">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="84.333335876464844"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9IK-8F-QtV" id="Scr-AV-99A">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="84.333335876464844"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l52-8C-q3B">
+                                                    <rect key="frame" x="9" y="9" width="375" height="66.333333333333329"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9u3-nF-1Ck" userLabel="BarcodeResult">
+                                                            <rect key="frame" x="9" y="9" width="318" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNf-ol-25O" userLabel="BarcodeType">
+                                                            <rect key="frame" x="9" y="39" width="318" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7F-DI-a7H" userLabel="BarcodeCount">
+                                                            <rect key="frame" x="336" y="18.333333333333329" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="EKY-Ua-bUA"/>
+                                                                <constraint firstAttribute="width" constant="30" id="T6o-hQ-Ge4"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="rNf-ol-25O" firstAttribute="trailing" secondItem="9u3-nF-1Ck" secondAttribute="trailing" id="AR4-eo-aYa"/>
+                                                        <constraint firstItem="9u3-nF-1Ck" firstAttribute="top" secondItem="l52-8C-q3B" secondAttribute="top" constant="9" id="Fmp-g2-ZYM"/>
+                                                        <constraint firstAttribute="trailing" secondItem="f7F-DI-a7H" secondAttribute="trailing" constant="9" id="Kbv-uu-P8p"/>
+                                                        <constraint firstItem="f7F-DI-a7H" firstAttribute="centerY" secondItem="l52-8C-q3B" secondAttribute="centerY" id="Nse-qv-5Wk"/>
+                                                        <constraint firstItem="f7F-DI-a7H" firstAttribute="leading" secondItem="9u3-nF-1Ck" secondAttribute="trailing" constant="9" id="VYs-pX-bt3"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rNf-ol-25O" secondAttribute="bottom" constant="9" id="d3F-89-H32"/>
+                                                        <constraint firstItem="rNf-ol-25O" firstAttribute="leading" secondItem="9u3-nF-1Ck" secondAttribute="leading" id="gif-jZ-B34"/>
+                                                        <constraint firstItem="9u3-nF-1Ck" firstAttribute="leading" secondItem="l52-8C-q3B" secondAttribute="leading" constant="9" id="jDR-9u-BXL"/>
+                                                        <constraint firstItem="rNf-ol-25O" firstAttribute="top" secondItem="9u3-nF-1Ck" secondAttribute="bottom" constant="9" id="xhD-Rg-G4X"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.92158359290000003" green="0.92158359290000003" blue="0.92158359290000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="l52-8C-q3B" firstAttribute="top" secondItem="Scr-AV-99A" secondAttribute="top" constant="9" id="4Qq-fQ-bBf"/>
+                                                <constraint firstAttribute="bottom" secondItem="l52-8C-q3B" secondAttribute="bottom" constant="9" id="7uP-Df-JPT"/>
+                                                <constraint firstItem="l52-8C-q3B" firstAttribute="leading" secondItem="Scr-AV-99A" secondAttribute="leading" constant="9" id="SjY-gm-34O"/>
+                                                <constraint firstAttribute="trailing" secondItem="l52-8C-q3B" secondAttribute="trailing" constant="9" id="VGC-64-AcJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92158359290000003" green="0.92158359290000003" blue="0.92158359290000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="containerView" destination="l52-8C-q3B" id="dhF-5n-zhu"/>
+                                            <outlet property="lblBarcodeCount" destination="f7F-DI-a7H" id="Ke5-8K-3y6"/>
+                                            <outlet property="lblBarcodeResult" destination="9u3-nF-1Ck" id="R80-Ys-CqZ"/>
+                                            <outlet property="lblBarcodeType" destination="rNf-ol-25O" id="rrB-KO-vDp"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="B83-Hw-cMb"/>
+                        <color key="backgroundColor" red="0.92158359290000003" green="0.92158359290000003" blue="0.92158359290000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="14z-Du-ZCn" firstAttribute="leading" secondItem="B83-Hw-cMb" secondAttribute="leading" id="FtW-bH-cJK"/>
+                            <constraint firstItem="B83-Hw-cMb" firstAttribute="bottom" secondItem="14z-Du-ZCn" secondAttribute="bottom" id="I0R-Sn-dk5"/>
+                            <constraint firstItem="14z-Du-ZCn" firstAttribute="top" secondItem="B83-Hw-cMb" secondAttribute="top" id="l67-9n-2lA"/>
+                            <constraint firstItem="B83-Hw-cMb" firstAttribute="trailing" secondItem="14z-Du-ZCn" secondAttribute="trailing" id="pbv-to-frg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="14z-Du-ZCn" id="88N-VS-nF3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="icc-4R-9ca" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="464" y="104"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

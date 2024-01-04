@@ -112,6 +112,17 @@
 				android:textColor="@color/primary_material_light" />
 
             <TextView
+				android:id="@+id/barcode_scan_and_count"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:text="Barcode Camera ScanAndCount View"
+				android:paddingHorizontal="16dp"
+                android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:textColor="@color/primary_material_light" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ready to Use UI"
