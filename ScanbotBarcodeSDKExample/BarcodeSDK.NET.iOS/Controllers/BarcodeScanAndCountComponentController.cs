@@ -154,7 +154,7 @@ namespace BarcodeSDK.NET.iOS.Controllers
 
             public override UIView OverlayForBarcode(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeScannerResult code)
             {
-                return new UIImageView(image: UIImage.FromBundle("Check"));
+                return new UIImageView(image: UIImage.CheckmarkImage);
             }
         }
     }
