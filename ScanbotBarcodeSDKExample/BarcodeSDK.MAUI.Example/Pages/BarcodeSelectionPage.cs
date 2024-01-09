@@ -1,8 +1,8 @@
 ﻿
-using BarcodeSDK.MAUI.Constants;
-using BarcodeSDK.MAUI.Example.Models;
+using ScanbotSDK.MAUI.Constants;
+using ScanbotSDK.MAUI.Example.Models;
 
-namespace BarcodeSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Pages
 {
     public class BarcodeSelectionPage : ContentPage
     {

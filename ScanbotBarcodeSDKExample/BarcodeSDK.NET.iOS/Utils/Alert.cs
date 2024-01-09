@@ -6,12 +6,12 @@ namespace BarcodeSDK.NET.iOS
     {
         public static bool CheckLicense(UIViewController parent)
         {
-            if (!ScanbotSDK.IsLicenseValid)
+            if (!ScanbotSDKGlobal.IsLicenseValid)
             {
                 Show(parent, "Oops!", "License invalid or expired");
             }
 
-            return ScanbotSDK.IsLicenseValid;
+            return ScanbotSDKGlobal.IsLicenseValid;
         }
 
         public static void Show(UIViewController parent, string title, string message)

@@ -1,16 +1,17 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using BarcodeSDK.MAUI.Droid.Services;
+using ScanbotSDK.MAUI.Services;
 
-namespace BarcodeSDK.MAUI.Example;
-
-[Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
-public class MainActivity : MauiAppCompatActivity
+namespace ScanbotSDK.MAUI.Example
 {
-    protected override void OnCreate(Bundle savedInstanceState)
+    [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    public class MainActivity : MauiAppCompatActivity
     {
-        base.OnCreate(savedInstanceState);
-        DependencyManager.RegisterActivity(this);
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            DependencyManager.RegisterActivity(this);
+        }
     }
 }

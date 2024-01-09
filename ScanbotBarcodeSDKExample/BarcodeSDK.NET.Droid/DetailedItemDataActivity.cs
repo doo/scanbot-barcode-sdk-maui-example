@@ -21,7 +21,12 @@ namespace BarcodeSDK.NET.Droid
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            var item = BarcodeResultBundle.SelectedBarcodeItem;
+            var item = Intent.GetParcelableExtra("SelectedBarcodeItem") as BarcodeItem;
+
+            if (item == null)
+            {
+                return;
+            }
 
             var container = FindViewById<ConstraintLayout>(Resource.Id.container);
 

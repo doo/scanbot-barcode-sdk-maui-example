@@ -31,6 +31,12 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="3.7.0" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="4.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Controllers\ClassicComponents\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Controllers\ClassicComponents\" />
     </ItemGroup>
 </Project>

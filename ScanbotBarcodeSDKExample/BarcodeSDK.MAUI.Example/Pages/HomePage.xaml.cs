@@ -1,9 +1,9 @@
-﻿using BarcodeSDK.MAUI.Constants;
-using BarcodeSDK.MAUI.Services;
-using BarcodeSDK.MAUI.Configurations;
-using BarcodeSDK.MAUI.Example.Utils;
+﻿using ScanbotSDK.MAUI.Constants;
+using ScanbotSDK.MAUI.Services;
+using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Example.Utils;
 
-namespace BarcodeSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Pages
 {
     public struct HomePageMenuItem
     {
@@ -23,7 +23,6 @@ namespace BarcodeSDK.MAUI.Example.Pages
     /// </summary>
     public partial class HomePage : ContentPage
     {
-        public bool IsLicenseValid => ScanbotBarcodeSDK.SDKService?.GetLicenseInfo()?.IsValid ?? false;
         /// <summary>
         /// List binding to UI ListView
         /// </summary>
@@ -63,7 +62,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// <param name="e"></param>
         private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            if (!IsLicenseValid)
+            if (!ScanbotBarcodeSDK.LicenseInfo.IsValid)
             {
                 CommonUtils.Alert(this, "Alert", "The license is expired.");
                 CollectionView_MenuItems.SelectedItem = null;
@@ -90,7 +89,6 @@ namespace BarcodeSDK.MAUI.Example.Pages
                 SuccessBeepEnabled = true
             };
             
-
             if (withImage)
             {
                 configuration.BarcodeImageGenerationType = BarcodeImageGenerationType.FromVideoFrame;
@@ -143,7 +141,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
                 EngineMode = EngineMode.NextGen
             };
             
-            var result = await ScanbotBarcodeSDK.BarcodeService?.OpenBatchBarcodeScannerView(configuration);
+            var result = await ScanbotBarcodeSDK.BarcodeService.OpenBatchBarcodeScannerView(configuration);
             if (result.Status == OperationResult.Ok)
             {
                 await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes, ""));
@@ -151,29 +149,34 @@ namespace BarcodeSDK.MAUI.Example.Pages
         }
 
         /// <summary>
-        /// Starts the Batch Barcode Scanning.
+        /// Detects barcodes on an image selected by the user.
         /// </summary>
         private async Task DetectBarcodesOnImage()
         {
-            var imageSource = await ScanbotBarcodeSDK.PickerService?.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
+            // Optain an image from somewhere.
+            // In this case, the user picks an image with our helper.
+            var imageSource = await ScanbotBarcodeSDK.PickerService.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
+
+            if (imageSource == null)
+            {
+                return;
+            }
+
+            // Configure the barcode detector for detecting many barcodes in one image.
             var configuration = new BarcodeDetectionConfiguration
             {
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
                 EngineMode = EngineMode.NextGen,
                 AdditionalParameters = new BarcodeScannerAdditionalParameters
                 {
-                    CodeDensity = BarcodeDensity.High,
-                    LowPowerMode = false,
+                    CodeDensity = BarcodeDensity.High
                 }
             };
 
+            var barcodes = await ScanbotBarcodeSDK.DetectionService.DetectBarcodesFrom(imageSource, configuration);
 
-            var barcodes = await ScanbotBarcodeSDK.DetectionService?.DetectBarcodesFrom(imageSource, configuration);
-
-            if (barcodes?.Count > 0)
-            {
-                await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
-            }
+            // Handle the result in your app as needed.
+            await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
         }
 
         /// <summary>
@@ -181,7 +184,7 @@ namespace BarcodeSDK.MAUI.Example.Pages
         /// </summary>
         private void ClearStorage()
         {
-            if (!IsLicenseValid)
+            if (!ScanbotBarcodeSDK.LicenseInfo.IsValid)
             {
                 return;
             }

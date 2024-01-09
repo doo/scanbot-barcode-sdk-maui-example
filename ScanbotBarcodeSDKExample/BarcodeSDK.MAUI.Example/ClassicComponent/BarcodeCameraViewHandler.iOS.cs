@@ -1,12 +1,10 @@
-﻿using BarcodeSDK.MAUI.Example.Platforms.iOS.CustomViews;
+﻿using ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews;
 using Microsoft.Maui.Handlers;
 
-namespace BarcodeSDK.MAUI.Example.ClassicComponent
+namespace ScanbotSDK.MAUI.Example.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, BarcodeCameraView_iOS>
     {
-        #region Handler Overrides
-
         protected override BarcodeCameraView_iOS CreatePlatformView() => new BarcodeCameraView_iOS(this.VirtualView.Frame);
 
         protected override void ConnectHandler(BarcodeCameraView_iOS platformView)
@@ -30,10 +28,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             base.RemoveContainer();
         }
 
-        #endregion
-
-        #region Properties Implementation
-
         public static void MapOverlayConfiguration(BarcodeCameraViewHandler current, BarcodeCameraView commonView)
         {
             current?.PlatformView?.MapOverlayConfiguration(commonView);
@@ -43,11 +37,7 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
         {
             current?.PlatformView?.MapIsFlashEnabled(commonView.IsFlashEnabled);
         }
-
-        #endregion
-
-        #region Event Handlers Implementation
-
+        
         public static void MapStartDetectionHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
             current?.PlatformView?.MapStartDetectionHandler();
@@ -69,8 +59,6 @@ namespace BarcodeSDK.MAUI.Example.ClassicComponent
             // This is the common method declared in BarcodeCameraViewHandler, and it is useful for the Android native component only.
             // Based on the MauiHandler concept, we have to define it on all the platforms.
         }
-
-        #endregion
     }
 }
 

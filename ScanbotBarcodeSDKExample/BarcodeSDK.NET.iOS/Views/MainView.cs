@@ -4,6 +4,8 @@
     {
         public UIButton ClassicButton { get; private set; }
 
+        public UIButton ClassicScanAndCountButton { get; private set; }
+
         public UIButton RTUUIButton { get; private set; }
 
         public UIButton RTUUIImageButton { get; private set; }
@@ -18,13 +20,15 @@
 
         public UIButton LicenseInfoButton { get; private set; }
 
-        readonly List<UIButton> buttons = new List<UIButton>();
+        private readonly List<UIButton> buttons = new List<UIButton>();
 
         public MainView()
         {
             BackgroundColor = UIColor.White;
 
             ClassicButton = CreateButton("CLASSIC COMPONENT");
+
+            ClassicScanAndCountButton = CreateButton("CLASSIC SCAN AND COUNT COMPONENT");
 
             RTUUIButton = CreateButton("RTU UI - BARCODE SCANNER");
 
@@ -59,7 +63,7 @@
             }
         }
 
-        UIButton CreateButton(string text)
+        private UIButton CreateButton(string text)
         {
             var button = new UIButton();
             button.SetTitle(text, UIControlState.Normal);

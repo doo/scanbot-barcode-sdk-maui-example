@@ -4,14 +4,14 @@ namespace BarcodeSDK.NET.iOS
 {
     public class ScanResultListController : UIViewController
     {
-        public UIImage ScannedPage { get; set; }
+        private UIImage scannedPage;
 
-        public List<SBSDKBarcodeScannerResult> Items { get; set; }
+        private SBSDKBarcodeScannerResult[] items;
 
         public ScanResultListController(UIImage scannedPage, SBSDKBarcodeScannerResult[] list)
         {
-            ScannedPage = scannedPage;
-            Items = list.ToList();
+            this.scannedPage = scannedPage;
+            items = list;
         }
 
         public ScanResultListView ContentView { get; set; }
@@ -19,29 +19,21 @@ namespace BarcodeSDK.NET.iOS
         {
             base.ViewDidLoad();
 
-            ContentView = new ScanResultListView();
-            View = ContentView;
-
-            ContentView.Source.Items = Items;
-
-            if (Items.Count > 0)
-            {
-                ContentView.TableView.ReloadData();
-            }
+            View = ContentView = new ScanResultListView(items);
         }
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-            ContentView.Source.ItemClick += RowSelected;
+            ContentView.ItemClick += RowSelected;
         }
 
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
 
-            ContentView.Source.ItemClick -= RowSelected;
+            ContentView.ItemClick -= RowSelected;
         }
 
         private void RowSelected(object sender, EventArgs e)
