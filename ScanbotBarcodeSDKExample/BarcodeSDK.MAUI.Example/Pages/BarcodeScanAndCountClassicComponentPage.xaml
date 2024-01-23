@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:classicComponent="clr-namespace:BarcodeSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
+             ios:Page.UseSafeArea="true"
+             Title="BarcodeClassicComponentPage"
+             NavigationPage.HasNavigationBar="True">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
+                Text="Barcode ScanAndCount ClassicComponent"
+                FontSize="Subtitle"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center" 
+                HorizontalOptions="Fill" />
+            <StackLayout Grid.Row="1">
+                <classicComponent:BarcodeScanAndCountView
+                    x:Name="cameraView"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    HeightRequest="420"
+                    WidthRequest="330"
+                    BackgroundColor="#1f1f1f" />
+            </StackLayout>
+            <Grid Grid.Row="2">
+                <StackLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="6">
+                    <Label 
+                        x:Name="lblResult"
+                        Text="Result"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center" />
+                    <Button
+                        x:Name="StartScanningButton"
+                        Text="Start Scanning"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"
+                        Clicked="StartScanningButton_Clicked"/>
+                    <Button
+                        x:Name="ContinueScanningButton"
+                        Text="Continue Scanning"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"
+                        Clicked="ConitueScanningButton_Clicked"/>
+
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -6,74 +6,65 @@ namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class BarcodeClassicComponentPage : ContentPage
 {
-    public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
+	public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
 
-    public BarcodeClassicComponentPage()
+	public BarcodeClassicComponentPage()
 	{
 		InitializeComponent();
-        SetupViews();
-    }
+		SetupViews();
+	}
+	
+	private void SetupViews()
+	{
+		cameraView.OnBarcodeScanResult = (result) =>
+		{
+			string text = string.Empty;
+			foreach (Barcode barcode in result.Barcodes)
+			{
+				text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
+			}
 
-    private void SetupViews()
-    {
-        cameraView.OnBarcodeScanResult = (result) =>
-        {
-            string text = string.Empty;
-            foreach (Barcode barcode in result.Barcodes)
-            {
-                text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
-            }
+			MainThread.BeginInvokeOnMainThread(() =>
+			{
+				System.Diagnostics.Debug.WriteLine(text);
+				lblResult.Text = text;
+			});
+		};
+		cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
+			Colors.Yellow, Colors.Yellow, Colors.Black,
+			Colors.Red, Colors.Red, Colors.Black);
+	}
+	
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if (!IsLicenseValid)
+		{
+			ShowExpiredLicenseAlert();
+		}
+		else if (string.IsNullOrEmpty(App.LicenseKey))
+		{
+			ShowTrialLicenseAlert();
+		}
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
-        };
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
-                                                                            Colors.Yellow, Colors.Yellow, Colors.Black,
-                                                                            Colors.Red, Colors.Red, Colors.Black);
-    }
+		cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
+		cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        if (!IsLicenseValid)
-        {
-            ShowExpiredLicenseAlert();
-        }
-        else if (string.IsNullOrEmpty(App.LicenseKey))
-        {
-            ShowTrialLicenseAlert();
-        }
+	}
+	
+	protected override void OnDisappearing()
+	{
+		base.OnDisappearing();
+		this.Navigation.PopAsync(true);
+	}
 
-        cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
-        cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
+	private void ShowExpiredLicenseAlert()
+	{
+		DisplayAlert("Error", "Your SDK license has expired", "Close");
+	}
 
-        if (DeviceInfo.Platform == DevicePlatform.iOS) {
-            StartScanningButton.IsVisible = false;
-        }
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        this.Navigation.PopAsync(true);
-    }
-
-    private void ShowExpiredLicenseAlert()
-    {
-        DisplayAlert("Error", "Your SDK license has expired", "Close");
-    }
-
-    private void ShowTrialLicenseAlert()
-    {
-        DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
-    }
-
-    void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
-    {
-        cameraView.StartDetection();
-        StartScanningButton.IsVisible = false;
-    }
+	private void ShowTrialLicenseAlert()
+	{
+		DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
+	}
 }

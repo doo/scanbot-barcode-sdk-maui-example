@@ -16,7 +16,7 @@ namespace ScanbotSDK.MAUI.Example
                 }).ConfigureMauiHandlers(handlers =>
                 {
                     handlers.AddHandler(typeof(BarcodeCameraView), typeof(BarcodeCameraViewHandler));
-                });
+                }).ConfigureScanbotSDKHandlers();
 
             return builder.Build();
         }

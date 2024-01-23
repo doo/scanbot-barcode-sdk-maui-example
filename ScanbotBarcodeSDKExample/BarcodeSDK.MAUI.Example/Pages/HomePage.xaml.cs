@@ -48,6 +48,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 new HomePageMenuItem("SCAN BARCODES", () => StartBarcodeScanning(withImage: false)),
                 new HomePageMenuItem("SCAN BARCODES WITH IMAGE", () => StartBarcodeScanning(withImage: true)),
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("SCAN BARCODE WITH CLASSIC SCAN AND COUNT COMPONENT", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
+                new HomePageMenuItem("SCAN BARCODE WITH CUSTOM CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeCustomClassicComponentPage())),
                 new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
                 new HomePageMenuItem("DETECT BARCODES ON IMAGE", DetectBarcodesOnImage),
                 new HomePageMenuItem("SET ACCEPTED BARCODE TYPES", () => Navigation.PushAsync(new BarcodeSelectionPage())),
@@ -75,6 +77,15 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
             CollectionView_MenuItems.SelectedItem = null;
         }
+
+        /// <summary>
+        /// Starts the Barcode scanning.
+        /// </summary>
+        private async Task StartBarcodeScanning()
+        {
+
+        }
+
 
         /// <summary>
         /// Starts the Barcode scanning.
