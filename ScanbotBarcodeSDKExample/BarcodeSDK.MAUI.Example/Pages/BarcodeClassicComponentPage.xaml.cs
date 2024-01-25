@@ -19,16 +19,20 @@ public partial class BarcodeClassicComponentPage : ContentPage
 		cameraView.OnBarcodeScanResult = (result) =>
 		{
 			string text = string.Empty;
-			foreach (Barcode barcode in result.Barcodes)
-			{
-				text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
-			}
 
-			MainThread.BeginInvokeOnMainThread(() =>
-			{
-				System.Diagnostics.Debug.WriteLine(text);
-				lblResult.Text = text;
-			});
+            if (result?.Barcodes != null)
+            {
+                foreach (Barcode barcode in result.Barcodes)
+                {
+                    text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
+                }
+            }
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                System.Diagnostics.Debug.WriteLine(text);
+                lblResult.Text = text;
+            });
 		};
 		cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
 			Colors.Yellow, Colors.Yellow, Colors.Black,
