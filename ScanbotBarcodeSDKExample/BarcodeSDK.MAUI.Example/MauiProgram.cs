@@ -1,9 +1,12 @@
 ﻿using ScanbotSDK.MAUI.Example.ClassicComponent;
+using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example
 {
     public static class MauiProgram
     {
+        public const string LicenseKey = "";
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -16,9 +19,25 @@ namespace ScanbotSDK.MAUI.Example
                 }).ConfigureMauiHandlers(handlers =>
                 {
                     handlers.AddHandler(typeof(BarcodeCameraView), typeof(BarcodeCameraViewHandler));
-                }).ConfigureScanbotSDKHandlers();
+                });
+
+            ScanbotSDKInitialize(builder);
+
 
             return builder.Build();
+        }
+
+        private static void ScanbotSDKInitialize(MauiAppBuilder mauiApp)
+        {
+            ScanbotBarcodeSDK.Initialize(mauiApp, new InitializationOptions
+            {
+                LicenseKey = LicenseKey,
+                LoggingEnabled = true,
+                ErrorHandler = (status, feature) =>
+                {
+                    Console.WriteLine($"License error: {status}, {feature}");
+                }
+            });
         }
     }
 }

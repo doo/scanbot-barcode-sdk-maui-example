@@ -77,16 +77,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
             CollectionView_MenuItems.SelectedItem = null;
         }
-
-        /// <summary>
-        /// Starts the Barcode scanning.
-        /// </summary>
-        private async Task StartBarcodeScanning()
-        {
-
-        }
-
-
         /// <summary>
         /// Starts the Barcode scanning.
         /// </summary>

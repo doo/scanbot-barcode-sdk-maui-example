@@ -46,7 +46,7 @@ public partial class BarcodeClassicComponentPage : ContentPage
 		{
 			ShowExpiredLicenseAlert();
 		}
-		else if (string.IsNullOrEmpty(App.LicenseKey))
+		else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
 		{
 			ShowTrialLicenseAlert();
 		}

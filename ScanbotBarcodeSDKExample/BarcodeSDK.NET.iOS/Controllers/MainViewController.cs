@@ -203,7 +203,7 @@ namespace BarcodeSDK.NET.iOS
                 this.navigationController = navigationController;
             }
 
-            public override void DidDetectResults(SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
+            public override void DidDetect(SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
             {
                 viewController.DismissViewController(animated: false, completionHandler: null);
 
