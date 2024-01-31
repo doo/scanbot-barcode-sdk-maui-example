@@ -1,12 +1,11 @@
-﻿using ScanbotSDK.MAUI.Example.ClassicComponent;
-using ScanbotSDK.MAUI.Models;
+﻿using ScanbotSDK.MAUI.Models;
+using ScanbotSDK.MAUI.Example.ClassicComponent;
 
 namespace ScanbotSDK.MAUI.Example
 {
     public static class MauiProgram
     {
         public const string LicenseKey = "";
-
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();

@@ -24,7 +24,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
     public partial class HomePage : ContentPage
     {
         /// <summary>
-        /// List binding to UI ListView
+        /// List binding to UI ListView1
         /// </summary>
         public List<HomePageMenuItem> MenuItems { get; set; }
 
@@ -87,7 +87,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen,
-                SuccessBeepEnabled = true
+                SuccessBeepEnabled = true,
+                CameraZoomLevel = 5,
+                AcceptedDocumentFormats = Enum.GetValues<BarcodeDocumentFormat>().ToList()
             };
             
             if (withImage)

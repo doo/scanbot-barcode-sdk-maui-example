@@ -1,6 +1,8 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using AndroidX.Core.App;
 using ScanbotSDK.MAUI.Services;
 
 namespace ScanbotSDK.MAUI.Example
@@ -12,6 +14,12 @@ namespace ScanbotSDK.MAUI.Example
         {
             base.OnCreate(savedInstanceState);
             DependencyManager.RegisterActivity(this);
+
+            ActivityCompat.RequestPermissions(this, new string[] {
+                Manifest.Permission.Camera,
+                Manifest.Permission.ReadExternalStorage,
+                Manifest.Permission.WriteExternalStorage
+        }, 0);
         }
     }
 }
