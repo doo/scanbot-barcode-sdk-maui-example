@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection.Emit;
-using System.Text;
+﻿using System.Text;
 using ScanbotBarcodeSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers
@@ -68,9 +66,7 @@ namespace BarcodeSDK.NET.iOS.Controllers
                 continueScanning.TrailingAnchor.ConstraintEqualTo(View.TrailingAnchor),
                 continueScanning.BottomAnchor.ConstraintEqualTo(View.LayoutMarginsGuide.BottomAnchor),
                 continueScanning.WidthAnchor.ConstraintEqualTo(buttonWidth),
-
             });
-
 
             flash.TouchUpInside += Flash_TouchUpInside;
             start.TouchUpInside += Start_TouchUpInside;

@@ -1,4 +1,4 @@
-﻿using BarcodeItem = ScanbotSDK.MAUI.Models.Barcode;
+﻿using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -9,7 +9,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
-        public BarcodeResultPage(List<BarcodeItem> barcodes, string imagePath)
+        public BarcodeResultPage(List<Barcode> barcodes, string imagePath)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -24,7 +24,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
         }
 
-        public BarcodeResultPage(List<BarcodeItem> barcodes, ImageSource imageSource)
+        public BarcodeResultPage(List<Barcode> barcodes, ImageSource imageSource)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;

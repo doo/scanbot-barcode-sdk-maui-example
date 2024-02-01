@@ -218,7 +218,7 @@ namespace BarcodeSDK.NET.Droid
             configuration.SetSelectionOverlayConfiguration(new IO.Scanbot.Sdk.UI.View.Barcode.SelectionOverlayConfiguration(true,
                 true, IO.Scanbot.Sdk.Barcode.UI.BarcodeOverlayTextFormat.Code,
                 Color.Yellow, Color.Yellow, Color.Black, Color.Pink));
-            var intent = BatchBarcodeScannerActivity.NewIntent(this, configuration, null);
+            var intent = BatchBarcodeScannerActivity.NewIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
 

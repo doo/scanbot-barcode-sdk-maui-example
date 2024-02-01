@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeClassicComponentPage"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeCustomClassicComponentPage"
+             xmlns:local="clr-namespace:ScanbotSDK.MAUI.Example.ClassicComponent"
              ios:Page.UseSafeArea="true"
-             Title="BarcodeClassicComponentPage"
+             Title="BarcodeCustomClassicComponentPage"
              NavigationPage.HasNavigationBar="True">
     <Grid>
         <Grid.RowDefinitions>
@@ -14,14 +14,14 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
-               Text="Barcode ClassicComponent"
-               FontSize="Subtitle"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="Center" 
-               HorizontalOptions="Fill" />
+            Text="Barcode ClassicComponent"
+            FontSize="Subtitle"
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            VerticalOptions="Center" 
+            HorizontalOptions="Fill" />
         <StackLayout Grid.Row="1">
-            <classicComponent:BarcodeScannerView
+            <local:BarcodeCameraView
                 x:Name="cameraView"
                 HeightRequest="500"
                 WidthRequest="300"
@@ -36,6 +36,12 @@
                 VerticalTextAlignment="Center"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
+                <Button
+                    x:Name="StartScanningButton"
+                    Text="Start Scanning"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Clicked="StartScanningButton_Clicked"/>
         </Grid>
     </Grid>
 </ContentPage>
