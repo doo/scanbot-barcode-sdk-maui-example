@@ -77,6 +77,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
             CollectionView_MenuItems.SelectedItem = null;
         }
+
         /// <summary>
         /// Starts the Barcode scanning.
         /// </summary>
@@ -88,10 +89,13 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen,
                 SuccessBeepEnabled = true,
-                CameraZoomLevel = 5,
-                AcceptedDocumentFormats = Enum.GetValues<BarcodeDocumentFormat>().ToList()
+                CameraZoomLevel = 0.5f,
+                CameraZoomRange = new MAUI.Models.ZoomRange(1.0f, 4.0f),
+
+                //Specify this property so then it could detect barcodes from accepted documents (but it will handle only these types)
+                //AcceptedDocumentFormats = Enum.GetValues<BarcodeDocumentFormat>().ToList()
             };
-            
+
             if (withImage)
             {
                 configuration.BarcodeImageGenerationType = BarcodeImageGenerationType.FromVideoFrame;
