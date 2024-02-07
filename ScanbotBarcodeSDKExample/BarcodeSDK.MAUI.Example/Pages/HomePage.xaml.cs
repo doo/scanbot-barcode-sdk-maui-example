@@ -147,7 +147,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen
             };
-            
+
             var result = await ScanbotBarcodeSDK.BarcodeService.OpenBatchBarcodeScannerView(configuration);
             if (result.Status == OperationResult.Ok)
             {

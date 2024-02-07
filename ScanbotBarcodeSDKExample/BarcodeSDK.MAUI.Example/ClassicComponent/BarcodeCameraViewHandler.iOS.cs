@@ -37,7 +37,7 @@ namespace ScanbotSDK.MAUI.Example.ClassicComponent
         {
             current?.PlatformView?.MapIsFlashEnabled(commonView.IsFlashEnabled);
         }
-        
+
         public static void MapStartDetectionHandler(BarcodeCameraViewHandler current, BarcodeCameraView commonView, object arg3)
         {
             current?.PlatformView?.MapStartDetectionHandler();

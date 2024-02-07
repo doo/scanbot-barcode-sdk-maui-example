@@ -9,8 +9,8 @@ public partial class BarcodeCustomClassicComponentPage : ContentPage
     public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
 
     public BarcodeCustomClassicComponentPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         SetupViews();
     }
 
@@ -50,7 +50,8 @@ public partial class BarcodeCustomClassicComponentPage : ContentPage
         cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
         cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
 
-        if (DeviceInfo.Platform == DevicePlatform.iOS) {
+        if (DeviceInfo.Platform == DevicePlatform.iOS)
+        {
             StartScanningButton.IsVisible = false;
         }
     }

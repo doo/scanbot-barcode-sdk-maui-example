@@ -6,19 +6,19 @@ namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class BarcodeClassicComponentPage : ContentPage
 {
-	public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
+    public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
 
-	public BarcodeClassicComponentPage()
-	{
-		InitializeComponent();
-		SetupViews();
-	}
-	
-	private void SetupViews()
-	{
-		cameraView.OnBarcodeScanResult = (result) =>
-		{
-			string text = string.Empty;
+    public BarcodeClassicComponentPage()
+    {
+        InitializeComponent();
+        SetupViews();
+    }
+
+    private void SetupViews()
+    {
+        cameraView.OnBarcodeScanResult = (result) =>
+        {
+            string text = string.Empty;
 
             if (result?.Barcodes != null)
             {
@@ -33,42 +33,42 @@ public partial class BarcodeClassicComponentPage : ContentPage
                 System.Diagnostics.Debug.WriteLine(text);
                 lblResult.Text = text;
             });
-		};
-		cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
-			Colors.Yellow, Colors.Yellow, Colors.Black,
-			Colors.Red, Colors.Red, Colors.Black);
-	}
-	
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
-		if (!IsLicenseValid)
-		{
-			ShowExpiredLicenseAlert();
-		}
-		else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
-		{
-			ShowTrialLicenseAlert();
-		}
+        };
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
+            Colors.Yellow, Colors.Yellow, Colors.Black,
+            Colors.Red, Colors.Red, Colors.Black);
+    }
 
-		cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
-		cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (!IsLicenseValid)
+        {
+            ShowExpiredLicenseAlert();
+        }
+        else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
+        {
+            ShowTrialLicenseAlert();
+        }
 
-	}
-	
-	protected override void OnDisappearing()
-	{
-		base.OnDisappearing();
-		this.Navigation.PopAsync(true);
-	}
+        cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
+        cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
 
-	private void ShowExpiredLicenseAlert()
-	{
-		DisplayAlert("Error", "Your SDK license has expired", "Close");
-	}
+    }
 
-	private void ShowTrialLicenseAlert()
-	{
-		DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
-	}
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        this.Navigation.PopAsync(true);
+    }
+
+    private void ShowExpiredLicenseAlert()
+    {
+        DisplayAlert("Error", "Your SDK license has expired", "Close");
+    }
+
+    private void ShowTrialLicenseAlert()
+    {
+        DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
+    }
 }
