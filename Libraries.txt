@@ -2388,7 +2388,7 @@ Version 1.1.0
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in ScanbotSDK for iOS version 4.2.0:
+Open Source libraries used in ScanbotSDK for iOS version 4.2.1:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
