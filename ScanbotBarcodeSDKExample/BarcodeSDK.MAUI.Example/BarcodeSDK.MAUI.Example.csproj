@@ -80,7 +80,7 @@
     <!-- ===================== Android Project References =====================  -->
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.0-beta.4" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.0" />
     </ItemGroup>
     <ItemGroup>
       <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />

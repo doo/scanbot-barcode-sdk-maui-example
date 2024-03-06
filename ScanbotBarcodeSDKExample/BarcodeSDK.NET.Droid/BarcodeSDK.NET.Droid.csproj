@@ -11,6 +11,6 @@
     </PropertyGroup>
     <ItemGroup>
          <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="4.2.0-alpha.3" />
+         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="4.2.0" />
     </ItemGroup>
 </Project>
