@@ -24,7 +24,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
     public partial class HomePage : ContentPage
     {
         /// <summary>
-        /// List binding to UI ListView
+        /// List binding to UI ListView1
         /// </summary>
         public List<HomePageMenuItem> MenuItems { get; set; }
 
@@ -48,6 +48,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 new HomePageMenuItem("SCAN BARCODES", () => StartBarcodeScanning(withImage: false)),
                 new HomePageMenuItem("SCAN BARCODES WITH IMAGE", () => StartBarcodeScanning(withImage: true)),
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("SCAN BARCODE WITH CLASSIC SCAN AND COUNT COMPONENT", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
+                new HomePageMenuItem("SCAN BARCODE WITH CUSTOM CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeCustomClassicComponentPage())),
                 new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
                 new HomePageMenuItem("DETECT BARCODES ON IMAGE", DetectBarcodesOnImage),
                 new HomePageMenuItem("SET ACCEPTED BARCODE TYPES", () => Navigation.PushAsync(new BarcodeSelectionPage())),
@@ -86,9 +88,14 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen,
-                SuccessBeepEnabled = true
+                SuccessBeepEnabled = true,
+                CameraZoomLevel = 0.5f,
+                CameraZoomRange = new MAUI.Models.ZoomRange(1.0f, 4.0f),
+
+                //Specify this property so then it could detect barcodes from accepted documents (but it will handle only these types)
+                //AcceptedDocumentFormats = Enum.GetValues<BarcodeDocumentFormat>().ToList()
             };
-            
+
             if (withImage)
             {
                 configuration.BarcodeImageGenerationType = BarcodeImageGenerationType.FromVideoFrame;
@@ -140,7 +147,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen
             };
-            
+
             var result = await ScanbotBarcodeSDK.BarcodeService.OpenBatchBarcodeScannerView(configuration);
             if (result.Status == OperationResult.Ok)
             {
