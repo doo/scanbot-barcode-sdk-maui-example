@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net7.0-android</TargetFrameworks>
+        <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Version>1.2.0</Version>
+    </PropertyGroup>
+    <ItemGroup>
+        <LibraryProjectZip Include="Jars\accompanist-insets-ui.aar" />
+    </ItemGroup>
+</Project>

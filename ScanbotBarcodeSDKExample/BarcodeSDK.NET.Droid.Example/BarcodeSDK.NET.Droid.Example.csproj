@@ -12,6 +12,26 @@
     </PropertyGroup>
     <ItemGroup>
          <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="4.2.0" />
+         <PackageReference Include="Xamarin.AndroidX.Activity.Compose" Version="1.7.0" />
+         <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.8.2.1" />
+         <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.4.0.1" />
+         <PackageReference Include="Xamarin.AndroidX.Compose.Foundation.Layout" Version="1.4.0" />
+         <PackageReference Include="Xamarin.AndroidX.Compose.UI" Version="1.4.0" />
+         <PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel.Compose" Version="2.6.1" />
+         <PackageReference Include="Xamarin.AndroidX.Preference" Version="1.2.1.4" />
+         <PackageReference Include="Xamarin.Google.Accompanist.AppCompat.Theme" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.DrawablePainter" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.FlowLayout" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.Pager" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.Pager.Indicators" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.Permissions" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.Placeholder" Version="0.30.1" />
+         <!-- <PackageReference Include="Xamarin.Google.Accompanist.Placeholder.Material" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Google.Accompanist.SwipeRefresh" Version="0.30.1" /> -->
+         <PackageReference Include="Xamarin.Google.Accompanist.SystemUIController" Version="0.30.1" />
+         <PackageReference Include="Xamarin.Accompanist.Insets" Version="1.2.0" />
     </ItemGroup>
+    <!-- <ItemGroup>
+      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\Shared\BarcodeSDK.Binding.Droid\BarcodeSDK.Droid.csproj" />
+    </ItemGroup> -->
 </Project>

@@ -11,6 +11,11 @@ using IO.Scanbot.Sdk.UI.View.Barcode.Configuration;
 using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
 using BarcodeSDK.NET.Droid.Activities;
+using BarcodeSDK.NET.Droid.Snippets;
+using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
+using IO.Scanbot.Sdk.Ui_v2.Common;
+using BarcodeScannerConfiguration = IO.Scanbot.Sdk.UI.View.Barcode.Configuration.BarcodeScannerConfiguration;
+using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -20,7 +25,8 @@ namespace BarcodeSDK.NET.Droid
         internal static ScanbotBarcodeScannerSDK SDK;
 
         private const int BARCODE_DEFAULT_UI_REQUEST_CODE = 910;
-
+        private const int BARCODE_DEFAULT_UI_REQUEST_CODE_V2 = 911;
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -32,6 +38,14 @@ namespace BarcodeSDK.NET.Droid
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
             FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_actionbar).Click += OnRTUUI_V2_ClickActionBar;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += OnRTUUI_V2_ClickArOverlay;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += OnRTUUI_V2_ClickItemMapping;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  OnRTUUI_V2_ClickMultipleScanningPreview;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning).Click += OnRTUUI_V2_ClickMultipleScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_scanning).Click += OnRTUUI_V2_ClickSingleScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_topbar).Click += OnRTUUI_V2_ClickTopBar;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_userguid).Click += OnRTUUI_V2_ClickUserGuid;
             FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
             FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;
             FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
@@ -79,6 +93,94 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             StartBarcodeScannerActivity(withImage: false);
+        }
+        
+        private void OnRTUUI_V2_ClickActionBar(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new ActionBarConfigSnippet().GetActionBarConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickArOverlay(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new ArOverlayUseCaseSnippet().GetArOverlayUseCaseSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickItemMapping(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new ItemMappingConfigSnippet().GetItemMappingConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickMultipleScanningPreview(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new MultipleScanningPreviewConfigSnippet().GetMultipleScanningPreviewConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickMultipleScanning(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new MultipleScanningUseCaseSnippet().GetMultipleScanningPreviewConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickSingleScanning(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new SingleScanningUseCaseSnippet().GetSingleScanningUseCaseSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickTopBar(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new TopBarConfigSnippet().GetTopBarConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        private void OnRTUUI_V2_ClickUserGuid(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            
+            var intent = BarcodeScannerActivityV2.NewIntent(this, new UserGuidanceConfigSnippet().GetUserGuidanceConfigSnippetConfiguration());
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
         }
 
         private void OnRTUUIImageClick(object sender, EventArgs e)
@@ -209,6 +311,52 @@ namespace BarcodeSDK.NET.Droid
             var intent = BarcodeScannerActivity.NewIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
+        
+        void StartBarcodeScannerActivityV2(bool withImage)
+        {
+            var configuration = new IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.BarcodeScannerConfiguration();
+            
+            configuration.ActionBar.FlashButton.Visible = true;
+            configuration.ActionBar.FlashButton.BackgroundColor = new ScanbotColor("#7A000000");
+            configuration.ActionBar.FlashButton.ForegroundColor = new ScanbotColor("#FFFFFF");
+            
+            configuration.ActionBar.FlashButton.ActiveBackgroundColor = new ScanbotColor("#FFCE5C");
+            configuration.ActionBar.FlashButton.ActiveForegroundColor = new ScanbotColor("#000000");
+            
+            configuration.ActionBar.ZoomButton.Visible = true;
+            configuration.ActionBar.ZoomButton.BackgroundColor = new ScanbotColor("#7A000000");
+            configuration.ActionBar.ZoomButton.ForegroundColor = new ScanbotColor("#FFFFFF");
+            
+            configuration.ActionBar.FlipCameraButton.Visible = true;
+            configuration.ActionBar.FlipCameraButton.BackgroundColor = new ScanbotColor("#7A000000");
+            configuration.ActionBar.FlipCameraButton.ForegroundColor = new ScanbotColor("#FFFFFF");
+
+
+            var intent = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.NewIntent(this, configuration);
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
+        
+        void StartBarcodeScannerActivityArOverlaySnippet()
+        {
+            var configuration = new IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.BarcodeScannerConfiguration();
+            configuration.UseCase = new MultipleScanningMode()
+            {
+                Mode = MultipleBarcodesScanningMode.Unique,
+                Sheet = new Sheet()
+                {
+                    Mode = SheetMode.CollapsedSheet,
+                    CollapsedVisibleHeight = CollapsedVisibleHeight.Small
+                },
+                ArOverlay = new ArOverlayGeneralConfiguration()
+                {
+                    Visible = true,
+                    AutomaticSelectionEnabled = false
+                }
+            };
+            
+            var intent = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.NewIntent(this, configuration);
+            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
+        }
 
         void StartBatchBarcodeScannerActivity()
         {
@@ -242,6 +390,23 @@ namespace BarcodeSDK.NET.Droid
 
                 var intent = new Intent(this, typeof(BarcodeResultActivity));
                 var bundle = new BarcodeResult(barcode, imagePath, previewPath).ToBundle();
+                intent.PutExtra(nameof(BarcodeResult), bundle);
+
+                StartActivity(intent);
+            }
+
+            var res = data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants
+                .ExtraKeyRtuResult);
+            if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE_V2 &&
+                data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants.ExtraKeyRtuResult) is BarcodeScannerResult barcodeV2)
+            {
+                var imagePath = data.GetStringExtra(
+                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodeImagePathExtra);
+                var previewPath = data.GetStringExtra(
+                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
+
+                var intent = new Intent(this, typeof(BarcodeResultActivity));
+                var bundle = new BarcodeResult(barcodeV2, imagePath, previewPath).ToBundle();
                 intent.PutExtra(nameof(BarcodeResult), bundle);
 
                 StartActivity(intent);

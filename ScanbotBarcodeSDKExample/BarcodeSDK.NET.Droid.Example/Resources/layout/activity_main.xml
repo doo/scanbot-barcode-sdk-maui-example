@@ -125,25 +125,158 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ready to Use UI"
+                android:text="Ready to Use UI v2"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:background="@color/scanbotRed"
                 android:gravity="center_vertical"
                 android:layout_gravity="left"
-                android:padding="16dp"
-            />
+                android:padding="16dp"/>
 
-            <TextView
-                android:id="@+id/rtu_ui"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+			<TextView
+				android:id="@+id/rtu_ui_v2_actionbar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
 				android:paddingHorizontal="16dp"
-                android:paddingVertical="20dp"
-                style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-                android:text="Barcode Scanner"
-                android:textColor="@color/primary_material_light" />
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner ActionBar"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_aroverlay"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner ArOverlay"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_item_mapping"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner ItemMapping"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_multiple_scanning_preview"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner MultipleScanning Preview"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_multiple_scanning"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner MultipleScanning"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+			
+			<TextView
+				android:id="@+id/rtu_ui_v2_single_scanning"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner SingleScanning"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_topbar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner TopBar"
+				android:textColor="@color/primary_material_light" />
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#50000000" />
+
+			<TextView
+				android:id="@+id/rtu_ui_v2_userguid"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner UserGuidance"
+				android:textColor="@color/primary_material_light" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Ready to Use UI"
+				android:textColor="@android:color/white"
+				android:textStyle="bold"
+				android:background="@color/scanbotRed"
+				android:gravity="center_vertical"
+				android:layout_gravity="left"
+				android:padding="16dp"/>
+
+			<TextView
+				android:id="@+id/rtu_ui"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner"
+				android:textColor="@color/primary_material_light" />
 
             <FrameLayout
                 android:layout_width="match_parent"
