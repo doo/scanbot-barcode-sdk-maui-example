@@ -8,7 +8,7 @@ using IO.Scanbot.Barcodescanner.Model.SEPA;
 using IO.Scanbot.Barcodescanner.Model.VCard;
 using IO.Scanbot.Sdk.Barcode.Entity;
 
-namespace BarcodeSDK.NET.Droid
+namespace BarcodeSDK.NET.Droid.Activities.V1
 {
     [Activity(Theme = "@style/AppTheme")]
     public class DetailedItemDataActivity : AppCompatActivity
@@ -24,18 +24,16 @@ namespace BarcodeSDK.NET.Droid
             var item = Intent.GetParcelableExtra("SelectedBarcodeItem") as BarcodeItem;
 
             if (item == null)
-            {
                 return;
-            }
 
             var container = FindViewById<ConstraintLayout>(Resource.Id.container);
 
             container.FindViewById<ImageView>(Resource.Id.image)
                 .SetImageBitmap(item.Image);
             container.FindViewById<TextView>(Resource.Id.barcodeFormat)
-                .Text = item.BarcodeFormat.Name();
+                .Text = item.BarcodeFormat?.Name();
             container.FindViewById<TextView>(Resource.Id.docFormat)
-                .Text = item.FormattedData?.ToString();
+                .Text = item.FormattedResult?.GetType()?.Name;
             container.FindViewById<TextView>(Resource.Id.description)
                 .Text = ParseFormat(item);
         }
@@ -43,9 +41,7 @@ namespace BarcodeSDK.NET.Droid
         private string ParseFormat(BarcodeItem item)
         {
             if (item.FormattedResult == null)
-            {
                 return item.Text;
-            }
 
             var format = item.FormattedResult;
 

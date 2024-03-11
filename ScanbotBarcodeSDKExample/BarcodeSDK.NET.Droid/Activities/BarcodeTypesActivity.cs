@@ -2,7 +2,7 @@
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 
-namespace BarcodeSDK.NET.Droid
+namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
     public class BarcodeTypesActivity : AppCompatActivity
