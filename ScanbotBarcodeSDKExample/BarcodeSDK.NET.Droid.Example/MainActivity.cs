@@ -11,9 +11,9 @@ using IO.Scanbot.Sdk.UI.View.Barcode.Configuration;
 using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
 using BarcodeSDK.NET.Droid.Activities;
+using BarcodeSDK.NET.Droid.Activities.V1;
 using BarcodeSDK.NET.Droid.Snippets;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using IO.Scanbot.Sdk.Ui_v2.Common;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.UI.View.Barcode.Configuration.BarcodeScannerConfiguration;
 using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity;
 
@@ -38,7 +38,6 @@ namespace BarcodeSDK.NET.Droid
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
             FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_actionbar).Click += OnRTUUI_V2_ClickActionBar;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += OnRTUUI_V2_ClickArOverlay;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += OnRTUUI_V2_ClickItemMapping;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  OnRTUUI_V2_ClickMultipleScanningPreview;
@@ -93,17 +92,6 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             StartBarcodeScannerActivity(withImage: false);
-        }
-        
-        private void OnRTUUI_V2_ClickActionBar(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new ActionBarConfigSnippet().GetActionBarConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
         }
         
         private void OnRTUUI_V2_ClickArOverlay(object sender, EventArgs e)
@@ -231,7 +219,7 @@ namespace BarcodeSDK.NET.Droid
 
             // Handle the result in your app as needed.
             var intent = new Intent(this, typeof(BarcodeResultActivity));
-            intent.PutExtra(nameof(BarcodeResult), new BarcodeResult(result, bitmap).ToBundle());
+            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScanningResult>(result, bitmap).ToBundle());
             StartActivity(intent);
         }
 
@@ -311,52 +299,6 @@ namespace BarcodeSDK.NET.Droid
             var intent = BarcodeScannerActivity.NewIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
-        
-        void StartBarcodeScannerActivityV2(bool withImage)
-        {
-            var configuration = new IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.BarcodeScannerConfiguration();
-            
-            configuration.ActionBar.FlashButton.Visible = true;
-            configuration.ActionBar.FlashButton.BackgroundColor = new ScanbotColor("#7A000000");
-            configuration.ActionBar.FlashButton.ForegroundColor = new ScanbotColor("#FFFFFF");
-            
-            configuration.ActionBar.FlashButton.ActiveBackgroundColor = new ScanbotColor("#FFCE5C");
-            configuration.ActionBar.FlashButton.ActiveForegroundColor = new ScanbotColor("#000000");
-            
-            configuration.ActionBar.ZoomButton.Visible = true;
-            configuration.ActionBar.ZoomButton.BackgroundColor = new ScanbotColor("#7A000000");
-            configuration.ActionBar.ZoomButton.ForegroundColor = new ScanbotColor("#FFFFFF");
-            
-            configuration.ActionBar.FlipCameraButton.Visible = true;
-            configuration.ActionBar.FlipCameraButton.BackgroundColor = new ScanbotColor("#7A000000");
-            configuration.ActionBar.FlipCameraButton.ForegroundColor = new ScanbotColor("#FFFFFF");
-
-
-            var intent = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.NewIntent(this, configuration);
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        void StartBarcodeScannerActivityArOverlaySnippet()
-        {
-            var configuration = new IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.BarcodeScannerConfiguration();
-            configuration.UseCase = new MultipleScanningMode()
-            {
-                Mode = MultipleBarcodesScanningMode.Unique,
-                Sheet = new Sheet()
-                {
-                    Mode = SheetMode.CollapsedSheet,
-                    CollapsedVisibleHeight = CollapsedVisibleHeight.Small
-                },
-                ArOverlay = new ArOverlayGeneralConfiguration()
-                {
-                    Visible = true,
-                    AutomaticSelectionEnabled = false
-                }
-            };
-            
-            var intent = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.NewIntent(this, configuration);
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
 
         void StartBatchBarcodeScannerActivity()
         {
@@ -388,15 +330,13 @@ namespace BarcodeSDK.NET.Droid
                 var previewPath = data.GetStringExtra(
                     BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
 
-                var intent = new Intent(this, typeof(BarcodeResultActivity));
-                var bundle = new BarcodeResult(barcode, imagePath, previewPath).ToBundle();
-                intent.PutExtra(nameof(BarcodeResult), bundle);
+                var intent = new Intent(this, typeof(BarcodeSDK.NET.Droid.Activities.V1.BarcodeResultActivity));
+                var bundle = new BaseBarcodeResult<BarcodeScanningResult>(barcode, imagePath, previewPath).ToBundle();
+                intent.PutExtra("BarcodeResult", bundle);
 
                 StartActivity(intent);
             }
-
-            var res = data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants
-                .ExtraKeyRtuResult);
+            
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE_V2 &&
                 data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants.ExtraKeyRtuResult) is BarcodeScannerResult barcodeV2)
             {
@@ -405,9 +345,9 @@ namespace BarcodeSDK.NET.Droid
                 var previewPath = data.GetStringExtra(
                     IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
 
-                var intent = new Intent(this, typeof(BarcodeResultActivity));
-                var bundle = new BarcodeResult(barcodeV2, imagePath, previewPath).ToBundle();
-                intent.PutExtra(nameof(BarcodeResult), bundle);
+                var intent = new Intent(this, typeof(BarcodeSDK.NET.Droid.Activities.V2.BarcodeResultActivity));
+                var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcodeV2, imagePath, previewPath).ToBundle();
+                intent.PutExtra("BarcodeResult", bundle);
 
                 StartActivity(intent);
             }

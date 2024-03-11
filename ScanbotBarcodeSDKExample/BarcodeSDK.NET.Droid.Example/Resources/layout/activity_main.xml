@@ -132,18 +132,7 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="left"
                 android:padding="16dp"/>
-
-			<TextView
-				android:id="@+id/rtu_ui_v2_actionbar"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:paddingHorizontal="16dp"
-				android:paddingVertical="20dp"
-				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-				android:text="Barcode Scanner ActionBar"
-				android:textColor="@color/primary_material_light" />
-
+			
 			<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="1dp"

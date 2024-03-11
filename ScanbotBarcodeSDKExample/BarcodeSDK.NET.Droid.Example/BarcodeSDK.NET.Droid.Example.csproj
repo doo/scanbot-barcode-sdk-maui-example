@@ -26,8 +26,6 @@
          <PackageReference Include="Xamarin.Google.Accompanist.Pager.Indicators" Version="0.30.1" />
          <PackageReference Include="Xamarin.Google.Accompanist.Permissions" Version="0.30.1" />
          <PackageReference Include="Xamarin.Google.Accompanist.Placeholder" Version="0.30.1" />
-         <!-- <PackageReference Include="Xamarin.Google.Accompanist.Placeholder.Material" Version="0.30.1" />
-         <PackageReference Include="Xamarin.Google.Accompanist.SwipeRefresh" Version="0.30.1" /> -->
          <PackageReference Include="Xamarin.Google.Accompanist.SystemUIController" Version="0.30.1" />
          <PackageReference Include="Xamarin.Accompanist.Insets" Version="1.2.0" />
     </ItemGroup>
