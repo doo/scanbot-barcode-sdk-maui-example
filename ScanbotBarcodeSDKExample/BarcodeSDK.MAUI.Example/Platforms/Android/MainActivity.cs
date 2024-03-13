@@ -14,12 +14,6 @@ namespace ScanbotSDK.MAUI.Example
         {
             base.OnCreate(savedInstanceState);
             DependencyManager.RegisterActivity(this);
-
-            ActivityCompat.RequestPermissions(this, new string[] {
-                Manifest.Permission.Camera,
-                Manifest.Permission.ReadExternalStorage,
-                Manifest.Permission.WriteExternalStorage
-        }, 0);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
-             ios:Page.UseSafeArea="true"
-             Title="BarcodeClassicScanAndCountComponentPage"
-             NavigationPage.HasNavigationBar="True">
+<pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
+                   xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                   x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
+                   ios:Page.UseSafeArea="true"
+                   Title="BarcodeClassicScanAndCountComponentPage"
+                   NavigationPage.HasNavigationBar="True">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -58,4 +59,4 @@
             </Grid>
         </Grid>
     </ScrollView>
-</ContentPage>
+</pages:BaseComponentPage>

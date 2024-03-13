@@ -4,7 +4,7 @@ using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages;
 
-public partial class BarcodeScanAndCountClassicComponentPage : ContentPage
+public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 {
     public BarcodeScanAndCountClassicComponentPage()
     {
@@ -52,7 +52,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
+        
         cameraView.StartDetection();
     }
 

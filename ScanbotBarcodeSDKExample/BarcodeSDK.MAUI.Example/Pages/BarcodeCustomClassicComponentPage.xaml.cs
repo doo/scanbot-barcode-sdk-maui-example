@@ -4,10 +4,8 @@ using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages;
 
-public partial class BarcodeCustomClassicComponentPage : ContentPage
+public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
 {
-    public bool IsLicenseValid => ScanbotBarcodeSDK.LicenseInfo.IsValid;
-
     public BarcodeCustomClassicComponentPage()
     {
         InitializeComponent();
@@ -38,15 +36,7 @@ public partial class BarcodeCustomClassicComponentPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (!IsLicenseValid)
-        {
-            ShowExpiredLicenseAlert();
-        }
-        else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
-        {
-            ShowTrialLicenseAlert();
-        }
-
+      
         cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
         cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
 
@@ -60,16 +50,6 @@ public partial class BarcodeCustomClassicComponentPage : ContentPage
     {
         base.OnDisappearing();
         this.Navigation.PopAsync(true);
-    }
-
-    private void ShowExpiredLicenseAlert()
-    {
-        DisplayAlert("Error", "Your SDK license has expired", "Close");
-    }
-
-    private void ShowTrialLicenseAlert()
-    {
-        DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.", "Close");
     }
 
     void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
