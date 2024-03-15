@@ -48,13 +48,13 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews
             {
                 cameraViewController.IsTrackingOverlayEnabled = true;
                 cameraViewController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled = config.AutomaticSelectionEnabled;
-                cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = config.PolygonColor.ToNative();
+                cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = config.StrokeColor.ToNative();
                 cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextColor = config.TextColor.ToNative();
                 cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundColor = config.TextContainerColor.ToNative();
 
-                if (config.HighlightedPolygonColor != null)
+                if (config.StrokeColor != null)
                 {
-                    cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = config.HighlightedPolygonColor?.ToNative();
+                    cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = config.HighlightedStrokeColor?.ToNative();
                 }
 
                 if (config.HighlightedTextColor != null)

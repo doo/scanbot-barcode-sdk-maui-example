@@ -19,7 +19,7 @@ public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
             string text = string.Empty;
             foreach (Barcode barcode in result.Barcodes)
             {
-                text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
 
             MainThread.BeginInvokeOnMainThread(() =>
@@ -28,9 +28,18 @@ public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
                 lblResult.Text = text;
             });
         };
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
-                                                                            Colors.Yellow, Colors.Yellow, Colors.Black,
-                                                                            Colors.Red, Colors.Red, Colors.Black);
+
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
+            automaticSelectionEnabled: true,
+            overlayFormat: BarcodeTextFormat.CodeAndType,
+            textColor: Colors.Yellow,
+            textContainerColor: Colors.Black,
+            strokeColor: Colors.Yellow,
+            highlightedStrokeColor: Colors.Red,
+            highlightedTextColor: Colors.Yellow,
+            highlightedTextContainerColor: Colors.DarkOrchid,
+            polygonBackgroundColor: Colors.Transparent,
+            polygonBackgroundHighlightedColor: Colors.Transparent);
     }
 
     protected override void OnAppearing()

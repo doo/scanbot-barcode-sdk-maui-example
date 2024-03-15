@@ -36,6 +36,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
             InitMenuItems();
             BindingContext = this;
+            
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         /// <summary>
@@ -104,9 +106,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
             configuration.OverlayConfiguration = new SelectionOverlayConfiguration(
                         automaticSelectionEnabled: false,
                         overlayFormat: BarcodeTextFormat.Code,
-                        polygon: Colors.Yellow,
-                        text: Colors.Yellow,
-                        textContainer: Colors.Black);
+                        strokeColor: Colors.Yellow,
+                        textColor: Colors.Yellow,
+                        textContainerColor: Colors.Black);
 
             // To see the confirmation dialog in action, uncomment the below and comment out the configuration.OverlayConfiguration line above.
             //configuration.ConfirmationDialogConfiguration = new BarcodeConfirmationDialogConfiguration
@@ -137,12 +139,14 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 OverlayConfiguration = new SelectionOverlayConfiguration(
                     automaticSelectionEnabled: true,
                     overlayFormat: BarcodeTextFormat.Code,
-                    polygon: Colors.Yellow,
-                    text: Colors.Yellow,
-                    textContainer: Colors.Black,
-                    highlightedPolygonColor: Colors.Red,
-                    highlightedTextColor: Colors.Red,
-                    highlightedTextContainerColor: Colors.Black),
+                    textColor: Colors.Yellow,
+                    textContainerColor: Colors.Black,
+                    strokeColor: Colors.Yellow,
+                    highlightedStrokeColor: Colors.Red,
+                    highlightedTextColor: Colors.Yellow,
+                    highlightedTextContainerColor: Colors.DarkOrchid,
+                    polygonBackgroundColor: Colors.Green,
+                    polygonBackgroundHighlightedColor: Colors.Aquamarine),
                 SuccessBeepEnabled = true,
                 CodeDensity = BarcodeDensity.High,
                 EngineMode = EngineMode.NextGen

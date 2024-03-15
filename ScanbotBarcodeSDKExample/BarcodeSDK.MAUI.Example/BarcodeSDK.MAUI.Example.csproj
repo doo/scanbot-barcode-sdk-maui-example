@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net7.0-ios;net7.0-android</TargetFrameworks>
+        <TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <RootNamespace>ScanbotSDK.MAUI.Example</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -10,6 +10,7 @@
         <!-- Display name -->
         <ApplicationTitle>ScanbotSDK.Barcode.MAUI.Example</ApplicationTitle>
         
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <!-- App Identifier -->
         <ApplicationId>io.scanbot.example.sdk.barcode.maui</ApplicationId>
         <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
@@ -21,13 +22,13 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     </PropertyGroup>
-     <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-ios|ARM64'">
+     <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'!='net7.0-ios|ARM64'">
+    <PropertyGroup Condition="'$(TargetFramework)'!='net8.0-ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
     </PropertyGroup>
@@ -69,18 +70,18 @@
         <Folder Include="Platforms\iOS\Utils\" />
         <Folder Include="Common\" />
     </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+    <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
         <Compile Remove="**\**\*.Android.cs" />
         <None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
-        <ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true">
+        <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
         <Compile Remove="**\**\*.iOS.cs" />
         <None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
     <!-- ===================== Android Project References =====================  -->
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.0" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.2-alpha.4" />
     </ItemGroup>
     <ItemGroup>
       <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />

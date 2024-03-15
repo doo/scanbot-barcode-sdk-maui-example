@@ -26,6 +26,8 @@
                 x:Name="cameraView"
                 HeightRequest="500"
                 WidthRequest="300"
+                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill"
                 BackgroundColor="#1f1f1f" />

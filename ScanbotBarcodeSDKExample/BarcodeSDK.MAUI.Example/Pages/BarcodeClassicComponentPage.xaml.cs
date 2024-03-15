@@ -13,44 +13,68 @@ public partial class BarcodeClassicComponentPage : BaseComponentPage
     }
 
     private void SetupViews()
+    {        
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
+            automaticSelectionEnabled: false,
+            overlayFormat: BarcodeTextFormat.CodeAndType,
+            textColor: Colors.Yellow,
+            textContainerColor: Colors.Black,
+            strokeColor: Colors.Yellow,
+            highlightedStrokeColor: Colors.Red,
+            highlightedTextColor: Colors.Yellow,
+            highlightedTextContainerColor: Colors.DarkOrchid,
+            polygonBackgroundColor: Colors.Transparent,
+            polygonBackgroundHighlightedColor: Colors.Transparent);
+    }
+
+    private void HandleScannerResults(BarcodeResultBundle result)
     {
-        cameraView.OnBarcodeScanResult = (result) =>
+        string text = string.Empty;
+
+        if (result?.Barcodes != null)
         {
-            string text = string.Empty;
-
-            if (result?.Barcodes != null)
+            foreach (Barcode barcode in result.Barcodes)
             {
-                foreach (Barcode barcode in result.Barcodes)
-                {
-                    text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
-                }
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
+        }
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
-        };
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(true, BarcodeTextFormat.CodeAndType,
-            Colors.Yellow, Colors.Yellow, Colors.Black,
-            Colors.Red, Colors.Red, Colors.Black);
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            System.Diagnostics.Debug.WriteLine(text);
+            lblResult.Text = text;
+        });
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         
+        // Start barcode detection manually
         cameraView.StartDetection();
         
         cameraView.HeightRequest = (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.6;
         cameraView.WidthRequest = (DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density);
     }
-
+    
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        
+        // Stop barcode detection manually
+        cameraView.StopDetection();
+            
         this.Navigation.PopAsync(true);
     }
-    
+
+    private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
+    {
+        HandleScannerResults(result);
+    }
+
+    private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
+    {
+        // Only works if automaticSelectionEnabled = false, inside of cameraView.OverlayConfiguration (SelectionOverlayConfiguration)
+        HandleScannerResults(result);
+    }
 }
