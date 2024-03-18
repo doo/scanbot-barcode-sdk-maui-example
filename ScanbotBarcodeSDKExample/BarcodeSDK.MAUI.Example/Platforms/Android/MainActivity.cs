@@ -1,8 +1,6 @@
-﻿using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using AndroidX.Core.App;
 using ScanbotSDK.MAUI.Services;
 
 namespace ScanbotSDK.MAUI.Example

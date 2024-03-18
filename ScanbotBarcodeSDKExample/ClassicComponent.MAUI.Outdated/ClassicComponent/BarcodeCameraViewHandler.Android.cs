@@ -1,4 +1,4 @@
-﻿using Android;
+using Android;
 using Android.Content.PM;
 using Android.Views;
 using Android.Widget;
@@ -16,7 +16,7 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
 
-namespace ScanbotSDK.MAUI.Example.ClassicComponent
+namespace ClassicComponent.MAUI.Outdated.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {

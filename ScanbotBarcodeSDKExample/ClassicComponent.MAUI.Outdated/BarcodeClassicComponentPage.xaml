@@ -1,10 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xml version="1.0" encoding="utf-8"?>
+
+<outdated:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                   x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeCustomClassicComponentPage"
-                   xmlns:local="clr-namespace:ScanbotSDK.MAUI.Example.ClassicComponent"
-                   xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                   xmlns:classicComponent="clr-namespace:ClassicComponent.MAUI.Outdated.ClassicComponent"
+                   xmlns:outdated="clr-namespace:ClassicComponent.MAUI.Outdated"
+                   x:Class="ClassicComponent.MAUI.Outdated.BarcodeCustomClassicComponentPage"
                    ios:Page.UseSafeArea="true"
                    Title="BarcodeCustomClassicComponentPage"
                    NavigationPage.HasNavigationBar="True">
@@ -15,14 +16,14 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
-            Text="Barcode ClassicComponent"
-            FontSize="Subtitle"
-            VerticalTextAlignment="Center"
-            HorizontalTextAlignment="Center"
-            VerticalOptions="Center" 
-            HorizontalOptions="Fill" />
+               Text="Barcode ClassicComponent"
+               FontSize="Subtitle"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="Center" 
+               HorizontalOptions="Fill" />
         <StackLayout Grid.Row="1">
-            <local:BarcodeCameraView
+            <classicComponent:BarcodeCameraView
                 x:Name="cameraView"
                 HeightRequest="500"
                 WidthRequest="300"
@@ -37,12 +38,12 @@
                 VerticalTextAlignment="Center"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-                <Button
-                    x:Name="StartScanningButton"
-                    Text="Start Scanning"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center"
-                    Clicked="StartScanningButton_Clicked"/>
+            <Button
+                x:Name="StartScanningButton"
+                Text="Start Scanning"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                Clicked="StartScanningButton_Clicked"/>
         </Grid>
     </Grid>
-</pages:BaseComponentPage>
+</outdated:BaseComponentPage>

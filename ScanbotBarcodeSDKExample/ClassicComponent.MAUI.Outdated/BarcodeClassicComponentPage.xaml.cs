@@ -1,8 +1,8 @@
-﻿using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Configurations;
 using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Models;
 
-namespace ScanbotSDK.MAUI.Example.Pages;
+namespace ClassicComponent.MAUI.Outdated;
 
 public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
 {
@@ -30,7 +30,7 @@ public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
         };
 
         cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-            automaticSelectionEnabled: true,
+            automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
             textColor: Colors.Yellow,
             textContainerColor: Colors.Black,

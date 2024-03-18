@@ -1,6 +1,6 @@
-﻿using UIKit;
+using UIKit;
 
-namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
+namespace ClassicComponent.MAUI.Outdated.Platforms.iOS.Utils
 {
     public static class ViewUtils
     {
@@ -8,7 +8,8 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
         // This method returns the viewController from the iOS navigation hierarchy.
         // Initially the UIWindow object in iOS is not available(null), so we have to give it a delay, to get the UIWindow instance.
         // -------------------------------------------------------------------------------------------------------------------------
-        internal static async Task<UIViewController> TryGetTopViewControllerAsync(UIView view, int retryCount = 5, int retryInterval = 500)
+        internal static async Task<UIViewController> TryGetTopViewControllerAsync(UIView view, int retryCount = 5,
+            int retryInterval = 500)
         {
             UIViewController viewController = null;
             var index = 0;
@@ -19,6 +20,7 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
                 index++;
 
             } while (viewController == null && index < retryCount);
+
             return viewController;
         }
 
@@ -43,7 +45,8 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
                 return tabBarController.SelectedViewController;
             }
             else
-            {   // If application has no Navigation Controller OR TabBarController
+            {
+                // If application has no Navigation Controller OR TabBarController
                 return viewController;
             }
         }

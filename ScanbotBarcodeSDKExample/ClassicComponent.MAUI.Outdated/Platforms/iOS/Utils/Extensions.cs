@@ -1,4 +1,4 @@
-﻿namespace ScanbotSDK.MAUI.Example.Platforms.iOS.Utils
+namespace ClassicComponent.MAUI.Outdated.Platforms.iOS.Utils
 {
     public static class Extensions
     {

@@ -1,15 +1,9 @@
-﻿using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Configurations;
 using ScanbotSDK.MAUI.Models;
 
-namespace ScanbotSDK.MAUI.Example.ClassicComponent
-{        /*
-            This is the View that will be referenced in the XAML to integrate our native Camera View.
-            The class itself does not provide any specific implementation; the actual implementation
-            is achieved through the use of Custom Renderers.
-            Renderers are platform specific and they are implemented in the relative native projects.
-            Take a look at AndroidBarcodeCameraRenderer.cs to see how the implementation is done.
-         */
-    public class BarcodeCameraView : View
+namespace ClassicComponent.MAUI.Outdated.ClassicComponent
+{
+  public class BarcodeCameraView : View
     {
         // This is the delegate that will be used from our native controller to
         // notify us that the scanner has returned a valid result.

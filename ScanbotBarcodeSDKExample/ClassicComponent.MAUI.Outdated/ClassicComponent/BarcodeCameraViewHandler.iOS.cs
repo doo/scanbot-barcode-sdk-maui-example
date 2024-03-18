@@ -1,7 +1,7 @@
-﻿using ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews;
+using ClassicComponent.MAUI.Outdated.Platforms.iOS.CustomViews;
 using Microsoft.Maui.Handlers;
 
-namespace ScanbotSDK.MAUI.Example.ClassicComponent
+namespace ClassicComponent.MAUI.Outdated.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, BarcodeCameraView_iOS>
     {
@@ -12,22 +12,7 @@ namespace ScanbotSDK.MAUI.Example.ClassicComponent
             base.ConnectHandler(platformView);
             platformView.ConnectHandler(this);
         }
-
-        protected override void DisconnectHandler(BarcodeCameraView_iOS platformView)
-        {
-            base.DisconnectHandler(platformView);
-        }
-
-        protected override void SetupContainer()
-        {
-            base.SetupContainer();
-        }
-
-        protected override void RemoveContainer()
-        {
-            base.RemoveContainer();
-        }
-
+        
         public static void MapOverlayConfiguration(BarcodeCameraViewHandler current, BarcodeCameraView commonView)
         {
             current?.PlatformView?.MapOverlayConfiguration(commonView);
@@ -61,4 +46,3 @@ namespace ScanbotSDK.MAUI.Example.ClassicComponent
         }
     }
 }
-
