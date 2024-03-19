@@ -5,9 +5,9 @@
 	<key>CFBundleDisplayName</key>
 	<string>ClassicComponent Outdated</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.scanbot.example.sdk.barcode.classiccomponent.maui.outdated</string>
+	<string>io.scanbot.example.sdk.barcode.classiccomponent.maui.legacy</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0.0</string>§
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>LSRequiresIPhoneOS</key>
