@@ -19,12 +19,11 @@ public class BaseComponentPage: ContentPage
     {
         if (!ScanbotSDK.MAUI.ScanbotBarcodeSDK.LicenseInfo.IsValid)
         {
-            DisplayAlert("Error", "Your SDK license has expired", "Close");
+            Console.WriteLine("Error: Your SDK license has expired");
         }
         else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
         {
-            DisplayAlert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.",
-                "Close");
+            Console.WriteLine("Welcome: You are using the Trial SDK License. The SDK will be active for one minute.");
         }
     }
 }

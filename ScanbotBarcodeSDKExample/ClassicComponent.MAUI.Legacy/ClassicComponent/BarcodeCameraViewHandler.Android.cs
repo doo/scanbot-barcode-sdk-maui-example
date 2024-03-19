@@ -14,6 +14,7 @@ using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Camera;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using Resource = Microsoft.Maui.Controls.Resource;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
 
 namespace ClassicComponent.MAUI.Legacy.ClassicComponent
@@ -109,6 +110,8 @@ namespace ClassicComponent.MAUI.Legacy.ClassicComponent
                 cameraViewDroid.SelectionOverlayController.SetBarcodeAppearanceDelegate(
                 (
                     getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
+                                                    strokeColor: config.StrokeColor.ToPlatform(),
+                                                    strokeHighlightedColor: config.HighlightedStrokeColor.ToPlatform(),
                                                     fillColor: config.PolygonBackgroundColor.ToPlatform(),
                                                     fillHighlightedColor: config.PolygonBackgroundHighlightedColor?.ToPlatform()),
                     getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(

@@ -20,15 +20,15 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
+        <MtouchLink>SdkOnly</MtouchLink>
+        <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)'!='net8.0-ios'">
-        <MtouchLink>SdkOnly</MtouchLink>
-        <CreatePackage>false</CreatePackage>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
@@ -52,16 +52,17 @@
         <Folder Include="Platforms\Android\Resources\layout\" />
         <Folder Include="Platforms\iOS\Utils\" />
     </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
+    <ItemGroup Condition="$(TargetFramework.Contains('-android')) != true">
         <Compile Remove="**\**\*.Android.cs" />
         <None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
+    <ItemGroup Condition="$(TargetFramework.Contains('-ios')) != true">
         <Compile Remove="**\**\*.iOS.cs" />
         <None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.2-alpha.4" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
     </ItemGroup>
     <ItemGroup>
         <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />
