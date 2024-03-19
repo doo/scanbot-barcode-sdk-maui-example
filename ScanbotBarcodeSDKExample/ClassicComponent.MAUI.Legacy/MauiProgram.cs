@@ -1,8 +1,8 @@
-﻿using ClassicComponent.MAUI.Outdated.ClassicComponent;
+﻿using ClassicComponent.MAUI.Legacy.ClassicComponent;
 using ScanbotSDK.MAUI;
 using ScanbotSDK.MAUI.Models;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 public static class MauiProgram
 {

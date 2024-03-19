@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 [Application]
 public class MainApplication : MauiApplication

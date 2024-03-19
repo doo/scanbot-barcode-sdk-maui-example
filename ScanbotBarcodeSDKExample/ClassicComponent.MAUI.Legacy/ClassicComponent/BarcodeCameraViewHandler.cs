@@ -1,6 +1,6 @@
 using Microsoft.Maui.Handlers;
 
-namespace ClassicComponent.MAUI.Outdated.ClassicComponent
+namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler
     {

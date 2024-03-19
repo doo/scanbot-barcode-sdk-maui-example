@@ -1,7 +1,7 @@
 ﻿using Foundation;
 using UIKit;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

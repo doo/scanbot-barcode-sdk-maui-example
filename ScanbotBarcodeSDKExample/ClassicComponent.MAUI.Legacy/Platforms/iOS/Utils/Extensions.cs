@@ -1,4 +1,4 @@
-namespace ClassicComponent.MAUI.Outdated.Platforms.iOS.Utils
+namespace ClassicComponent.MAUI.Legacy.Platforms.iOS.Utils
 {
     public static class Extensions
     {

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 public class Program
 {

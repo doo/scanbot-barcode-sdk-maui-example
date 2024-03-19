@@ -2,7 +2,7 @@ using ScanbotSDK.MAUI.Configurations;
 using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Models;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 public partial class BarcodeCustomClassicComponentPage : BaseComponentPage
 {

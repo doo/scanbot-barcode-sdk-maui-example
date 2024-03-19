@@ -1,7 +1,7 @@
-using ClassicComponent.MAUI.Outdated.Platforms.iOS.CustomViews;
+using ClassicComponent.MAUI.Legacy.Platforms.iOS.CustomViews;
 using Microsoft.Maui.Handlers;
 
-namespace ClassicComponent.MAUI.Outdated.ClassicComponent
+namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, BarcodeCameraView_iOS>
     {

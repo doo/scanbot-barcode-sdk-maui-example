@@ -1,4 +1,4 @@
-﻿namespace ClassicComponent.MAUI.Outdated;
+﻿namespace ClassicComponent.MAUI.Legacy;
 
 public partial class App : Application
 {

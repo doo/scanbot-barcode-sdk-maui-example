@@ -1,7 +1,7 @@
-using ClassicComponent.MAUI.Outdated.Models;
+using ClassicComponent.MAUI.Legacy.Models;
 using ScanbotSDK.MAUI;
 
-namespace ClassicComponent.MAUI.Outdated;
+namespace ClassicComponent.MAUI.Legacy;
 
 public class BaseComponentPage: ContentPage
 {

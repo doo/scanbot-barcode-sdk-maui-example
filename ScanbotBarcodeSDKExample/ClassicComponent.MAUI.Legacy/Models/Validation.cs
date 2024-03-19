@@ -1,4 +1,4 @@
-namespace ClassicComponent.MAUI.Outdated.Models;
+namespace ClassicComponent.MAUI.Legacy.Models;
 
 public class Validation
 {

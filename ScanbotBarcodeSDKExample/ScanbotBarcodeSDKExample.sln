@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.iOS", "Barco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.Droid", "BarcodeSDK.NET.Droid\BarcodeSDK.NET.Droid.csproj", "{9A04E3DC-F75C-4142-925B-0B9346513924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicComponent.MAUI.Outdated", "ClassicComponent.MAUI.Outdated\ClassicComponent.MAUI.Outdated.csproj", "{304F3C29-9E19-4959-8101-05167BAB410F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicComponent.MAUI.Legacy", "ClassicComponent.MAUI.Legacy\ClassicComponent.MAUI.Legacy.csproj", "{304F3C29-9E19-4959-8101-05167BAB410F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

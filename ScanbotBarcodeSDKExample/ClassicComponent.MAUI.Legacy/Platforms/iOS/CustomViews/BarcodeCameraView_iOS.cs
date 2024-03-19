@@ -1,13 +1,13 @@
 
-using ClassicComponent.MAUI.Outdated.ClassicComponent;
-using ClassicComponent.MAUI.Outdated.Platforms.iOS.Utils;
+using ClassicComponent.MAUI.Legacy.ClassicComponent;
+using ClassicComponent.MAUI.Legacy.Platforms.iOS.Utils;
 using CoreGraphics;
 using ScanbotBarcodeSDK.iOS;
 using ScanbotSDK.MAUI.iOS.Utils;
 using ScanbotSDK.MAUI.Models;
 using UIKit;
 
-namespace ClassicComponent.MAUI.Outdated.Platforms.iOS.CustomViews
+namespace ClassicComponent.MAUI.Legacy.Platforms.iOS.CustomViews
 {
     public class BarcodeCameraView_iOS : UIView
 	{

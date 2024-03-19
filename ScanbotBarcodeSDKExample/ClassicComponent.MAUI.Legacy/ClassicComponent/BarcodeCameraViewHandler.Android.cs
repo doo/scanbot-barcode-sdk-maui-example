@@ -16,7 +16,7 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
 
-namespace ClassicComponent.MAUI.Outdated.ClassicComponent
+namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {
