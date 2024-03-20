@@ -9,27 +9,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
         public BarcodeClassicComponentPage()
         {
             InitializeComponent();
-            SetupViews();
         }
-
-        private void SetupViews()
-        {
-            cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-                automaticSelectionEnabled: true,
-                overlayFormat: BarcodeTextFormat.None,
-                textColor: Colors.Transparent,
-                Colors.Transparent,
-                Colors.Transparent);
-            
-            cameraView.FinderConfiguration = new FinderConfiguration()
-            {
-                IsFinderEnabled = true,
-                FinderLineColor = Colors.White,
-                FinderLineWidth = 1,
-                FinderMinimumPadding = 25
-            };
-        }
-
+        
         private void HandleScannerResults(BarcodeResultBundle result)
         {
             string text = string.Empty;
