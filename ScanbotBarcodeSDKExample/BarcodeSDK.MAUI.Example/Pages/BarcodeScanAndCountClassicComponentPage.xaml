@@ -24,8 +24,7 @@
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"
                     HeightRequest="420"
-                    WidthRequest="330"
-                    BackgroundColor="#1f1f1f" />
+                    WidthRequest="330" />
             </StackLayout>
             <Grid Grid.Row="1">
                 <StackLayout
@@ -50,7 +49,6 @@
                         VerticalOptions="Center" 
                         HorizontalOptions="Center"
                         Clicked="ConitueScanningButton_Clicked"/>
-
                 </StackLayout>
             </Grid>
         </Grid>

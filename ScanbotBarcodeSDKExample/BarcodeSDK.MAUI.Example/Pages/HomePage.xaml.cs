@@ -50,6 +50,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 new HomePageMenuItem("SCAN BARCODES", () => StartBarcodeScanning(withImage: false)),
                 new HomePageMenuItem("SCAN BARCODES WITH IMAGE", () => StartBarcodeScanning(withImage: true)),
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("SCAN BARCODE AR OVERLAY WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC SCAN AND COUNT COMPONENT", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
                 new HomePageMenuItem("DETECT BARCODES ON IMAGE", DetectBarcodesOnImage),

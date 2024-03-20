@@ -1,12 +1,12 @@
-﻿using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Configurations;
 using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
-    public partial class BarcodeClassicComponentPage : BaseComponentPage
+    public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
     {
-        public BarcodeClassicComponentPage()
+        public BarcodeArOverlayClassicComponentPage()
         {
             InitializeComponent();
             SetupViews();
@@ -15,18 +15,20 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void SetupViews()
         {
             cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-                automaticSelectionEnabled: true,
-                overlayFormat: BarcodeTextFormat.None,
-                textColor: Colors.Transparent,
-                Colors.Transparent,
-                Colors.Transparent);
+                automaticSelectionEnabled: false,
+                overlayFormat: BarcodeTextFormat.CodeAndType,
+                textColor: Colors.Yellow,
+                textContainerColor: Colors.Black,
+                strokeColor: Colors.Yellow,
+                highlightedStrokeColor: Colors.Red,
+                highlightedTextColor: Colors.Yellow,
+                highlightedTextContainerColor: Colors.DarkOrchid,
+                polygonBackgroundColor: Colors.Transparent,
+                polygonBackgroundHighlightedColor: Colors.Transparent);
             
             cameraView.FinderConfiguration = new FinderConfiguration()
             {
-                IsFinderEnabled = true,
-                FinderLineColor = Colors.White,
-                FinderLineWidth = 1,
-                FinderMinimumPadding = 25
+                IsFinderEnabled = false
             };
         }
 
@@ -67,6 +69,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
         {
+            HandleScannerResults(result);
+        }
+
+        private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
+        {
+            // Only works if automaticSelectionEnabled = false, inside of cameraView.OverlayConfiguration (SelectionOverlayConfiguration)
             HandleScannerResults(result);
         }
     }

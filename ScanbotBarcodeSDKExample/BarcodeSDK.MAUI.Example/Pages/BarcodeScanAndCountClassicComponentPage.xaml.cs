@@ -27,6 +27,11 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             polygonBackgroundColor: Colors.Transparent,
             polygonBackgroundHighlightedColor: Colors.Transparent
         );
+        
+        cameraView.FinderConfiguration = new FinderConfiguration()
+        {
+            IsFinderEnabled = false
+        };
     }
 
     protected override void OnAppearing()
@@ -43,8 +48,6 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         
         // Stop barcode detection manually
         cameraView.StopDetection();
-        
-        this.Navigation.PopAsync(true);
     }
 
     void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
@@ -65,11 +68,14 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
     {
         if (result.Status != OperationResult.Ok)
             return;
-
+        
         string text = string.Empty;
-        foreach (Barcode barcode in result?.Barcodes)
+        if (result?.Barcodes != null)
         {
-            text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
+            foreach (Barcode barcode in result?.Barcodes)
+            {
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
+            }
         }
 
         System.Diagnostics.Debug.WriteLine(text);
