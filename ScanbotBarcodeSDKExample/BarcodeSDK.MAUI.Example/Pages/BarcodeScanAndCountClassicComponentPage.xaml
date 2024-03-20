@@ -1,36 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
-             ios:Page.UseSafeArea="true"
-             Title="BarcodeClassicScanAndCountComponentPage"
-             NavigationPage.HasNavigationBar="True">
+<pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
+                   xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                   x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
+                   ios:Page.UseSafeArea="true"
+                   Title="BarcodeClassicScanAndCountComponentPage"
+                   NavigationPage.HasNavigationBar="True">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="6*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="7.5*" />
+                <RowDefinition Height="2.5*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0"
-                Text="Barcode ScanAndCount ClassicComponent"
-                FontSize="Subtitle"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="Center" 
-                HorizontalOptions="Fill" />
-            <StackLayout Grid.Row="1">
+            <StackLayout 
+                Grid.Row="0"
+                Margin="0,15,0,0">
                 <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
+                    OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"
                     HeightRequest="420"
-                    WidthRequest="330"
-                    BackgroundColor="#1f1f1f" />
+                    WidthRequest="330" />
             </StackLayout>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="1">
                 <StackLayout
                     VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"
@@ -43,19 +39,18 @@
                         HorizontalOptions="Center" />
                     <Button
                         x:Name="StartScanningButton"
-                        Text="Start Scanning"
+                        Text="Capture"
                         VerticalOptions="Center" 
                         HorizontalOptions="Center"
                         Clicked="StartScanningButton_Clicked"/>
                     <Button
                         x:Name="ContinueScanningButton"
-                        Text="Continue Scanning"
+                        Text="Continue"
                         VerticalOptions="Center" 
                         HorizontalOptions="Center"
                         Clicked="ConitueScanningButton_Clicked"/>
-
                 </StackLayout>
             </Grid>
         </Grid>
     </ScrollView>
-</ContentPage>
+</pages:BaseComponentPage>

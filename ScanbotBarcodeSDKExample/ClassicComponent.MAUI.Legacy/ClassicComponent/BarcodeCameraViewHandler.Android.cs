@@ -1,5 +1,4 @@
-﻿using Android;
-using Android.Content;
+using Android;
 using Android.Content.PM;
 using Android.Views;
 using Android.Widget;
@@ -15,10 +14,10 @@ using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Camera;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using Resource = Microsoft.Maui.Controls.Resource;
 using SBSDK = IO.Scanbot.Sdk.Barcode_scanner.ScanbotBarcodeScannerSDK;
-using static IO.Scanbot.Sdk.Barcode.UI.BarcodePolygonsViewExtensions;
 
-namespace ScanbotSDK.MAUI.Example.ClassicComponent
+namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler : ViewHandler<BarcodeCameraView, FrameLayout>
     {
@@ -51,21 +50,6 @@ namespace ScanbotSDK.MAUI.Example.ClassicComponent
 
             BarcodeScannerViewWrapper.InitCamera(cameraViewDroid);
             BarcodeScannerViewWrapper.InitDetectionBehavior(cameraViewDroid, detector, new SBResultHandler(HandleFrameHandlerResult), new BarcodeScannerViewCallback(VirtualView, cameraViewDroid));
-        }
-
-        protected override void DisconnectHandler(FrameLayout platformView)
-        {
-            base.DisconnectHandler(platformView);
-        }
-
-        protected override void RemoveContainer()
-        {
-            base.RemoveContainer();
-        }
-
-        protected override void SetupContainer()
-        {
-            base.SetupContainer();
         }
 
         public static void MapOverlayConfiguration(BarcodeCameraViewHandler current, BarcodeCameraView commonView)
@@ -126,15 +110,17 @@ namespace ScanbotSDK.MAUI.Example.ClassicComponent
                 cameraViewDroid.SelectionOverlayController.SetBarcodeAppearanceDelegate(
                 (
                     getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
-                                                    fillColor: config.PolygonColor.ToPlatform(),
-                                                    fillHighlightedColor: config.HighlightedPolygonColor?.ToPlatform()),
+                                                    strokeColor: config.StrokeColor.ToPlatform(),
+                                                    strokeHighlightedColor: config.HighlightedStrokeColor.ToPlatform(),
+                                                    fillColor: config.PolygonBackgroundColor.ToPlatform(),
+                                                    fillHighlightedColor: config.PolygonBackgroundHighlightedColor?.ToPlatform()),
                     getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(
                             textFormat: config.OverlayTextFormat.ToNative(),
                             textColor: config.TextColor.ToPlatform(),
                             textContainerColor: config.TextContainerColor.ToPlatform(),
                             textHighlightedColor: config.HighlightedTextColor?.ToPlatform(),
                             textContainerHighlightedColor: config.HighlightedTextContainerColor?.ToPlatform()
-                            )
+                        )
                 ));
             }
         }

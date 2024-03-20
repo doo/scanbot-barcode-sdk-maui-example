@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                   xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
-                   xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
-                   x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeClassicComponentPage"
-                   ios:Page.UseSafeArea="true"
-                   Title="BarcodeARClassicComponentPage"
-                   NavigationPage.HasNavigationBar="True">
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
+                         xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                         ios:Page.UseSafeArea="true"
+                         Title="BarcodeClassicComponentPage"
+                         NavigationPage.HasNavigationBar="True"
+                         x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeArOverlayClassicComponentPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -26,6 +26,7 @@
                 x:Name="cameraView"
                 HeightRequest="500"
                 WidthRequest="300"
+                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                 OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
