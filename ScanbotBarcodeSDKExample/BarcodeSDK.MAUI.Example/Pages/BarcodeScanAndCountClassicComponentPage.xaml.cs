@@ -67,7 +67,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             return;
 
         string text = string.Empty;
-        foreach (Barcode barcode in result.Barcodes)
+        foreach (Barcode barcode in result?.Barcodes)
         {
             text += string.Format("{0} ({1})\n", barcode.Text, barcode.Format.ToString().ToUpper());
         }
