@@ -27,11 +27,6 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             polygonBackgroundColor: Colors.Transparent,
             polygonBackgroundHighlightedColor: Colors.Transparent
         );
-        
-        cameraView.FinderConfiguration = new FinderConfiguration()
-        {
-            IsFinderEnabled = false
-        };
     }
 
     protected override void OnAppearing()
