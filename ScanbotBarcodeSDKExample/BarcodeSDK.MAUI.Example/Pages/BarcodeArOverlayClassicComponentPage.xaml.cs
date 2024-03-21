@@ -25,11 +25,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 highlightedTextContainerColor: Colors.DarkOrchid,
                 polygonBackgroundColor: Colors.Transparent,
                 polygonBackgroundHighlightedColor: Colors.Transparent);
-            
-            cameraView.FinderConfiguration = new FinderConfiguration()
-            {
-                IsFinderEnabled = false
-            };
         }
 
         private void HandleScannerResults(BarcodeResultBundle result)
