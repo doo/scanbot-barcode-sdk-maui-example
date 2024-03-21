@@ -5,7 +5,7 @@
                          xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
                          ios:Page.UseSafeArea="true"
-                         Title="BarcodeClassicComponentPage"
+                         Title="BarcodeARClassicComponentPage"
                          NavigationPage.HasNavigationBar="True"
                          x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeArOverlayClassicComponentPage">
     <Grid>

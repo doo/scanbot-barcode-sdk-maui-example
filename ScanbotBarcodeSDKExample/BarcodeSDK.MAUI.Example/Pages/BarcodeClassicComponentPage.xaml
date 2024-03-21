@@ -6,7 +6,7 @@
                    xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
                    x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeClassicComponentPage"
                    ios:Page.UseSafeArea="true"
-                   Title="BarcodeARClassicComponentPage"
+                   Title="BarcodeClassicComponentPage"
                    NavigationPage.HasNavigationBar="True">
     <Grid>
         <Grid.RowDefinitions>
