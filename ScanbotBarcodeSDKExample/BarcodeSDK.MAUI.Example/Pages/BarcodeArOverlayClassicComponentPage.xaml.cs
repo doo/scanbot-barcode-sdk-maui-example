@@ -69,7 +69,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
         {
-            // Only works if automaticSelectionEnabled = false, inside of cameraView.OverlayConfiguration (SelectionOverlayConfiguration)
             HandleScannerResults(result);
         }
     }
