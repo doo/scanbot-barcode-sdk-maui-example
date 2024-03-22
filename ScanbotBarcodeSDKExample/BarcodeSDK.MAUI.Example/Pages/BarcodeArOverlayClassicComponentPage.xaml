@@ -27,7 +27,6 @@
                 HeightRequest="500"
                 WidthRequest="300"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
-                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
         </StackLayout>

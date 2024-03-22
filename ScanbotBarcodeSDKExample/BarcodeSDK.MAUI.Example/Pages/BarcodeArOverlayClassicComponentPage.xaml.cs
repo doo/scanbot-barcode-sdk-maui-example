@@ -61,12 +61,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             // Stop barcode detection manually
             cameraView.StopDetection();
         }
-
-        private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
-        {
-            HandleScannerResults(result);
-        }
-
+        
         private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
         {
             HandleScannerResults(result);
