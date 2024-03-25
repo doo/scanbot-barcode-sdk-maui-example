@@ -1,6 +1,6 @@
-﻿using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Handlers;
 
-namespace ScanbotSDK.MAUI.Example.ClassicComponent
+namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
     public partial class BarcodeCameraViewHandler
     {

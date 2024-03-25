@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<legacy:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                          xmlns:classicComponent="clr-namespace:ClassicComponent.MAUI.Legacy.ClassicComponent"
+                          xmlns:legacy="clr-namespace:ClassicComponent.MAUI.Legacy"
+                          x:Class="ClassicComponent.MAUI.Legacy.BarcodeCustomClassicComponentPage"
+                          ios:Page.UseSafeArea="true"
+                          Title="BarcodeCustomClassicComponentPage"
+                          NavigationPage.HasNavigationBar="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Text="Barcode ClassicComponent"
+               FontSize="Subtitle"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="Center" 
+               HorizontalOptions="Fill" />
+        <StackLayout Grid.Row="1">
+            <classicComponent:BarcodeCameraView
+                x:Name="cameraView"
+                HeightRequest="500"
+                WidthRequest="300"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                BackgroundColor="#1f1f1f" />
+        </StackLayout>
+        <Grid Grid.Row="2">
+            <Label 
+                x:Name="lblResult"
+                Text="Result"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button
+                x:Name="StartScanningButton"
+                Text="Start Scanning"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                Clicked="StartScanningButton_Clicked"/>
+        </Grid>
+    </Grid>
+</legacy:BaseComponentPage>

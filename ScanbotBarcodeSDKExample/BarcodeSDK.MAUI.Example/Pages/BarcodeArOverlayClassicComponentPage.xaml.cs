@@ -1,16 +1,32 @@
-﻿using ScanbotSDK.MAUI.Configurations;
+using ScanbotSDK.MAUI.Configurations;
 using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
-    public partial class BarcodeClassicComponentPage : BaseComponentPage
+    public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
     {
-        public BarcodeClassicComponentPage()
+        public BarcodeArOverlayClassicComponentPage()
         {
             InitializeComponent();
+            SetupViews();
         }
-        
+
+        private void SetupViews()
+        {
+            cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
+                automaticSelectionEnabled: false,
+                overlayFormat: BarcodeTextFormat.CodeAndType,
+                textColor: Colors.Yellow,
+                textContainerColor: Colors.Black,
+                strokeColor: Colors.Yellow,
+                highlightedStrokeColor: Colors.Red,
+                highlightedTextColor: Colors.Yellow,
+                highlightedTextContainerColor: Colors.DarkOrchid,
+                polygonBackgroundColor: Colors.Transparent,
+                polygonBackgroundHighlightedColor: Colors.Transparent);
+        }
+
         private void HandleScannerResults(BarcodeResultBundle result)
         {
             string text = string.Empty;
@@ -45,8 +61,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
             // Stop barcode detection manually
             cameraView.StopDetection();
         }
-
-        private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
+        
+        private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
         {
             HandleScannerResults(result);
         }

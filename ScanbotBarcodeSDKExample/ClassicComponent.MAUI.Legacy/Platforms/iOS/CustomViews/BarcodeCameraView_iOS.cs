@@ -1,13 +1,13 @@
-﻿using ScanbotSDK.MAUI.Models;
-using ScanbotSDK.MAUI.Example.ClassicComponent;
+
+using ClassicComponent.MAUI.Legacy.ClassicComponent;
+using ClassicComponent.MAUI.Legacy.Platforms.iOS.Utils;
 using CoreGraphics;
 using ScanbotBarcodeSDK.iOS;
-using UIKit;
 using ScanbotSDK.MAUI.iOS.Utils;
-using ScanbotSDK.MAUI.Example.Platforms.iOS.Utils;
+using ScanbotSDK.MAUI.Models;
+using UIKit;
 
-
-namespace ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews
+namespace ClassicComponent.MAUI.Legacy.Platforms.iOS.CustomViews
 {
     public class BarcodeCameraView_iOS : UIView
 	{
@@ -48,23 +48,23 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews
             {
                 cameraViewController.IsTrackingOverlayEnabled = true;
                 cameraViewController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled = config.AutomaticSelectionEnabled;
-                cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = config.PolygonColor.ToNative();
-                cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextColor = config.TextColor.ToNative();
-                cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundColor = config.TextContainerColor.ToNative();
+                cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = config.StrokeColor?.ToNative()!;
+                cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextColor = config.TextColor?.ToNative()!;
+                cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundColor = config.TextContainerColor?.ToNative()!;
 
-                if (config.HighlightedPolygonColor != null)
+                if (config.StrokeColor != null)
                 {
-                    cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = config.HighlightedPolygonColor?.ToNative();
+                    cameraViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = config.StrokeColor?.ToNative()!;
                 }
 
                 if (config.HighlightedTextColor != null)
                 {
-                    cameraViewController.TrackingOverlayController.Configuration.TextStyle.SelectedTextColor = config.HighlightedTextColor?.ToNative();
+                    cameraViewController.TrackingOverlayController.Configuration.TextStyle.SelectedTextColor = config.HighlightedTextColor?.ToNative()!;
                 }
 
                 if (config.HighlightedTextContainerColor != null)
                 {
-                    cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundSelectedColor = config.HighlightedTextContainerColor?.ToNative();
+                    cameraViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundSelectedColor = config.HighlightedTextContainerColor?.ToNative()!;
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace ScanbotSDK.MAUI.Example.Platforms.iOS.CustomViews
 
         public override bool ShouldDetectBarcodes(SBSDKBarcodeScannerViewController controller)
         {
-            if (ScanbotBarcodeSDK.LicenseInfo.IsValid == true)
+            if (ScanbotSDK.MAUI.ScanbotBarcodeSDK.LicenseInfo.IsValid)
             {
                 return true;
             }
