@@ -1,4 +1,4 @@
-Open Source libraries used in the Scanbot Barcode SDK for .NET and MAUI version 4.2.0:
+Open Source libraries used in the Scanbot Barcode SDK for .NET and MAUI version 4.2.1:
 
 --------------------------------------------------------------------------------------
 Xamarin.Android bindings for AndroidX - camera-camera2: 
