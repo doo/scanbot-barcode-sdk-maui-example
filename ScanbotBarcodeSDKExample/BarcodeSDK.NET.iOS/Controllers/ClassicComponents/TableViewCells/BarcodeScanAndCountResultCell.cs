@@ -2,7 +2,7 @@
 
 
 using BarcodeSDK.NET.iOS.Utils;
-using ScanbotBarcodeSDK.iOS;
+using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents.TableViewCells
 {

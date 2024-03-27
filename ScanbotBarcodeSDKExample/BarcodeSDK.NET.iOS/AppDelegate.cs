@@ -13,11 +13,11 @@ namespace BarcodeSDK.NET.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            ScanbotBarcodeSDK.iOS.ScanbotSDKGlobal.SetLoggingEnabled(true);
+            ScanbotSDK.iOS.ScanbotSDKGlobal.SetLoggingEnabled(true);
 
             if (!string.IsNullOrEmpty(LicenseKey))
             {
-                ScanbotBarcodeSDK.iOS.ScanbotSDKGlobal.SetLicense(LicenseKey);
+                ScanbotSDK.iOS.ScanbotSDKGlobal.SetLicense(LicenseKey);
             }
 
             var rootController = new UINavigationController(new MainViewController());
