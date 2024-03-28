@@ -1,4 +1,4 @@
-﻿using ScanbotBarcodeSDK.iOS;
+﻿using ScanbotSDK.iOS;
 using UIKit;
 
 namespace BarcodeSDK.NET.iOS
@@ -48,7 +48,7 @@ namespace BarcodeSDK.NET.iOS
             flash.Frame = new CGRect(padding, padding, size, size);
             flash.Click += (sender, e) =>
             {
-                scannerController.FlashLightEnabled = e.Enabled;
+                scannerController.IsFlashLightEnabled = e.Enabled;
             };
         }
 

@@ -1,8 +1,10 @@
-﻿using BarcodeSDK.NET.iOS.Controllers;
+﻿using System.Reflection;
+using BarcodeSDK.NET.iOS.Controllers;
 using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
 using BarcodeSDK.NET.iOS.Utils;
 using Scanbot.ImagePicker.iOS;
-using ScanbotBarcodeSDK.iOS;
+using ScanbotSDK.iOS;
+using UIKit;
 
 namespace BarcodeSDK.NET.iOS
 {
@@ -169,7 +171,7 @@ namespace BarcodeSDK.NET.iOS
                 CodeDensity = SBSDKBarcodeDensity.High
             };
             configuration.BehaviorConfiguration.EngineMode = SBSDKBarcodeEngineMode.NextGen;
-            configuration.BehaviorConfiguration.SuccessBeepEnabled = true;
+            configuration.BehaviorConfiguration.IsSuccessBeepEnabled = true;
 
             if (withImage)
             {
@@ -192,34 +194,24 @@ namespace BarcodeSDK.NET.iOS
             //configuration.BehaviorConfiguration.ResultWithConfirmationEnabled = true;
             //configuration.BehaviorConfiguration.DialogTextFormat = SBSDKBarcodeDialogFormat.TypeAndCode;
 
-            SBSDKUIBarcodeScannerViewController.PresentOn(this, configuration, new BarcodeDelegate(NavigationController));
-        }
-
-        private class BarcodeDelegate : SBSDKUIBarcodeScannerViewControllerDelegate
-        {
-            private UINavigationController navigationController;
-            public BarcodeDelegate(UINavigationController navigationController)
+            var controller = SBSDKUIBarcodeScannerViewController.PresentOn(this, configuration, null);
+            controller.DidDetectResults += (_, e) =>
             {
-                this.navigationController = navigationController;
-            }
+                controller.DismissViewController(animated: false, completionHandler: null);
 
-            public override void DidDetectResults(SBSDKUIBarcodeScannerViewController viewController, SBSDKBarcodeScannerResult[] barcodeResults)
-            {
-                viewController.DismissViewController(animated: false, completionHandler: null);
-
-                if (barcodeResults == null || barcodeResults?.Length == 0)
+                if (e.BarcodeResults == null || e.BarcodeResults?.Length == 0)
                 {
                     return;
                 }
 
-                if (navigationController.TopViewController is ScanResultListController)
+                if (NavigationController.TopViewController is ScanResultListController)
                 {
                     return;
                 }
 
-                var controller = new ScanResultListController(barcodeResults.First().BarcodeImage, barcodeResults);
-                navigationController.PushViewController(controller, animated: true);
-            }
+                var resultsController = new ScanResultListController(e.BarcodeResults.First().BarcodeImage, e.BarcodeResults);
+                NavigationController.PushViewController(resultsController, animated: true);
+            };
         }
 
         private void OnRTUBatchBarcodeClicked(object sender, EventArgs e)
@@ -234,7 +226,7 @@ namespace BarcodeSDK.NET.iOS
 
             configuration.BehaviorConfiguration.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes;
             configuration.BehaviorConfiguration.EngineMode = SBSDKBarcodeEngineMode.NextGen;
-            configuration.BehaviorConfiguration.SuccessBeepEnabled = true;
+            configuration.BehaviorConfiguration.IsSuccessBeepEnabled = true;
             configuration.BehaviorConfiguration.AdditionalDetectionParameters = new SBSDKBarcodeAdditionalParameters
             {
                 CodeDensity = SBSDKBarcodeDensity.High
@@ -249,23 +241,13 @@ namespace BarcodeSDK.NET.iOS
             configuration.TrackingOverlayConfiguration.HighlightedTextContainerColor = UIColor.Black;
             configuration.TrackingOverlayConfiguration.PolygonColor = UIColor.Yellow;
 
-            SBSDKUIBarcodesBatchScannerViewController.PresentOn(this, configuration, new BatchBarcodeDelegate(NavigationController));
-        }
+            var controller = SBSDKUIBarcodesBatchScannerViewController.PresentOn(this, configuration, null);
 
-        private class BatchBarcodeDelegate : SBSDKUIBarcodesBatchScannerViewControllerDelegate
-        {
-            private UINavigationController navigationController;
-            public BatchBarcodeDelegate(UINavigationController navigationController)
+            controller.DidFinishWithResults += (_, args) =>
             {
-                this.navigationController = navigationController;
-            }
-
-            public override void DidDetect(SBSDKUIBarcodesBatchScannerViewController viewController, SBSDKUIBarcodeMappedResult[] barcodeResults)
-            {
-                var resultViewController = new BatchBarcodeResultViewController(barcodeResults ?? new SBSDKUIBarcodeMappedResult[] { });
-                navigationController.PushViewController(resultViewController, animated: true);
-            }
+                var resultViewController = new BatchBarcodeResultViewController(args.BarcodeResults ?? new SBSDKUIBarcodeMappedResult[] { });
+                NavigationController.PushViewController(resultViewController, animated: true);
+            };
         }
-
     }
 }

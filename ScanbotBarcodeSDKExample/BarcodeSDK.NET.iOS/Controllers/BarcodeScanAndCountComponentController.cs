@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using ScanbotBarcodeSDK.iOS;
+using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers
 {
@@ -75,12 +75,12 @@ namespace BarcodeSDK.NET.iOS.Controllers
 
         private void Flash_TouchUpInside(object sender, EventArgs e)
         {
-            scannerController.FlashLightEnabled = !scannerController.FlashLightEnabled;
+            scannerController.IsFlashLightEnabled = !scannerController.IsFlashLightEnabled;
         }
 
         private void Start_TouchUpInside(object sender, EventArgs e)
         {
-            scannerController.RecognitionEnabled = true;
+            scannerController.IsRecognitionEnabled = true;
             scannerController?.ScanAndCount();
 
             start.Hidden = true;

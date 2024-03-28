@@ -1,4 +1,4 @@
-﻿using ScanbotBarcodeSDK.iOS;
+﻿using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS
 {
