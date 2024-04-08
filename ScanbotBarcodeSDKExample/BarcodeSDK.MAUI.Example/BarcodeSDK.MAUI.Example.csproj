@@ -25,6 +25,7 @@
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
 
     <!-- General settings for iOS targets -->
