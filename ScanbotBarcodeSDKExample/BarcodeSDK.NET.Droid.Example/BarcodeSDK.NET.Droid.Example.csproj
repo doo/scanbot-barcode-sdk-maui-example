@@ -8,6 +8,7 @@
         <ApplicationId>io.scanbot.example.sdk.barcode.net</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
     <ItemGroup>
          <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
