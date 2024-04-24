@@ -8,8 +8,7 @@ namespace BarcodeSDK.NET.iOS
 
         public string GetText(SBSDKBarcodeScannerResult barcode)
         {
-            var format = barcode.FormattedResult;
-            return format.ToJson();
+            return barcode.ToString();
         }
     }
 }

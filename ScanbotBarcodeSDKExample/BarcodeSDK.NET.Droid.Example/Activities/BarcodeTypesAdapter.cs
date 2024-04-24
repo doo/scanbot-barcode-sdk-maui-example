@@ -2,7 +2,7 @@
 using AndroidX.RecyclerView.Widget;
 using IO.Scanbot.Sdk.Barcode.Entity;
 
-namespace BarcodeSDK.NET.Droid
+namespace BarcodeSDK.NET.Droid.Activities
 {
     public class BarcodeTypesAdapter : RecyclerView.Adapter
     {

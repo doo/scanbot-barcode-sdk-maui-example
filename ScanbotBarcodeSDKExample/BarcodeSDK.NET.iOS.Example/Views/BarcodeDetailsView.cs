@@ -49,11 +49,6 @@ namespace BarcodeSDK.NET.iOS
 
         string ParseText(SBSDKBarcodeScannerResult barcode)
         {
-            if (barcode.FormattedResult == null)
-            {
-                return barcode.RawTextString;
-            }
-
             return BarcodeFormatter.Instance.GetText(barcode);
         }
     }

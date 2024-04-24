@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.MAUI.Example", "BarcodeSDK.MAUI.Example\BarcodeSDK.MAUI.Example.csproj", "{FB3143CA-07AE-4914-9676-1F9FE52484ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.iOS.Example", "BarcodeSDK.NET.iOS\BarcodeSDK.NET.iOS.Example.csproj", "{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.Droid.Example", "BarcodeSDK.NET.Droid\BarcodeSDK.NET.Droid.Example.csproj", "{9A04E3DC-F75C-4142-925B-0B9346513924}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicComponent.MAUI.Legacy", "ClassicComponent.MAUI.Legacy\ClassicComponent.MAUI.Legacy.csproj", "{304F3C29-9E19-4959-8101-05167BAB410F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.Droid.Example", "BarcodeSDK.NET.Droid.Example\BarcodeSDK.NET.Droid.Example.csproj", "{153D974E-6092-4B81-976A-F2A4CE1AE47C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.iOS.Example", "BarcodeSDK.NET.iOS.Example\BarcodeSDK.NET.iOS.Example.csproj", "{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C4A9F08-D2B8-48F1-A56B-4D41B7E6AD87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A04E3DC-F75C-4142-925B-0B9346513924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A04E3DC-F75C-4142-925B-0B9346513924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A04E3DC-F75C-4142-925B-0B9346513924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A04E3DC-F75C-4142-925B-0B9346513924}.Release|Any CPU.Build.0 = Release|Any CPU
 		{304F3C29-9E19-4959-8101-05167BAB410F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{304F3C29-9E19-4959-8101-05167BAB410F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{304F3C29-9E19-4959-8101-05167BAB410F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{304F3C29-9E19-4959-8101-05167BAB410F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

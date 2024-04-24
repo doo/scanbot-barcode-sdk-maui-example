@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net7.0-ios</TargetFramework>
+        <TargetFrameworks>net7.0-ios;net8.0-ios</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -22,16 +22,11 @@
         <CodesignProvision>Automatic</CodesignProvision>
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <CreatePackage>false</CreatePackage>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <CreatePackage>false</CreatePackage>
+        <Platforms>x64;ARM64</Platforms>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="4.2.0" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="5.1.0-alpha.4" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Controllers\ClassicComponents\" />

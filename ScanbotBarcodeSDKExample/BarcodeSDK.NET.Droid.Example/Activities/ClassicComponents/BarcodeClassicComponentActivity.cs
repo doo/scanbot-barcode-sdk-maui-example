@@ -6,6 +6,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
+using BarcodeSDK.NET.Droid.Activities.V1;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
@@ -13,7 +14,7 @@ using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
 using IO.Scanbot.Sdk.UI.Camera;
 
-namespace BarcodeSDK.NET.Droid
+namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
     public class BarcodeClassicComponentActivity : AppCompatActivity
@@ -77,8 +78,8 @@ namespace BarcodeSDK.NET.Droid
         private void OnSelectionOverlayBarcodeClicked(BarcodeItem e)
         {
             var intent = new Intent(this, typeof(BarcodeResultActivity));
-            var result = new BarcodeResult(new BarcodeScanningResult(new List<BarcodeItem> { e }, 0));
-            intent.PutExtra(nameof(BarcodeResult), result.ToBundle());
+            var result = new BaseBarcodeResult<BarcodeScanningResult>(new BarcodeScanningResult(new List<BarcodeItem> { e }, 0));
+            intent.PutExtra(("BarcodeResult"), result.ToBundle());
             StartActivity(intent);
             Finish();
         }
@@ -95,7 +96,7 @@ namespace BarcodeSDK.NET.Droid
             if (shouldHandleBarcode && result != null)
             {
                 var intent = new Intent(this, typeof(BarcodeResultActivity));
-                intent.PutExtra(nameof(BarcodeResult), new BarcodeResult(result).ToBundle());
+                intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScanningResult>(result).ToBundle());
                 StartActivity(intent);
                 Finish();
             }
