@@ -23,10 +23,11 @@
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
         <Platforms>x64;ARM64</Platforms>
+        <DefineConstants>$(DefineConstants);LEGACY</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="5.1.0-alpha.4" />
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="5.1.0-beta.53" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Controllers\ClassicComponents\" />
