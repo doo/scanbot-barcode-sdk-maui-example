@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using ScanbotSDK.MAUI.Services;
 
 namespace ScanbotSDK.MAUI.Example
 {
