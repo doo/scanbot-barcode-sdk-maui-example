@@ -245,6 +245,60 @@
 				android:text="Barcode Scanner UserGuidance"
 				android:textColor="@color/primary_material_light" />
 
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Ready to Use UI (legacy)"
+				android:textColor="@android:color/white"
+				android:textStyle="bold"
+				android:background="@color/scanbotRed"
+				android:gravity="center_vertical"
+				android:layout_gravity="left"
+				android:padding="16dp"/>
+
+			<TextView
+				android:id="@+id/rtu_ui"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+				android:paddingVertical="20dp"
+				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+				android:text="Barcode Scanner"
+				android:textColor="@color/primary_material_light" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#50000000" />
+
+            <TextView
+                android:id="@+id/rtu_ui_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+                android:paddingVertical="20dp"
+                style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+                android:text="Barcode Scanner with Image"
+                android:textColor="@color/primary_material_light" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#50000000" />
+
+            <TextView
+                android:id="@+id/batch_rtu_ui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+				android:paddingHorizontal="16dp"
+                android:paddingVertical="20dp"
+                style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
+                android:text="Batch Barcode Scanner"
+                android:textColor="@color/primary_material_light" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

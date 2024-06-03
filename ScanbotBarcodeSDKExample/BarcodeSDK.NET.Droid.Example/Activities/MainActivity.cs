@@ -20,7 +20,7 @@ using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActi
 namespace BarcodeSDK.NET.Droid
 {
     [Activity(MainLauncher = true, Theme = "@style/AppTheme")]
-    public class MainActivity : Activity
+    public partial class MainActivity : Activity
     {
         internal static ScanbotBarcodeScannerSDK SDK;
 
@@ -32,12 +32,17 @@ namespace BarcodeSDK.NET.Droid
             base.OnCreate(savedInstanceState);
             SDK = new ScanbotBarcodeScannerSDK(this);
 
+#if LEGACY_EXAMPLES
+            SetContentView(Resource.Layout.activity_main_legacy);
+            FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
+            FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
+            FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;
+#else
             SetContentView(Resource.Layout.activity_main);
-
+#endif
             FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += OnRTUUI_V2_ClickArOverlay;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += OnRTUUI_V2_ClickItemMapping;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  OnRTUUI_V2_ClickMultipleScanningPreview;
@@ -45,148 +50,11 @@ namespace BarcodeSDK.NET.Droid
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_scanning).Click += OnRTUUI_V2_ClickSingleScanning;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_topbar).Click += OnRTUUI_V2_ClickTopBar;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_userguid).Click += OnRTUUI_V2_ClickUserGuid;
-            FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
-            FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;
+
             FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
             FindViewById<TextView>(Resource.Id.settings).Click += OnSettingsClick;
             FindViewById<TextView>(Resource.Id.clear_storage).Click += OnClearStorageClick;
             FindViewById<TextView>(Resource.Id.license_info).Click += OnLicenseInfoClick;
-        }
-
-        private void OnBarcodeCameraDemoClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
-            intent.PutExtra("useCameraX", false);
-            StartActivity(intent);
-        }
-
-        private void OnBarcodeCameraXDemoClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
-            intent.PutExtra("useCameraX", true);
-            StartActivity(intent);
-        }
-
-        private void OnBarcodeCameraScanAndCountClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            var intent = new Intent(this, typeof(BarcodeScanAndCountActivity));
-            StartActivity(intent);
-        }
-
-        private void OnRTUUIClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            StartBarcodeScannerActivity(withImage: false);
-        }
-        
-        private void OnRTUUI_V2_ClickArOverlay(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new ArOverlayUseCaseSnippet().GetArOverlayUseCaseSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickItemMapping(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new ItemMappingConfigSnippet().GetItemMappingConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickMultipleScanningPreview(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new MultipleScanningPreviewConfigSnippet().GetMultipleScanningPreviewConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickMultipleScanning(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new MultipleScanningUseCaseSnippet().GetMultipleScanningPreviewConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickSingleScanning(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new SingleScanningUseCaseSnippet().GetSingleScanningUseCaseSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickTopBar(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new TopBarConfigSnippet().GetTopBarConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-        
-        private void OnRTUUI_V2_ClickUserGuid(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            
-            var intent = BarcodeScannerActivityV2.NewIntent(this, new UserGuidanceConfigSnippet().GetUserGuidanceConfigSnippetConfiguration());
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-
-        private void OnRTUUIImageClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            StartBarcodeScannerActivity(withImage: true);
-        }
-
-        private void OnBatchRTUUIClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this, SDK))
-            {
-                return;
-            }
-            StartBatchBarcodeScannerActivity();
         }
 
         private async void OnImportClick(object sender, EventArgs e)
