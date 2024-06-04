@@ -42,14 +42,11 @@ namespace BarcodeSDK.NET.Droid
             FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_scanning).Click += SingleScanningUseCaseSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += ItemMappingConfigSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_topbar).Click += TopBarConfigSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_userguid).Click += UserGuidanceConfigSnippet;                
-
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  MultipleScanningUseCaseSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning).Click += MultipleScanningPreviewConfigSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += ArOverlayUseCaseSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single).Click += SingleScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_ar_overlay).Click += SingleScanningWithArOverlay;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_batch).Click += BatchBarcodeScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_unique).Click += MultipleUniqueBarcodeScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_find_and_pick).Click += FindAndPickScanning;
             
             FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
             FindViewById<TextView>(Resource.Id.settings).Click += OnSettingsClick;

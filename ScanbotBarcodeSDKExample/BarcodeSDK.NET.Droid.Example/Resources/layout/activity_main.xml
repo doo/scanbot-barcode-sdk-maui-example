@@ -139,7 +139,7 @@
 				android:background="#50000000" />
 
             <TextView
-				android:id="@+id/rtu_ui_v2_single_scanning"
+				android:id="@+id/rtu_ui_v2_single"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -154,15 +154,16 @@
 				android:layout_height="1dp"
 				android:background="#50000000" />
 
+
 			<TextView
-				android:id="@+id/rtu_ui_v2_aroverlay"
+				android:id="@+id/rtu_ui_v2_single_ar_overlay"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
 				android:paddingHorizontal="16dp"
 				android:paddingVertical="20dp"
 				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-				android:text="RTU UI - with selection overlay"
+				android:text="RTU UI - single scanning selection overlay"
 				android:textColor="@color/primary_material_light" />
 
 			<FrameLayout
@@ -171,14 +172,14 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_item_mapping"
+				android:id="@+id/rtu_ui_v2_batch"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
 				android:paddingHorizontal="16dp"
 				android:paddingVertical="20dp"
 				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-				android:text="Barcode Scanner ItemMapping"
+				android:text="RTU UI - batch barcode scanning"
 				android:textColor="@color/primary_material_light" />
 
 			<FrameLayout
@@ -187,7 +188,7 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_multiple_scanning_preview"
+				android:id="@+id/rtu_ui_v2_multiple_unique"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -203,7 +204,7 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_multiple_scanning"
+				android:id="@+id/rtu_ui_v2_find_and_pick"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -217,33 +218,6 @@
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:background="#50000000" />
-			
-			<TextView
-				android:id="@+id/rtu_ui_v2_topbar"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:paddingHorizontal="16dp"
-				android:paddingVertical="20dp"
-				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-				android:text="Barcode Scanner TopBar"
-				android:textColor="@color/primary_material_light" />
-
-			<FrameLayout
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:background="#50000000" />
-
-			<TextView
-				android:id="@+id/rtu_ui_v2_userguid"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:paddingHorizontal="16dp"
-				android:paddingVertical="20dp"
-				style="@style/Scanbot.Demo.MaterialTwoButtonTeaser.Button"
-				android:text="Barcode Scanner UserGuidance"
-				android:textColor="@color/primary_material_light" />
 
             <TextView
                 android:layout_width="match_parent"
