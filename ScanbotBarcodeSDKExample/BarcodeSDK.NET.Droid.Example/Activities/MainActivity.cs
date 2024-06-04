@@ -12,7 +12,6 @@ using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
 using BarcodeSDK.NET.Droid.Activities;
 using BarcodeSDK.NET.Droid.Activities.V1;
-using BarcodeSDK.NET.Droid.Snippets;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.UI.View.Barcode.Configuration.BarcodeScannerConfiguration;
 using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity;
@@ -34,23 +33,24 @@ namespace BarcodeSDK.NET.Droid
 
 #if LEGACY_EXAMPLES
             SetContentView(Resource.Layout.activity_main_legacy);
-            FindViewById<TextView>(Resource.Id.rtu_ui).Click += OnRTUUIClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += OnRTUUIImageClick;
-            FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += OnBatchRTUUIClick;
+            FindViewById<TextView>(Resource.Id.rtu_ui).Click += LegacySingleBarcodeScanningSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += LegacySingleBarcodeScanningWithImageSnippet;
+            FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += LgeacyBatchBarcodeScanningSnippet;
 #else
             SetContentView(Resource.Layout.activity_main);
 #endif
             FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += OnRTUUI_V2_ClickArOverlay;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += OnRTUUI_V2_ClickItemMapping;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  OnRTUUI_V2_ClickMultipleScanningPreview;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning).Click += OnRTUUI_V2_ClickMultipleScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_scanning).Click += OnRTUUI_V2_ClickSingleScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_topbar).Click += OnRTUUI_V2_ClickTopBar;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_userguid).Click += OnRTUUI_V2_ClickUserGuid;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_scanning).Click += SingleScanningUseCaseSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_item_mapping).Click += ItemMappingConfigSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_topbar).Click += TopBarConfigSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_userguid).Click += UserGuidanceConfigSnippet;                
 
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning_preview).Click +=  MultipleScanningUseCaseSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_scanning).Click += MultipleScanningPreviewConfigSnippet;
+            FindViewById<TextView>(Resource.Id.rtu_ui_v2_aroverlay).Click += ArOverlayUseCaseSnippet;
+            
             FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
             FindViewById<TextView>(Resource.Id.settings).Click += OnSettingsClick;
             FindViewById<TextView>(Resource.Id.clear_storage).Click += OnClearStorageClick;
@@ -124,62 +124,7 @@ namespace BarcodeSDK.NET.Droid
 
             Alert.ShowInfoDialog(this, "License Info", message);
         }
-
-        void StartBarcodeScannerActivity(bool withImage)
-        {
-            var configuration = new BarcodeScannerConfiguration();
-            var defaultAdditionalConfig = new BarcodeScannerAdditionalConfiguration();
-
-            configuration.SetBarcodeFormatsFilter(
-                BarcodeTypes.Instance.AcceptedTypes);
-            configuration.SetAdditionalDetectionParameters(
-                defaultAdditionalConfig.Copy(codeDensity: BarcodeDensity.High));
-            configuration.SetEngineMode(EngineMode.NextGen);
-            configuration.SetSuccessBeepEnabled(true);
-
-            if (withImage)
-            {
-                configuration.SetBarcodeImageGenerationType(BarcodeImageGenerationType.VideoFrame);
-            }
-
-            configuration.SetSelectionOverlayConfiguration(
-                new IO.Scanbot.Sdk.UI.View.Barcode.SelectionOverlayConfiguration(
-                    overlayEnabled: true,
-                    automaticSelectionEnabled: false,
-                    textFormat: IO.Scanbot.Sdk.Barcode.UI.BarcodeOverlayTextFormat.Code,
-                    polygonColor: Color.Yellow,
-                    textColor: Color.Yellow,
-                    textContainerColor: Color.Black));
-
-            // To see the confirmation dialog in action, uncomment the below and comment out the configuration.SetConfirmationDialogConfiguration line above.
-            //configuration.SetConfirmationDialogConfiguration(new IO.Scanbot.Sdk.UI.View.Barcode.Dialog.BarcodeConfirmationDialogConfiguration(
-            //    resultWithConfirmationEnabled: true,
-            //    title: "Barcode Detected!",
-            //    message: "A barcode was found.",
-            //    confirmButtonTitle: "Continue",
-            //    retryButtonTitle: "Try again",
-            //    dialogTextFormat: IO.Scanbot.Sdk.UI.View.Barcode.Dialog.BarcodeDialogFormat.TypeAndCode,
-            //    buttonsAccentColor: null,
-            //    isConfirmButtonFilled: false,
-            //    filledConfirmButtonTextColor: null
-            //));
-
-            var intent = BarcodeScannerActivity.NewIntent(this, configuration);
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
-        }
-
-        void StartBatchBarcodeScannerActivity()
-        {
-            var configuration = new BatchBarcodeScannerConfiguration();
-            var list = BarcodeTypes.Instance.AcceptedTypes;
-            configuration.SetBarcodeFormatsFilter(list);
-            configuration.SetSelectionOverlayConfiguration(new IO.Scanbot.Sdk.UI.View.Barcode.SelectionOverlayConfiguration(true,
-                true, IO.Scanbot.Sdk.Barcode.UI.BarcodeOverlayTextFormat.Code,
-                Color.Yellow, Color.Yellow, Color.Black, Color.Pink));
-            var intent = BatchBarcodeScannerActivity.NewIntent(this, configuration);
-            StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
-        }
-
+        
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
@@ -193,31 +138,13 @@ namespace BarcodeSDK.NET.Droid
                 data?.GetParcelableExtra(
                     RtuConstants.ExtraKeyRtuResult) is BarcodeScanningResult barcode)
             {
-                var imagePath = data.GetStringExtra(
-                    BarcodeScannerActivity.ScannedBarcodeImagePathExtra);
-                var previewPath = data.GetStringExtra(
-                    BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
-
-                var intent = new Intent(this, typeof(BarcodeSDK.NET.Droid.Activities.V1.BarcodeResultActivity));
-                var bundle = new BaseBarcodeResult<BarcodeScanningResult>(barcode, imagePath, previewPath).ToBundle();
-                intent.PutExtra("BarcodeResult", bundle);
-
-                StartActivity(intent);
+                OnLegacyActivityResult(data, barcode);
             }
             
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE_V2 &&
                 data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants.ExtraKeyRtuResult) is BarcodeScannerResult barcodeV2)
             {
-                var imagePath = data.GetStringExtra(
-                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodeImagePathExtra);
-                var previewPath = data.GetStringExtra(
-                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
-
-                var intent = new Intent(this, typeof(BarcodeSDK.NET.Droid.Activities.V2.BarcodeResultActivity));
-                var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcodeV2, imagePath, previewPath).ToBundle();
-                intent.PutExtra("BarcodeResult", bundle);
-
-                StartActivity(intent);
+                OnRTUv2ActivityResult(data, barcodeV2);
             }
         }
 

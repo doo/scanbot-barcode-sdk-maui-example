@@ -12,10 +12,6 @@ using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
 using BarcodeSDK.NET.Droid.Activities;
 using BarcodeSDK.NET.Droid.Activities.V1;
-using BarcodeSDK.NET.Droid.Snippets;
-using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using BarcodeScannerConfiguration = IO.Scanbot.Sdk.UI.View.Barcode.Configuration.BarcodeScannerConfiguration;
-using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity;
 
 namespace BarcodeSDK.NET.Droid
 {
