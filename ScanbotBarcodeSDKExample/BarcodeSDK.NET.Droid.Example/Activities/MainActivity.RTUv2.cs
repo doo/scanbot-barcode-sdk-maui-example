@@ -143,11 +143,11 @@ namespace BarcodeSDK.NET.Droid
             findAndPickConfig.SheetContent.SubmitButton.Foreground.Color = new ScanbotColor("#000000"); //arg string
 
             // Set the expected barcodes.
-            // findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>() 
-            // {
-            //     new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-            //     new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-            // };
+            findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>() 
+            {
+                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+            };
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             configuration.UseCase = findAndPickConfig;
