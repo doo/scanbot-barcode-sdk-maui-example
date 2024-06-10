@@ -29,21 +29,25 @@ namespace BarcodeSDK.NET.iOS
         {
             base.ViewWillAppear(animated);
 
-#if LEGACY
-            contentView.CreateButton("RTU UI v1 - Single", OnRTUUIButtonClick);
-            contentView.CreateButton("RTU UI v1 – Single with Image", OnRTUUIImageButtonClick);
-            contentView.CreateButton("RTU UI v1 - Batch", OnRTUBatchBarcodeClicked);
-#endif
-
-            contentView.CreateButton("RTU UI v2 - Single", ShowSingleBarcodeScannerFromRTUUI);
-            contentView.CreateButton("RTU UI v2 - Single AR", ShowSingleARBarcodeScannerFromRTUUI);
-            contentView.CreateButton("RTU UI v2 - Single AR Auto Select", ShowSingleARAutoSelectBarcodeScannerFromRTUUI);
-            contentView.CreateButton("RTU UI v2 - Multiple", ShowMultiBarcodeScannerFromRTUUI);
-            contentView.CreateButton("RTU UI v2 - Multiple Sheet", ShowMultiSheetBarcodeScannerFromRTUUI);
-            contentView.CreateButton("RTU UI v2 - Multiple Sheet AR Count", ShowMultiSheetARCountAutoSelectBarcodeScannerFromRTUUI);
-
-            contentView.CreateButton("Classic Component", OnClassicButtonClick);
-            contentView.CreateButton("Classic Scan and Count Component", OnClassicScanAndCountButtonClick);
+            contentView.CreateText("Classic Components");
+            contentView.CreateButton("Barcode Component", OnClassicButtonClick);
+            contentView.CreateButton("Barcode Scan and Count Component", OnClassicScanAndCountButtonClick);
+        
+            #if LEGACY_EXAMPLES
+            contentView.CreateText("Ready to Use UI (legacy)");
+            contentView.CreateButton("Barcode Scanner", OnRTUUIButtonClick);
+            contentView.CreateButton("Barcode Scanner with Image", OnRTUUIImageButtonClick);
+            contentView.CreateButton("Batch Barcode Scanner", OnRTUBatchBarcodeClicked);
+            #else
+            contentView.CreateText("Ready to Use UI");
+            contentView.CreateButton("Single Scanning", ShowSingleBarcodeScannerFromRTUUI);
+            contentView.CreateButton("Single Scanning Selection Overlay", ShowSingleARBarcodeScannerFromRTUUI);
+            contentView.CreateButton("Batch Barcode Scanning", ShowSingleARAutoSelectBarcodeScannerFromRTUUI);
+            contentView.CreateButton("Multiple Unique Barcode Scanning", ShowMultiBarcodeScannerFromRTUUI);
+            contentView.CreateButton("Find and Pick Barcode Scanning", ShowMultiSheetBarcodeScannerFromRTUUI);
+            #endif
+            
+            contentView.CreateText("SDK Operations");
             contentView.CreateButton("Pick Image From Library", OnLibraryButtonClick);
             contentView.CreateButton("Set Accepted Barcode Types", OnCodeTypeButtonClick);
             contentView.CreateButton("Clear Image Storage", OnClearStorageButtonClick);
@@ -54,7 +58,7 @@ namespace BarcodeSDK.NET.iOS
         {
             base.ViewWillDisappear(animated);
 
-            contentView.RemoveAllButtons();
+            contentView.RemoveAllControls();
         }
 
         private void OnClassicButtonClick(object sender, EventArgs e)
