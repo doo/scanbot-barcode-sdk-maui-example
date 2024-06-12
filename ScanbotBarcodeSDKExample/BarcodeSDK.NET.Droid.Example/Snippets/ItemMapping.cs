@@ -14,6 +14,7 @@ public static partial class Snippets
             
             var useCase = new SingleScanningMode();
 
+            useCase.ConfirmationSheetEnabled = true;
             useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
             {
                 BarcodeItemMapper = new CustomMapper()

@@ -42,7 +42,7 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types. TODO fix in the binding library
-            config.RecognizerConfiguration.BarcodeFormats = BarcodeFormat.CommonCodes.ToList();
+            config.RecognizerConfiguration.BarcodeFormats = BarcodeFormat.CommonCodes;
 
             return config;
         }

@@ -40,11 +40,11 @@ namespace BarcodeSDK.NET.iOS
             contentView.CreateButton("Batch Barcode Scanner", OnRTUBatchBarcodeClicked);
             #else
             contentView.CreateText("Ready to Use UI");
-            contentView.CreateButton("Single Scanning", ShowSingleBarcodeScannerFromRTUUI);
-            contentView.CreateButton("Single Scanning Selection Overlay", ShowSingleARBarcodeScannerFromRTUUI);
-            contentView.CreateButton("Batch Barcode Scanning", ShowSingleARAutoSelectBarcodeScannerFromRTUUI);
-            contentView.CreateButton("Multiple Unique Barcode Scanning", ShowMultiBarcodeScannerFromRTUUI);
-            contentView.CreateButton("Find and Pick Barcode Scanning", ShowMultiSheetBarcodeScannerFromRTUUI);
+            contentView.CreateButton("Single Scanning", SingleScanning);
+            contentView.CreateButton("Single Scanning Selection Overlay", SingleScanningWithArOverlay);
+            contentView.CreateButton("Batch Barcode Scanning", BatchBarcodeScanning);
+            contentView.CreateButton("Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning);
+            contentView.CreateButton("Find and Pick Barcode Scanning", FindAndPickScanning);
             #endif
             
             contentView.CreateText("SDK Operations");

@@ -21,10 +21,13 @@ namespace BarcodeSDK.NET.Droid
             {
                 RecognizerConfiguration = new BarcodeRecognizerConfiguration
                 {
-                    BarcodeFormats = BarcodeFormat.Values().ToList(),
+                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypesV2,
                     Gs1Handling = Gs1Handling.Decode
                 },
                 UseCase = new SingleScanningMode()
+                {
+                    ConfirmationSheetEnabled = true
+                }
             });
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
         }
@@ -60,7 +63,7 @@ namespace BarcodeSDK.NET.Droid
             {
                 RecognizerConfiguration = new BarcodeRecognizerConfiguration
                 {
-                    BarcodeFormats = BarcodeFormat.Values().ToList(),           
+                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypesV2,           
                 },
                 UseCase = new MultipleScanningMode
                 {
@@ -81,7 +84,20 @@ namespace BarcodeSDK.NET.Droid
             {
                 UseCase = new MultipleScanningMode
                 {
-                    Mode = MultipleBarcodesScanningMode.Counting
+                    Mode = MultipleBarcodesScanningMode.Unique,
+                    SheetContent = new SheetContent
+                    {
+                        ManualCountChangeEnabled = false
+                    },
+                    Sheet = new Sheet
+                    {
+                        Mode = SheetMode.CollapsedSheet
+                    },
+                    ArOverlay = new ArOverlayGeneralConfiguration
+                    {
+                        Visible = true, 
+                        AutomaticSelectionEnabled = false
+                    }
                 },
                 UserGuidance = new UserGuidanceConfiguration
                 {
@@ -89,25 +105,6 @@ namespace BarcodeSDK.NET.Droid
                 }
             });
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
-        }
-
-        private class CustomMapper : global::Java.Lang.Object, global::Java.IO.ISerializable, IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.IBarcodeItemMapper
-        {
-            public void MapBarcodeItem(BarcodeItem barcodeItem, IBarcodeMappingResult result)
-            {
-                var title = $"Some product {barcodeItem.TextWithExtension}";
-                var subTitle = barcodeItem.Type.Name();
-                var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
-
-                if (barcodeItem.TextWithExtension == "Error occurred!")
-                {
-                    result.OnError();
-                }
-                else
-                {
-                    result.OnResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
-                }
-            }
         }
 
         private void FindAndPickScanning(object sender, EventArgs e)

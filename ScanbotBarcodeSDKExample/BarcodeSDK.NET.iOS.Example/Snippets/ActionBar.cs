@@ -3,7 +3,7 @@ using ScanbotSDK.iOS;
 namespace BarcodeSDK.NET.iOS;
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration ActionBarConfig
+    public static SBSDKUI2BarcodeScannerConfiguration ActionBar
     {
         get
         {

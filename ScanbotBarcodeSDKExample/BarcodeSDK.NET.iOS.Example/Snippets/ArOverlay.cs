@@ -16,7 +16,7 @@ public static partial class Snippets
             useCase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Unique;
             useCase.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
             useCase.Sheet.CollapsedVisibleHeight = SBSDKUI2CollapsedVisibleHeight.Small;
-
+            
             // Configure AR Overlay.
             useCase.ArOverlay.Visible = true;
             useCase.ArOverlay.AutomaticSelectionEnabled = false;

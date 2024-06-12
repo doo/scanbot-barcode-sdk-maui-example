@@ -13,6 +13,7 @@ public static partial class Snippets
             
             var useCase = new SBSDKUI2SingleScanningMode();
 
+            useCase.ConfirmationSheetEnabled = true;
             useCase.BarcodeInfoMapping = new SBSDKUI2BarcodeInfoMapping()
             {
                 BarcodeItemMapper = new CustomMapper()
@@ -27,7 +28,7 @@ public static partial class Snippets
 
     public class CustomMapper : SBSDKUI2BarcodeItemMapper
     {
-        public void MapBarcodeItem(SBSDKUI2BarcodeItem barcodeItem, Action<SBSDKUI2BarcodeMappedData> onResult, Action onError)
+        public override void MapBarcodeItemWithItem(SBSDKUI2BarcodeItem barcodeItem, Action<SBSDKUI2BarcodeMappedData> onResult, Action onError)
         {
             var title = $"Some product {barcodeItem.TextWithExtension}";
             var subTitle = "Subtitle";

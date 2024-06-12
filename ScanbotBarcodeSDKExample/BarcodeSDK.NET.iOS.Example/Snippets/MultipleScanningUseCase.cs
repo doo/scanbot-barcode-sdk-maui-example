@@ -34,8 +34,8 @@ public static partial class Snippets
             // Configure other parameters, pertaining to multiple-scanning mode as needed.
             config.UseCase = useCase;
 
-            // Set an array of accepted barcode types. TODO fix in binding library
-            //config.RecognizerConfiguration.BarcodeFormats = SBSDKUI2BarcodeFormat.CommonFormats;
+            // Set an array of accepted barcode types.
+            config.RecognizerConfiguration.BarcodeFormats = SBSDKUI2BarcodeFormat.CommonFormats;
 
             return config;
         }

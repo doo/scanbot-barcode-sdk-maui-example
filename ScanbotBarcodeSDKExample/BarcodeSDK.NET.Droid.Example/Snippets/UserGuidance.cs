@@ -5,7 +5,7 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration UserGuidanceConfig
+    public static BarcodeScannerConfiguration UserGuidance
     {
         get
         {

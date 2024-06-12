@@ -35,11 +35,10 @@ public static partial class Snippets
             useCase.SheetContent.SubmitButton.Foreground.Color = new SBSDKUI2Color("#000000"); //arg string
 
             // Set the expected barcodes.
-            // useCase.ExpectedBarcodes = new List<ExpectedBarcode>() 
-            // {
-            //     new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-            //     new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-            // };
+            useCase.ExpectedBarcodes = new SBSDKUI2ExpectedBarcode[] {
+                new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+                new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+            };
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             config.UseCase = useCase;
