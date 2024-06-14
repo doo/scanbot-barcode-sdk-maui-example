@@ -1,6 +1,6 @@
 ﻿using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Example.Utils;
+using ScanbotSDK.MAUI.Example.Models;
 using System.Diagnostics;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -17,26 +17,20 @@ namespace ScanbotSDK.MAUI.Example.Pages
         { 
             try
             {
-                Console.WriteLine("example: StartBarcodeScanning");
-                BarcodeScannerConfiguration configuration = new BarcodeScannerConfiguration();
-           
-                //     configuration.RecognizerConfiguration.BarcodeTypes =
-                //         new[] { SBSDKBarcodeType.AustraliaPost, SBSDKBarcodeType.Aztec };
-            
-                var usecases = new SingleScanningMode();
-                usecases.ConfirmationSheetEnabled = true;
-                usecases.ArOverlay.Visible = false;
-                usecases.ArOverlay.AutomaticSelectionEnabled = false;
+                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                {
+                    RecognizerConfiguration = new BarcodeRecognizerConfiguration
+                    {
+                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
+                        Gs1Handling = Gs1Handling.Decode
+                    },
+                    UseCase = new SingleScanningMode()
+                    {
+                        ConfirmationSheetEnabled = true
+                    }
+                });
 
-                configuration.UseCase = usecases;
-
-                Console.WriteLine("example: starting barcode scanner");
-                //var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerView(configuration);
-                Console.WriteLine("example: finished barcode scanner");
-
-                Console.WriteLine("example: navigating to results page");
-                    //await Navigation.PushAsync(new BarcodeResultPage(result.Items.ToList(), null));
-                Console.WriteLine("example: navigated to results page");
+                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
             }
             catch (TaskCanceledException ex)
             {
@@ -53,29 +47,18 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// Starts the Batch Barcode Scanning.
         /// </summary>
         private async Task StartBatchBarcodeScanner()
-        {
-            BarcodeScannerConfiguration configuration = new BarcodeScannerConfiguration();
-           
-            //     configuration.RecognizerConfiguration.BarcodeTypes =
-            //         new[] { SBSDKBarcodeType.AustraliaPost, SBSDKBarcodeType.Aztec };
-            
-            var usecases = new MultipleScanningMode();
-            configuration.UseCase = usecases;
-
+        {           
             try
             {
-                Console.WriteLine("example: starting barcode scanner");
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(configuration);
-                Console.WriteLine("example: finished barcode scanner");
+                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                {
 
-                Console.WriteLine("example: navigating to results page");
-                //await Navigation.PushAsync(new BarcodeResultPage(result.Items.ToList(), null));
-                Console.WriteLine("example: navigated to results page");
+                });
+                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
             }
             catch (TaskCanceledException ex)
             {
                 // for when the user cancels the action
-                Console.WriteLine("example: cancelled barcode scanning");
             }
             catch (Exception ex)
             {

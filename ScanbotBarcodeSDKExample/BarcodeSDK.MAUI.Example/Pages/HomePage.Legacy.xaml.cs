@@ -17,7 +17,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             var configuration = new RTU.v1.BarcodeScannerConfiguration
             {
-                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 CodeDensity = CodeDensity.High,
                 EngineMode = EngineMode.NextGen,
                 SuccessBeepEnabled = true,
@@ -77,7 +77,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             var configuration = new RTU.v1.BatchBarcodeScannerConfiguration
             {
-                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
                     automaticSelectionEnabled: true,
                     overlayFormat: BarcodeTextFormat.Code,

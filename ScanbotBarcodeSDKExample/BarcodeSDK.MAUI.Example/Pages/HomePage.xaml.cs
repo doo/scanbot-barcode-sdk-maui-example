@@ -47,14 +47,14 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             MenuItems = new List<HomePageMenuItem>
             {
-                //#if LEGACY
+                #if LEGACY_EXAMPLES
                     new HomePageMenuItem("SCAN LEGACY BARCODES", () => StartLegacyBarcodeScanner(withImage: false)),
                     new HomePageMenuItem("SCAN LEGACY BARCODES WITH IMAGE", () => StartLegacyBarcodeScanner(withImage: true)),
                     new HomePageMenuItem("SCAN LEGACY BATCH BARCODES", StartLegacyBatchBarcodeScanner),
-                //#elif
+                #else
                     new HomePageMenuItem("SCAN BARCODES", StartBarcodeScanner),
                     new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
-                //#endif
+                #endif
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("SCAN BARCODE AR OVERLAY WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC SCAN AND COUNT COMPONENT", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
@@ -102,7 +102,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             // Configure the barcode detector for detecting many barcodes in one image.
             var configuration = new RTU.v1.BarcodeDetectionConfiguration
             {
-                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes,
+                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 EngineMode = EngineMode.NextGen,
                 AdditionalParameters = new RTU.v1.BarcodeScannerAdditionalParameters
                 {

@@ -9,6 +9,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
+        public BarcodeResultPage(BarcodeItem[] barcodes)
+        {
+            InitializeComponent();
+        }
+
         public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, string imagePath)
         {
             InitializeComponent();
