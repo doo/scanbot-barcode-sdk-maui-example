@@ -46,19 +46,22 @@ namespace ScanbotSDK.MAUI.Example.Pages
             MenuItems = new List<HomePageMenuItem>
             {
                 #if LEGACY_EXAMPLES
-                    new HomePageMenuItem("SCAN LEGACY BARCODES", () => StartLegacyBarcodeScanner(withImage: false)),
-                    new HomePageMenuItem("SCAN LEGACY BARCODES WITH IMAGE", () => StartLegacyBarcodeScanner(withImage: true)),
-                    new HomePageMenuItem("SCAN LEGACY BATCH BARCODES", StartLegacyBatchBarcodeScanner),
+                    new HomePageMenuItem("RTU v1 Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
+                    new HomePageMenuItem("RTU v1 Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
+                    new HomePageMenuItem("RTU v1 Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
                 #else
-                    new HomePageMenuItem("SCAN BARCODES", SingleScanning),
-                    new HomePageMenuItem("SCAN BATCH BARCODES", BatchBarcodeScanning),
+                    new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
+                    new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
+                    new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
+                    new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
+                    new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
                 #endif
-                new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
-                new HomePageMenuItem("SCAN BARCODE AR OVERLAY WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
-                new HomePageMenuItem("SCAN BARCODE WITH CLASSIC SCAN AND COUNT COMPONENT", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
-                new HomePageMenuItem("DETECT BARCODES ON IMAGE", DetectBarcodesOnImage),
-                new HomePageMenuItem("SET ACCEPTED BARCODE TYPES", () => Navigation.PushAsync(new BarcodeSelectionPage())),
-                new HomePageMenuItem("VIEW LICENSE INFO", () => Task.FromResult(ViewLicenseInfo()))
+                new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
+                new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
+                new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
+                new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeSelectionPage())),
+                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo()))
             };
         }
 

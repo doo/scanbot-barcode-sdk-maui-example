@@ -1,6 +1,4 @@
 ﻿using ScanbotSDK.MAUI.Example.Models;
-using System.Diagnostics;
-
 namespace ScanbotSDK.MAUI.Example.Pages
 {
     /// <summary>
@@ -28,9 +26,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     }
                 });
 
-                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
+                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
+                                                 .FirstOrDefault() ?? string.Empty;
+
+                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // for when the user cancels the action
             }
@@ -56,9 +57,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     }
                 });
 
-                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
+                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
+                                                 .FirstOrDefault() ?? string.Empty;
+
+                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // for when the user cancels the action
             }
@@ -87,9 +91,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
                         Mode = MultipleBarcodesScanningMode.Counting
                     }
                 });
-                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
+
+                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
+                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // for when the user cancels the action
             }
@@ -128,9 +134,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
                         Title = new StyledText{ Text = "Please align the QR-/Barcode in the frame above to scan it." }
                     }
                 });
-                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
+
+                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
+                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // for when the user cancels the action
             }
@@ -182,9 +190,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 configuration.RecognizerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
 
                 var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(configuration);
-                await Navigation.PushAsync(new BarcodeResultPage(result.Items));
+                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
+                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // for when the user cancels the action
             }

@@ -20,6 +20,7 @@
         <!-- Supported Platforms -->        
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+        <Platforms>AnyCPU;ARM64</Platforms>
     </PropertyGroup>
     
     <!-- Settings for all targets that are not iOS (e.g., Android ) -->
@@ -58,14 +59,13 @@
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Pages\" />
         <Folder Include="Models\" />
         <Folder Include="Common\" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-beta.3" />    
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-beta.6" />    
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
