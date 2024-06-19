@@ -1,7 +1,3 @@
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Models;
-
 namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage

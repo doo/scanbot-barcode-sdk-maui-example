@@ -1,6 +1,4 @@
-﻿using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Example.Utils;
+﻿using ScanbotSDK.MAUI.Example.Utils;
 using System.Diagnostics;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -52,8 +50,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     new HomePageMenuItem("SCAN LEGACY BARCODES WITH IMAGE", () => StartLegacyBarcodeScanner(withImage: true)),
                     new HomePageMenuItem("SCAN LEGACY BATCH BARCODES", StartLegacyBatchBarcodeScanner),
                 #else
-                    new HomePageMenuItem("SCAN BARCODES", StartBarcodeScanner),
-                    new HomePageMenuItem("SCAN BATCH BARCODES", StartBatchBarcodeScanner),
+                    new HomePageMenuItem("SCAN BARCODES", SingleScanning),
+                    new HomePageMenuItem("SCAN BATCH BARCODES", BatchBarcodeScanning),
                 #endif
                 new HomePageMenuItem("SCAN BARCODE WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("SCAN BARCODE AR OVERLAY WITH CLASSIC COMPONENT", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),

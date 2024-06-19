@@ -4,7 +4,6 @@ using ClassicComponent.MAUI.Legacy.Platforms.iOS.Utils;
 using CoreGraphics;
 using ScanbotSDK.iOS;
 using ScanbotSDK.MAUI.iOS.Utils;
-using ScanbotSDK.MAUI.Models;
 using UIKit;
 
 namespace ClassicComponent.MAUI.Legacy.Platforms.iOS.CustomViews

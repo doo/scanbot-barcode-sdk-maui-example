@@ -1,6 +1,3 @@
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Models;
-
 namespace ClassicComponent.MAUI.Legacy.ClassicComponent
 {
   public class BarcodeCameraView : View

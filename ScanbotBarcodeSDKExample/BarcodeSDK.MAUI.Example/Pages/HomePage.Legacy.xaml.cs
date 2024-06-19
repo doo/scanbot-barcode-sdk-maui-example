@@ -1,6 +1,4 @@
-﻿using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Example.Utils;
+﻿using ScanbotSDK.MAUI.Example.Utils;
 using System.Diagnostics;
 
 namespace ScanbotSDK.MAUI.Example.Pages

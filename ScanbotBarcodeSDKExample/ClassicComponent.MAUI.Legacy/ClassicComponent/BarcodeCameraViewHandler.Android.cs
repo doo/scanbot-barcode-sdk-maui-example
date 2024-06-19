@@ -6,7 +6,6 @@ using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using ScanbotSDK.MAUI.Droid.Converters;
 using ScanbotSDK.MAUI.Droid.Utils;
-using ScanbotSDK.MAUI.Models;
 using IO.Scanbot.Sdk;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;

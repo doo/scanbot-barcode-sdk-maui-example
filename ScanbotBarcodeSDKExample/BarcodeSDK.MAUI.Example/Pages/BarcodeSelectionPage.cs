@@ -1,5 +1,4 @@
 ﻿
-using ScanbotSDK.MAUI.Constants;
 using ScanbotSDK.MAUI.Example.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages

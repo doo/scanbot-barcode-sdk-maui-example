@@ -1,6 +1,5 @@
 ﻿using ClassicComponent.MAUI.Legacy.ClassicComponent;
 using ScanbotSDK.MAUI;
-using ScanbotSDK.MAUI.Models;
 
 namespace ClassicComponent.MAUI.Legacy;
 

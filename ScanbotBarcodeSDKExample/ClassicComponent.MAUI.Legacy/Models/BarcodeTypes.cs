@@ -1,5 +1,3 @@
-using ScanbotSDK.MAUI.Constants;
-
 namespace ClassicComponent.MAUI.Legacy.Models
 {
     public class BarcodeTypes
