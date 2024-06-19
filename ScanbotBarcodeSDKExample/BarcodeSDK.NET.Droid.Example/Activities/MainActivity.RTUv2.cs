@@ -29,6 +29,11 @@ namespace BarcodeSDK.NET.Droid
                     ConfirmationSheetEnabled = true
                 }
             });
+
+            // To try some of the snippets, comment out the above and create an intent with:
+            // var intent = BarcodeScannerActivity.NewIntent(this, Snippets.SingleScanningUseCase);
+            // Or any other snippet (like MultipleScanningUseCase, FindAndPickUseCase, ArOverlay, etc.)
+
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
         }
 

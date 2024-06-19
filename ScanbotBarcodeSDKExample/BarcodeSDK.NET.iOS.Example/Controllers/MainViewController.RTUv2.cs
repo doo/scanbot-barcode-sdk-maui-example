@@ -25,6 +25,10 @@ namespace BarcodeSDK.NET.iOS
                     ConfirmationSheetEnabled = true
                 }
             };
+
+            // To try some of the snippets, comment out the above and use an existing configuration object from the Snippets class:
+            // var configuration =  Snippets.SingleScanningUseCase;
+            // Or any other snippet (like MultipleScanningUseCase, FindAndPickUseCase, ArOverlay, etc.)
             
             var controller = SBSDKUI2BarcodeScannerViewController.CreateNew(configuration,
                 (viewController, cancelled, error, result) =>
@@ -56,9 +60,8 @@ namespace BarcodeSDK.NET.iOS
             usecases.ArOverlay.Visible = true;
             usecases.ArOverlay.AutomaticSelectionEnabled = false;
 
-            configuration.UseCase = usecases;
-            
-            
+            configuration.UseCase = usecases;      
+
             var controller = SBSDKUI2BarcodeScannerViewController.CreateNew(configuration,
                 (viewController, cancelled, error, result) =>
                 {
@@ -74,6 +77,7 @@ namespace BarcodeSDK.NET.iOS
                         viewController.DismissViewController(true, () => { });
                     }
                 });
+
 
             PresentViewController(controller, false, null);
         }
