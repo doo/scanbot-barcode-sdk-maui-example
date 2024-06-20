@@ -18,7 +18,13 @@ namespace ScanbotSDK.MAUI.Example
                 // ... or set an entirely new palette.
                 config.Palette = new Palette()
                 {
+                    // ColorValues are RGB or RGBA hash strings by default.
                     SbColorPrimary = new ColorValue("#C8193C"),
+                    // You can use Microsoft.Maui.Graphics.Color instead.
+                    //SbColorPrimary = new Microsoft.Maui.Graphics.Color(0xC8, 0x19, 0x3C),
+                    // Or System.Drawing.Color.
+                    //SbColorPrimary = System.Drawing.Color.FromArgb(unchecked((int)0xFFC8193c)),
+
                     SbColorPrimaryDisabled = new ColorValue("#F5F5F5"),
                     SbColorNegative = new ColorValue("#FF3737"),
                     SbColorPositive = new ColorValue("#4EFFB4"),
