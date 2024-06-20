@@ -20,7 +20,7 @@
         <!-- Supported Platforms -->        
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-        <Platforms>AnyCPU;ARM64</Platforms>
+        <Platforms>x64;ARM64</Platforms>
     </PropertyGroup>
     
     <!-- Settings for all targets that are not iOS (e.g., Android ) -->
@@ -70,12 +70,6 @@
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
     </ItemGroup>
-    <ItemGroup>
-      <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />
-    </ItemGroup>
-    <!-- <ItemGroup>
-      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\MAUI\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />
-    </ItemGroup> -->
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
       <PackageReference Include="Xamarin.AndroidX.Preference" Version="1.2.1.4" />
     </ItemGroup>

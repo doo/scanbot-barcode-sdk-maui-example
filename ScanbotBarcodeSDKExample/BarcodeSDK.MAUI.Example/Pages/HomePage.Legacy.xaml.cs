@@ -50,15 +50,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             try
             {
-                Console.WriteLine("example: starting barcode scanner");
                 var result = await ScanbotBarcodeSDK.LegacyBarcodeScanner.OpenBarcodeScannerView(configuration);
-                //var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerView(configuration);
-                Console.WriteLine("example: finished barcode scanner");
-            //  if (result.Status == OperationResult.Ok)
+                
+                if (result.Status == OperationResult.Ok)
                 {
-                    Console.WriteLine("example: navigating to results page");
-                    //await Navigation.PushAsync(new BarcodeResultPage(result.Items.ToList(), null));
-                    Console.WriteLine("example: navigated to results page");
+                    await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList(), null));
                 }
             }
             catch (Exception ex)
