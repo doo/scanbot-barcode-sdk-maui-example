@@ -43,17 +43,15 @@ namespace BarcodeSDK.NET.Droid
             {
                 return;
             }
-            
+
+            var useCase = new SingleScanningMode();
+            useCase.ArOverlay.Visible = true;
+
             var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerConfiguration
             {
-                UseCase = new SingleScanningMode()
-                {
-                    ArOverlay = new ArOverlayGeneralConfiguration() 
-                    {
-                        Visible = true
-                    }    
-                }
+                UseCase = useCase
             });
+
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE_V2);
         }
 
