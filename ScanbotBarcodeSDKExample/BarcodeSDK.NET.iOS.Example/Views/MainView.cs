@@ -22,7 +22,7 @@ namespace BarcodeSDK.NET.iOS
             nfloat x = padding;
             nfloat y = 0;
             nfloat w = Frame.Width - 2 * padding;
-            nfloat h = w / 7.5f;
+            nfloat h = w / 8.5f;
             
             foreach (var control in sorting)
             {
@@ -34,7 +34,7 @@ namespace BarcodeSDK.NET.iOS
                     textView.ContentInset = new UIEdgeInsets((h - contentSize.Height) / 2, 0, (h - contentSize.Height) / 2, 0);
                 }
 
-                y += h + padding;
+                y += h + 5;
             }
         }
 
