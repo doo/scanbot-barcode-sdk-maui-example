@@ -23,6 +23,12 @@ namespace BarcodeSDK.NET.iOS
             nfloat y = 0;
             nfloat w = Frame.Width - 2 * padding;
             nfloat h = w / 8.5f;
+
+            if (Frame.Width > Frame.Height)
+            {
+                w = Frame.Height - 2 * padding;
+                h = w / 8.5f;
+            }
             
             foreach (var control in sorting)
             {
