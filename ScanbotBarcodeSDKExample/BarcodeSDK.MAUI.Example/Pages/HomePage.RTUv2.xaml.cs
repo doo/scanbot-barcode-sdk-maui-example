@@ -26,6 +26,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     }
                 });
 
+                // Comment out the above and use the below to try some of our snippets instead:
+                // var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(Snippets.SingleScanningUseCase);
+                // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
+
                 var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
                                                  .FirstOrDefault() ?? string.Empty;
 

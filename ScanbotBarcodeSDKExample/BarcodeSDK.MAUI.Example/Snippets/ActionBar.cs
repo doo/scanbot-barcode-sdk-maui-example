@@ -13,7 +13,7 @@ namespace ScanbotSDK.MAUI.Example
                 
                 // Configure the action bar.
                 // Hide/unhide the flash button.
-                config.ActionBar.FlashButton.Visible = false;
+                config.ActionBar.FlashButton.Visible = true;
 
                 // Configure the inactive state of the flash button.
                 config.ActionBar.FlashButton.BackgroundColor = new ColorValue("#7A000000");
@@ -24,7 +24,7 @@ namespace ScanbotSDK.MAUI.Example
                 config.ActionBar.FlashButton.ActiveForegroundColor = new ColorValue("#000000");
 
                 // Hide/unhide the zoom button.
-                config.ActionBar.ZoomButton.Visible = false;
+                config.ActionBar.ZoomButton.Visible = true;
 
                 // Configure the inactive state of the zoom button.
                 config.ActionBar.ZoomButton.BackgroundColor = new ColorValue("#7A000000");
