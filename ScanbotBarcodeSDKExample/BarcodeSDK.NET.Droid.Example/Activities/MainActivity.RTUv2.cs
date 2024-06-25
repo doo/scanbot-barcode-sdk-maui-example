@@ -145,8 +145,8 @@ namespace BarcodeSDK.NET.Droid
             // Set the expected barcodes.
             findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>() 
             {
-                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
             };
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
