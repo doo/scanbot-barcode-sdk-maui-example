@@ -1,6 +1,6 @@
 namespace ScanbotSDK.MAUI.Example
 {
-    public partial class Snippets
+    public partial class Snippets : IStaticBarcodeItemMapper
     {
         public static BarcodeScannerConfiguration ItemMapping
         {
@@ -10,11 +10,29 @@ namespace ScanbotSDK.MAUI.Example
                 var config = new BarcodeScannerConfiguration();
                 
                 var useCase = new SingleScanningMode();
+                var productTitle = "Some product title";
 
                 useCase.ConfirmationSheetEnabled = true;
                 useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
                 {
-                    BarcodeItemMapper = new CustomBarcodeItemMapper()
+                    BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
+                        var title = $"{productTitle} {barcodeItem.TextWithExtension}";
+                        var subTitle = "Subtitle";
+                        var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+
+                        if (barcodeItem.TextWithExtension == "Error occurred!")
+                        {
+                            onError();
+                        }
+                        else
+                        {
+                            onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
+                        }
+                    }),
+
+                    // Comment out the above and uncomment below to use static item mappers.
+                    // The class has to implement IStaticBarcodeItemMapper.
+                    //BarcodeItemMapper = new StaticBarcodeItemMapper<Snippets>()
                 };
 
                 // Configure other parameters, pertaining to single-scanning mode as needed.
@@ -24,22 +42,19 @@ namespace ScanbotSDK.MAUI.Example
             }
         }
 
-        public class CustomBarcodeItemMapper : BarcodeItemMapper
+        public static void MapBarcodeItem(BarcodeItem barcodeItem, Action<BarcodeMappedData> onResult, Action onError)
         {
-            public override void MapBarcodeItem(BarcodeItem barcodeItem, Action<BarcodeMappedData> onResult, Action onError)
-            {
-                var title = $"Some product {barcodeItem.TextWithExtension}";
-                var subTitle = "Subtitle";
-                var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+            var title = $"Static item mapper product {barcodeItem.TextWithExtension}";
+            var subTitle = "Subtitle";
+            var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
 
-                if (barcodeItem.TextWithExtension == "Error occurred!")
-                {
-                    onError();
-                }
-                else
-                {
-                    onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
-                }
+            if (barcodeItem.TextWithExtension == "Error occurred!")
+            {
+                onError();
+            }
+            else
+            {
+                onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
             }
         }
     }
