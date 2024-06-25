@@ -83,25 +83,16 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             
+            var useCase = new MultipleScanningMode();
+            useCase.Mode = MultipleBarcodesScanningMode.Unique;
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
+            useCase.SheetContent.ManualCountChangeEnabled = false;
+            useCase.ArOverlay.Visible = true;
+            useCase.ArOverlay.AutomaticSelectionEnabled = false;
+
             var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerConfiguration
             {
-                UseCase = new MultipleScanningMode
-                {
-                    Mode = MultipleBarcodesScanningMode.Unique,
-                    SheetContent = new SheetContent
-                    {
-                        ManualCountChangeEnabled = false
-                    },
-                    Sheet = new Sheet
-                    {
-                        Mode = SheetMode.CollapsedSheet
-                    },
-                    ArOverlay = new ArOverlayGeneralConfiguration
-                    {
-                        Visible = true, 
-                        AutomaticSelectionEnabled = false
-                    }
-                },
+                UseCase = useCase,
                 UserGuidance = new UserGuidanceConfiguration
                 {
                     Title = new StyledText{ Text = "Please align the QR-/Barcode in the frame above to scan it." }
