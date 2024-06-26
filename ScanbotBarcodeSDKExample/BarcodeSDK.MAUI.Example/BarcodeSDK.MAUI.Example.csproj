@@ -25,7 +25,6 @@
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
-        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
 
     <!-- General settings for iOS targets -->
@@ -66,14 +65,5 @@
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
         <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="4.2.1" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
-    </ItemGroup>
-    <ItemGroup>
-      <AndroidResource Include="Platforms\Android\Resources\layout\barcode_camera_view.xml" />
-    </ItemGroup>
-    <!-- <ItemGroup>
-      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\MAUI\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />
-    </ItemGroup> -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
-      <PackageReference Include="Xamarin.AndroidX.Preference" Version="1.2.1.4" />
     </ItemGroup>
 </Project>
