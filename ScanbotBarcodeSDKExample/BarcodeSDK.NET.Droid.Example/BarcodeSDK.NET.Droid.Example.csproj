@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net7.0-android;net8.0-android</TargetFrameworks>
+        <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+        <OutputType>Exe</OutputType>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <ApplicationId>io.scanbot.example.sdk.barcode.net</ApplicationId>
+        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+        <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
+        <Platforms>x64;ARM64</Platforms>
+        <CreatePackage>false</CreatePackage>
+        <WarningsAsErrors>NU1603</WarningsAsErrors>
+        <!-- Comment this out to see RTU v1 in the example -->
+        <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
+    </PropertyGroup>
+    <ItemGroup>
+         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
+         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="5.1.0" />
+    </ItemGroup>
+</Project>
