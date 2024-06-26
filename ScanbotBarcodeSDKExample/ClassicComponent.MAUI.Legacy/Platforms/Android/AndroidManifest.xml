@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.scanbot.example.sdk.barcode.classiccomponent.maui.legacy" android:versionCode="1" android:versionName="1.0">
-	<application android:allowBackup="true" android:supportsRtl="true" android:label="ClassicComponent.MAUI.Legacy"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-feature android:name="android.hardware.camera" />
-</manifest>

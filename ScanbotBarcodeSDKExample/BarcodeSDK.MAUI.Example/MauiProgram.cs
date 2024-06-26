@@ -1,6 +1,4 @@
-﻿using ScanbotSDK.MAUI.Models;
-
-namespace ScanbotSDK.MAUI.Example
+﻿namespace ScanbotSDK.MAUI.Example
 {
     public static class MauiProgram
     {

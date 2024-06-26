@@ -1,7 +1,3 @@
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Models;
-
 namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
@@ -14,7 +10,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration
+        cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -59,7 +55,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ContinueScanningButton.IsEnabled = false;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
+    private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
     {
         if (result.Status != OperationResult.Ok)
             return;
@@ -67,7 +63,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         string text = string.Empty;
         if (result?.Barcodes != null)
         {
-            foreach (Barcode barcode in result?.Barcodes)
+            foreach (var barcode in result?.Barcodes)
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
@@ -77,7 +73,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         lblResult.Text = text;
     }
 
-    private void CameraView_OnOnScanAndCountFinished(BarcodeResultBundle result)
+    private void CameraView_OnOnScanAndCountFinished(RTU.v1.BarcodeResultBundle result)
     {
         if (result.Status == OperationResult.Ok)
         {
