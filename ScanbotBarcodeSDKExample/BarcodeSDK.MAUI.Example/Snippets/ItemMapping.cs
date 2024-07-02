@@ -9,16 +9,17 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerConfiguration();
                 
-                var useCase = new SingleScanningMode();
+                var useCase = new MultipleScanningMode();
                 var productTitle = "Some product title";
 
-                useCase.ConfirmationSheetEnabled = true;
+                useCase.Mode = MultipleBarcodesScanningMode.Unique;
+                useCase.ArOverlay.Visible = true;
                 useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
                 {
                     BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
-                        var title = $"{productTitle} {barcodeItem.TextWithExtension}";
+                        var title = $"{productTitle} - {barcodeItem.TextWithExtension}";
                         var subTitle = "Subtitle";
-                        var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+                        var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
 
                         if (barcodeItem.TextWithExtension == "Error occurred!")
                         {
@@ -44,9 +45,9 @@ namespace ScanbotSDK.MAUI.Example
 
         public static void MapBarcodeItem(BarcodeItem barcodeItem, Action<BarcodeMappedData> onResult, Action onError)
         {
-            var title = $"Static item mapper product {barcodeItem.TextWithExtension}";
+            var title = $"Static item mapper - product {barcodeItem.TextWithExtension}";
             var subTitle = "Subtitle";
-            var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
 
             if (barcodeItem.TextWithExtension == "Error occurred!")
             {

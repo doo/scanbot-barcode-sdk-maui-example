@@ -13,21 +13,21 @@ namespace ScanbotSDK.MAUI.Example.Pages
         { 
             try
             {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
-                {
-                    RecognizerConfiguration = new BarcodeRecognizerConfiguration
-                    {
-                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                        Gs1Handling = Gs1Handling.Decode
-                    },
-                    UseCase = new SingleScanningMode()
-                    {
-                        ConfirmationSheetEnabled = true
-                    }
-                });
+                // var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                // {
+                //     RecognizerConfiguration = new BarcodeRecognizerConfiguration
+                //     {
+                //         BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
+                //         Gs1Handling = Gs1Handling.Decode
+                //     },
+                //     UseCase = new SingleScanningMode()
+                //     {
+                //         ConfirmationSheetEnabled = true
+                //     }
+                // });
 
                 // Comment out the above and use the below to try some of our snippets instead:
-                // var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(Snippets.SingleScanningUseCase);
+                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(Snippets.ItemMapping);
                 // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
                 var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
