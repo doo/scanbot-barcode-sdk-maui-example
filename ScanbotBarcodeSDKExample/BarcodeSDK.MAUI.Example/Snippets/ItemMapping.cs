@@ -18,7 +18,7 @@ namespace ScanbotSDK.MAUI.Example
                     BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
                         var title = $"{productTitle} {barcodeItem.TextWithExtension}";
                         var subTitle = "Subtitle";
-                        var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+                        var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
 
                         if (barcodeItem.TextWithExtension == "Error occurred!")
                         {
@@ -46,7 +46,7 @@ namespace ScanbotSDK.MAUI.Example
         {
             var title = $"Static item mapper product {barcodeItem.TextWithExtension}";
             var subTitle = "Subtitle";
-            var image = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
 
             if (barcodeItem.TextWithExtension == "Error occurred!")
             {
