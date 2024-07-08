@@ -1,3 +1,6 @@
+using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Common;
+
 namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets

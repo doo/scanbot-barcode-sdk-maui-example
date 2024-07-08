@@ -1,3 +1,5 @@
+using ScanbotSDK.MAUI.Barcode;
+
 namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets : IStaticBarcodeItemMapper

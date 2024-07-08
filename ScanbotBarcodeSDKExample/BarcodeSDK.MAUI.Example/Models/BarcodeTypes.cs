@@ -1,4 +1,6 @@
-﻿namespace ScanbotSDK.MAUI.Example.Models
+﻿using ScanbotSDK.MAUI.Barcode;
+
+namespace ScanbotSDK.MAUI.Example.Models
 {
     public class BarcodeTypes
     {

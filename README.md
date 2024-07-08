@@ -90,7 +90,6 @@ To run the project on a real iOS device, specify a target framework with `-f net
 
 ```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.MAUI.Example -f net8.0-ios -t:Run --force --no-incremental```
 
-
 To run the project on a real Android device, specify a target framework with `-f net8.0-android` and the Run target via `-t:Run`, yielding the following:
 
 ```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.MAUI.Example -f net8.0-android -t:Run --force --no-incremental```

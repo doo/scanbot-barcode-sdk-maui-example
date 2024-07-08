@@ -1,4 +1,4 @@
-﻿using ScanbotSDK.MAUI;
+﻿using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {

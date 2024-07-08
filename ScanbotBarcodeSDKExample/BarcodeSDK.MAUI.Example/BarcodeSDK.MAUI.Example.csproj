@@ -21,6 +21,10 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <Platforms>x64;ARM64</Platforms>
+        <WarningsAsErrors>NU1603</WarningsAsErrors>
+        
+        <!-- Comment this out to see RTU v1 in the example -->
+        <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
     
     <!-- Settings for all targets that are not iOS (e.g., Android ) -->
@@ -65,7 +69,7 @@
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.2" />    
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.3" />    
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
