@@ -46,17 +46,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             MenuItems = new List<HomePageMenuItem>
             {
-                #if LEGACY_EXAMPLES
-                    new HomePageMenuItem("RTU v1 Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
-                    new HomePageMenuItem("RTU v1 Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
-                    new HomePageMenuItem("RTU v1 Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
-                #else
-                    new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
-                    new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
-                    new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
-                    new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
-                    new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
-                #endif
+                new HomePageMenuItem("RTU v2 - Single Scanning", StartSingleScanning),
+                new HomePageMenuItem("RTU v2 - Multiple Scanning Selection Overlay", StartAROverlay),
+                new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", StartMultiScanning),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
