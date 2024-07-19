@@ -1,3 +1,5 @@
+using ScanbotSDK.MAUI.RTU.v1;
+
 namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
@@ -56,6 +58,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             // Stop barcode detection manually
             cameraView.StopDetection();
+            
+            cameraView.Handler?.DisconnectHandler();
         }
         
         private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)

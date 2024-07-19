@@ -40,6 +40,8 @@
 
             // Stop barcode detection manually
             cameraView.StopDetection();
+            
+            cameraView.Handler?.DisconnectHandler();
         }
 
         private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
