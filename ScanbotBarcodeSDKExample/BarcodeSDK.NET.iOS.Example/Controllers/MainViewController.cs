@@ -61,23 +61,32 @@ namespace BarcodeSDK.NET.iOS
             contentView.RemoveAllControls();
         }
 
-        private void OnClassicButtonClick(object sender, EventArgs e)
+        private async void OnClassicButtonClick(object sender, EventArgs e)
         {
             if (!Alert.CheckLicense(this))
             {
                 return;
             }
-            NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
+
+            if (await this.IsCameraPermissionGranted())
+            {
+                NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
+            }
         }
 
-        private void OnClassicScanAndCountButtonClick(object sender, EventArgs e)
+        private async void OnClassicScanAndCountButtonClick(object sender, EventArgs e)
         {
             if (!Alert.CheckLicense(this))
             {
                 return;
             }
-            var viewController = Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
-            this.NavigationController.PushViewController(viewController, true);
+
+            if (await this.IsCameraPermissionGranted())
+            {
+                var viewController =
+                    Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
+                this.NavigationController.PushViewController(viewController, true);
+            }
         }
 
         private async void OnLibraryButtonClick(object sender, EventArgs e)
