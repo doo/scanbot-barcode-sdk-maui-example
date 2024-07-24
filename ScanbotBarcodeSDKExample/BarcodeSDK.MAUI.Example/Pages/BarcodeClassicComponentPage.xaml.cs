@@ -21,11 +21,8 @@
                 }
             }
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
+            System.Diagnostics.Debug.WriteLine(text);
+            lblResult.Text = text;
         }
 
         protected override void OnAppearing()
@@ -55,11 +52,8 @@
 
         void ToggleCameraPreview_Clicked(System.Object sender, System.EventArgs e)
         {
-            MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                cameraView.IsVisible = !cameraView.IsVisible;
-                CameraBtn.Text = cameraView.IsVisible ? StopScanner : StartScanner;
-            });
+            cameraView.IsVisible = !cameraView.IsVisible;
+            CameraBtn.Text = cameraView.IsVisible ? StopScanner : StartScanner;
         }
     }
 }
