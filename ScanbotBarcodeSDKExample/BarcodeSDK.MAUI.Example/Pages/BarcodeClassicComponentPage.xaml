@@ -8,35 +8,38 @@
                    ios:Page.UseSafeArea="true"
                    Title="BarcodeClassicComponentPage"
                    NavigationPage.HasNavigationBar="True">
-    <Grid>
+    <Grid RowSpacing="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
             <RowDefinition Height="7*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Text="Barcode ClassicComponent"
-               FontSize="Subtitle"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="Center" 
-               HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1">
+
+        <Grid Grid.Row="0">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
-                HeightRequest="500"
-                WidthRequest="300"
+                MinimumHeightRequest="500"
+                MinimumWidthRequest="300"
                 OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                 HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-        </StackLayout>
-        <Grid Grid.Row="2">
+                VerticalOptions="Fill"
+                IsVisible="False"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Button
+                    x:Name="CameraBtn"
+                    HorizontalOptions="Center"
+                    Text="Start Scanner"
+                    Clicked="ToggleCameraPreview_Clicked" />
+        </Grid>
+        <ScrollView Grid.Row="2">
             <Label 
                 x:Name="lblResult"
                 Text="Result"
                 VerticalTextAlignment="Center"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-        </Grid>
+        </ScrollView>
     </Grid>
 </pages:BaseComponentPage>
