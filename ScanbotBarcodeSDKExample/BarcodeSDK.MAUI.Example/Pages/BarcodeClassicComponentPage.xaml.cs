@@ -2,8 +2,6 @@
 {
     public partial class BarcodeClassicComponentPage : BaseComponentPage
     {
-        const string StartScanner = "Start Scanner";
-        const string StopScanner = "Stop Scanner";
         public BarcodeClassicComponentPage()
         {
             InitializeComponent();
@@ -18,6 +16,7 @@
                 foreach (var barcode in result.Barcodes)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
+                    text += "--------------------------\n";
                 }
             }
 
@@ -28,8 +27,6 @@
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            CameraBtn.Text = cameraView.IsVisible ? StopScanner : StartScanner;
 
             // Start barcode detection manually
             cameraView.StartDetection();
@@ -48,12 +45,6 @@
         private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
         {
             HandleScannerResults(result);
-        }
-
-        void ToggleCameraPreview_Clicked(System.Object sender, System.EventArgs e)
-        {
-            cameraView.IsVisible = !cameraView.IsVisible;
-            CameraBtn.Text = cameraView.IsVisible ? StopScanner : StartScanner;
         }
     }
 }

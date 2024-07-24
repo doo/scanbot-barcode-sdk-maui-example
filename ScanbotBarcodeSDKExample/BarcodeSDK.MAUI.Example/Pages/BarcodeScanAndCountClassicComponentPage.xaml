@@ -23,8 +23,8 @@
                     VerticalOptions="Fill"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"
-                    HeightRequest="420"
-                    WidthRequest="330" />
+                    MinimumHeightRequest="420"
+                    MinimumWidthRequest="330" />
             </StackLayout>
             <Grid Grid.Row="1">
                 <StackLayout
