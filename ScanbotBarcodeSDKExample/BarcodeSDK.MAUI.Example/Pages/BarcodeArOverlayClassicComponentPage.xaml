@@ -22,15 +22,14 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Center"
                HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1">
+        <Grid Grid.Row="1">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
-                MinimumHeightRequest="500"
-                MinimumWidthRequest="300"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                 HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-        </StackLayout>
+                VerticalOptions="Fill"
+                />
+        </Grid>
         <ScrollView Grid.Row="2">
             <StackLayout>
                 <Label

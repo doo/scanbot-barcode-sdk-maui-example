@@ -37,11 +37,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 }
             }
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
+            System.Diagnostics.Debug.WriteLine(text);
+            lblResult.Text = text;
         }
 
         protected override void OnAppearing()
