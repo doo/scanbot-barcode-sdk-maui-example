@@ -8,46 +8,59 @@
                    ios:Page.UseSafeArea="true"
                    Title="BarcodeClassicScanAndCountComponentPage"
                    NavigationPage.HasNavigationBar="True">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="3*" />
-        </Grid.RowDefinitions>
-        <Grid 
-                Grid.Row="0">
-            <classicComponent:BarcodeScanAndCountView
+    <ScrollView>
+        <Grid RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid 
+            Grid.Row="0">
+                <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>
-        </Grid>
-        <Grid Grid.Row="1">
-            <ScrollView>
+            </Grid>
+            <StackLayout
+                Grid.Row="1">
                 <StackLayout
+                    Orientation="Horizontal"
                     VerticalOptions="Center"
-                    HorizontalOptions="FillAndExpand"
-                    Spacing="6">
-                    <Label 
-                        x:Name="lblResult"
-                        Text="Result"
-                        VerticalTextAlignment="Center"
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center" />
+                    HorizontalOptions="Center"
+                    Spacing="10">
                     <Button
                         x:Name="StartScanningButton"
                         Text="Capture"
                         VerticalOptions="Center" 
-                        HorizontalOptions="Center"
                         Clicked="StartScanningButton_Clicked"/>
                     <Button
                         x:Name="ContinueScanningButton"
                         Text="Continue"
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        IsEnabled="False"
                         Clicked="ConitueScanningButton_Clicked"/>
                 </StackLayout>
-            </ScrollView>
+                <StackLayout>
+                    <Label
+                        x:Name="lblResultCaption"
+                        Text="Result"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+                    <Label
+                        x:Name="lblResult"
+                        Margin="15,10"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill" />
+                </StackLayout>
+            </StackLayout>
         </Grid>
-    </Grid>
+    </ScrollView>
 </pages:BaseComponentPage>
