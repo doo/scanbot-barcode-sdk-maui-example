@@ -27,8 +27,7 @@
                 x:Name="cameraView"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                 HorizontalOptions="Fill"
-                VerticalOptions="Fill"
-                />
+                VerticalOptions="Fill" />
         </Grid>
         <ScrollView Grid.Row="2">
             <StackLayout>
