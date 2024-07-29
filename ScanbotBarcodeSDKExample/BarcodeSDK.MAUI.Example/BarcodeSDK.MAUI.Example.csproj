@@ -19,7 +19,6 @@
         <!-- Supported Platforms -->        
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-        <Platforms>x64;ARM64</Platforms>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
         
         <!-- Comment this out to see RTU v1 in the example -->
@@ -40,10 +39,12 @@
         <CreatePackage>false</CreatePackage>
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
 
-        <!-- Simulator support attribute -->
-        <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+      <MtouchDebug>true</MtouchDebug>
+      <MtouchLink>SdkOnly</MtouchLink>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -68,7 +69,7 @@
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.7" />    
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.8" />
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
