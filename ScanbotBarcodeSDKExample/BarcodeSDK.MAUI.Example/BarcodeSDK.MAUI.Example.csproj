@@ -16,15 +16,16 @@
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1.0</ApplicationVersion>
-        <!-- Supported Platforms -->        
+        <!-- Supported Platforms -->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <Platforms>x64;ARM64</Platforms>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
-        
+
         <!-- Comment this out to see RTU v1 in the example -->
         <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
+
     <!-- Properties for iOS Simulator (x64 architecture) -->
     <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-x64'">
         <RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
@@ -41,20 +42,25 @@
         <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
         <!-- Additional properties specific to iOS device (arm64) -->
     </PropertyGroup>
-    <!-- Settings for all targets that are not iOS (e.g., Android) -->
+
+    <!-- Settings for all targets that are not iOS (e.g., Android ) -->
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
+
     <!-- General settings for iOS targets -->
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+
         <!-- Simulator support attribute -->
         <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
