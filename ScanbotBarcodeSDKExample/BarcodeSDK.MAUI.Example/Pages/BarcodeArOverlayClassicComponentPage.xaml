@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -22,33 +22,31 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Center"
                HorizontalOptions="Fill" />
-        <Grid Grid.Row="1">
+        <StackLayout Grid.Row="1">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill"
-                />
-        </Grid>
-        <ScrollView Grid.Row="2">
-            <StackLayout>
-                <Label
-                    x:Name="lblResultCaption"
-                    Text="Result"
-                    FontAttributes="Bold"
-                    FontSize="18"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center" />
-                <Label
-                    x:Name="lblResult"
-                    Margin="15,10"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center" />
-            </StackLayout>
-        </ScrollView>
+                IsVisible="True" />
+        </StackLayout>
+        <StackLayout Grid.Row="2">
+            <Label
+                x:Name="lblResultCaption"
+                Text="Result"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+            <Label
+                x:Name="lblResult"
+                Margin="15,10"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+        </StackLayout>
     </Grid>
 </pages:BaseComponentPage>

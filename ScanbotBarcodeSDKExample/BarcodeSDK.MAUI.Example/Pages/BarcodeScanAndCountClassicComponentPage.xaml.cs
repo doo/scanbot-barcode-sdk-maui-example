@@ -31,16 +31,15 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         
         // Start barcode detection manually
         cameraView.StartDetection();
-        
-        cameraView.Handler?.DisconnectHandler();
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        
+
         // Stop barcode detection manually
         cameraView.StopDetection();
+        cameraView.Handler.DisconnectHandler();
     }
 
     void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
