@@ -8,23 +8,22 @@
                    ios:Page.UseSafeArea="true"
                    Title="BarcodeClassicScanAndCountComponentPage"
                    NavigationPage.HasNavigationBar="True">
-    <ScrollView>
-        <Grid RowSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="7*" />
-                <RowDefinition Height="3*" />
-            </Grid.RowDefinitions>
-            <Grid 
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid 
             Grid.Row="0">
-                <classicComponent:BarcodeScanAndCountView
+            <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>
-            </Grid>
-            <StackLayout
-                Grid.Row="1">
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <StackLayout>
                 <StackLayout
                     Orientation="Horizontal"
                     VerticalOptions="Center"
@@ -61,6 +60,6 @@
                         HorizontalOptions="Fill" />
                 </StackLayout>
             </StackLayout>
-        </Grid>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </pages:BaseComponentPage>
