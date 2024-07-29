@@ -25,28 +25,35 @@
         <!-- Comment this out to see RTU v1 in the example -->
         <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
-    
-    <!-- Settings for all targets that are not iOS (e.g., Android ) -->
+    <!-- Properties for iOS Simulator (x64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-x64'">
+        <RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS simulator (x64) -->
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <!-- Properties for iOS Simulator (arm64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">
+        <RuntimeIdentifiers>iossimulator-arm64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS simulator (arm64) -->
+    </PropertyGroup>
+    <!-- Properties for iOS Device (arm64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'ios-arm64'">
+        <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS device (arm64) -->
+    </PropertyGroup>
+    <!-- Settings for all targets that are not iOS (e.g., Android) -->
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
-
     <!-- General settings for iOS targets -->
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
-        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-        
         <!-- Simulator support attribute -->
         <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-      <MtouchDebug>true</MtouchDebug>
-      <MtouchLink>SdkOnly</MtouchLink>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
