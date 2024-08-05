@@ -27,7 +27,18 @@
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+  cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+                automaticSelectionEnabled: false,
+                overlayFormat: BarcodeTextFormat.CodeAndType,
+                textColor: Colors.Yellow,
+                textContainerColor: Colors.Black,
+                strokeColor: Colors.Yellow,
+                highlightedStrokeColor: Colors.Red,
+                highlightedTextColor: Colors.Yellow,
+                highlightedTextContainerColor: Colors.DarkOrchid,
+                polygonBackgroundColor: Colors.Transparent,
+                polygonBackgroundHighlightedColor: Colors.Transparent);
+            
             // Start barcode detection manually
             cameraView.StartDetection();
         }

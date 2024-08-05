@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.PageTestCameraOff"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+             NavigationPage.HasNavigationBar="True"
+             Title="IsVisible OFF">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <Label
+                    Text="Barcode Classic Component"
+                    TextColor="Brown"
+                    FontSize="Subtitle"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Fill" />
+            </StackLayout>
+            <StackLayout Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    IsVisible="False"
+                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                    BackgroundColor="Red"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Opacity="0.5" />
+            </StackLayout>
+            <StackLayout Grid.Row="2">
+                <Button
+                    x:Name="StartCameraBtn"
+                    Text="Result"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Clicked="StartCameraBtn_OnClicked" />
+                <Label
+                    x:Name="lblResult"
+                    Margin="15,10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

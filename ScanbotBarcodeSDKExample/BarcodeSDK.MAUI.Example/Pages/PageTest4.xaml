@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.PageTest4"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+             NavigationPage.HasNavigationBar="True"
+             Title="VStack->VStack->Classic">
+    <ContentPage.Content>
+        <VerticalStackLayout BackgroundColor="Orange">
+            <VerticalStackLayout BackgroundColor="Aqua" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="500">
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                    BackgroundColor="Red"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+                <StackLayout 
+                    BackgroundColor="Pink" 
+                    MinimumHeightRequest="300" 
+                    HorizontalOptions="Fill" 
+                             VerticalOptions="Fill" />
+            </VerticalStackLayout>
+            <StackLayout Grid.Row="2">
+                <Button
+                    x:Name="StartCameraBtn"
+                    Text="Result"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Clicked="StartCameraBtn_OnClicked" />
+                <Label
+                    x:Name="lblResult"
+                    Margin="15,10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+            </StackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -46,23 +46,34 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             MenuItems = new List<HomePageMenuItem>
             {
-                #if LEGACY_EXAMPLES
+                
+                    new HomePageMenuItem("Debugging From Scratch", () => Navigation.PushAsync(new FreshStart())),
+                
+                // #if LEGACY_EXAMPLES
                     new HomePageMenuItem("RTU v1 Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
                     new HomePageMenuItem("RTU v1 Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
                     new HomePageMenuItem("RTU v1 Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
-                #else
+                // #else
                     new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
                     new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
                     new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
                     new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
                     new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
-                #endif
+                // #endif
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeSelectionPage())),
-                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo()))
+                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo())),
+                
+                new HomePageMenuItem("Camera IsVisiblie OFF", () => Navigation.PushAsync(new PageTestCameraOff())),
+                new HomePageMenuItem("Camera IsVisiblie OFF", () => Navigation.PushAsync(new PageTestCameraOff())),
+                new HomePageMenuItem("CC Page 1", () => Navigation.PushAsync(new PageTest1())),
+                new HomePageMenuItem("CC Page 2", () => Navigation.PushAsync(new PageTest2())),
+                new HomePageMenuItem("CC Page 3", () => Navigation.PushAsync(new PageTest3())),
+                new HomePageMenuItem("CC Page 4", () => Navigation.PushAsync(new PageTest4())),
+                new HomePageMenuItem("CC Page 5", () => Navigation.PushAsync(new PageTest5()))
             };
         }
 

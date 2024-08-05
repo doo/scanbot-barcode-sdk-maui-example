@@ -13,7 +13,7 @@
             <RowDefinition Height="7*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <Grid 
+        <Frame 
             Grid.Row="0">
             <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
@@ -21,7 +21,7 @@
                     VerticalOptions="Fill"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>
-        </Grid>
+        </Frame>
         <ScrollView Grid.Row="1">
             <StackLayout>
                 <StackLayout

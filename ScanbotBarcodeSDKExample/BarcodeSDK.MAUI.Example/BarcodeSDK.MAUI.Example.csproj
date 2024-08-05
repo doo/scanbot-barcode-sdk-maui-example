@@ -19,7 +19,7 @@
         <!-- Supported Platforms -->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-        <Platforms>x64;ARM64</Platforms>
+<!--        <Platforms>x64;ARM64</Platforms>-->
         <WarningsAsErrors>NU1603</WarningsAsErrors>
 
         <!-- Comment this out to see RTU v1 in the example -->
@@ -85,9 +85,13 @@
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.8" />
+<!--        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.8" />-->
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />
+      <ProjectReference Include="..\..\..\scanbot-sdk-maui\ScanbotSDK.Shared\ScanbotSDK.BS.Shared.csproj" />
     </ItemGroup>
 </Project>

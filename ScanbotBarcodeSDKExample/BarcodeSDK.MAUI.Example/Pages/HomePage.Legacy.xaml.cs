@@ -72,6 +72,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             var configuration = new RTU.v1.BatchBarcodeScannerConfiguration
             {
+                FinderEnabled = false,
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
                     automaticSelectionEnabled: true,

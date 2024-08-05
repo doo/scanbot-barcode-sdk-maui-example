@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ScanbotSDK.MAUI.RTU.v1;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -61,6 +62,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
         {
             HandleScannerResults(result);
+        }
+
+        private void StartCameraBtn_OnClicked(object sender, EventArgs e)
+        {
+            cameraView.IsVisible = !cameraView.IsVisible;
         }
     }
 }

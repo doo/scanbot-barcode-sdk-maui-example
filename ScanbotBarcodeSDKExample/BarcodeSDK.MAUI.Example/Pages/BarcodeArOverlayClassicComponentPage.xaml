@@ -4,42 +4,41 @@
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
                          xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+                         xmlns:local="clr-namespace:ScanbotSDK.MAUI.Example.CustomView"
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
                          ios:Page.UseSafeArea="true"
                          Title="BarcodeARClassicComponentPage"
                          NavigationPage.HasNavigationBar="True"
                          x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeArOverlayClassicComponentPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="2*" />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Text="Barcode Classic Component"
-               FontSize="Subtitle"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="Center"
-               HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1">
+    <Grid RowDefinitions="1*,7*,2*">
+        <StackLayout Grid.Row="0">
+            <Label
+                Text="Barcode Classic Component"
+                FontSize="Subtitle"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill" />
+        </StackLayout>
+        <StackLayout Grid.Row="1" 
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill"
+                     InputTransparent="True">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                 HorizontalOptions="Fill"
-                VerticalOptions="Fill"
-                IsVisible="True" />
+                VerticalOptions="Fill" />
         </StackLayout>
         <StackLayout Grid.Row="2">
-            <Label
-                x:Name="lblResultCaption"
+            <Button
+                x:Name="StartCameraBtn"
                 Text="Result"
                 FontAttributes="Bold"
                 FontSize="18"
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
                 VerticalOptions="Center"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                Clicked="StartCameraBtn_OnClicked" />
             <Label
                 x:Name="lblResult"
                 Margin="15,10"

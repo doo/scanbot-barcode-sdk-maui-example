@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.PageTest2"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+             NavigationPage.HasNavigationBar="True"
+             Title="Grid->Classic,Stack">
+    <ContentPage.Content>
+        <Grid 
+            HorizontalOptions="Fill" 
+              VerticalOptions="Fill" 
+            RowDefinitions="*,Auto"
+            BackgroundColor="Aqua">
+            <StackLayout Grid.Row="0">
+            <classicComponent:BarcodeScannerView 
+                                                 x:Name="cameraView"
+                                                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                                                 BackgroundColor="Green" 
+                                                 HorizontalOptions="Fill" 
+                                                 VerticalOptions="Fill" />
+            </StackLayout>
+            <StackLayout Grid.Row="1">
+                <Button
+                    x:Name="StartCameraBtn"
+                    Text="Result"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Clicked="StartCameraBtn_OnClicked" />
+                <Label
+                    x:Name="lblResult"
+                    Margin="15,10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
