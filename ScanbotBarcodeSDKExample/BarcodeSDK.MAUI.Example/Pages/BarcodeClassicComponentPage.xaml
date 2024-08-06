@@ -16,12 +16,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <classicComponent:ScanbotClassicUIContainer
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
-            <classicComponent:BarcodeScannerView
-                x:Name="cameraView"
-                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+            <classicComponent:ScanbotClassicUIContainer>
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
             </classicComponent:ScanbotClassicUIContainer>
         </Grid>
         <ScrollView Grid.Row="1">

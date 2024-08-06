@@ -16,10 +16,8 @@
         <Grid 
             Grid.Row="0">
             <classicComponent:ScanbotClassicUIContainer 
-                Grid.Row="1"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
-            <classicComponent:BarcodeScanAndCountView
+                Grid.Row="1">
+                <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>

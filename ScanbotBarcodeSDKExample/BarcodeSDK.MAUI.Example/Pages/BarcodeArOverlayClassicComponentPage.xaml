@@ -22,9 +22,7 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Center"
                HorizontalOptions="Fill" />
-        <classicComponent:ScanbotClassicUIContainer Grid.Row="1"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
+        <classicComponent:ScanbotClassicUIContainer Grid.Row="1">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
