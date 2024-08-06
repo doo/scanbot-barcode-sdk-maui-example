@@ -11,16 +11,15 @@
     <ContentPage.Content>
         <VerticalStackLayout
             HorizontalOptions="Fill"
-            VerticalOptions="Fill"
-            BackgroundColor="Aqua">
+            VerticalOptions="Fill" >
+            <classicComponent:ScanbotClassicUIContainer Grid.Row="0" HeightRequest="400">
                 <classicComponent:BarcodeScannerView
-                    Grid.Row="0"
                     x:Name="cameraView"
+                    HeightRequest="400"
                     OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Fill" 
-                    BackgroundColor="Green"
-                    Height="600" />
+                    VerticalOptions="Fill" InputTransparent="True" />
+            </classicComponent:ScanbotClassicUIContainer>
             <StackLayout Grid.Row="1">
                 <Button
                     x:Name="StartCameraBtn"

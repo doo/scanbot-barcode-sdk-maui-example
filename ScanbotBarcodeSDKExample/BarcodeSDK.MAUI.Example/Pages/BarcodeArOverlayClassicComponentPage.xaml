@@ -20,16 +20,19 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Fill" />
         </StackLayout>
-        <StackLayout Grid.Row="1" 
-                     HorizontalOptions="Fill"
-                     VerticalOptions="Fill"
-                     InputTransparent="True">
-            <classicComponent:BarcodeScannerView
-                x:Name="cameraView"
-                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+        <Grid Grid.Row="1"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill">
+            <classicComponent:ScanbotClassicUIContainer
                 HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-        </StackLayout>
+                VerticalOptions="Fill">
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" InputTransparent="True" />
+            </classicComponent:ScanbotClassicUIContainer>
+        </Grid>
         <StackLayout Grid.Row="2">
             <Button
                 x:Name="StartCameraBtn"

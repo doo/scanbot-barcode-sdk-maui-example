@@ -10,13 +10,15 @@
                          Title="BarcodeClassicComponentPage"
                          NavigationPage.HasNavigationBar="True">
     <Grid RowSpacing="10" RowDefinitions="7*,3*">
-        <Frame Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Cyan">
-            <classicComponent:BarcodeScannerView
-                x:Name="cameraView"
-                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-        </Frame>
+        <Border Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Cyan">
+            <classicComponent:ScanbotClassicUIContainer HeightRequest="300">
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+            </classicComponent:ScanbotClassicUIContainer>
+        </Border>
 
         <ScrollView Grid.Row="1">
             <StackLayout>

@@ -11,7 +11,11 @@
              Title="Grid->CC">
     <ContentPage.Content>
         <Grid RowDefinitions="*,Auto">
-            <local:BarcodeWrapper x:Name="cameraView"  Grid.Row="0"/>
+                    <classicComponent:ScanbotClassicUIContainer HeightRequest="300" VerticalOptions="Start">
+                        <classicComponent:BarcodeScannerView 
+                            x:Name="cameraView"
+                            OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"/>
+                    </classicComponent:ScanbotClassicUIContainer>
             <Button
                 Grid.Row="1"
                 x:Name="StartCameraBtn"

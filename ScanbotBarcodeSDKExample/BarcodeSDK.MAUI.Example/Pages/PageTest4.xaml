@@ -10,18 +10,21 @@
              Title="VStack->VStack->Classic">
     <ContentPage.Content>
         <VerticalStackLayout BackgroundColor="Orange">
-            <VerticalStackLayout BackgroundColor="Aqua" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="500">
-                <classicComponent:BarcodeScannerView
-                    x:Name="cameraView"
-                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
-                    BackgroundColor="Red"
+            <VerticalStackLayout BackgroundColor="Aqua" HorizontalOptions="Fill" VerticalOptions="Fill"
+                                 HeightRequest="500">
+                <classicComponent:ScanbotClassicUIContainer>
+                    <classicComponent:BarcodeScannerView
+                        x:Name="cameraView"
+                        OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                        BackgroundColor="Red"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
+                </classicComponent:ScanbotClassicUIContainer>
+                <StackLayout
+                    BackgroundColor="Pink"
+                    MinimumHeightRequest="300"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill" />
-                <StackLayout 
-                    BackgroundColor="Pink" 
-                    MinimumHeightRequest="300" 
-                    HorizontalOptions="Fill" 
-                             VerticalOptions="Fill" />
             </VerticalStackLayout>
             <StackLayout Grid.Row="2">
                 <Button

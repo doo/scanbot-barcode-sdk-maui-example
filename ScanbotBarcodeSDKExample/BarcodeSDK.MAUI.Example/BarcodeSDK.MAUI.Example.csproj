@@ -85,13 +85,13 @@
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-<!--        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.8" />-->
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0-rc.9" />
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />
-      <ProjectReference Include="..\..\..\scanbot-sdk-maui\ScanbotSDK.Shared\ScanbotSDK.BS.Shared.csproj" />
+<!--      <ProjectReference Include="..\..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />-->
+<!--      <ProjectReference Include="..\..\..\scanbot-sdk-maui\ScanbotSDK.Shared\ScanbotSDK.BS.Shared.csproj" />-->
     </ItemGroup>
 </Project>

@@ -9,19 +9,20 @@
              NavigationPage.HasNavigationBar="True"
              Title="Grid->Classic,Stack">
     <ContentPage.Content>
-        <Grid 
-            HorizontalOptions="Fill" 
-              VerticalOptions="Fill" 
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
             RowDefinitions="*,Auto"
             BackgroundColor="Aqua">
-            <StackLayout Grid.Row="0">
-            <classicComponent:BarcodeScannerView 
-                                                 x:Name="cameraView"
-                                                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
-                                                 BackgroundColor="Green" 
-                                                 HorizontalOptions="Fill" 
-                                                 VerticalOptions="Fill" />
-            </StackLayout>
+                <classicComponent:ScanbotClassicUIContainer Grid.Row="0">
+                    <classicComponent:BarcodeScannerView
+                        x:Name="cameraView"
+                        OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                        BackgroundColor="Green"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
+                </classicComponent:ScanbotClassicUIContainer>
+
             <StackLayout Grid.Row="1">
                 <Button
                     x:Name="StartCameraBtn"
