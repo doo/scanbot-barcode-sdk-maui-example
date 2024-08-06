@@ -16,15 +16,12 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <classicComponent:BarcodeScannerView
-                x:Name="cameraView"
-                MinimumHeightRequest="500"
-                MinimumWidthRequest="300"
-                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
+            <classicComponent:ScanbotClassicUIContainer>
+                <classicComponent:BarcodeScannerView
+                    x:Name="cameraView"
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+            </classicComponent:ScanbotClassicUIContainer>
         </Grid>
-
         <ScrollView Grid.Row="1">
             <StackLayout>
                 <Label

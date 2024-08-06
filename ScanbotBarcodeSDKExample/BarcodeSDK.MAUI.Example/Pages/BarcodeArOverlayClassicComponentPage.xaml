@@ -22,14 +22,11 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Center"
                HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1">
+        <classicComponent:ScanbotClassicUIContainer Grid.Row="1">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
-                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill"
-                IsVisible="True" />
-        </StackLayout>
+                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
+        </classicComponent:ScanbotClassicUIContainer>
         <StackLayout Grid.Row="2">
             <Label
                 x:Name="lblResultCaption"

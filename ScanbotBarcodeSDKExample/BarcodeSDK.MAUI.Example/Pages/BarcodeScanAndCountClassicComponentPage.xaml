@@ -15,12 +15,13 @@
         </Grid.RowDefinitions>
         <Grid 
             Grid.Row="0">
-            <classicComponent:BarcodeScanAndCountView
+            <classicComponent:ScanbotClassicUIContainer 
+                Grid.Row="1">
+                <classicComponent:BarcodeScanAndCountView
                     x:Name="cameraView"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill"
                     OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
                     OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>
+            </classicComponent:ScanbotClassicUIContainer>
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout>
