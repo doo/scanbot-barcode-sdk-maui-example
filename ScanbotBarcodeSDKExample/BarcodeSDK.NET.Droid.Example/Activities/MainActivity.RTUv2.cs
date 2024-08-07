@@ -83,25 +83,16 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             
+            var useCase = new MultipleScanningMode();
+            useCase.Mode = MultipleBarcodesScanningMode.Unique;
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
+            useCase.SheetContent.ManualCountChangeEnabled = false;
+            useCase.ArOverlay.Visible = true;
+            useCase.ArOverlay.AutomaticSelectionEnabled = false;
+
             var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerConfiguration
             {
-                UseCase = new MultipleScanningMode
-                {
-                    Mode = MultipleBarcodesScanningMode.Unique,
-                    SheetContent = new SheetContent
-                    {
-                        ManualCountChangeEnabled = false
-                    },
-                    Sheet = new Sheet
-                    {
-                        Mode = SheetMode.CollapsedSheet
-                    },
-                    ArOverlay = new ArOverlayGeneralConfiguration
-                    {
-                        Visible = true, 
-                        AutomaticSelectionEnabled = false
-                    }
-                },
+                UseCase = useCase,
                 UserGuidance = new UserGuidanceConfiguration
                 {
                     Title = new StyledText{ Text = "Please align the QR-/Barcode in the frame above to scan it." }
@@ -145,8 +136,8 @@ namespace BarcodeSDK.NET.Droid
             // Set the expected barcodes.
             findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>() 
             {
-                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
+                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
             };
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
