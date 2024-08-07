@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=BarcodeSDK.MAUI"
+                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
                          ios:Page.UseSafeArea="true"
                          Title="BarcodeARClassicComponentPage"
@@ -15,28 +16,34 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
-               Text="Barcode ClassicComponent"
+               Text="Barcode Classic Component"
                FontSize="Subtitle"
                VerticalTextAlignment="Center"
                HorizontalTextAlignment="Center"
-               VerticalOptions="Center" 
+               VerticalOptions="Center"
                HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1">
+        <classicComponent:ScanbotClassicUIContainer Grid.Row="1">
             <classicComponent:BarcodeScannerView
                 x:Name="cameraView"
-                HeightRequest="500"
-                WidthRequest="300"
-                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-        </StackLayout>
-        <Grid Grid.Row="2">
-            <Label 
-                x:Name="lblResult"
+                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
+        </classicComponent:ScanbotClassicUIContainer>
+        <StackLayout Grid.Row="2">
+            <Label
+                x:Name="lblResultCaption"
                 Text="Result"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"
-                VerticalOptions="Center" 
+                VerticalOptions="Center"
                 HorizontalOptions="Center" />
-        </Grid>
+            <Label
+                x:Name="lblResult"
+                Margin="15,10"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+        </StackLayout>
     </Grid>
 </pages:BaseComponentPage>

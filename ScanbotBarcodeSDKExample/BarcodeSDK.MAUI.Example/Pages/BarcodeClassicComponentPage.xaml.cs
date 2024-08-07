@@ -1,8 +1,4 @@
-﻿using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Models;
-
-namespace ScanbotSDK.MAUI.Example.Pages
+﻿namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeClassicComponentPage : BaseComponentPage
     {
@@ -10,24 +6,22 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             InitializeComponent();
         }
-        
-        private void HandleScannerResults(BarcodeResultBundle result)
+
+        private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
         {
             string text = string.Empty;
 
             if (result?.Barcodes != null)
             {
-                foreach (Barcode barcode in result.Barcodes)
+                foreach (var barcode in result.Barcodes)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
+                    text += "--------------------------\n";
                 }
             }
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
+            System.Diagnostics.Debug.WriteLine(text);
+            lblResult.Text = text;
         }
 
         protected override void OnAppearing()
@@ -44,9 +38,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             // Stop barcode detection manually
             cameraView.StopDetection();
+
+            cameraView.Handler?.DisconnectHandler();
         }
 
-        private void CameraView_OnOnBarcodeScanResult(BarcodeResultBundle result)
+        private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
         {
             HandleScannerResults(result);
         }

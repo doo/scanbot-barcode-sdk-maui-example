@@ -16,30 +16,32 @@
                  BackgroundColor="Transparent"
                  FontSize="34"/>
         </StackLayout>
-        <StackLayout Grid.Row="1">
-            <CollectionView x:Name="CollectionView_MenuItems"
+        <ScrollView Grid.Row="1">
+            <StackLayout >
+                <CollectionView x:Name="CollectionView_MenuItems"
                     ItemsSource="{Binding MenuItems}"
                     SelectionChanged="MenuItemSelected"
                     SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout HeightRequest="55"  Padding="10,0">
-                            <Label Text="{Binding Title}"
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout HeightRequest="55"  Padding="10,0">
+                                <Label Text="{Binding Title}"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="CenterAndExpand"
                                FontSize="Default"/>
-                            <StackLayout
+                                <StackLayout
                                 BackgroundColor="LightGray"
                                 HeightRequest="0.5" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.FooterTemplate>
-                    <DataTemplate>
-                        <Grid BackgroundColor="#c8193c" HeightRequest="50"/>
-                    </DataTemplate>
-                </CollectionView.FooterTemplate>
-            </CollectionView>
-        </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.FooterTemplate>
+                        <DataTemplate>
+                            <Grid BackgroundColor="#c8193c" HeightRequest="50"/>
+                        </DataTemplate>
+                    </CollectionView.FooterTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

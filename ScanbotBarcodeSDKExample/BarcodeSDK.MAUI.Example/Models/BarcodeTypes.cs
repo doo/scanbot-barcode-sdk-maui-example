@@ -1,4 +1,4 @@
-﻿using ScanbotSDK.MAUI.Constants;
+﻿using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Models
 {
@@ -8,20 +8,11 @@ namespace ScanbotSDK.MAUI.Example.Models
 
         public Dictionary<BarcodeFormat, bool> List { get; private set; } = new Dictionary<BarcodeFormat, bool>();
 
-        public List<BarcodeFormat> AcceptedTypes
+        public BarcodeFormat[] AcceptedTypes
         {
             get
             {
-                var result = new List<BarcodeFormat>();
-                foreach (var item in List)
-                {
-                    if (item.Value)
-                    {
-                        result.Add(item.Key);
-                    }
-                }
-
-                return result;
+                return List.Where(item => item.Value).Select(item => item.Key).ToArray();
             }
         }
 

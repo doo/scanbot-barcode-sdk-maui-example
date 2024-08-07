@@ -1,6 +1,4 @@
-using ScanbotSDK.MAUI.Configurations;
-using ScanbotSDK.MAUI.Constants;
-using ScanbotSDK.MAUI.Models;
+using ScanbotSDK.MAUI.RTU.v1;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -14,7 +12,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
-            cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
+            cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
@@ -27,23 +25,20 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
 
-        private void HandleScannerResults(BarcodeResultBundle result)
+        private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
         {
             string text = string.Empty;
 
             if (result?.Barcodes != null)
             {
-                foreach (Barcode barcode in result.Barcodes)
+                foreach (var barcode in result.Barcodes)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
                 }
             }
 
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                System.Diagnostics.Debug.WriteLine(text);
-                lblResult.Text = text;
-            });
+            System.Diagnostics.Debug.WriteLine(text);
+            lblResult.Text = text;
         }
 
         protected override void OnAppearing()
@@ -60,9 +55,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             // Stop barcode detection manually
             cameraView.StopDetection();
+            cameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(BarcodeResultBundle result)
+        private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
         {
             HandleScannerResults(result);
         }
