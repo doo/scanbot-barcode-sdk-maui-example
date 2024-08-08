@@ -40,6 +40,7 @@ namespace ScanbotSDK.MAUI.Example
                 // Configure other parameters, pertaining to single-scanning mode as needed.
                 config.UseCase = useCase;
 
+                // Set an array of accepted barcode types.
                 config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.Common;
 
                 return config;
