@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net7.0-ios;net8.0-ios</TargetFrameworks>
+        <TargetFramework>net8.0-ios</TargetFramework>
         <OutputType>Exe</OutputType>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -25,6 +25,33 @@
         <Platforms>x64;ARM64</Platforms>
         <!-- Comment this out to see RTU v1 in the example -->
         <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
+    </PropertyGroup>
+    <!-- Properties for iOS Simulator (x64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-x64'">
+        <RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS simulator (x64) -->
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <!-- Properties for iOS Simulator (arm64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">
+        <RuntimeIdentifiers>iossimulator-arm64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS simulator (arm64) -->
+    </PropertyGroup>
+    <!-- Properties for iOS Device (arm64 architecture) -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'ios-arm64'">
+        <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+        <!-- Additional properties specific to iOS device (arm64) -->
+    </PropertyGroup>
+
+    <!-- General settings for iOS targets -->
+    <PropertyGroup>
+        <MtouchLink>SdkOnly</MtouchLink>
+        <MtouchInterpreter>-all</MtouchInterpreter>
+        <CreatePackage>false</CreatePackage>
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+
+        <!-- Simulator support attribute -->
+        <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
