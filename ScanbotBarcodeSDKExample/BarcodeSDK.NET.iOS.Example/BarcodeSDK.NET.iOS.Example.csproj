@@ -43,15 +43,8 @@
         <!-- Additional properties specific to iOS device (arm64) -->
     </PropertyGroup>
 
-    <!-- Settings for all targets that are not iOS (e.g., Android ) -->
-    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
-        <MtouchLink>SdkOnly</MtouchLink>
-        <CreatePackage>false</CreatePackage>
-        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    </PropertyGroup>
-
     <!-- General settings for iOS targets -->
-    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <PropertyGroup>
         <MtouchLink>SdkOnly</MtouchLink>
         <MtouchInterpreter>-all</MtouchInterpreter>
         <CreatePackage>false</CreatePackage>
