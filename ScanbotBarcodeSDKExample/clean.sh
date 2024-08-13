@@ -10,5 +10,6 @@ set -e
     echo $folder
   done
 
-  # For visual studio project cache
+  # For visual studio and jetbrains:rider project cache
   rm -rf ./.vs
+  rm -rf ./.idea

@@ -49,8 +49,20 @@ For more details please refer to the SDK documentation.
 
 
 ## Requirements
-[Microsoft Visual Studio](https://www.visualstudio.com)
-Developing native, cross-platform .NET Multi-platform App UI (.NET MAUI) apps requires Visual Studio 2022 17.3 or greater, or Visual Studio 2022 for Mac 17.4 or greater.
+Developing native, cross-platform .NET Multi-platform App UI apps requires following items mentioned below according to the system you are building on.
+
+**MacOS** 
+
+  - Download and install the [.NET SDK](https://dotnet.microsoft.com/en-us/download).
+  - Install the latest **.NET MAUI workloads** via terminal using this command `sudo dotnet workload install maui`.
+  - Install the Android and iOS SDKs.
+  - **Note:** As the IDE **Visual Studio for Mac**, is no more supported, You may want to check this article on [Visual Studio alternative for Mac](https://scanbot.io/techblog/visual-studio-alternatives-for-mac/).
+
+**Windows**
+
+  - Install [Visual Studio](https://dotnet.microsoft.com/en-us/download).
+  - For running and debugging the iOS applications, Check [Pair to Mac](https://learn.microsoft.com/en-us/dotnet/maui/ios/pair-to-mac?view=net-maui-8.0) for iOS development.
+
 
 
 ## Documentation
