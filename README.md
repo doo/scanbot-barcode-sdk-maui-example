@@ -49,19 +49,19 @@ For more details please refer to the SDK documentation.
 
 
 ## Requirements
-Developing native, cross-platform .NET Multi-platform App UI apps requires following items mentioned below according to the system you are building on.
+Developing native, cross-platform .NET Multi-platform App UI apps requires the items mentioned below, according to the system you are building on.
 
 **MacOS** 
 
   - Download and install the [.NET SDK](https://dotnet.microsoft.com/en-us/download).
   - Install the latest **.NET MAUI workloads** via terminal using this command `sudo dotnet workload install maui`.
   - Install the Android and iOS SDKs.
-  - **Note:** As the IDE **Visual Studio for Mac**, is no more supported, You may want to check this article on [Visual Studio alternatives for Mac](https://scanbot.io/techblog/visual-studio-alternatives-for-mac/).
+  - **Note:** As the IDE **Visual Studio for Mac** is no longer supported, you may want to check this article on [Visual Studio alternatives for Mac](https://scanbot.io/techblog/visual-studio-alternatives-for-mac/).
 
 **Windows**
 
   - Install [Visual Studio](https://dotnet.microsoft.com/en-us/download).
-  - For running and debugging the iOS applications, Check [Pair to Mac](https://learn.microsoft.com/en-us/dotnet/maui/ios/pair-to-mac?view=net-maui-8.0) for iOS development.
+  - For running and debugging iOS applications, Check [Pair to Mac](https://learn.microsoft.com/en-us/dotnet/maui/ios/pair-to-mac?view=net-maui-8.0) for iOS development.
 
 ## Documentation
 The documentation of the current ScanbotBarcodeSDK.NET release can be found [here](https://docs.scanbot.io/barcode-scanner-sdk/maui/introduction/)
