@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
+        <TargetFrameworks>net8.0;net8.0-ios;net8.0-android</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <RootNamespace>ScanbotSDK.MAUI.Example</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -23,7 +23,7 @@
         <WarningsAsErrors>NU1603</WarningsAsErrors>
 
         <!-- Comment this out to see RTU v1 in the example -->
-        <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
+         <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> 
     </PropertyGroup>
 
     <!-- Properties for iOS Simulator (x64 architecture) -->
@@ -85,7 +85,7 @@
 
     <ItemGroup>
         <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.3-alpha.1" />
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
