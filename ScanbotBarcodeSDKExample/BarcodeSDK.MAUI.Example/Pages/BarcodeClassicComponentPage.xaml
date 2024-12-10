@@ -19,8 +19,7 @@
             <classicComponent:ScanbotClassicUIContainer>
                 <classicComponent:BarcodeScannerView
                     x:Name="cameraView"
-                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
-                    IsVisible="False"/>
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
             </classicComponent:ScanbotClassicUIContainer>
         </Grid>
         <ScrollView Grid.Row="1">
