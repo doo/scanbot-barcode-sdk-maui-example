@@ -19,11 +19,17 @@
             <classicComponent:ScanbotClassicUIContainer>
                 <classicComponent:BarcodeScannerView
                     x:Name="cameraView"
-                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
+                    IsVisible="False"/>
             </classicComponent:ScanbotClassicUIContainer>
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout>
+                <Button 
+                    x:Name="VisibilityButton"
+                    Clicked="VisibilityButton_OnClicked" 
+                    Text="Toggle Visibility" 
+                    HorizontalOptions="Center" />
                 <Label
                     x:Name="lblResultCaption"
                     Text="Result"
