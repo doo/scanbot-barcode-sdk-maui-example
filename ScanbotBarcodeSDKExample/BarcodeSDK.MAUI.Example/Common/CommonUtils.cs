@@ -26,8 +26,8 @@ namespace ScanbotSDK.MAUI.Example.Utils
         internal static string GenericDocumentToString(ScanbotSDK.MAUI.Common.GenericDocument document)
         {
             return string.Join("\n", document.Fields
-                                .Where((f) => f != null && f.Name != null && f.Name != null && f.Value.Text != null)
-                                .Select((f) => string.Format("{0}: {1}", f.Name, f.Value.Text)));
+                                .Where(f => f?.Name != null && f.Value.Text != null)
+                                .Select(f => $"{f.Name}: {f.Value.Text}"));
         }
 
         /// <summary>
