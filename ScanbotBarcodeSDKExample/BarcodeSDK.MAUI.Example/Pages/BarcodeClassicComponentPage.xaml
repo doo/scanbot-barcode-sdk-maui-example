@@ -24,11 +24,6 @@
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout>
-                <Button 
-                    x:Name="VisibilityButton"
-                    Clicked="VisibilityButton_OnClicked" 
-                    Text="Toggle Visibility" 
-                    HorizontalOptions="Center" />
                 <Label
                     x:Name="lblResultCaption"
                     Text="Result"

@@ -31,11 +31,6 @@
                     HorizontalOptions="Center"
                     Spacing="10">
                     <Button
-                            x:Name="VisibilityButton"
-                            Clicked="VisibilityButton_OnClicked" 
-                            Text="Toggle Visibility" 
-                            HorizontalOptions="Center"/>
-                    <Button
                         x:Name="StartScanningButton"
                         Text="Capture"
                         VerticalOptions="Center" 

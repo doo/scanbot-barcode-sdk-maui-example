@@ -46,10 +46,5 @@
         {
             HandleScannerResults(result);
         }
-
-        private void VisibilityButton_OnClicked(object sender, EventArgs e)
-        {
-            cameraView.IsVisible = !cameraView.IsVisible;
-        }
     }
 }
