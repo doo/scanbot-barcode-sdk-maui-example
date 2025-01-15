@@ -22,13 +22,8 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity where 
     protected virtual BaseBarcodeResult<TNativeBarcodeResult> DisplayBarcodeResult()
     {
         var barcodeResult = new BaseBarcodeResult<TNativeBarcodeResult>().FromBundle(Intent?.GetBundleExtra("BarcodeResult"));
-        string imagePath = barcodeResult.PreviewPath ?? barcodeResult.ImagePath;
 
-        if (!string.IsNullOrEmpty(imagePath))
-        {
-            ShowSnapImage(imagePath);
-        }
-        else if (barcodeResult.ResultBitmap != null)
+        if (barcodeResult.ResultBitmap != null)
         {
             ShowSnapImage(barcodeResult);
         }

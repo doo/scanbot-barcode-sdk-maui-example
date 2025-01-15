@@ -3,7 +3,7 @@ using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers
 {
-	public class BarcodeScanAndCountComponentController : UIViewController
+    public class BarcodeScanAndCountComponentController : UIViewController
     {
         UIButton flash;
         UIButton start;
@@ -20,10 +20,6 @@ namespace BarcodeSDK.NET.iOS.Controllers
 
             scannerController = new SBSDKBarcodeScanAndCountViewController(this, View);
             scannerController.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes;
-            scannerController.AdditionalDetectionParameters = new SBSDKBarcodeAdditionalParameters
-            {
-                CodeDensity = SBSDKBarcodeDensity.High
-            };
             scannerController.EngineMode = SBSDKBarcodeEngineMode.NextGen;
 
             scannerController.PolygonStyle.PolygonDrawingEnabled = true;

@@ -14,12 +14,9 @@
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
-        <!-- Comment this out to see RTU v1 in the example -->
-        <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
     
     <ItemGroup>
-         <PackageReference Include="Scanbot.Xamarin.ImagePicker" Version="0.0.3-beta.1" />
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="5.1.0" />
+         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0-rc.1" />
     </ItemGroup>
 </Project>
