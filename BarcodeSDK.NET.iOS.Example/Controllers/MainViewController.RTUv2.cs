@@ -2,7 +2,6 @@
 using BarcodeSDK.NET.iOS.Controllers;
 using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
 using BarcodeSDK.NET.iOS.Utils;
-using Scanbot.ImagePicker.iOS;
 using ScanbotSDK.iOS;
 using UIKit;
 
@@ -18,7 +17,7 @@ namespace BarcodeSDK.NET.iOS
                 RecognizerConfiguration = new SBSDKUI2BarcodeRecognizerConfiguration
                 {
                     BarcodeFormats = BarcodeTypes.Instance.AcceptedTypesV2,
-                    Gs1Handling = SBSDKUI2Gs1Handling.Decode
+                    Gs1Handling = SBSDKUI2Gs1Handling.DecodeStructure
                 },
                 UseCase = new SBSDKUI2SingleScanningMode
                 {

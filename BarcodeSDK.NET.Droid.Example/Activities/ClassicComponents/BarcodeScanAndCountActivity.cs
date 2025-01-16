@@ -35,7 +35,6 @@ namespace BarcodeSDK.NET.Droid.Activities
             {
                 var defaultConfig = new BarcodeScannerAdditionalConfig();
                 detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
-                detectorConfig.SetAdditionalConfig(defaultConfig.Copy(codeDensity: BarcodeDensity.High));
                 detectorConfig.SetEngineMode(EngineMode.NextGen);
                 detectorConfig.SetSaveCameraPreviewFrame(false);
             });

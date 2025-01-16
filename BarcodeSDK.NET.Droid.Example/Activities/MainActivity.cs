@@ -11,7 +11,6 @@ using IO.Scanbot.Sdk.UI.View.Barcode.Configuration;
 using IO.Scanbot.Sdk.UI.View.Base;
 using IO.Scanbot.Sdk.Barcode;
 using BarcodeSDK.NET.Droid.Activities;
-using BarcodeSDK.NET.Droid.Activities.V1;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.UI.View.Barcode.Configuration.BarcodeScannerConfiguration;
 using BarcodeScannerActivityV2 = IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity;
@@ -25,21 +24,14 @@ namespace BarcodeSDK.NET.Droid
 
         private const int BARCODE_DEFAULT_UI_REQUEST_CODE = 910;
         private const int BARCODE_DEFAULT_UI_REQUEST_CODE_V2 = 911;
+        private const int SELECT_IMAGE_FROM_GALLERY = 912;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SDK = new ScanbotBarcodeScannerSDK(this);
 
-#if LEGACY_EXAMPLES
-            SetContentView(Resource.Layout.activity_main_legacy);
-            FindViewById<TextView>(Resource.Id.rtu_ui).Click += LegacySingleBarcodeScanningSnippet;
-            FindViewById<TextView>(Resource.Id.rtu_ui_image).Click += LegacySingleBarcodeScanningWithImageSnippet;
-            FindViewById<TextView>(Resource.Id.batch_rtu_ui).Click += LgeacyBatchBarcodeScanningSnippet;
-#else
             SetContentView(Resource.Layout.activity_main);
-#endif
-            FindViewById<TextView>(Resource.Id.barcode_camera_demo).Click += OnBarcodeCameraDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_single).Click += SingleScanning;
@@ -61,31 +53,45 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
 
-            // Optain an image from somewhere.
-            // In this case, the user picks an image with our helper.
-            Bitmap bitmap = await Scanbot.ImagePicker.Droid.ImagePicker.Instance.PickImageAsync();
-
-            if (bitmap == null)
+            try
             {
-                return;
+                // Optain an image from somewhere.
+                // In this case, the user picks an image with our helper.
+                var bitmap = await PickImageAsync();
+
+                // Configure the barcode detector for detecting many barcodes in one image.
+                var barcodeDetector = SDK.CreateBarcodeDetector();
+                barcodeDetector.ModifyConfig(detectorConfig =>
+                {
+                    var defaultConfig = new BarcodeScannerAdditionalConfig();
+                    detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
+
+                    var additionalParams = new BarcodeScannerAdditionalConfig(
+                        minimumTextLength: BarcodeScannerAdditionalConfig.DefaultMinTextLength,
+                        maximumTextLength: BarcodeScannerAdditionalConfig.DefaultMaxTextLength,
+                        minimum1DQuietZoneSize: BarcodeScannerAdditionalConfig.DefaultMin1dQuietZoneSize,
+                        gs1Handling: BarcodeScannerAdditionalConfig.DEFAULT_GS1_DECODING_HANDLING,
+                        msiPlesseyChecksumAlgorithms: BarcodeScannerAdditionalConfig.DEFAULT_MSI_PLESSEY_CHECKSUM_ALGORITHMS,
+                        stripCheckDigits: BarcodeScannerAdditionalConfig.DefaultStripCheckDigits,
+                        lowPowerMode: BarcodeScannerAdditionalConfig.DefaultLowPowerMode,
+                        useIata2Of5Checksum: BarcodeScannerAdditionalConfig.DefaultUseIata2Of5Checksum,
+                        useCode11Checksum: BarcodeScannerAdditionalConfig.DefaultUseCode11Checksum,
+                        australiaPostCustomerFormat: BarcodeScannerAdditionalConfig.DEFAULT_AUSTRALIA_POST_CUSTOMER_FORMAT,
+                        addAdditionalQuietZone: true);
+                    detectorConfig.SetAdditionalConfig(additionalParams);
+                });
+
+                var result = barcodeDetector.DetectFromBitmap(bitmap, 0);
+
+                // Handle the result in your app as needed.
+                var intent = new Intent(this, typeof(Activities.V1.BarcodeResultActivity));
+                intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScanningResult>(result, bitmap).ToBundle());
+                StartActivity(intent);
             }
-
-            // Configure the barcode detector for detecting many barcodes in one image.
-            var barcodeDetector = SDK.CreateBarcodeDetector();
-            barcodeDetector.ModifyConfig(detectorConfig =>
+            catch(TaskCanceledException)
             {
-                var defaultConfig = new BarcodeScannerAdditionalConfig();
-                detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
-                detectorConfig.SetEngineMode(EngineMode.NextGen);
-                detectorConfig.SetAdditionalConfig(defaultConfig.Copy(codeDensity: BarcodeDensity.High)); 
-            });
 
-            var result = barcodeDetector.DetectFromBitmap(bitmap, 0);
-
-            // Handle the result in your app as needed.
-            var intent = new Intent(this, typeof(BarcodeResultActivity));
-            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScanningResult>(result, bitmap).ToBundle());
-            StartActivity(intent);
+            }
         }
 
         private void OnSettingsClick(object sender, EventArgs e)
@@ -131,17 +137,21 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
 
-            if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE &&
-                data?.GetParcelableExtra(
-                    RtuConstants.ExtraKeyRtuResult) is BarcodeScanningResult barcode)
-            {
-                OnLegacyActivityResult(data, barcode);
-            }
-            
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE_V2 &&
                 data?.GetParcelableExtra(IO.Scanbot.Sdk.Ui_v2.Common.Activity.ActivityConstants.ExtraKeyRtuResult) is BarcodeScannerResult barcodeV2)
             {
                 OnRTUv2ActivityResult(data, barcodeV2);
+            }
+
+            if (requestCode == SELECT_IMAGE_FROM_GALLERY)
+            {
+                if (resultCode != Result.Ok)
+                {
+                    pendingBitmap.SetCanceled();
+                    return;
+                }
+                var stream = ContentResolver.OpenInputStream(data.Data);
+                pendingBitmap.SetResult(BitmapFactory.DecodeStream(stream));
             }
         }
 
@@ -163,6 +173,22 @@ namespace BarcodeSDK.NET.Droid
             {
                 warningView.Visibility = ViewStates.Gone;
             }
+        }
+
+        private TaskCompletionSource<Bitmap> pendingBitmap = new TaskCompletionSource<Bitmap>();
+
+        private Task<Bitmap> PickImageAsync()
+        {
+            pendingBitmap = new TaskCompletionSource<Bitmap>();
+            // Define the Intent for getting images
+            var intent = new Intent();
+            intent.SetType("image/*");
+            intent.SetAction(Intent.ActionGetContent);
+
+            var chooser = Intent.CreateChooser(intent, "Select Image");
+            StartActivityForResult(chooser, SELECT_IMAGE_FROM_GALLERY);
+            
+            return pendingBitmap.Task;
         }
     }
 }

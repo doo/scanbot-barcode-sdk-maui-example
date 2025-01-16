@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0-ios</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        
+        <!-- Display name -->
+        <ApplicationTitle>BarcodeSDK.NET.iOS</ApplicationTitle>
+        
+        <!-- App Identifier -->
+        <ApplicationId>io.scanbot.example.sdk.barcode.net</ApplicationId>
+        <ApplicationIdGuid>4653df0b-6b74-4bd0-a889-35f94efbbf0c</ApplicationIdGuid>
+        
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+        <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+        <MtouchLink>None</MtouchLink>
+        <CreatePackage>false</CreatePackage>
+        <CodesignProvision>Automatic</CodesignProvision>
+        <CodesignKey>iPhone Developer</CodesignKey>
+        <MtouchDebug>true</MtouchDebug>
+        <Platforms>x64;ARM64</Platforms>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">iossimulator-x64</RuntimeIdentifier>
+        <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
+    </PropertyGroup>
+   
+    <ItemGroup>
+        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0-rc.1" />
+    </ItemGroup>
+</Project>

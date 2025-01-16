@@ -6,7 +6,6 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
-using BarcodeSDK.NET.Droid.Activities.V1;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
@@ -41,7 +40,6 @@ namespace BarcodeSDK.NET.Droid.Activities
             {
                 var defaultConfig = new BarcodeScannerAdditionalConfig();
                 detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
-                detectorConfig.SetAdditionalConfig(defaultConfig.Copy(codeDensity: BarcodeDensity.High));
                 detectorConfig.SetEngineMode(EngineMode.NextGen);
                 detectorConfig.SetSaveCameraPreviewFrame(false);
             });
@@ -77,7 +75,7 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         private void OnSelectionOverlayBarcodeClicked(BarcodeItem e)
         {
-            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            var intent = new Intent(this, typeof(V1.BarcodeResultActivity));
             var result = new BaseBarcodeResult<BarcodeScanningResult>(new BarcodeScanningResult(new List<BarcodeItem> { e }, 0));
             intent.PutExtra(("BarcodeResult"), result.ToBundle());
             StartActivity(intent);
@@ -95,10 +93,10 @@ namespace BarcodeSDK.NET.Droid.Activities
 
             if (shouldHandleBarcode && result != null)
             {
-                var intent = new Intent(this, typeof(BarcodeResultActivity));
-                intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScanningResult>(result).ToBundle());
-                StartActivity(intent);
-                Finish();
+               var intent = new Intent(this, typeof(V1.BarcodeResultActivity));
+               intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScanningResult>(result).ToBundle());
+               StartActivity(intent);
+               Finish();
             }
 
             return false;

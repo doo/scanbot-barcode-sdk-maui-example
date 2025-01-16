@@ -17,10 +17,6 @@ namespace BarcodeSDK.NET.iOS
 
             scannerController = new SBSDKBarcodeScannerViewController(this, View);
             scannerController.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes;
-            scannerController.AdditionalDetectionParameters = new SBSDKBarcodeAdditionalParameters
-            {
-                CodeDensity = SBSDKBarcodeDensity.High
-            };
             scannerController.EngineMode = SBSDKBarcodeEngineMode.NextGen;
 
             scannerController.IsTrackingOverlayEnabled = true;
