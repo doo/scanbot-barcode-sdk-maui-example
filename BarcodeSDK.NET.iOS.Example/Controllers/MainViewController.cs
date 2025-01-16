@@ -114,7 +114,7 @@ namespace BarcodeSDK.NET.iOS
                 var controller = new ScanResultListController(image, result);
                 NavigationController.PushViewController(controller, animated: true);
             }
-            catch
+            catch(TaskCanceledException)
             {
 
             }
@@ -156,9 +156,11 @@ namespace BarcodeSDK.NET.iOS
             Alert.Show(this, "Status", message);
         }
 
-        private static void ShowPopup(UIViewController controller, string text, Action onClose = null)
+        private static void ShowPopup(UIViewController controller, string text)
         {
-            
+            var alertController = UIAlertController.Create("Scanner Result", text,  UIAlertControllerStyle.Alert);
+            alertController.AddAction(UIAlertAction.Create("Dismiss", UIAlertActionStyle.Cancel, null));
+            controller.PresentViewController(alertController, animated: true, completionHandler: null);
         }
 
         private Task<UIImage> PickImageAsync()

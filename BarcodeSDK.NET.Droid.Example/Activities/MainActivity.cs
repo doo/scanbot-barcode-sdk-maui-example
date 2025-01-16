@@ -88,7 +88,7 @@ namespace BarcodeSDK.NET.Droid
                 intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScanningResult>(result, bitmap).ToBundle());
                 StartActivity(intent);
             }
-            catch
+            catch(TaskCanceledException)
             {
 
             }
