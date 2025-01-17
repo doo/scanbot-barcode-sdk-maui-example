@@ -16,12 +16,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
         { 
             try
             {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerConfiguration
                 {
                     RecognizerConfiguration = new BarcodeRecognizerConfiguration
                     {
                         BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                        Gs1Handling = Gs1Handling.Decode
+                        Gs1Handling = Gs1Handling.DecodeStructure
                     },
                     UseCase = new SingleScanningMode()
                     {
@@ -30,7 +30,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 });
 
                 // Comment out the above and use the below to try some of our snippets instead:
-                // var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(Snippets.SingleScanningUseCase);
+                // var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
                 // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
                 var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
@@ -53,7 +53,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         { 
             try
             {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerConfiguration
                 {
                     UseCase = new SingleScanningMode()
                     {
@@ -87,7 +87,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {           
             try
             {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerConfiguration
                 {
                     RecognizerConfiguration = new BarcodeRecognizerConfiguration
                     {
@@ -117,7 +117,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             try
             {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerConfiguration
                 {
                     UseCase = new MultipleScanningMode
                     {
@@ -196,7 +196,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 configuration.UseCase = findAndPickConfig;
                 configuration.RecognizerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
 
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(configuration);
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration);
                 var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
                 await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
             }

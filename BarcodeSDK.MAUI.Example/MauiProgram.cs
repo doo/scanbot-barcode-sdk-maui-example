@@ -16,22 +16,16 @@
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            ScanbotSDKInitialize(builder);
-
-            return builder.Build();
-        }
-
-        private static void ScanbotSDKInitialize(MauiAppBuilder mauiApp)
-        {
-            ScanbotBarcodeSDK.Initialize(mauiApp, new InitializationOptions
+            SBSDKInitializer.Initialize(builder, LicenseKey, new SBSDKConfiguration
             {
-                LicenseKey = LicenseKey,
                 LoggingEnabled = true,
                 ErrorHandler = (status, feature) =>
                 {
                     Console.WriteLine($"License error: {status}, {feature}");
                 }
             });
+
+            return builder.Build();
         }
     }
 }

@@ -10,7 +10,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration
+        cameraView.OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -56,7 +56,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ContinueScanningButton.IsEnabled = false;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnOnBarcodeScanResult(Barcode.RTU.v1.BarcodeResultBundle result)
     {
         if (result.Status != OperationResult.Ok)
             return;
@@ -74,7 +74,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         lblResult.Text = text;
     }
 
-    private void CameraView_OnOnScanAndCountFinished(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnOnScanAndCountFinished(Barcode.RTU.v1.BarcodeResultBundle result)
     {
         if (result.Status == OperationResult.Ok)
         {
