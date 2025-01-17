@@ -1,4 +1,5 @@
 ﻿using ScanbotSDK.MAUI.Barcode;
+using Microsoft.Maui.Graphics.Platform;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -14,7 +15,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, string imagePath)
+        public BarcodeResultPage(Barcode.RTU.v1.Barcode[] barcodes, string imagePath)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -29,14 +30,14 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
         }
 
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, ImageSource imageSource)
+        public BarcodeResultPage(Barcode.RTU.v1.Barcode[] barcodes, PlatformImage image)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
-            if (imageSource != null)
+            if (image != null)
             {
                 imageView.IsVisible = true;
-                imageView.Source = imageSource;
+                imageView.Source = ImageSource.FromStream(() => image.AsStream());
             }
             else
             {
