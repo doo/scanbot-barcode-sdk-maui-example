@@ -22,7 +22,7 @@ namespace BarcodeSDK.NET.Droid
                 RecognizerConfiguration = new BarcodeRecognizerConfiguration
                 {
                     BarcodeFormats = BarcodeTypes.Instance.AcceptedTypesV2,
-                    Gs1Handling = Gs1Handling.Decode
+                    Gs1Handling = Gs1Handling.DecodeStructure
                 },
                 UseCase = new SingleScanningMode()
                 {
@@ -150,13 +150,8 @@ namespace BarcodeSDK.NET.Droid
 
         private void OnRTUv2ActivityResult(Intent data, BarcodeScannerResult barcode)
         {
-            var imagePath = data.GetStringExtra(
-                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodeImagePathExtra);
-            var previewPath = data.GetStringExtra(
-                    IO.Scanbot.Sdk.Ui_v2.Barcode.BarcodeScannerActivity.ScannedBarcodePreviewFramePathExtra);
-
             var intent = new Intent(this, typeof(BarcodeSDK.NET.Droid.Activities.V2.BarcodeResultActivity));
-            var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcode, imagePath, previewPath).ToBundle();
+            var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcode).ToBundle();
             intent.PutExtra("BarcodeResult", bundle);
 
             StartActivity(intent);
