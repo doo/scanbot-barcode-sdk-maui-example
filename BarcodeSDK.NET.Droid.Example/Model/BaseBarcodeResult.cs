@@ -8,10 +8,6 @@ public class BaseBarcodeResult<TNativeBarcodeResult> where TNativeBarcodeResult 
     
     public Bitmap ResultBitmap { get; protected set; }
 
-    public string ImagePath { get; protected  set; }
-
-    public string PreviewPath { get; protected set; }
-
     protected readonly MemoryStream _resultOutputStream;
 
     public BaseBarcodeResult()
@@ -24,13 +20,6 @@ public class BaseBarcodeResult<TNativeBarcodeResult> where TNativeBarcodeResult 
         ScanningResult = result;
     }
 
-    public BaseBarcodeResult(TNativeBarcodeResult result, string imagePath, string previewPath)
-    {
-        ScanningResult = result;
-        ImagePath = imagePath;
-        PreviewPath = previewPath;
-    }
-    
     public BaseBarcodeResult(TNativeBarcodeResult result, Bitmap resultBitmap)
     {
         ScanningResult = result;
@@ -49,9 +38,6 @@ public class BaseBarcodeResult<TNativeBarcodeResult> where TNativeBarcodeResult 
         {
             ResultBitmap = BitmapFactory.DecodeByteArray(rawBitmapBytes, 0, rawBitmapBytes.Length);
         }
-        
-        ImagePath = bundle?.GetString(nameof(ImagePath));
-        PreviewPath = bundle?.GetString(nameof(PreviewPath));
 
         return this;
     }
@@ -75,8 +61,6 @@ public class BaseBarcodeResult<TNativeBarcodeResult> where TNativeBarcodeResult 
             bundle.PutByteArray(nameof(ResultBitmap), Array.Empty<byte>());
         }
         bundle.PutParcelable(nameof(ScanningResult), ScanningResult);
-        bundle.PutString(nameof(ImagePath), ImagePath);
-        bundle.PutString(nameof(PreviewPath), PreviewPath);
         return bundle;
     }
 }

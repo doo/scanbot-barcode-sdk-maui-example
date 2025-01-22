@@ -17,7 +17,7 @@ The Scanbot SDK will run without a license for one minute per session!
 
 After the trial period has expired, all SDK functions and UI components will stop working. You have to restart the app to get another one-minute trial period.
 
-To test the Scanbot SDK without crashing, you can get a free “no-strings-attached” trial license. Please submit the [Trial License Form](https://scanbot.io/trial/) on our website.
+To try the Scanbot SDK without a one-minute limit, you can get a free “no-strings-attached” trial license. Please submit the [Trial License Form](https://scanbot.io/trial/) on our website.
 
 ## Free Developer Support
 
@@ -75,34 +75,34 @@ Assuming you already have your development machine setup, the following commands
 
 To build the iOS example project for both net7.0-ios and net8.0-ios, forcing packages to be restored and everything to be compiled from scratch:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.NET.iOS.Example  -r ios-arm64 --force --no-incremental```
+```dotnet build BarcodeSDK.NET.iOS.Example --force --no-incremental```
 
 To run the project on a real device, specify a target framework with `-f net8.0-ios` and the Run target via `-t:Run`, yielding the following:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.NET.iOS.Example -r ios-arm64 -f net8.0-ios -t:Run --force --no-incremental```
+```dotnet build BarcodeSDK.NET.iOS.Example -f net8.0-ios -t:Run --force --no-incremental```
 
 ##### Android
 To build the Android example project for both net7.0-android and net8.0-android, forcing packages to be restored and everything to be compiled from scratch:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.NET.Droid.Example --force --no-incremental```
+```dotnet build BarcodeSDK.NET.Droid.Example --force --no-incremental```
 
 To run the project on a real device, specify a target framework with `-f net8.0-android` and the Run target via `-t:Run`, yielding the following:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.NET.Droid.Example -f net8.0-android -t:Run --force --no-incremental```
+```dotnet build BarcodeSDK.NET.Droid.Example -f net8.0-android -t:Run --force --no-incremental```
 
 #### MAUI
 
 To build the MAUI example project for all supported target frameworks (net7.0-android, net7.0-ios, net8.0-android and net8.0-ios) and forcing packages to be restored and everything to be compiled from scratch, execute:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.MAUI.Example --force --no-incremental```
+```dotnet build BarcodeSDK.MAUI.Example --force --no-incremental```
 
 To run the project on a real iOS device, specify a target framework with `-f net8.0-ios` and the Run target via `-t:Run`, yielding the following:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.MAUI.Example -f net8.0-ios -t:Run --force --no-incremental```
+```dotnet build BarcodeSDK.MAUI.Example -f net8.0-ios -t:Run --force --no-incremental```
 
 To run the project on a real Android device, specify a target framework with `-f net8.0-android` and the Run target via `-t:Run`, yielding the following:
 
-```dotnet build ScanbotBarcodeSDKExample/BarcodeSDK.MAUI.Example -f net8.0-android -t:Run --force --no-incremental```
+```dotnet build BarcodeSDK.MAUI.Example -f net8.0-android -t:Run --force --no-incremental```
 
 ## Please note
 
