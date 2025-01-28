@@ -62,7 +62,7 @@ namespace BarcodeSDK.NET.iOS
 
             if (await this.IsCameraPermissionGranted())
             {
-                NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
+                NavigationController?.PushViewController(new BarcodeClassicComponentController(), animated: true);
             }
         }
 
@@ -75,9 +75,8 @@ namespace BarcodeSDK.NET.iOS
 
             if (await this.IsCameraPermissionGranted())
             {
-                var viewController =
-                    Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
-                this.NavigationController.PushViewController(viewController, true);
+                var viewController = Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
+                NavigationController?.PushViewController(viewController, true);
             }
         }
 

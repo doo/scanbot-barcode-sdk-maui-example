@@ -1,4 +1,6 @@
-﻿using Android.Content;
+﻿using System;
+using Android.App;
+using Android.Content;
 using IO.Scanbot.Sdk.Barcode_scanner;
 
 namespace BarcodeSDK.NET.Droid
