@@ -1,6 +1,4 @@
 ﻿using ScanbotSDK.MAUI.Example.Utils;
-using System.Diagnostics;
-using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -107,9 +105,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
             };
 
             var barcodes = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
-
+            var source = ImageSource.FromStream(() => image?.AsStream(quality: 0.7f));
+            
             // Handle the result in your app as needed.
-            await Navigation.PushAsync(new BarcodeResultPage(barcodes, image));
+            await Navigation.PushAsync(new BarcodeResultPage(barcodes.ToList(), source));
         }
 
         /// <summary>

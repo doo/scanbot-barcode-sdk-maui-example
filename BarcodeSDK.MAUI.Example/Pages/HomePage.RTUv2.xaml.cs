@@ -33,10 +33,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 // var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
                 // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
-                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
-                                                 .FirstOrDefault() ?? string.Empty;
-
-                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
+                await DisplayResults(result);
             }
             catch (TaskCanceledException)
             {
@@ -53,21 +50,21 @@ namespace ScanbotSDK.MAUI.Example.Pages
         { 
             try
             {
-                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerConfiguration
+                var config = new BarcodeScannerConfiguration
                 {
                     UseCase = new SingleScanningMode()
                     {
-                        ArOverlay = new ArOverlayGeneralConfiguration() 
+                        ArOverlay = new ArOverlayGeneralConfiguration()
                         {
                             Visible = true
-                        }    
-                    }
-                });
+                        },
+                    },
+                };
+                
+                config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.PostalFormats;
+                var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(config);
 
-                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
-                                                 .FirstOrDefault() ?? string.Empty;
-
-                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
+                await DisplayResults(result);
             }
             catch (TaskCanceledException)
             {
@@ -99,8 +96,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     }
                 });
 
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
+               await DisplayResults(result);
             }
             catch (TaskCanceledException)
             {
@@ -142,8 +138,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     }
                 });
 
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
+               await DisplayResults(result);
             }
             catch (TaskCanceledException)
             {
@@ -197,8 +192,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 configuration.RecognizerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
 
                 var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration);
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
+               await DisplayResults(result);
             }
             catch (TaskCanceledException)
             {
@@ -208,6 +202,14 @@ namespace ScanbotSDK.MAUI.Example.Pages
             {
                 // for any other errors that occur
                 Console.WriteLine(ex.Message);
+            }
+        }
+        
+        private async Task DisplayResults(BarcodeScannerResult result)
+        {
+            if (result?.Items?.Length > 0)
+            {
+                await Navigation.PushAsync(new BarcodeResultPage(result.Items.ToList()));
             }
         }
     }
