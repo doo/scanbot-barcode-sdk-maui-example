@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultDetailPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+                Margin="10">
+                <!-- Barcode Format -->
+                <Label
+                    Margin="0,5,0,0"
+                    Text="Barcode Type: "
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    TextColor="DarkGray" />
+                <Label
+                    x:Name="LabelBarcodeFormatValue"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    FontAttributes="Bold" />
+
+                <!-- Barcode Text -->
+                <Label
+                    Margin="0,5,0,0"
+                    Text="Text: "
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    TextColor="DarkGray" />
+                <Label x:Name="LabelBarcodeTextValue"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start" />
+
+                <!-- Barcode TextWithExtension -->
+                <Label
+                    x:Name="LabelBarcodeTextWithExtensionCaption"
+                    Margin="0,5,0,0"
+                    Text="Text with Extension: "
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    TextColor="DarkGray" />
+                <Label
+                    x:Name="LabelBarcodeTextWithExtensionValue"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start" />
+
+                <!-- Barcode RawBytes -->
+                <Label
+                    x:Name="LabelBarcodeRawBytesCaption"
+                    Margin="0,5,0,0"
+                    Text="Raw Bytes: "
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    TextColor="DarkGray" />
+                <Label
+                    x:Name="LabelBarcodeRawBytesValue"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
