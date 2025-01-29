@@ -2,7 +2,6 @@
 using BarcodeSDK.NET.iOS.Controllers;
 using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
 using BarcodeSDK.NET.iOS.Utils;
-using Scanbot.ImagePicker.iOS;
 using ScanbotSDK.iOS;
 using UIKit;
 
@@ -33,19 +32,12 @@ namespace BarcodeSDK.NET.iOS
             contentView.CreateButton("Barcode Component", OnClassicButtonClick);
             contentView.CreateButton("Barcode Scan and Count Component", OnClassicScanAndCountButtonClick);
         
-            #if LEGACY_EXAMPLES
-            contentView.CreateText("Ready to Use UI (legacy)");
-            contentView.CreateButton("Barcode Scanner", OnRTUUIButtonClick);
-            contentView.CreateButton("Barcode Scanner with Image", OnRTUUIImageButtonClick);
-            contentView.CreateButton("Batch Barcode Scanner", OnRTUBatchBarcodeClicked);
-            #else
             contentView.CreateText("Ready to Use UI");
             contentView.CreateButton("Single Scanning", SingleScanning);
             contentView.CreateButton("Single Scanning Selection Overlay", SingleScanningWithArOverlay);
             contentView.CreateButton("Batch Barcode Scanning", BatchBarcodeScanning);
             contentView.CreateButton("Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning);
             contentView.CreateButton("Find and Pick Barcode Scanning", FindAndPickScanning);
-            #endif
             
             contentView.CreateText("SDK Operations");
             contentView.CreateButton("Pick Image From Library", OnLibraryButtonClick);
@@ -70,7 +62,7 @@ namespace BarcodeSDK.NET.iOS
 
             if (await this.IsCameraPermissionGranted())
             {
-                NavigationController.PushViewController(new BarcodeClassicComponentController(), animated: true);
+                NavigationController?.PushViewController(new BarcodeClassicComponentController(), animated: true);
             }
         }
 
@@ -83,9 +75,8 @@ namespace BarcodeSDK.NET.iOS
 
             if (await this.IsCameraPermissionGranted())
             {
-                var viewController =
-                    Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
-                this.NavigationController.PushViewController(viewController, true);
+                var viewController = Utilities.GetViewController<BarcodeScanAndCountViewController>(Texts.ClassicComponentStoryboard);
+                NavigationController?.PushViewController(viewController, true);
             }
         }
 
@@ -98,28 +89,34 @@ namespace BarcodeSDK.NET.iOS
 
             // Optain an image from somewhere.
             // In this case, the user picks an image with our helper.
-            UIImage image = await ImagePicker.Instance.PickImageAsync();
-
-            if (image == null)
+            try
             {
-                return;
-            }
+                UIImage image = await PickImageAsync();
 
-            // Configure the barcode detector for detecting many barcodes in one image.
-            var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes)
-            {
-                EngineMode = SBSDKBarcodeEngineMode.NextGen,
-                AdditionalParameters = new SBSDKBarcodeAdditionalParameters
+                if (image == null)
                 {
-                    CodeDensity = SBSDKBarcodeDensity.High,
+                    return;
                 }
-             };
 
-            var result = scanner.DetectBarCodesOnImage(image);
+                // Configure the barcode detector for detecting many barcodes in one image.
+                var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes);
+                scanner.AdditionalParameters.AddAdditionalQuietZone = true;
 
-            // Handle the result in your app as needed.
-            var controller = new ScanResultListController(image, result);
-            NavigationController.PushViewController(controller, animated: true);
+                var result = scanner.DetectBarCodesOnImage(image);
+
+                if (result.Length == 0)
+                {
+                    return;
+                }
+                
+                // Handle the result in your app as needed.
+                var controller = new ScanResultListController(image, result);
+                NavigationController.PushViewController(controller, animated: true);
+            }
+            catch(TaskCanceledException)
+            {
+
+            }
         }
 
         private void OnCodeTypeButtonClick(object sender, EventArgs e)
@@ -158,9 +155,44 @@ namespace BarcodeSDK.NET.iOS
             Alert.Show(this, "Status", message);
         }
 
-        private static void ShowPopup(UIViewController controller, string text, Action onClose = null)
+        private static void ShowPopup(UIViewController controller, string text)
         {
-            
+            var alertController = UIAlertController.Create("Scanner Result", text,  UIAlertControllerStyle.Alert);
+            alertController.AddAction(UIAlertAction.Create("Dismiss", UIAlertActionStyle.Cancel, null));
+            controller.PresentViewController(alertController, animated: true, completionHandler: null);
         }
+
+        private Task<UIImage> PickImageAsync()
+        {
+            var imagePicker = new UIImagePickerController
+            {
+                SourceType = UIImagePickerControllerSourceType.PhotoLibrary,
+                MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary),
+                // This will prevent the ImagePicker from getting closed by swiping down.
+                // The closing of ImagePicker by "Swiping Down" creates an issue in returning the taskSource. It never returns task cancelled.
+                ModalPresentationStyle = UIModalPresentationStyle.FullScreen
+            };
+            
+            var taskCompletionSource = new TaskCompletionSource<UIImage>();
+
+            // Set event handlers
+            imagePicker.FinishedPickingMedia += (object sender, UIImagePickerMediaPickedEventArgs args) => {
+                UIImage image = args.EditedImage ?? args.OriginalImage;
+                imagePicker.DismissViewController(true, () => taskCompletionSource.SetResult(image));
+            };
+            imagePicker.Canceled += (object sender, EventArgs args) =>
+            {
+                taskCompletionSource.SetCanceled();
+                imagePicker.DismissViewController(true, null);
+            };
+
+            // Present UIImagePickerController;
+            UIWindow window = UIApplication.SharedApplication.KeyWindow;
+            var viewController = window?.RootViewController;
+            viewController.PresentViewController(imagePicker, true, null);
+
+            return taskCompletionSource.Task;
+        }
+        
     }
 }
