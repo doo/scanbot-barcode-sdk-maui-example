@@ -17,6 +17,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0-rc.1" />
+         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" />
     </ItemGroup>
 </Project>
