@@ -18,7 +18,7 @@
 
             SBSDKInitializer.Initialize(builder, LicenseKey, new SBSDKConfiguration
             {
-                LoggingEnabled = true,
+                EnableLogging = true,
                 ErrorHandler = (status, feature) =>
                 {
                     Console.WriteLine($"License error: {status}, {feature}");
