@@ -1,5 +1,4 @@
 using ScanbotSDK.MAUI.ClassicComponent;
-using ScanbotSDK.MAUI.RTU.v1;
 
 namespace ScanbotSDK.MAUI.Example.CustomView;
 

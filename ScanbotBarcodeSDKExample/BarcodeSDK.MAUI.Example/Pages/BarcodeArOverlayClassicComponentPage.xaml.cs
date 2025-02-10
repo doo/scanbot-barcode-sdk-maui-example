@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using ScanbotSDK.MAUI.RTU.v1;
+using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
