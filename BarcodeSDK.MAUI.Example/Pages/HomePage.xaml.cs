@@ -1,6 +1,4 @@
 ﻿using ScanbotSDK.MAUI.Example.Utils;
-using System.Diagnostics;
-using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -46,17 +44,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             MenuItems = new List<HomePageMenuItem>
             {
-                #if LEGACY_EXAMPLES
-                    new HomePageMenuItem("RTU v1 Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
-                    new HomePageMenuItem("RTU v1 Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
-                    new HomePageMenuItem("RTU v1 Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
-                #else
-                    new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
-                    new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
-                    new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
-                    new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
-                    new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
-                #endif
+                new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
+                new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
+                new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
+                new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
+                new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
@@ -73,7 +65,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// <param name="e"></param>
         private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            if (!ScanbotBarcodeSDK.LicenseInfo.IsValid)
+            if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
                 CommonUtils.Alert(this, "Alert", "The license is expired.");
                 CollectionView_MenuItems.SelectedItem = null;
@@ -94,28 +86,29 @@ namespace ScanbotSDK.MAUI.Example.Pages
         {
             // Optain an image from somewhere.
             // In this case, the user picks an image with our helper.
-            var imageSource = await ScanbotBarcodeSDK.PickerService.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
+            var image = await ScanbotSDKMain.ImagePicker.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
 
-            if (imageSource == null)
+            if (image == null)
             {
                 return;
             }
 
             // Configure the barcode detector for detecting many barcodes in one image.
-            var configuration = new RTU.v1.BarcodeDetectionConfiguration
+            var configuration = new Barcode.BarcodeDetectionConfiguration
             {
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 EngineMode = EngineMode.NextGen,
-                AdditionalParameters = new RTU.v1.BarcodeScannerAdditionalParameters
+                AdditionalParameters = new Barcode.RTU.v1.BarcodeScannerAdditionalParameters
                 {
-                    CodeDensity = CodeDensity.High
+                    AddAdditionalQuietZone = true
                 }
             };
 
-            var barcodes = await ScanbotBarcodeSDK.BarcodeDetector.DetectBarcodesFrom(imageSource, configuration);
-
+            var barcodes = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
+            var source = ImageSource.FromStream(() => image?.AsStream(quality: 0.7f));
+            
             // Handle the result in your app as needed.
-            await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
+            await Navigation.PushAsync(new BarcodeResultPage(barcodes.ToList(), source));
         }
 
         /// <summary>
@@ -123,12 +116,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private void ClearStorage()
         {
-            if (!ScanbotBarcodeSDK.LicenseInfo.IsValid)
+            if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
                 return;
             }
 
-            var result = ScanbotBarcodeSDK.SDKService.ClearStorageDirectory();
+            var result = ScanbotSDKMain.CommonOperations.ClearStorageDirectory();
 
             if (result.Status == OperationResult.Ok)
             {
@@ -145,7 +138,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private LicenseInfo ViewLicenseInfo()
         {
-            var info = ScanbotBarcodeSDK.LicenseInfo;
+            var info = ScanbotSDKMain.LicenseInfo;
             var message = $"License status {info.Status}";
 
             if (info.IsValid)

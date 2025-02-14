@@ -21,43 +21,12 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <Platforms>x64;ARM64</Platforms>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
-
-        <!-- Comment this out to see RTU v1 in the example -->
-        <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
-    </PropertyGroup>
-
-    <!-- Properties for iOS Simulator (x64 architecture) -->
-    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-x64'">
-        <RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
-        <!-- Additional properties specific to iOS simulator (x64) -->
-        <PlatformTarget>x64</PlatformTarget>
-    </PropertyGroup>
-    <!-- Properties for iOS Simulator (arm64 architecture) -->
-    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">
-        <RuntimeIdentifiers>iossimulator-arm64</RuntimeIdentifiers>
-        <!-- Additional properties specific to iOS simulator (arm64) -->
-    </PropertyGroup>
-    <!-- Properties for iOS Device (arm64 architecture) -->
-    <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'ios-arm64'">
-        <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
-        <!-- Additional properties specific to iOS device (arm64) -->
-    </PropertyGroup>
-
-    <!-- Settings for all targets that are not iOS (e.g., Android ) -->
-    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
-        <MtouchLink>SdkOnly</MtouchLink>
-        <CreatePackage>false</CreatePackage>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
 
-    <!-- General settings for iOS targets -->
-    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-        <MtouchLink>SdkOnly</MtouchLink>
-        <MtouchInterpreter>-all</MtouchInterpreter>
-        <CreatePackage>false</CreatePackage>
-        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-
-        <!-- Simulator support attribute -->
+     <PropertyGroup Condition="$(TargetFramework.Contains('ios'))">
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">iossimulator-x64</RuntimeIdentifier>
         <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
 
@@ -78,16 +47,9 @@
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Models\" />
-        <Folder Include="Common\" />
-    </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Scanbot.Xamarin.Forms.ImagePicker" Version="0.0.3-beta.1" />
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="5.1.0" />
-    </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.Contains('net8.'))">
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="6.1.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
     </ItemGroup>
 </Project>
