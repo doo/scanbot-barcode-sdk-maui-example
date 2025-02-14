@@ -60,8 +60,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
                         },
                     },
                 };
-                
-                config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.PostalFormats;
+
+                config.RecognizerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
                 var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(config);
 
                 await DisplayResults(result);
