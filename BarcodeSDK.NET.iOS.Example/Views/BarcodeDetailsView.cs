@@ -4,27 +4,30 @@ namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeDetailsView : UIView
     {
-        UIImageView imageView;
-        UILabel label;
+        private readonly UIImageView imageView;
+        private readonly UILabel label;
 
-        public BarcodeDetailsView(SBSDKBarcodeScannerResult result)
+        public BarcodeDetailsView(SBSDKBarcodeItem result)
         {
             BackgroundColor = UIColor.White;
-
-            if (result.BarcodeImage != null)
+            imageView = new UIImageView
             {
-                imageView = new UIImageView();
-                imageView.Image = result.BarcodeImage;
-                imageView.ContentMode = UIViewContentMode.ScaleAspectFit;
-                imageView.BackgroundColor = UIColor.FromRGB(245, 245, 245);
-                AddSubview(imageView);
-            }
+                ContentMode = UIViewContentMode.ScaleAspectFit,
+                BackgroundColor = UIColor.FromRGB(245, 245, 245)
+            };
 
-            label = new UILabel();
-            label.Text = ParseText(result);
-            label.TextColor = UIColor.DarkGray;
-            label.Lines = 0;
-            AddSubview(label);
+            label = new UILabel
+            {
+                TextColor = UIColor.DarkGray,
+                Lines = 0
+            };
+            
+            AddSubviews(imageView, label);
+            if (result != null)
+            {
+                imageView.Image = result.SourceImage?.ToUIImage();
+                label.Text = result.Text;
+            }
         }
 
         public override void LayoutSubviews()
@@ -45,11 +48,6 @@ namespace BarcodeSDK.NET.iOS
             }
 
             label.Frame = new CGRect(x, y, w, h);
-        }
-
-        string ParseText(SBSDKBarcodeScannerResult barcode)
-        {
-            return BarcodeFormatter.Instance.GetText(barcode);
         }
     }
 }

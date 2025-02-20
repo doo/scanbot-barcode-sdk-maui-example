@@ -4,12 +4,12 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration FindAndPickUseCase
+    public static SBSDKUI2BarcodeScannerScreenConfiguration FindAndPickUseCase
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             // Initialize the use case for multiple scanning.
             var useCase = new SBSDKUI2FindAndPickScanningMode();

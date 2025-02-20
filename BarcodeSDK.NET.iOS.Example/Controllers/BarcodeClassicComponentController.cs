@@ -15,10 +15,18 @@ namespace BarcodeSDK.NET.iOS
 
             Title = "CLASSIC COMPONENT";
 
-            scannerController = new SBSDKBarcodeScannerViewController(this, View);
-            scannerController.AcceptedBarcodeTypes = BarcodeTypes.Instance.AcceptedTypes;
-            scannerController.EngineMode = SBSDKBarcodeEngineMode.NextGen;
-
+            var configuration = new SBSDKBarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            };
+            
+            SBSDKBarcodeScannerConfiguration config = new SBSDKBarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations = [configuration],
+                ReturnBarcodeImage = true
+            };
+            
+            scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
             scannerController.IsTrackingOverlayEnabled = true;
             scannerController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled = false;
             scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
@@ -42,44 +50,30 @@ namespace BarcodeSDK.NET.iOS
             nfloat size = 55;
             nfloat padding = 10;
             flash.Frame = new CGRect(padding, padding, size, size);
-            flash.Click += (sender, e) =>
+            flash.Click += (_, e) =>
             {
                 scannerController.IsFlashLightEnabled = e.Enabled;
             };
         }
 
-        private class BarcodeSelectionDelegate : SBSDKBarcodeTrackingOverlayControllerDelegate
+        private class BarcodeSelectionDelegate(UINavigationController navigationController)
+            : SBSDKBarcodeTrackingOverlayControllerDelegate
         {
-            private UINavigationController navigationController;
-
-            public BarcodeSelectionDelegate(UINavigationController navigationController)
+            public override void DidTapOnBarcode(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode)
             {
-                this.navigationController = navigationController;
-            }
-
-            public override void DidTapOnBarcode(SBSDKBarcodeTrackingOverlayController overlayController, SBSDKBarcodeScannerResult barcode)
-            {
-                var resultsController = new ScanResultListController(barcode.SourceImage, new[] { barcode });
+                var resultsController = new ScanResultListController([barcode]);
 
                 navigationController.PopViewController(animated: false);
                 navigationController.PushViewController(resultsController, animated: true);
             }
         }
 
-        private class BarcodeDetectionDelegate : SBSDKBarcodeScannerViewControllerDelegate
+        private class BarcodeDetectionDelegate(UINavigationController navigationController)
+            : SBSDKBarcodeScannerViewControllerDelegate
         {
-            private UINavigationController navigationController;
-
-            public BarcodeDetectionDelegate(UINavigationController navigationController)
+            public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
             {
-                this.navigationController = navigationController;
-            }
-
-            public override void DidDetectBarcodes(
-                SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeScannerResult[] codes)
-            {
-                var shouldHandleBarcode = barcodeController.IsTrackingOverlayEnabled ?
-                                          barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled : true;
+                var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled || barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled;
 
                 if (!shouldHandleBarcode)
                 {
@@ -91,13 +85,13 @@ namespace BarcodeSDK.NET.iOS
                     return;
                 }
 
-                var resultsController = new ScanResultListController(codes.First().SourceImage, codes);
+                var resultsController = new ScanResultListController(codes);
 
                 navigationController.PopViewController(animated: false);
                 navigationController.PushViewController(resultsController, animated: true);
             }
 
-            public override bool ShouldDetectBarcodes(SBSDKBarcodeScannerViewController controller)
+            public override bool ShouldScanBarcodes(SBSDKBarcodeScannerViewController controller)
             {
                 return true;
             }

@@ -4,12 +4,12 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration Localization
+    public static SBSDKUI2BarcodeScannerScreenConfiguration Localization
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             config.Localization.TopBarTitle = "Custom top bar title";
             config.Localization.UserGuidance = "Custom guidance title";

@@ -21,8 +21,8 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents.TableViewCells
         internal void PopulateData(SBSDKBarcodeScannerAccumulatingResult barcode)
 		{
             lblBarcodeCount.Text = "x" + (int)barcode.ScanCount;
-			lblBarcodeResult.Text = barcode.Code.RawTextString;
-            lblBarcodeType.Text = barcode.Code.Type.Name;
+			lblBarcodeResult.Text = barcode.Item.Text;
+            lblBarcodeType.Text = barcode.Item.Format.ToString();
             Utilities.CreateRoundedCardView(containerView);
         }
     }

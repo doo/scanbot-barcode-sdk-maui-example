@@ -6,12 +6,20 @@ namespace BarcodeSDK.NET.iOS
     {
         private UIImage scannedPage;
 
-        private SBSDKBarcodeScannerResult[] items;
+        private SBSDKBarcodeItem[] items;
 
-        public ScanResultListController(UIImage scannedPage, SBSDKBarcodeScannerResult[] list)
+        public ScanResultListController(SBSDKBarcodeItem[] list, UIImage scannedPage = null)
         {
-            this.scannedPage = scannedPage;
+            if (list == null || list.Length <= 0) return;
+            this.scannedPage = scannedPage ?? list.First().SourceImage?.ToUIImage();
             items = list;
+        }
+        
+        public ScanResultListController(SBSDKUI2BarcodeScannerUIItem[] list, UIImage scannedPage = null)
+        {
+            if (list == null || list.Length <= 0) return;
+            this.scannedPage = scannedPage ?? list.First().Barcode.SourceImage?.ToUIImage();
+            items = list.Select(item => item.Barcode).ToArray();
         }
 
         public ScanResultListView ContentView { get; set; }
@@ -38,9 +46,11 @@ namespace BarcodeSDK.NET.iOS
 
         private void RowSelected(object sender, EventArgs e)
         {
-            var barcode = (SBSDKBarcodeScannerResult)sender;
-            var controller = new BarcodeDetailsController(barcode);
-            NavigationController.PushViewController(controller, true);
+            if (sender is SBSDKBarcodeItem barcode)
+            {
+                var controller = new BarcodeDetailsController(barcode);
+                NavigationController?.PushViewController(controller, true);
+            }
         }
     }
 }
