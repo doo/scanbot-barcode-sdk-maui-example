@@ -4,12 +4,12 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration SingleScanningUseCase
+    public static SBSDKUI2BarcodeScannerScreenConfiguration SingleScanningUseCase
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             var useCase = new SBSDKUI2SingleScanningMode();
             // Enable and configure the confirmation sheet.
@@ -41,7 +41,7 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.RecognizerConfiguration.BarcodeFormats = SBSDKUI2BarcodeFormat.CommonFormats;
+            config.ScannerConfiguration.BarcodeFormats = SBSDKBarcodeFormats.Common;
 
             return config;
         }

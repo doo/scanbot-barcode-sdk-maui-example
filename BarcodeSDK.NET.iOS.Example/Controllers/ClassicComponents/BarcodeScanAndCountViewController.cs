@@ -34,9 +34,18 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
         {
             base.ViewDidLoad();
             ScannedBarcodes = new List<SBSDKBarcodeScannerAccumulatingResult>();
-            viewController = new SBSDKBarcodeScanAndCountViewController(parentViewController: this,
-                                                                      containerView, new BarcodeScanAndCountViewDelegate(this));
-            viewController.AcceptedBarcodeTypes = SBSDKBarcodeType.AllTypes;
+            var barcodeConfiguration = new SBSDKBarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            };
+            
+            var configuration = new SBSDKBarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations = [barcodeConfiguration]
+            };
+            
+            viewController = new(parentViewController: this, containerView, configuration);
+            viewController.Delegate = new BarcodeScanAndCountViewDelegate(this);
         }
 
         partial void BtnShowResults_Action(UIBarButtonItem sender)
@@ -56,15 +65,17 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
             this.scanAndCountViewDelegate = scanAndCountViewDelegate;
         }
 
-        public override void DidDetectBarcodes(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeScannerResult[] codes)
+        public override void DidScanBarcodes(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeItem[] codes)
         {
             foreach (var code in codes)
             {
-                var existingBarcode = scanAndCountViewDelegate.ScannedBarcodes.Find(item => item.Code.Type == code.Type && item.Code.RawTextString == code.RawTextString);
+                var existingBarcode = scanAndCountViewDelegate.ScannedBarcodes.Find(
+                    item => item.Item.Format.Equals(code.Format) 
+                            && item.Item.Text == code.Text);
+                
                 if (existingBarcode != null)
                 {
                     existingBarcode.ScanCount += 1;
-                    existingBarcode.Code.DateOfDetection = code.DateOfDetection;
                 }
                 else
                 {
@@ -74,7 +85,7 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
             scanAndCountViewDelegate.UpdateScannedItems();
         }
 
-        public override UIView OverlayForBarcode(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeScannerResult code)
+        public override UIView OverlayForBarcode(SBSDKBarcodeScanAndCountViewController controller, SBSDKBarcodeItem item)
         {
             return new UIImageView(image: UIImage.CheckmarkImage);
         }
