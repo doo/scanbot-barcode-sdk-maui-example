@@ -10,7 +10,7 @@
 
             View = listView = new BarcodeListView();
             Title = "ACCEPTED TYPES";
-            listView.AddButtons(BarcodeTypes.Instance.List);
+            listView.AddButtons(BarcodeTypes.Instance.AcceptedBarcodesDictionary);
         }
 
         public override void ViewWillAppear(bool animated)

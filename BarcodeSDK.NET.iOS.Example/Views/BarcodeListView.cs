@@ -31,7 +31,7 @@ namespace BarcodeSDK.NET.iOS
             ContentSize = new CGSize(Frame.Width, y);
         }
 
-        public void AddButtons(Dictionary<SBSDKBarcodeType, bool> list)
+        public void AddButtons(Dictionary<SBSDKBarcodeFormat, bool> list)
         {
             foreach (var button in Buttons)
             {

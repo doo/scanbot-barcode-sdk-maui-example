@@ -4,13 +4,13 @@ namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeTypeButton : UIView
     {
-        public SBSDKBarcodeType Code { get; private set; }
+        public SBSDKBarcodeFormat Code { get; private set; }
 
         public UILabel Title { get; set; }
 
         public UISwitch Switch { get; private set; }
 
-        public BarcodeTypeButton(SBSDKBarcodeType code)
+        public BarcodeTypeButton(SBSDKBarcodeFormat code)
         {
             Code = code;
 
@@ -25,10 +25,10 @@ namespace BarcodeSDK.NET.iOS
             Switch.Layer.Opacity = 1.0f;
             AddSubview(Switch);
 
-            Title.Text = code.Name;
+            Title.Text = code.ToString();
         }
 
-        public BarcodeTypeButton(KeyValuePair<SBSDKBarcodeType, bool> item)
+        public BarcodeTypeButton(KeyValuePair<SBSDKBarcodeFormat, bool> item)
         {
             Code = item.Key;
 
@@ -43,7 +43,7 @@ namespace BarcodeSDK.NET.iOS
             Switch.Layer.Opacity = 1.0f;
             AddSubview(Switch);
 
-            Title.Text = Code.Name;
+            Title.Text = Code.ToString();
         }
 
         public override void LayoutSubviews()

@@ -3,12 +3,12 @@ using ScanbotSDK.iOS;
 namespace BarcodeSDK.NET.iOS;
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration Palette
+    public static SBSDKUI2BarcodeScannerScreenConfiguration Palette
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             // Simply alter one color and keep the other default.
             // configuration.Palette = new Palette()
