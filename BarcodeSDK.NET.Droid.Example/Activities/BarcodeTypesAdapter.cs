@@ -1,22 +1,19 @@
 ﻿using Android.Views;
 using AndroidX.RecyclerView.Widget;
-using IO.Scanbot.Sdk.Barcode.Entity;
+using IO.Scanbot.Sdk.Barcode;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
     public class BarcodeTypesAdapter : RecyclerView.Adapter
     {
-        public List<BarcodeFormat> Items = BarcodeFormat.Values().ToList();
-
-        public override int ItemCount => Items.Count;
+        public override int ItemCount => BarcodeFormats.All.Count;
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            var format = Items[position];
-
+            var format = BarcodeFormats.All[position];
             var barcodeHolder = (BarcodeViewHolder)holder;
             barcodeHolder.Name.Text = format.Name();
-            barcodeHolder.Checker.Checked = BarcodeTypes.Instance.IsChecked(format);
+            barcodeHolder.Checker.Checked = BarcodeTypes.Instance.AcceptedBarcodesDictionary[format];
 
             barcodeHolder.Checker.CheckedChange += (sender, e) =>
             {

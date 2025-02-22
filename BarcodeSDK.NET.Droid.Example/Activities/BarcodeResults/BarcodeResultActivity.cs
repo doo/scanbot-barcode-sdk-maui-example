@@ -1,13 +1,15 @@
-﻿using Android.Content;
+using Android.Content;
+using Android.Graphics;
 using Android.Views;
-using IO.Scanbot.Sdk.Barcode.Entity;
+using IO.Scanbot.Sdk.Barcode;
+using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 
-namespace BarcodeSDK.NET.Droid.Activities.V1
+namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeResultActivity : BaseResultActivity<BarcodeScanningResult>
+    public class BarcodeResultActivity : BaseResultActivity<BarcodeScannerResult>
     {
-        protected override BaseBarcodeResult<BarcodeScanningResult> DisplayBarcodeResult()
+        protected override BaseBarcodeResult<BarcodeScannerResult> DisplayBarcodeResult()
         {
             var barcodeResult = base.DisplayBarcodeResult();
             ShowBarcodeResult(barcodeResult.ScanningResult);
@@ -15,14 +17,14 @@ namespace BarcodeSDK.NET.Droid.Activities.V1
             return barcodeResult;
         }
         
-        private void ShowBarcodeResult(BarcodeScanningResult result)
+        private void ShowBarcodeResult(BarcodeScannerResult result)
         {
             var parent = FindViewById<LinearLayout>(Resource.Id.recognisedItems);
 
             if (result == null)
                 return;
 
-            foreach (var item in result.BarcodeItems)
+            foreach (var item in result.Barcodes)
             {
                 View child = LayoutInflater.Inflate(Resource.Layout.barcode_item, parent, false);
                 InitItemData(child, item);
@@ -36,13 +38,17 @@ namespace BarcodeSDK.NET.Droid.Activities.V1
             var barFormat = child.FindViewById<TextView>(Resource.Id.barcodeFormat);
             var docFormat = child.FindViewById<TextView>(Resource.Id.docFormat);
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
-            
-            if (item.Image != null)
-            {
-                image.SetImageBitmap(item.Image);
+
+            var rawBytes = item.GetRawBytes();
+
+            if (rawBytes?.Length > 0)
+            {   
+                Bitmap bitmap = BitmapFactory.DecodeByteArray(rawBytes, 0, rawBytes.Length);
+
+                image.SetImageBitmap(bitmap);
             }
 
-            barFormat.Text = "Format: " + item.BarcodeFormat.Name();
+            barFormat.Text = "Format: " + item.Format?.Name();
             docText.Text = "Content: " + item.Text;
 
             child.Click += (sender, e) =>
@@ -51,6 +57,6 @@ namespace BarcodeSDK.NET.Droid.Activities.V1
                 intent.PutExtra("SelectedBarcodeItem", item);
                 StartActivity(intent);
             };
-        }
+        } 
     }
 }
