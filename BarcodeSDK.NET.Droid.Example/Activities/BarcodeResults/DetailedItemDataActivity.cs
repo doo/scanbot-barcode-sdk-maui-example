@@ -1,9 +1,8 @@
 using AndroidX.AppCompat.App;
 using AndroidX.ConstraintLayout.Widget;
-using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using Java.Lang;
+using IO.Scanbot.Sdk.Barcode;
 
-namespace BarcodeSDK.NET.Droid.Activities.V2
+namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
     public class DetailedItemDataActivity : AppCompatActivity
