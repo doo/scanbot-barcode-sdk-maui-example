@@ -5,12 +5,12 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration ArOverlay
+    public static BarcodeScannerScreenConfiguration ArOverlay
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
             var useCase = new MultipleScanningMode();
 
