@@ -37,7 +37,14 @@ namespace BarcodeSDK.NET.Droid.Activities
             SetContentView(Resource.Layout.barcode_classic_activity);
 
             var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
-            barcodeScanner.SetConfigurations(BarcodeFormats.All, BarcodeDocumentFormats.All, false);
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeFormats.All };
+            var barcodeScannerConfigs = new BarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations = [barcodeFormatConfig],
+                ExtractedDocumentFormats = BarcodeDocumentFormats.All
+            };
+                
+            barcodeScanner.SetConfiguration(barcodeScannerConfigs);
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
             barcodeScannerView?.InitCamera(new CameraUiSettings(Intent.GetBooleanExtra("useCameraX", false)));
