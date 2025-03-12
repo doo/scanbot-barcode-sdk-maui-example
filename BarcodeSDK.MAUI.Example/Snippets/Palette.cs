@@ -5,12 +5,12 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration Palette
+        public static BarcodeScannerScreenConfiguration Palette
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
                 // Simply alter one color and keep the other default.
                 // configuration.Palette = new Palette()

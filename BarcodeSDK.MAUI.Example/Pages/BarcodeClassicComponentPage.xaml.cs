@@ -7,7 +7,7 @@
             InitializeComponent();
         }
 
-        private void HandleScannerResults(Barcode.RTU.v1.BarcodeResultBundle result)
+        private void HandleScannerResults(Barcode.Core.BarcodeScannerResult result)
         {
             string text = string.Empty;
 
@@ -42,7 +42,7 @@
             cameraView.Handler?.DisconnectHandler();
         }
 
-        private void CameraView_OnOnBarcodeScanResult(Barcode.RTU.v1.BarcodeResultBundle result)
+        private void CameraView_OnOnBarcodeScanResult(Barcode.Core.BarcodeScannerResult result)
         {
             HandleScannerResults(result);
         }

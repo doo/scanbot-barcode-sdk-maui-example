@@ -4,12 +4,12 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration ArOverlay
+        public static BarcodeScannerScreenConfiguration ArOverlay
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
                 var useCase = new MultipleScanningMode();
 

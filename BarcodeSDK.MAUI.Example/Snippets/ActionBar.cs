@@ -4,12 +4,12 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration ActionBar
+        public static BarcodeScannerScreenConfiguration ActionBar
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
                 // Configure the action bar.
                 // Hide/unhide the flash button.

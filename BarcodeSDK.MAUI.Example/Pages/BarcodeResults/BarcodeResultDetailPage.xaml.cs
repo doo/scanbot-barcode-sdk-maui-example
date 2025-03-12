@@ -1,4 +1,4 @@
-using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Barcode.Core;
 
 namespace ScanbotSDK.MAUI.Example.Pages;
 
@@ -10,19 +10,19 @@ public partial class BarcodeResultDetailPage : ContentPage
         InitializeComponent();
     }
 
-    internal void NavigateData(BarcodeItem barcodeItem)
+    internal void NavigateData(BarcodeItem BarcodeScannerUiItem)
     {
-        this.barcodeItem = barcodeItem;
+        this.barcodeItem = BarcodeScannerUiItem;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        LabelBarcodeFormatValue.Text = barcodeItem.Type.Value.ToString();
+        LabelBarcodeFormatValue.Text = barcodeItem.Format.ToString();
         LabelBarcodeTextValue.Text = barcodeItem.Text;
         
-        if (string.IsNullOrEmpty(barcodeItem.TextWithExtension))
+        if (string.IsNullOrEmpty(barcodeItem.UpcEanExtension))
         {
             LabelBarcodeTextWithExtensionCaption.IsVisible = false;
             LabelBarcodeTextWithExtensionValue.IsVisible = false;
@@ -31,7 +31,7 @@ public partial class BarcodeResultDetailPage : ContentPage
         {
             LabelBarcodeTextWithExtensionCaption.IsVisible = true;
             LabelBarcodeTextWithExtensionValue.IsVisible = true;
-            LabelBarcodeTextWithExtensionValue.Text = barcodeItem.TextWithExtension;
+            LabelBarcodeTextWithExtensionValue.Text = barcodeItem.UpcEanExtension;
         }
 
         if (barcodeItem.RawBytes != null && barcodeItem.RawBytes.Length > 1)

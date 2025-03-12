@@ -1,4 +1,7 @@
-﻿using ScanbotSDK.MAUI.Example.Utils;
+﻿using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.Utils;
+using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -93,45 +96,47 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 return;
             }
 
-            // Configure the barcode detector for detecting many barcodes in one image.
-            var configuration = new Barcode.BarcodeDetectionConfiguration
+            var configs = new BarcodeFormatCommonConfiguration
             {
-                BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
-                EngineMode = EngineMode.NextGen,
-                AdditionalParameters = new Barcode.RTU.v1.BarcodeScannerAdditionalParameters
-                {
-                    AddAdditionalQuietZone = true
-                }
+                Formats = Models.BarcodeTypes.Instance.AcceptedTypes
+            };
+            
+
+            // Configure the barcode detector for detecting many barcodes in one image.
+            var configuration = new BarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations = [configs],
+                EngineMode = BarcodeScannerEngineMode.NextGen,
             };
 
-            var barcodes = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
+            var result = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
             var source = ImageSource.FromStream(() => image?.AsStream(quality: 0.7f));
             
             // Handle the result in your app as needed.
-            await Navigation.PushAsync(new BarcodeResultPage(barcodes.ToList(), source));
+            await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList(), source));
         }
 
-        /// <summary>
-        /// Clear storage.
-        /// </summary>
-        private void ClearStorage()
-        {
-            if (!ScanbotSDKMain.LicenseInfo.IsValid)
-            {
-                return;
-            }
-
-            var result = ScanbotSDKMain.CommonOperations.ClearStorageDirectory();
-
-            if (result.Status == OperationResult.Ok)
-            {
-                CommonUtils.Alert(this, "Success!", "Cleared image storage");
-            }
-            else
-            {
-                CommonUtils.Alert(this, "Oops!", result.Error);
-            }
-        }
+        // /// <summary>
+        // /// Clear storage.
+        // /// </summary>
+        // private void ClearStorage()
+        // {
+        //     if (!ScanbotSDKMain.LicenseInfo.IsValid)
+        //     {
+        //         return;
+        //     }
+        //
+        //     var result = ScanbotSDKMain.CommonOperations.ClearStorageDirectory();
+        //
+        //     if (result.Status == OperationResult.Ok)
+        //     {
+        //         CommonUtils.Alert(this, "Success!", "Cleared image storage");
+        //     }
+        //     else
+        //     {
+        //         CommonUtils.Alert(this, "Oops!", result.Error);
+        //     }
+        // }
 
         /// <summary>
         /// View Current License Information
