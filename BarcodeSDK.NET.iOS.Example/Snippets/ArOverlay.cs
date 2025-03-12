@@ -4,12 +4,12 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration ArOverlay
+    public static SBSDKUI2BarcodeScannerScreenConfiguration ArOverlay
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             var useCase = new SBSDKUI2MultipleScanningMode();
 

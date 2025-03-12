@@ -1,14 +1,11 @@
 ﻿using Android.Graphics;
-using IO.Scanbot.Sdk.Barcode.Entity;
-using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
+using IO.Scanbot.Sdk.Barcode;
 
 namespace BarcodeSDK.NET.Droid
 {
     public class BarcodeResult
     {
-        public BarcodeScanningResult ScanningResult { get; private set; }
-        
-        public BarcodeScannerResult ScanningResultV2 { get; private set; }
+        public BarcodeScannerResult ScanningResult { get; private set; }
 
         public Bitmap ResultBitmap { get; private set; }
 
@@ -18,26 +15,19 @@ namespace BarcodeSDK.NET.Droid
 
         private readonly MemoryStream resultOutputStream;
 
-        public BarcodeResult(BarcodeScanningResult result)
+        public BarcodeResult(BarcodeScannerResult result)
         {
             ScanningResult = result;
-        }
-
-        public BarcodeResult(BarcodeScanningResult result, string imagePath, string previewPath)
-        {
-            ScanningResult = result;
-            ImagePath = imagePath;
-            PreviewPath = previewPath;
         }
         
         public BarcodeResult(BarcodeScannerResult result, string imagePath, string previewPath)
         {
-            ScanningResultV2 = result;
+            ScanningResult = result;
             ImagePath = imagePath;
             PreviewPath = previewPath;
         }
 
-        public BarcodeResult(BarcodeScanningResult result, Bitmap resultBitmap)
+        public BarcodeResult(BarcodeScannerResult result, Bitmap resultBitmap)
         {
             ScanningResult = result;
             ResultBitmap = resultBitmap;
@@ -67,7 +57,6 @@ namespace BarcodeSDK.NET.Droid
                 bundle.PutByteArray(nameof(ResultBitmap), Array.Empty<byte>());
             }
             
-            bundle.PutParcelable(nameof(ScanningResultV2), ScanningResultV2);
             bundle.PutParcelable(nameof(ScanningResult), ScanningResult);
             bundle.PutString(nameof(ImagePath), ImagePath);
             bundle.PutString(nameof(PreviewPath), PreviewPath);
@@ -81,8 +70,7 @@ namespace BarcodeSDK.NET.Droid
 
         public BarcodeResult FromBundle(Bundle bundle)
         {
-            ScanningResult = bundle?.GetParcelable(nameof(ScanningResult)) as BarcodeScanningResult;
-            ScanningResultV2 = bundle?.GetParcelable(nameof(ScanningResultV2)) as BarcodeScannerResult;
+            ScanningResult = bundle?.GetParcelable(nameof(ScanningResult)) as BarcodeScannerResult;
 
             var rawBitmapBytes = bundle?.GetByteArray(nameof(ResultBitmap)) ?? Array.Empty<byte>();
 

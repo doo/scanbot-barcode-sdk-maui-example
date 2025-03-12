@@ -42,7 +42,6 @@ namespace BarcodeSDK.NET.iOS
             contentView.CreateText("SDK Operations");
             contentView.CreateButton("Pick Image From Library", OnLibraryButtonClick);
             contentView.CreateButton("Set Accepted Barcode Types", OnCodeTypeButtonClick);
-            contentView.CreateButton("Clear Image Storage", OnClearStorageButtonClick);
             contentView.CreateButton("View License Info", OnLicenseInfoButtonClick);
         }
 
@@ -99,21 +98,30 @@ namespace BarcodeSDK.NET.iOS
                 }
 
                 // Configure the barcode detector for detecting many barcodes in one image.
-                var scanner = new SBSDKBarcodeScanner(BarcodeTypes.Instance.AcceptedTypes);
-                scanner.AdditionalParameters.AddAdditionalQuietZone = true;
+                var barcodeConfiguration = new SBSDKBarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeTypes.Instance.AcceptedTypes
+                };
+                
+                var scannerConfiguration = new SBSDKBarcodeScannerConfiguration
+                {
+                    BarcodeFormatConfigurations = [barcodeConfiguration],
+                    ReturnBarcodeImage = true
+                };
+                
+                var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration);
+                var result = scanner.ScanFromImage(image);
 
-                var result = scanner.DetectBarCodesOnImage(image);
-
-                if (result.Length == 0)
+                if (result == null || !result.Success || result.Barcodes.Length == 0)
                 {
                     return;
                 }
-                
+
                 // Handle the result in your app as needed.
-                var controller = new ScanResultListController(image, result);
-                NavigationController.PushViewController(controller, animated: true);
+                var controller = new ScanResultListController(result.Barcodes, image);
+                NavigationController?.PushViewController(controller, animated: true);
             }
-            catch(TaskCanceledException)
+            catch (TaskCanceledException)
             {
 
             }
@@ -126,18 +134,7 @@ namespace BarcodeSDK.NET.iOS
                 return;
             }
             var controller = new BarcodeListController();
-            NavigationController.PushViewController(controller, true);
-        }
-
-
-        private void OnClearStorageButtonClick(object sender, EventArgs e)
-        {
-            if (!Alert.CheckLicense(this))
-            {
-                return;
-            }
-            SBSDKUIBarcodeImageStorage.DefaultStorage.RemoveAll();
-            Alert.Show(this, "Success", "Image storage cleared");
+            NavigationController?.PushViewController(controller, true);
         }
 
         private void OnLicenseInfoButtonClick(object sender, EventArgs e)
@@ -189,10 +186,9 @@ namespace BarcodeSDK.NET.iOS
             // Present UIImagePickerController;
             UIWindow window = UIApplication.SharedApplication.KeyWindow;
             var viewController = window?.RootViewController;
-            viewController.PresentViewController(imagePicker, true, null);
+            viewController?.PresentViewController(imagePicker, true, null);
 
             return taskCompletionSource.Task;
         }
-        
     }
 }

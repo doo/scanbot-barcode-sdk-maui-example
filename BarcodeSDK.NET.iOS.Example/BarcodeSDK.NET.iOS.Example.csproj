@@ -22,13 +22,13 @@
         <CodesignProvision>Automatic</CodesignProvision>
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
-        <Platforms>x64;ARM64</Platforms>
         <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
         <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">iossimulator-x64</RuntimeIdentifier>
         <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
    
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" />
+        <!-- <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" /> -->
+        <ProjectReference Include="../../scanbot-sdk-maui/BarcodeSDK/BarcodeSDK.NET.iOS/BarcodeSDK.NET.iOS.csproj" />
     </ItemGroup>
 </Project>

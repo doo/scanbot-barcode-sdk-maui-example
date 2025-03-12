@@ -1,3 +1,4 @@
+using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using IO.Scanbot.Sdk.Ui_v2.Common;
 
@@ -5,12 +6,12 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration FindAndPickUseCase
+    public static BarcodeScannerScreenConfiguration FindAndPickUseCase
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
             // Initialize the use case for multiple scanning.
             var useCase = new FindAndPickScanningMode();
@@ -44,7 +45,7 @@ public static partial class Snippets
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             config.UseCase = useCase;
-            config.RecognizerConfiguration.BarcodeFormats = BarcodeFormat.CommonCodes.ToList();
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
  
             return config;
         }
