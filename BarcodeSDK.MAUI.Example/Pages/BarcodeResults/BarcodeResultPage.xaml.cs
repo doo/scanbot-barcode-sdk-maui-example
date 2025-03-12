@@ -1,5 +1,4 @@
-﻿using BarcodeItemV1 = ScanbotSDK.MAUI.Barcode.RTU.v1.Barcode;
-using BarcodeItemV2 = ScanbotSDK.MAUI.Barcode.BarcodeItem;
+﻿using ScanbotSDK.MAUI.Barcode.Core;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -10,7 +9,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
-        public BarcodeResultPage(List<BarcodeItemV1> barcodes, string imagePath)
+        public BarcodeResultPage(List<BarcodeItem> barcodes, string imagePath)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -25,7 +24,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
         }
 
-        public BarcodeResultPage(List<BarcodeItemV1> barcodes, ImageSource imageSource)
+        public BarcodeResultPage(List<BarcodeItem> barcodes, ImageSource imageSource)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -40,7 +39,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
         }
 
-        public BarcodeResultPage(List<BarcodeItemV2> barcodes)
+        public BarcodeResultPage(List<BarcodeItem> barcodes)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -49,7 +48,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void ListView_Results_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem is BarcodeItemV2 barcodeItem)
+            if (e.SelectedItem is BarcodeItem barcodeItem)
             {
                 var resultPage = new BarcodeResultDetailPage();
                 resultPage.NavigateData(barcodeItem);
