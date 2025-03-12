@@ -3,12 +3,12 @@ using ScanbotSDK.iOS;
 namespace BarcodeSDK.NET.iOS;
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration ActionBar
+    public static SBSDKUI2BarcodeScannerScreenConfiguration ActionBar
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
             // Configure the action bar.
             // Hide/unhide the flash button.

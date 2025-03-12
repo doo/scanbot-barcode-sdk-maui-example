@@ -4,12 +4,12 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration FindAndPickUseCase
+        public static BarcodeScannerScreenConfiguration FindAndPickUseCase
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
                 // Initialize the use case for multiple scanning.
                 var useCase = new FindAndPickScanningMode();
@@ -43,7 +43,7 @@ namespace ScanbotSDK.MAUI.Example
 
                 // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
                 config.UseCase = useCase;
-                config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+                config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
     
                 return config;
             }

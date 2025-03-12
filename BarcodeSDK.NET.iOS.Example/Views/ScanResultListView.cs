@@ -8,7 +8,7 @@ namespace BarcodeSDK.NET.iOS
         private UITableView tableView;
         private ScanResultListSource listSource;
 
-        public ScanResultListView(SBSDKBarcodeScannerResult[] items)
+        public ScanResultListView(SBSDKBarcodeItem[] items)
         {
             tableView = new UITableView();
             tableView.RegisterClassForCellReuse(typeof(ScanResultCell), ScanResultCell.Identifier);
@@ -43,9 +43,9 @@ namespace BarcodeSDK.NET.iOS
         private class ScanResultListSource : UITableViewSource
         {
             internal EventHandler<EventArgs> itemClick;
-            private SBSDKBarcodeScannerResult[] items;
+            private SBSDKBarcodeItem[] items;
 
-            public ScanResultListSource(SBSDKBarcodeScannerResult[] items)
+            public ScanResultListSource(SBSDKBarcodeItem[] items)
             {
                 this.items = items;
             }

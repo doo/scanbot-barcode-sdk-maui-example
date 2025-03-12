@@ -5,12 +5,12 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration Localization
+    public static BarcodeScannerScreenConfiguration Localization
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
             config.Localization.TopBarTitle = "Custom top bar title";
             config.Localization.UserGuidance = "Custom guidance title";

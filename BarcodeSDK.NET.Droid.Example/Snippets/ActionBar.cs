@@ -5,12 +5,12 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration ActionBar
+    public static BarcodeScannerScreenConfiguration ActionBar
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
             // Configure the action bar.
             // Hide/unhide the flash button.
