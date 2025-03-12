@@ -4,12 +4,12 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration MultipleScanningUseCase
+        public static BarcodeScannerScreenConfiguration MultipleScanningUseCase
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
                 var useCase = new MultipleScanningMode();
                 // Set the counting mode.
@@ -35,7 +35,7 @@ namespace ScanbotSDK.MAUI.Example
                 config.UseCase = useCase;
 
                 // Set an array of accepted barcode types.
-                config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+                config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
 
                 return config;
             }
