@@ -3,7 +3,7 @@ using BarcodeSDK.NET.Droid.Activities;
 
 namespace BarcodeSDK.NET.Droid
 {
-    public partial class MainActivity : Activity
+    public partial class MainActivity
     {
         private void OnBarcodeCameraXDemoClick(object sender, EventArgs e)
         {

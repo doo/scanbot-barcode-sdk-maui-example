@@ -39,15 +39,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             var docFormat = child.FindViewById<TextView>(Resource.Id.docFormat);
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
 
-            var rawBytes = item.GetRawBytes();
-
-            if (rawBytes?.Length > 0)
-            {   
-                Bitmap bitmap = BitmapFactory.DecodeByteArray(rawBytes, 0, rawBytes.Length);
-
-                image.SetImageBitmap(bitmap);
-            }
-
+            image.SetImageBitmap(item.SourceImage?.ToBitmap());
             barFormat.Text = "Format: " + item.Format?.Name();
             docText.Text = "Content: " + item.Text;
 

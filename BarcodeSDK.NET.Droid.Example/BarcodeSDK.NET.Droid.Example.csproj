@@ -10,13 +10,13 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
-        <Platforms>x64;ARM64</Platforms>
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
     </PropertyGroup>
     
     <ItemGroup>
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" />
+         <!-- <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" /> -->
+         <ProjectReference Include="../../scanbot-sdk-maui/BarcodeSDK/BarcodeSDK.NET.Droid/BarcodeSDK.NET.Droid.csproj" />
     </ItemGroup>
 </Project>
