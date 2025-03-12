@@ -8,16 +8,19 @@ using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.B
 
 namespace BarcodeSDK.NET.Droid
 {
-    public partial class MainActivity : Activity
+    public partial class MainActivity
     {
+        BarcodeScannerActivity.ResultContract resultContract;
+        
         private void SingleScanning(object sender, EventArgs e)
         {
             if (!Alert.CheckLicense(this, SDK))
             {
                 return;
             }
-            
-            var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerScreenConfiguration
+
+            resultContract = new BarcodeScannerActivity.ResultContract();
+            var intent = resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
             {
                 ScannerConfiguration = new BarcodeScannerConfiguration
                 {
@@ -47,7 +50,8 @@ namespace BarcodeSDK.NET.Droid
             var useCase = new SingleScanningMode();
             useCase.ArOverlay.Visible = true;
 
-            var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerScreenConfiguration
+            resultContract = new BarcodeScannerActivity.ResultContract();
+            var intent = resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
             {
                 UseCase = useCase
             });
@@ -62,7 +66,8 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             
-            var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerScreenConfiguration 
+            resultContract = new BarcodeScannerActivity.ResultContract();
+            var intent = resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration 
             {
                 ScannerConfiguration = new BarcodeScannerConfiguration
                 {
@@ -90,7 +95,8 @@ namespace BarcodeSDK.NET.Droid
             useCase.ArOverlay.Visible = true;
             useCase.ArOverlay.AutomaticSelectionEnabled = false;
 
-            var intent = BarcodeScannerActivity.NewIntent(this, new BarcodeScannerScreenConfiguration
+            resultContract = new BarcodeScannerActivity.ResultContract();
+            var intent = resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
             {
                 UseCase = useCase,
                 UserGuidance = new UserGuidanceConfiguration
@@ -134,21 +140,32 @@ namespace BarcodeSDK.NET.Droid
             findAndPickConfig.SheetContent.SubmitButton.Foreground.Color = new ScanbotColor("#000000"); //arg string
 
             // Set the expected barcodes.
-            findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>() 
+            findAndPickConfig.ExpectedBarcodes = new List<ExpectedBarcode>
             {
-                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+                new (barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+                new (barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
             };
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             configuration.UseCase = findAndPickConfig;
             configuration.ScannerConfiguration.BarcodeFormats = BarcodeFormat.Values().ToList();
 
-            var intent = BarcodeScannerActivity.NewIntent(this, configuration);
+            resultContract = new BarcodeScannerActivity.ResultContract();
+            var intent = resultContract.CreateIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
 
-        private void OnRTUv2ActivityResult(Intent data, BarcodeScannerResult barcode)
+        private void OnRTUv2ActivityResult(BarcodeScannerUiResult barcode)
+        {
+            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            var result = new BarcodeScannerResult(barcode.Items.Select(item => item.Barcode).ToArray(), true);
+            var bundle = new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle();
+            intent.PutExtra("BarcodeResult", bundle);
+
+            StartActivity(intent);
+        }
+        
+        private void OnRTUv2ActivityResult(BarcodeScannerResult barcode)
         {
             var intent = new Intent(this, typeof(BarcodeResultActivity));
             var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcode).ToBundle();
