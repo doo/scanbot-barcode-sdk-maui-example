@@ -1,5 +1,9 @@
-
-![Scanbot SDK Logo](.images/ScanbotSDKLogo.png)
+<p align="left">
+  <img src=".images/ScanbotSDKLogo.png#gh-light-mode-only" width="15%" />
+</p>
+<p align="left">
+  <img src=".images/ScanbotSDKLogo_darkmode.png#gh-dark-mode-only" width="15%" />
+</p>
 
 # Example App for the Scanbot .NET MAUI Barcode Scanner SDK
 
@@ -8,6 +12,8 @@ This example app demonstrates how to integrate the Scanbot Barcode Scanner SDK i
 ## What is the Scanbot Barcode Scanner SDK?
 
 The Scanbot [Barcode Scanner SDK](https://scanbot.io/barcode-scanner-sdk/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) is a simple and intuitive barcode scanning library that turns mobile devices into fast and reliable barcode readers.
+
+The SDK utilizes your device's camera, which can be freely switched. You can also apply various filters to narrow down the results by barcode type or content, with regex pattern support to ensure you only capture the specific barcodes relevant to your application.
 
 It operates entirely offline on the user's device and takes only 0.04 seconds to scan barcodes. Scans are accurate even under challenging conditions, including damaged, small, or distant barcodes and low-light environments.
 
@@ -127,6 +133,12 @@ The Scanbot .NET MAUI barcode scanner supports all common 1D- or 2D barcode type
 | Postal Symbologies | USPS Intelligent Mail (IMb), Royal Mail RM4SCC Barcode, Australia Post 4-State Customer Code, Japan Post 4-State Customer Code, KIX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 💡 Please visit our [docs](https://docs.scanbot.io/barcode-scanner-sdk/maui/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a complete overview of the supported barcode symbologies.
+
+### Data Parsers
+
+The Scanbot Barcode Scanner SDK supports a variety of data parsers that extract structured information from 2D barcodes such as QR Codes and Data Matrix. These include parsers for documents such as driving licences (AAMVA), boarding passes, medical certificates, SEPA forms, Swiss QR codes and vCard business cards.
+
+💡 Please refer to our [documentation](https://docs.scanbot.io/barcode-scanner-sdk/maui/supported-barcodes/#data-parsers) for a full list of supported data parsers.
 
 ## Additional information
 
