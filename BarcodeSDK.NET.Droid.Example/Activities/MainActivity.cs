@@ -122,7 +122,7 @@ namespace BarcodeSDK.NET.Droid
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
             {
                 var bsResult = resultContract.ParseResult((int)resultCode, data);
-                if (bsResult is BarcodeScannerActivity.BarcodeScannerActivityResult resultUiResult)
+                if (bsResult is BarcodeScannerActivity.BarcodeScannerActivityResult resultUiResult && resultUiResult?.Result != null)
                 {
                     var barcodes = resultUiResult.ScannerUiResult().Items.Select(item => item.Barcode).ToList();
                     var result = new BarcodeScannerResult(barcodes, true);
