@@ -43,7 +43,7 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity where 
     {
         var items = FindViewById<LinearLayout>(Resource.Id.recognisedItems);
         var view = LayoutInflater.Inflate(Resource.Layout.snap_image_item, items, false);
-        items.AddView(view);
-        return view.FindViewById<ImageView>(Resource.Id.snapImage);
+        items?.AddView(view);
+        return view?.FindViewById<ImageView>(Resource.Id.snapImage);
     }
 }

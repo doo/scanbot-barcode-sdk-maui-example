@@ -36,7 +36,6 @@ namespace BarcodeSDK.NET.Droid.Activities
         {
             var image = child.FindViewById<ImageView>(Resource.Id.image);
             var barFormat = child.FindViewById<TextView>(Resource.Id.barcodeFormat);
-            var docFormat = child.FindViewById<TextView>(Resource.Id.docFormat);
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
 
             image.SetImageBitmap(item.SourceImage?.ToBitmap());

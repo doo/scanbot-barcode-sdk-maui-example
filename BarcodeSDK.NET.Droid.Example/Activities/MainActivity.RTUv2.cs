@@ -154,16 +154,6 @@ namespace BarcodeSDK.NET.Droid
             var intent = resultContract.CreateIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
-
-        private void OnRTUv2ActivityResult(BarcodeScannerUiResult barcode)
-        {
-            var intent = new Intent(this, typeof(BarcodeResultActivity));
-            var result = new BarcodeScannerResult(barcode.Items.Select(item => item.Barcode).ToArray(), true);
-            var bundle = new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle();
-            intent.PutExtra("BarcodeResult", bundle);
-
-            StartActivity(intent);
-        }
         
         private void OnRTUv2ActivityResult(BarcodeScannerResult barcode)
         {
