@@ -6,7 +6,7 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	
-	<!-- Uncomment to enable downloading of images from URLs in RTU v2 -->
-	<!-- <uses-permission android:name="android.permission.INTERNET" /> -->
-	<application android:label="BarcodeSDK.NET"  android:theme="@style/AppTheme"></application>
+	<!-- Enables downloading of images from URLs in RTU v2 -->
+	 <uses-permission android:name="android.permission.INTERNET" />
+	<application android:label="BarcodeSDK.NET" android:theme="@style/AppTheme" />
 </manifest>
