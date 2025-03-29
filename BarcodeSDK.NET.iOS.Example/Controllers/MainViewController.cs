@@ -110,9 +110,9 @@ namespace BarcodeSDK.NET.iOS
                 };
                 
                 var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration);
-                var result = scanner.ScanFromImage(image);
+                var result = scanner.ScanFromImage(image, useLiveMode: false, optimizeOverlays: false);
 
-                if (result == null || !result.Success || result.Barcodes.Length == 0)
+                if (result?.Barcodes == null || !result.Success || result.Barcodes.Length == 0)
                 {
                     return;
                 }

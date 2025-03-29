@@ -15,6 +15,6 @@
         <WarningsAsErrors>NU1603</WarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.0.0-alpha.2" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.0.0-alpha.4" />
     </ItemGroup>
 </Project>

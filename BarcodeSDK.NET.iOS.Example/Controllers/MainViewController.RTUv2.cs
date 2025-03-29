@@ -11,6 +11,8 @@ public partial class MainViewController
 {
     private void SingleScanning(object _, EventArgs e)
     {
+        if (!ScanbotSDKGlobal.IsLicenseValid) return;
+        
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration
         {
@@ -29,183 +31,104 @@ public partial class MainViewController
         // var configuration =  Snippets.SingleScanningUseCase;
         // Or any other snippet (like MultipleScanningUseCase, FindAndPickUseCase, ArOverlay, etc.)
 
-        var controller = SBSDKUI2BarcodeScannerViewController.CreateNewWithConfiguration(configuration,
-            (viewController, cancelled, error, result) =>
-            {
-                if (!cancelled)
-                {
-                    viewController.DismissViewController(true, delegate
-                    {
-                        ShowBarcodeReults(result.Items);
-                        viewController.Dispose();
-                        configuration.Dispose();
-                    });
-                }
-                else
-                {
-                    DismissViewControllerWithConfiguration(viewController, configuration);
-                }
-            });
-
-        PresentViewController(controller, false, null);
+        SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 
     private void SingleScanningWithArOverlay(object _, EventArgs e)
     {
+        if (!ScanbotSDKGlobal.IsLicenseValid) return;
+        
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
         configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
-        var usecases = new SBSDKUI2SingleScanningMode();
-        usecases.ConfirmationSheetEnabled = true;
-        usecases.ArOverlay.Visible = true;
-        usecases.ArOverlay.AutomaticSelectionEnabled = false;
+        var usecase = new SBSDKUI2SingleScanningMode();
+        usecase.ConfirmationSheetEnabled = true;
+        usecase.ArOverlay.Visible = true;
+        usecase.ArOverlay.AutomaticSelectionEnabled = false;
 
-        configuration.UseCase = usecases;
+        configuration.UseCase = usecase;
 
-        var controller = SBSDKUI2BarcodeScannerViewController.CreateNewWithConfiguration(configuration,
-            (viewController, cancelled, error, result) =>
-            {
-                if (!cancelled)
-                {
-                    viewController.DismissViewController(true, delegate
-                    {
-                        ShowBarcodeReults(result.Items);
-                        viewController.Dispose();
-                        configuration.Dispose();
-                    });
-                }
-                else
-                {
-                    DismissViewControllerWithConfiguration(viewController, configuration);
-                }
-            });
-
-
-        PresentViewController(controller, false, null);
+        SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 
     private void BatchBarcodeScanning(object _, EventArgs e)
     {
+        if (!ScanbotSDKGlobal.IsLicenseValid) return;
+        
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
         configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
-        var usecases = new SBSDKUI2MultipleScanningMode();
-        usecases.Mode = SBSDKUI2MultipleBarcodesScanningMode.Counting;
+        var usecase = new SBSDKUI2MultipleScanningMode();
+        usecase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Counting;
 
-        configuration.UseCase = usecases;
+        configuration.UseCase = usecase;
 
-        var controller = SBSDKUI2BarcodeScannerViewController.CreateNewWithConfiguration(configuration,
-            (viewController, cancelled, error, result) =>
-            {
-                if (!cancelled)
-                {
-                    viewController.DismissViewController(true, delegate
-                    {
-                        ShowBarcodeReults(result.Items);
-                        viewController.Dispose();
-                        configuration.Dispose();
-                    });
-                }
-                else
-                {
-                    DismissViewControllerWithConfiguration(viewController, configuration);
-                }
-            });
-
-        PresentViewController(controller, false, null);
+        SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 
     private void MultipleUniqueBarcodeScanning(object _, EventArgs e)
     {
+        if (!ScanbotSDKGlobal.IsLicenseValid) return;
+        
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
         configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
         configuration.UserGuidance.Title.Text = "Please align the QR-/Barcode in the frame above to scan it.";
 
-        var usecases = new SBSDKUI2MultipleScanningMode();
-        usecases.Mode = SBSDKUI2MultipleBarcodesScanningMode.Unique;
-        usecases.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
-        usecases.SheetContent.ManualCountChangeEnabled = false;
-        usecases.ArOverlay.Visible = false;
-        usecases.ArOverlay.AutomaticSelectionEnabled = false;
+        var usecase = new SBSDKUI2MultipleScanningMode();
+        usecase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Unique;
+        usecase.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
+        usecase.SheetContent.ManualCountChangeEnabled = false;
+        usecase.ArOverlay.Visible = true;
+        usecase.ArOverlay.AutomaticSelectionEnabled = false;
 
-        configuration.UseCase = usecases;
+        configuration.UseCase = usecase;
 
-        var controller = SBSDKUI2BarcodeScannerViewController.CreateNewWithConfiguration(configuration,
-            (viewController, cancelled, error, result) =>
-            {
-                if (!cancelled)
-                {
-                    viewController.DismissViewController(true, delegate
-                    {
-                        ShowBarcodeReults(result.Items);
-                        viewController.Dispose();
-                        configuration.Dispose();
-                    });
-                }
-                else
-                {
-                    DismissViewControllerWithConfiguration(viewController, configuration);
-                }
-            });
-
-        PresentViewController(controller, false, null);
+        SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 
     private void FindAndPickScanning(object _, EventArgs e)
     {
+        if (!ScanbotSDKGlobal.IsLicenseValid) return;
+        
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
+        
+        var usecase = new SBSDKUI2FindAndPickScanningMode();
+        usecase.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
+        usecase.Sheet.CollapsedVisibleHeight = SBSDKUI2CollapsedVisibleHeight.Large;
+        usecase.SheetContent.ManualCountChangeEnabled = true;
+        usecase.ArOverlay.Visible = true;
+        usecase.ArOverlay.AutomaticSelectionEnabled = true;
+        usecase.ExpectedBarcodes = [
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4)
+        ];
 
-        var usecases = new SBSDKUI2FindAndPickScanningMode();
-        usecases.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
-        usecases.Sheet.CollapsedVisibleHeight = SBSDKUI2CollapsedVisibleHeight.Large;
-        usecases.SheetContent.ManualCountChangeEnabled = true;
-        usecases.ArOverlay.Visible = true;
-        usecases.ArOverlay.AutomaticSelectionEnabled = true;
-        usecases.ExpectedBarcodes = new SBSDKUI2ExpectedBarcode[]
+        configuration.UseCase = usecase;
+        SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
+    }
+
+    private void BarcodeScannerResultHandler(SBSDKUI2BarcodeScannerViewController viewController, bool cancelled, NSError error, SBSDKUI2BarcodeScannerUIResult result)
+    {
+        // disposes the object after the method scope.
+        using var disposableViewController = viewController;
+        if (!cancelled)
         {
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode",
-                image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode",
-                image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-        };
-
-        configuration.UseCase = usecases;
-
-        var controller = SBSDKUI2BarcodeScannerViewController.CreateNewWithConfiguration(configuration,
-            (viewController, cancelled, error, result) =>
+            disposableViewController?.PresentingViewController?.DismissViewController(true, delegate
             {
-                if (!cancelled)
-                {
-                    viewController.DismissViewController(true, delegate
-                    {
-                        ShowBarcodeReults(result.Items);
-                        viewController.Dispose();
-                        configuration.Dispose();
-                    });
-                }
-                else
-                {
-                    DismissViewControllerWithConfiguration(viewController, configuration);
-                }
+                ShowBarcodeReults(result.Items);
             });
-
-        PresentViewController(controller, false, null);
+        }
+        else
+        {
+            disposableViewController?.PresentingViewController?.DismissViewController(true, null);
+        }
     }
 
     private void ShowBarcodeReults(SBSDKUI2BarcodeScannerUIItem[] items)
     {
         var viewController = new ScanResultListController(items);
         NavigationController?.PushViewController(viewController, true);
-    }
-
-    private void DismissViewControllerWithConfiguration(UIViewController viewController, IDisposable configuration)
-    {
-        viewController?.DismissViewController(true, () =>
-        {
-            // viewController?.Dispose();
-            // configuration?.Dispose();
-        });
     }
 }
