@@ -62,25 +62,6 @@ public partial class HomePage
                 },
             };
 
-            useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
-            {
-                BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) =>
-                {
-                    var title = $"{barcodeItem.Format} {barcodeItem.UpcEanExtension}";
-                    var subTitle = "Subtitle";
-                    var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
-
-                    if (barcodeItem.UpcEanExtension == "Error occurred!")
-                    {
-                        onError();
-                    }
-                    else
-                    {
-                        onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
-                    }
-                })
-            };
-
             config.UseCase = useCase;
             config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
             var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(config);
