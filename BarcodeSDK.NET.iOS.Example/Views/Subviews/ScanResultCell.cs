@@ -73,7 +73,7 @@ namespace BarcodeSDK.NET.iOS
 
             image.Image = item.SourceImage?.ToUIImage();
             text.Text = item.Text;
-            type.Text = item.Format.ToString();
+            type.Text = item.Format.Name;
         }
     }
 }
