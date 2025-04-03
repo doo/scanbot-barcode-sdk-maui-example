@@ -12,7 +12,7 @@ using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfigu
 namespace BarcodeSDK.NET.Droid
 {
     [Activity(MainLauncher = true, Theme = "@style/AppTheme")]
-    public partial class MainActivity : AppCompatActivity //, IActivityResultCallback
+    public partial class MainActivity : AppCompatActivity
     {
         internal static ScanbotBarcodeScannerSDK SDK;
 

@@ -5,10 +5,8 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using IO.Scanbot.Sdk.Barcode;
-using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
-using IO.Scanbot.Sdk.Camera;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
@@ -17,11 +15,11 @@ namespace BarcodeSDK.NET.Droid.Activities
     {
         private BarcodeScanAndCountView scanAndCountView;
         private TextView resultView;
-        private Button _startScanningButton;
-        private Button _continueScanningButton;
+        private Button startScanningButton;
+        private Button continueScanningButton;
 
-        private const int REQUEST_PERMISSION_CODE = 200;
-        private static readonly string[] permissions = new string[] { Manifest.Permission.Camera };
+        private const int RequestPermissionCode = 200;
+        private static readonly string[] Permissions = [ Manifest.Permission.Camera ];
 
         private bool flashEnabled = false;
 
@@ -38,18 +36,19 @@ namespace BarcodeSDK.NET.Droid.Activities
                 BarcodeFormatConfigurations = [barcodeFormatConfig],
                 ExtractedDocumentFormats = BarcodeDocumentFormats.All
             };
-                
+
             barcodeScanner.SetConfiguration(barcodeScannerConfigs);
 
             resultView = FindViewById<TextView>(Resource.Id.result);
             resultView.Visibility = Android.Views.ViewStates.Gone;
 
             scanAndCountView = FindViewById<BarcodeScanAndCountView>(Resource.Id.camera);
-            scanAndCountView.InitCamera();
-
-            var del = new BarcodeScanCountViewDelegate(scanAndCountView);
-            scanAndCountView.InitDetectionBehavior(
-                barcodeScanner, del.delegateHandler);
+            scanAndCountView.InitDetectionBehavior(barcodeScanner: barcodeScanner,
+                scannerViewCallbacks: (onCameraOpen: OnCameraOpen,
+                    onLicenseError: OnLicenseError,
+                    onScanAndCountFinished: OnScanAndCountFinished,
+                    onScanAndCountStarted: OnScanAndCountStarted)
+            );
 
             // scanAndCountView.CounterOverlayController.SetBarcodeAppearanceDelegate(
             //         getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
@@ -65,22 +64,22 @@ namespace BarcodeSDK.NET.Droid.Activities
                 scanAndCountView.ViewController.UseFlash(flashEnabled);
             };
 
-            _startScanningButton = FindViewById<Button>(Resource.Id.startScanning);
-            _startScanningButton.Click += delegate
+            startScanningButton = FindViewById<Button>(Resource.Id.startScanning);
+            startScanningButton.Click += delegate
             {
                 scanAndCountView.ViewController.ScanAndCount();
 
-                _startScanningButton.Visibility = Android.Views.ViewStates.Gone;
-                _continueScanningButton.Visibility = Android.Views.ViewStates.Visible;
+                startScanningButton.Visibility = Android.Views.ViewStates.Gone;
+                continueScanningButton.Visibility = Android.Views.ViewStates.Visible;
             };
 
-            _continueScanningButton = FindViewById<Button>(Resource.Id.continueScanning);
-            _continueScanningButton.Click += delegate
+            continueScanningButton = FindViewById<Button>(Resource.Id.continueScanning);
+            continueScanningButton.Click += delegate
             {
                 scanAndCountView.ViewController.ContinueScanning();
 
-                _startScanningButton.Visibility = Android.Views.ViewStates.Visible;
-                _continueScanningButton.Visibility = Android.Views.ViewStates.Gone;
+                startScanningButton.Visibility = Android.Views.ViewStates.Visible;
+                continueScanningButton.Visibility = Android.Views.ViewStates.Gone;
             };
         }
 
@@ -88,10 +87,11 @@ namespace BarcodeSDK.NET.Droid.Activities
         {
             var sb = new StringBuilder();
 
-            foreach(var barcode in barcodes)
+            foreach (var barcode in barcodes)
             {
-                sb.Append($"{barcode.Key.UpcEanExtension} - {barcode.Value} \n");
+                sb.Append($"{barcode.Key.Text} - {barcode.Value} \n");
             }
+
             resultView.Text = sb.ToString();
             resultView.Visibility = Android.Views.ViewStates.Visible;
         }
@@ -100,39 +100,31 @@ namespace BarcodeSDK.NET.Droid.Activities
         {
             base.OnResume();
 
-            var status = ContextCompat.CheckSelfPermission(this, permissions[0]);
+            var status = ContextCompat.CheckSelfPermission(this, Permissions[0]);
             if (status != Permission.Granted)
             {
-                ActivityCompat.RequestPermissions(this, permissions, REQUEST_PERMISSION_CODE);
+                ActivityCompat.RequestPermissions(this, Permissions, RequestPermissionCode);
             }
         }
 
-        private class BarcodeScanCountViewDelegate(BarcodeScanAndCountView scanAndCountView) 
-        {   
-            public (Action onCameraOpen, 
-                Action onLicenseError, 
-                Action<IList<BarcodeItem>> onScanAndCountFinished,
-                Action onScanAndCountStarted) delegateHandler { get; set; }
-            
-            public void OnCameraOpen()
-            {
-                delegateHandler.onCameraOpen?.Invoke();
-            }
+        public void OnCameraOpen()
+        {
+            Alert.Toast(this, "The Scanbot license is invalid or expired.");
+        }
 
-            public void OnLicenseError()
-            {
-                delegateHandler.onLicenseError?.Invoke();
-            }
+        public void OnLicenseError()
+        {
+            // Handler license error
+        }
 
-            public void OnScanAndCountFinished(IList<BarcodeItem> barcodes)
-            {
-                delegateHandler.onScanAndCountFinished?.Invoke(scanAndCountView.CountedBarcodes.Select(item => item.Key).ToList());
-            }
+        public void OnScanAndCountFinished(IList<BarcodeItem> barcodes)
+        {
+            HandleBarcodeSnanningResult(scanAndCountView.CountedBarcodes);
+        }
 
-            public void OnScanAndCountStarted()
-            {
-                delegateHandler.onScanAndCountStarted?.Invoke();
-            }
+        public void OnScanAndCountStarted()
+        {
+            // Handler On scan started
         }
     }
 }
