@@ -39,7 +39,8 @@ namespace BarcodeSDK.NET.Droid.Activities
             var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
                 BarcodeFormatConfigurations = [barcodeFormatConfig],
-                ExtractedDocumentFormats = BarcodeDocumentFormats.All
+                ExtractedDocumentFormats = BarcodeDocumentFormats.All,
+                ReturnBarcodeImage = true
             };
                 
             barcodeScanner.SetConfiguration(barcodeScannerConfigs);
