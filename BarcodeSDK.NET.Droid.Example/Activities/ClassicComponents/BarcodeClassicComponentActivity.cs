@@ -1,5 +1,4 @@
 ﻿using Android;
-using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
 using AndroidX.AppCompat.App;
@@ -7,7 +6,6 @@ using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode;
-using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
