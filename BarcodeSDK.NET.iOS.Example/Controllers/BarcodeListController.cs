@@ -1,15 +1,15 @@
 ﻿namespace BarcodeSDK.NET.iOS
 {
-    public class BarcodeListController : UIViewController
+    public class BarcodeListController : BaseViewController
     {
         private BarcodeListView listView;
 
         public override void ViewDidLoad()
         {
+            PageTitle = "Accepted Types";
             base.ViewDidLoad();
 
             View = listView = new BarcodeListView();
-            Title = "ACCEPTED TYPES";
             listView.AddButtons(BarcodeTypes.Instance.AcceptedBarcodesDictionary);
         }
 

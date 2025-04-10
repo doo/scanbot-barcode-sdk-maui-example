@@ -22,7 +22,7 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents.TableViewCells
 		{
             lblBarcodeCount.Text = "x" + (int)barcode.ScanCount;
 			lblBarcodeResult.Text = barcode.Item.Text;
-            lblBarcodeType.Text = barcode.Item.Format.ToString();
+            lblBarcodeType.Text = barcode.Item.Format.Name;
             Utilities.CreateRoundedCardView(containerView);
         }
     }
