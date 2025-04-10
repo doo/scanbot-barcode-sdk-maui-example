@@ -2,7 +2,7 @@
 
 namespace BarcodeSDK.NET.iOS
 {
-    public class ScanResultListController : UIViewController
+    public class ScanResultListController : BaseViewController
     {
         private UIImage scannedPage;
 
@@ -25,6 +25,7 @@ namespace BarcodeSDK.NET.iOS
         public ScanResultListView ContentView { get; set; }
         public override void ViewDidLoad()
         {
+            PageTitle = "Barcode Results";
             base.ViewDidLoad();
 
             View = ContentView = new ScanResultListView(items);

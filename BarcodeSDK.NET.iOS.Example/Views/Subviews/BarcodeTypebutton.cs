@@ -43,7 +43,7 @@ namespace BarcodeSDK.NET.iOS
             Switch.Layer.Opacity = 1.0f;
             AddSubview(Switch);
 
-            Title.Text = Code.ToString();
+            Title.Text = Code.Name;
         }
 
         public override void LayoutSubviews()

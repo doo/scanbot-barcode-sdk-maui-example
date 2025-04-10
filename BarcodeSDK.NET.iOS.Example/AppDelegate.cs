@@ -19,21 +19,11 @@ namespace BarcodeSDK.NET.iOS
             {
                 ScanbotSDK.iOS.ScanbotSDKGlobal.SetLicense(LicenseKey);
             }
-
+            
             var rootController = new UINavigationController(new MainViewController());
-            rootController.NavigationBar.BarTintColor = MainViewController.ScanbotRed;
-            rootController.NavigationBar.TintColor = UIColor.White;
-            rootController.NavigationBar.Translucent = false;
-            rootController.NavigationBar.TitleTextAttributes = new UIStringAttributes
-            {
-                ForegroundColor = UIColor.White,
-                Font = UIFont.FromName("HelveticaNeue", 16),
-            };
-
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
             Window.RootViewController = rootController;
             Window.MakeKeyAndVisible();
-
             return true;
         }
     }

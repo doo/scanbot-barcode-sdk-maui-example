@@ -11,11 +11,12 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
         void UpdateScannedItems();
     }
 
-    public partial class BarcodeScanAndCountViewController : UIViewController, IBarcodeScanAndCountViewDelegate
+    public partial class BarcodeScanAndCountViewController : BaseViewController, IBarcodeScanAndCountViewDelegate
     {
         SBSDKBarcodeScanAndCountViewController viewController;
         public BarcodeScanAndCountViewController(IntPtr handle) : base(handle)
         {
+            PageTitle = "ScanAndCountView";
         }
 
         #region IBarcodeScanAndCountViewDelegate Implementation
@@ -25,7 +26,7 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
         public void UpdateScannedItems()
         {
             var count = (int)ScannedBarcodes.Sum(item => item.ScanCount);
-            btnBarcodeCount.Title = string.Format("{0}: {1}", Texts.TotalItemsScanned, count);
+            btnBarcodeCount.Title = $"{Texts.TotalItemsScanned}: {count}";
         }
 
         #endregion
@@ -46,20 +47,26 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
             
             viewController = new(parentViewController: this, containerView, configuration);
             viewController.Delegate = new BarcodeScanAndCountViewDelegate(this);
+            
+            // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
+            SetFlashButton(() =>
+            {
+                viewController.IsFlashLightEnabled = !viewController.IsFlashLightEnabled;
+                return viewController.IsFlashLightEnabled;
+            });
         }
 
         partial void BtnShowResults_Action(UIBarButtonItem sender)
         {
-            var viewController = Utilities.GetViewController<BarcodeScanAndCountResultViewController>(Texts.ClassicComponentStoryboard);
-            viewController.NavigateData(ScannedBarcodes);
-            this.NavigationController?.PushViewController(viewController, true);
+            var resultController = Utilities.GetViewController<BarcodeScanAndCountResultViewController>(Texts.ClassicComponentStoryboard);
+            resultController.NavigateData(ScannedBarcodes);
+            NavigationController?.PushViewController(resultController, true);
         }
     }
 
     internal class BarcodeScanAndCountViewDelegate : SBSDKBarcodeScanAndCountViewControllerDelegate
     {
-        private IBarcodeScanAndCountViewDelegate scanAndCountViewDelegate;
-
+        private readonly IBarcodeScanAndCountViewDelegate scanAndCountViewDelegate;
         internal BarcodeScanAndCountViewDelegate(IBarcodeScanAndCountViewDelegate scanAndCountViewDelegate)
         {
             this.scanAndCountViewDelegate = scanAndCountViewDelegate;

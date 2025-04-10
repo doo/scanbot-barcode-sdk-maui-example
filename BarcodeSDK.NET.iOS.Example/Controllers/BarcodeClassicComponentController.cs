@@ -3,17 +3,14 @@ using UIKit;
 
 namespace BarcodeSDK.NET.iOS
 {
-    public class BarcodeClassicComponentController : UIViewController
+    public class BarcodeClassicComponentController : BaseViewController
     {
         private SBSDKBarcodeScannerViewController scannerController;
 
-        private FlashButton flash;
-
         public override void ViewDidLoad()
         {
+            PageTitle = "BarcodeScannerView";
             base.ViewDidLoad();
-
-            Title = "CLASSIC COMPONENT";
 
             var configuration = new SBSDKBarcodeFormatCommonConfiguration
             {
@@ -42,22 +39,16 @@ namespace BarcodeSDK.NET.iOS
 
             scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
             scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
-            
-            flash = new FlashButton();
-            View.AddSubview(flash);
-            View.BackgroundColor = UIColor.Black;
 
-            nfloat size = 55;
-            nfloat padding = 10;
-            flash.Frame = new CGRect(padding, padding, size, size);
-            flash.Click += (_, e) =>
+            // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
+            SetFlashButton(() =>
             {
-                scannerController.IsFlashLightEnabled = e.Enabled;
-            };
+                scannerController.IsFlashLightEnabled = !scannerController.IsFlashLightEnabled;
+                return scannerController.IsFlashLightEnabled;
+            });
         }
 
-        private class BarcodeSelectionDelegate(UINavigationController navigationController)
-            : SBSDKBarcodeTrackingOverlayControllerDelegate
+        private class BarcodeSelectionDelegate(UINavigationController navigationController): SBSDKBarcodeTrackingOverlayControllerDelegate
         {
             public override void DidTapOnBarcode(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode)
             {
@@ -68,8 +59,7 @@ namespace BarcodeSDK.NET.iOS
             }
         }
 
-        private class BarcodeDetectionDelegate(UINavigationController navigationController)
-            : SBSDKBarcodeScannerViewControllerDelegate
+        private class BarcodeDetectionDelegate(UINavigationController navigationController): SBSDKBarcodeScannerViewControllerDelegate
         {
             public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
             {

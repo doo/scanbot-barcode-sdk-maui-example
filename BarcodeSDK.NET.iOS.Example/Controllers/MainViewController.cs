@@ -7,21 +7,18 @@ using UIKit;
 
 namespace BarcodeSDK.NET.iOS
 {
-    public partial class MainViewController : UIViewController
+    public partial class MainViewController : BaseViewController
     {
         private MainView contentView;
 
         internal static UIColor ScanbotRed => FlashButton.ScanbotRed;
-
-        public UIViewController ViewController => this;
-
+        
         public override void ViewDidLoad()
         {
+            PageTitle = "Barcode Scanner Example";
             base.ViewDidLoad();
-            contentView = new MainView(); 
+            contentView = new MainView();
             View = contentView;
-
-            Title = "BARCODE SCANNER";
         }
 
         public override void ViewWillAppear(bool animated)
