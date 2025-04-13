@@ -49,20 +49,5 @@ namespace BarcodeSDK.NET.iOS.Utils
 
             return isGranted;
         }
-        
-        /// <summary>
-        /// Add Constraints for left, top, right to a view.
-        /// This is generally used for setting constraints to a View in a vertical order.
-        /// </summary>
-        /// <param name="parentView">Parent view of the newView, on which you are setting the constraints.</param>
-        /// <param name="newView">The View on which you are setting the constraint.</param>
-        /// <param name="prevView">The previous view on top of the current newView.</param>
-        internal static void AddLTRViewConstraints(this UIView parentView, UIView newView, UIView prevView)
-        {
-            var leftConstraintLabel = NSLayoutConstraint.Create(newView, NSLayoutAttribute.Left, NSLayoutRelation.Equal, parentView, NSLayoutAttribute.Left, 1, 15);
-            var rightConstraintLabel = NSLayoutConstraint.Create(newView, NSLayoutAttribute.Right, NSLayoutRelation.Equal, parentView, NSLayoutAttribute.Right, 1, -15);
-            var topConstraintLabel = NSLayoutConstraint.Create(newView, NSLayoutAttribute.Top, NSLayoutRelation.Equal, prevView, NSLayoutAttribute.Bottom, 1,9);
-            parentView.AddConstraints([leftConstraintLabel, rightConstraintLabel, topConstraintLabel]);
-        }
     }
 }

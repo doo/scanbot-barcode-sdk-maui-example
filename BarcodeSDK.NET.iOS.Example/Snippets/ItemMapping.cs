@@ -29,16 +29,16 @@ public static partial class Snippets
     {
         public override void MapBarcodeItemWithItem(SBSDKBarcodeItem barcodeItem, Action<SBSDKUI2BarcodeMappedData> onResult, Action onError)
         {
-            var title = $"Some product {barcodeItem.UpcEanExtension}";
-            var subTitle = "Subtitle";
-            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
-
-            if (barcodeItem.UpcEanExtension == "Error occurred!")
+            if (barcodeItem.Text == "Error occurred!")
             {
                 onError();
             }
             else
             {
+                var title = $"Some product {barcodeItem.Text}";
+                var subTitle = "Subtitle";
+                var image = "https://avatars.githubusercontent.com/u/1454920";
+                
                 onResult(new SBSDKUI2BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
             }
         }

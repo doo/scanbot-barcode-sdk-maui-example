@@ -1,8 +1,9 @@
-﻿namespace BarcodeSDK.NET.iOS
+﻿using BarcodeSDK.NET.iOS.Utils;
+
+namespace BarcodeSDK.NET.iOS
 {
     public class FlashButton : UIView
     {
-        internal static readonly UIColor ScanbotRed = UIColor.FromRGB(200, 25, 60);
 
         UIImage flashOn = UIImage.FromFile("flash_on_white");
         UIImage flashOff = UIImage.FromFile("flash_off_white");
@@ -16,7 +17,7 @@
             flashIcon.Image = flashOff;
             AddSubview(flashIcon);
 
-            Layer.BackgroundColor = ScanbotRed.CGColor;
+            Layer.BackgroundColor = Colors.ScanbotRed.CGColor;
         }
 
         public override void LayoutSubviews()

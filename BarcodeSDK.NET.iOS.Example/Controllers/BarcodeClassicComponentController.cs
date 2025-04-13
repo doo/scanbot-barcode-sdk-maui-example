@@ -12,14 +12,20 @@ namespace BarcodeSDK.NET.iOS
             PageTitle = "BarcodeScannerView";
             base.ViewDidLoad();
 
-            var configuration = new SBSDKBarcodeFormatCommonConfiguration
+            var commonConfiguration = new SBSDKBarcodeFormatCommonConfiguration
             {
                 Formats = BarcodeTypes.Instance.AcceptedTypes
             };
             
-            SBSDKBarcodeScannerConfiguration config = new SBSDKBarcodeScannerConfiguration
+            // Configure different parameters for specific barcode format.
+            var dataMatrixConfig = new SBSDKBarcodeFormatCode128Configuration
             {
-                BarcodeFormatConfigurations = [configuration],
+               MinimumTextLength = 10
+            };
+            
+            var config = new SBSDKBarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations = [commonConfiguration, dataMatrixConfig],
                 ReturnBarcodeImage = true
             };
             
@@ -63,14 +69,14 @@ namespace BarcodeSDK.NET.iOS
         {
             public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
             {
-                var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled || barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled;
-
-                if (!shouldHandleBarcode)
+                if (navigationController.TopViewController is ScanResultListController)
                 {
                     return;
                 }
+                
+                var shouldHandleBarcode = barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled || !barcodeController.IsTrackingOverlayEnabled;
 
-                if (navigationController.TopViewController is ScanResultListController)
+                if (!shouldHandleBarcode)
                 {
                     return;
                 }
@@ -88,4 +94,3 @@ namespace BarcodeSDK.NET.iOS
         }
     }
 }
-
