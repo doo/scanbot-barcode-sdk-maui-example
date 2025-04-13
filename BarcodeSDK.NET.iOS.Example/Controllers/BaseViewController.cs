@@ -1,8 +1,4 @@
-using System;
-
-using UIKit;
-using Foundation;
-using ScanbotSDK.iOS;
+using BarcodeSDK.NET.iOS.Utils;
 
 namespace BarcodeSDK.NET.iOS;
 
@@ -27,11 +23,11 @@ public class BaseViewController : UIViewController
         if (NavigationController != null)
         {
             NavigationController.NavigationBar.Translucent = false;
-            NavigationController.NavigationBar.BarTintColor = MainViewController.ScanbotRed;
+            NavigationController.NavigationBar.BarTintColor = Colors.ScanbotRed;
             NavigationController.NavigationBar.TintColor = UIColor.White;
             if (NavigationController.View != null)
             {
-                NavigationController.View.BackgroundColor = MainViewController.ScanbotRed;
+                NavigationController.View.BackgroundColor = Colors.ScanbotRed;
             }
         }
     }

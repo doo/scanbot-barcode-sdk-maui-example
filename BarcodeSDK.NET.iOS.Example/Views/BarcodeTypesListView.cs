@@ -31,7 +31,7 @@ namespace BarcodeSDK.NET.iOS
             ContentSize = new CGSize(Frame.Width, y);
         }
 
-        public void AddButtons(Dictionary<SBSDKBarcodeFormat, bool> list)
+        public void AddItems(Dictionary<SBSDKBarcodeFormat, bool> list)
         {
             foreach (var button in Buttons)
             {
@@ -43,12 +43,22 @@ namespace BarcodeSDK.NET.iOS
             foreach (var item in list)
             {
                 var button = new BarcodeTypeButton(item);
+                button.Click += OnButtonClick;
+                
                 Buttons.Add(button);
                 AddSubview(button);
             }
 
             LayoutSubviews();
         }
+        
+        private void OnButtonClick(object sender, EventArgs e)
+        {
+            var button = (BarcodeTypeButton)sender;
+            button.Toggle();
 
+            var isOn = button.Switch.On;
+            BarcodeTypes.Instance.Update(button.Code, isOn);
+        }
     }
 }

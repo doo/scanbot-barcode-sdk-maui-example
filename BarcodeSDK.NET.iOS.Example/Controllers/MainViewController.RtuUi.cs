@@ -1,9 +1,4 @@
-﻿using System.Reflection;
-using BarcodeSDK.NET.iOS.Controllers;
-using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
-using BarcodeSDK.NET.iOS.Utils;
-using ScanbotSDK.iOS;
-using UIKit;
+﻿using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 
@@ -101,8 +96,8 @@ public partial class MainViewController
         usecase.ArOverlay.Visible = true;
         usecase.ArOverlay.AutomaticSelectionEnabled = true;
         usecase.ExpectedBarcodes = [
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4)
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: new IntPtr(4)),
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: new IntPtr(4))
         ];
 
         configuration.UseCase = usecase;
@@ -117,7 +112,7 @@ public partial class MainViewController
         {
             disposableViewController?.PresentingViewController?.DismissViewController(true, delegate
             {
-                ShowBarcodeReults(result.Items);
+                ShowBarcodeResults(result.Items);
             });
         }
         else
@@ -126,7 +121,7 @@ public partial class MainViewController
         }
     }
 
-    private void ShowBarcodeReults(SBSDKUI2BarcodeScannerUIItem[] items)
+    private void ShowBarcodeResults(SBSDKUI2BarcodeScannerUIItem[] items)
     {
         var viewController = new ScanResultListController(items);
         NavigationController?.PushViewController(viewController, true);

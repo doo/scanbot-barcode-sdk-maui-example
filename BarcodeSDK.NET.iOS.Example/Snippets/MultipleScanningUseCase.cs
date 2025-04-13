@@ -25,7 +25,7 @@ public static partial class Snippets
             useCase.SheetContent.ManualCountChangeEnabled = true;
 
             // Set the delay before same barcode counting repeat.
-            useCase.CountingRepeatDelay = 1000;
+            useCase.CountingRepeatDelay = new IntPtr(1000);
 
             // Configure the submit button.
             useCase.SheetContent.SubmitButton.Text = "Submit";

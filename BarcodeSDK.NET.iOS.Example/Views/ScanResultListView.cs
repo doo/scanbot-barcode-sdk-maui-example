@@ -14,10 +14,6 @@ namespace BarcodeSDK.NET.iOS
             tableView.RegisterClassForCellReuse(typeof(ScanResultCell), ScanResultCell.Identifier);
             tableView.Source = listSource = new ScanResultListSource(items);
 
-            if (items.Length > 0)
-            {
-                tableView.ReloadData();
-            }
             AddSubview(tableView);
         }
 

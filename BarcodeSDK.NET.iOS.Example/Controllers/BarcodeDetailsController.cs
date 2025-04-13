@@ -1,5 +1,4 @@
-﻿using BarcodeSDK.NET.iOS.Utils;
-using ScanbotSDK.iOS;
+﻿using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 
@@ -69,6 +68,25 @@ public partial class BarcodeDetailsController : BaseViewController
             tableView.BottomAnchor.ConstraintEqualTo(View.BottomAnchor)
         ]);
     }
+    
+    private void PopulateData(SBSDKBarcodeItem barcode)
+    {
+        barcodeDetails =
+        [
+            new(caption: "Format", text: barcode.Format.Name),
+            new(caption: "Text", text: barcode.Text),
+        ];
+
+        if (!string.IsNullOrEmpty(barcode.UpcEanExtension))
+        {
+            barcodeDetails.Add(new(caption: "Extension", text: barcode.UpcEanExtension));
+        }
+
+        if (barcode.ExtractedDocument != null)
+        {
+            GetFormattedDocument(barcode.ExtractedDocument);
+        }
+    }
 }
 
 internal class BarcodeDetailsTableViewSource(List<BarcodeDetailModel> barcodeDetailList) : UITableViewSource
@@ -102,7 +120,7 @@ internal class BarcodeDetailsTableViewCell : UITableViewCell
             TextAlignment = UITextAlignment.Left,
             Font = UIFont.BoldSystemFontOfSize(18f),
             TranslatesAutoresizingMaskIntoConstraints = false,
-            Lines = 0,
+            Lines = new IntPtr(0),
             LineBreakMode = UILineBreakMode.WordWrap
         };
 
@@ -111,7 +129,7 @@ internal class BarcodeDetailsTableViewCell : UITableViewCell
             TextAlignment = UITextAlignment.Left,
             Font = UIFont.SystemFontOfSize(18f),
             TranslatesAutoresizingMaskIntoConstraints = false,
-            Lines = 0,
+            Lines = new IntPtr(0),
             LineBreakMode = UILineBreakMode.WordWrap
         };
 

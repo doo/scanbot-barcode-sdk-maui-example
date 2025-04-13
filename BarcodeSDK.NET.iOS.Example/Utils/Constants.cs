@@ -9,5 +9,10 @@ namespace BarcodeSDK.NET.iOS.Utils
 
         public const string TotalItemsScanned = "Total items scanned";
     }
+
+    public static class Colors
+    {
+        public static readonly UIColor ScanbotRed = UIColor.FromRGB(200, 25, 60);
+    }
 }
 

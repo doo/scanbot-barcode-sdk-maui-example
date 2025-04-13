@@ -1,11 +1,9 @@
-﻿using System.Linq;
+﻿using BarcodeSDK.NET.iOS.Utils;
 
 namespace BarcodeSDK.NET.iOS
 {
     public class MainView : UIView
     {
-        private readonly UIColor scanbotColor = MainViewController.ScanbotRed;
-        private readonly UIColor backgroundColor = UIColor.FromRGB(52, 54, 56);
         private readonly Dictionary<EventHandler, UIButton> buttons = new Dictionary<EventHandler, UIButton>();
         private readonly List<UIView> sorting = new List<UIView>();
 
@@ -36,7 +34,7 @@ namespace BarcodeSDK.NET.iOS
             }
         }
 
-        public UITextView CreateText(string text)
+        public UITextView CreateHeader(string text)
         {
             var existing = sorting.OfType<UITextView>().FirstOrDefault(l => l.Text == text);
 
@@ -48,7 +46,7 @@ namespace BarcodeSDK.NET.iOS
             var label = new UITextView();
             label.Text = text;
             label.TextColor = UIColor.White;
-            label.BackgroundColor = scanbotColor;
+            label.BackgroundColor = Colors.ScanbotRed;
             label.TextAlignment = UITextAlignment.Left;
             label.Font = UIFont.FromName("HelveticaNeue-Bold", 16);
             label.ScrollEnabled = false;
@@ -59,7 +57,7 @@ namespace BarcodeSDK.NET.iOS
             return label;
         }
 
-        public UIButton CreateButton(string text, EventHandler action)
+        public UIButton CreateItem(string text, EventHandler action)
         {
             if (buttons.TryGetValue(action, out var existing))
             {
@@ -72,7 +70,7 @@ namespace BarcodeSDK.NET.iOS
             button.TitleLabel.Font = UIFont.FromName("HelveticaNeue-Bold", 16);
             button.TitleLabel.TextAlignment = UITextAlignment.Left;
             button.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-            button.BackgroundColor = backgroundColor;
+            button.BackgroundColor = UIColor.FromRGB(52, 54, 56);
             button.TitleEdgeInsets = new UIEdgeInsets(0, 15, 0, 0);
             AddSubview(button);
             button.TouchUpInside += action;
@@ -80,35 +78,6 @@ namespace BarcodeSDK.NET.iOS
             sorting.Add(button);
 
             return button;
-        }
-
-        public void RemoveButton(EventHandler action)
-        {
-            if (buttons.TryGetValue(action, out var button))
-            {
-                button.TouchUpInside -= action;
-                buttons.Remove(action);
-                sorting.Remove(button);
-                button.RemoveFromSuperview();
-            }
-        }
-
-        public void RemoveAllControls()
-        {
-            var keys = buttons.Keys;
-
-            foreach (var key in keys)
-            {
-                RemoveButton(key);
-            }
-
-            var controlsToRemove = sorting.ToArray();
-
-            foreach (var control in controlsToRemove)
-            {
-                sorting.Remove(control);
-                control.RemoveFromSuperview();
-            }
         }
     }
 }
