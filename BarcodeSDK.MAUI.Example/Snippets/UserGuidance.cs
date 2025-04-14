@@ -11,7 +11,7 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
-                // Hide/unhide the user guidance.
+                // Hide/Show the user guidance.
                 config.UserGuidance.Visible = true;
 
                 // Configure the title.

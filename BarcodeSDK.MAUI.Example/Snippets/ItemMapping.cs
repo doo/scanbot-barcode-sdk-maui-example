@@ -19,11 +19,11 @@ namespace ScanbotSDK.MAUI.Example
                 useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
                 {
                     BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
-                        var title = $"{productTitle} {barcodeItem.UpcEanExtension}";
+                        var title = $"{productTitle} {barcodeItem.Text}";
                         var subTitle = "Subtitle";
-                        var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
+                        var image = "https://avatars.githubusercontent.com/u/1454920";
 
-                        if (barcodeItem.UpcEanExtension == "Error occurred!")
+                        if (barcodeItem.Text == "Error occurred!")
                         {
                             onError();
                         }

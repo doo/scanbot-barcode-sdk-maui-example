@@ -5,31 +5,24 @@
                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
                          xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                         x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeArOverlayClassicComponentPage"
                          ios:Page.UseSafeArea="true"
-                         Title="BarcodeARClassicComponentPage"
-                         NavigationPage.HasNavigationBar="True"
-                         x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeArOverlayClassicComponentPage">
+                         Title="Classic AR Overlay"
+                         NavigationPage.HasNavigationBar="True">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
             <RowDefinition Height="7*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Text="Barcode Classic Component"
-               FontSize="Subtitle"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="Center"
-               HorizontalOptions="Fill" />
-        <classicComponent:ScanbotClassicUIContainer Grid.Row="1">
+        <classicComponent:ScanbotClassicUIContainer
+            Grid.Row="0">
             <classicComponent:BarcodeScannerView
-                x:Name="cameraView"
+                x:Name="CameraView"
                 OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
         </classicComponent:ScanbotClassicUIContainer>
-        <StackLayout Grid.Row="2">
+        <StackLayout
+            Grid.Row="1">
             <Label
-                x:Name="lblResultCaption"
                 Text="Result"
                 FontAttributes="Bold"
                 FontSize="18"
@@ -38,7 +31,7 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center" />
             <Label
-                x:Name="lblResult"
+                x:Name="ResultLabel"
                 Margin="15,10"
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"

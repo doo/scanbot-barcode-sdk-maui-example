@@ -16,7 +16,7 @@ namespace ScanbotSDK.MAUI.Example
                 useCase.ConfirmationSheetEnabled = true;
                 useCase.SheetColor = new ColorValue("#FFFFFF");
 
-                // Hide/unhide the barcode image.
+                // Hide/Show the user guidance. the barcode image.
                 useCase.BarcodeImageVisible = true;
 
                 // Configure the barcode title of the confirmation sheet.
