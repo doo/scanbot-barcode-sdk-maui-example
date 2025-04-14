@@ -27,22 +27,22 @@ public static partial class Snippets
             return config;
         }
     }
-
-    public class CustomMapper : global::Java.Lang.Object, global::Java.IO.ISerializable, IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.IBarcodeItemMapper
+    
+    public class CustomMapper : global::Java.Lang.Object, IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.IBarcodeItemMapper
     {
         public void MapBarcodeItem(BarcodeItem item, IBarcodeMappingResultCallback resultCallback, IBarcodeMappingErrorCallback errorCallback)
         {
-            var title = $"Some product {item?.UpcEanExtension}";
-            var subTitle = item?.Format?.Name();
+            var title = $"Some product {item.UpcEanExtension}";
+            var subTitle = item.Format.Name();
             var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
-        
-            if (item?.UpcEanExtension == "Error occurred!")
+            
+            if (item.UpcEanExtension == "Error occurred!")
             {
-                errorCallback?.OnError();
+                errorCallback.OnError();
             }
             else
             {
-                resultCallback?.OnResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
+                resultCallback.OnResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
             }
         }
     }

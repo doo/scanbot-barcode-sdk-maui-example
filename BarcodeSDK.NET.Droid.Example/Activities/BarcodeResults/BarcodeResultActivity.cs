@@ -39,7 +39,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
 
             image.SetImageBitmap(item.SourceImage?.ToBitmap());
-            barFormat.Text = "Format: " + item.Format?.Name();
+            barFormat.Text = "Format: " + item.Format.Name();
             docText.Text = "Content: " + item.Text;
 
             child.Click += (sender, e) =>

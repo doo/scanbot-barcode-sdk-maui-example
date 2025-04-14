@@ -18,7 +18,7 @@ public static partial class Snippets
             useCase.ConfirmationSheetEnabled = true;
             useCase.SheetColor = new ScanbotColor("#FFFFFF");
 
-            // Hide/unhide the barcode image.
+            // Hide/Show the barcode image.
             useCase.BarcodeImageVisible = true;
 
             // Configure the barcode title of the confirmation sheet.
