@@ -10,7 +10,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
+        CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -30,7 +30,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         base.OnAppearing();
         
         // Start barcode detection manually
-        cameraView.StartDetection();
+        CameraView.StartDetection();
     }
 
     protected override void OnDisappearing()
@@ -38,19 +38,19 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         base.OnDisappearing();
 
         // Stop barcode detection manually
-        cameraView.StopDetection();
-        cameraView.Handler.DisconnectHandler();
+        CameraView.StopDetection();
+        CameraView.Handler?.DisconnectHandler();
     }
 
     void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
     {
         // Start scanning
-        cameraView.StartScanAndCount();
+        CameraView.StartScanAndCount();
     }
 
     void ConitueScanningButton_Clicked(System.Object sender, System.EventArgs e)
     {
-        cameraView.ContinueScanning();
+        CameraView.ContinueScanning();
 
         StartScanningButton.IsEnabled = true;
         ContinueScanningButton.IsEnabled = false;
@@ -62,16 +62,17 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             return;
         
         string text = string.Empty;
-        if (result?.Barcodes != null)
+        
+        if (result.Barcodes != null)
         {
-            foreach (var barcode in result?.Barcodes)
+            foreach (var barcode in result.Barcodes)
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
         }
 
         System.Diagnostics.Debug.WriteLine(text);
-        lblResult.Text = text;
+        ResultLabel.Text = text;
     }
 
     private void CameraView_OnOnScanAndCountFinished(Barcode.Core.BarcodeScannerResult result)

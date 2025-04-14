@@ -11,7 +11,7 @@
         {
             string text = string.Empty;
 
-            if (result?.Barcodes != null)
+            if (result.Barcodes != null)
             {
                 foreach (var barcode in result.Barcodes)
                 {
@@ -21,7 +21,7 @@
             }
 
             System.Diagnostics.Debug.WriteLine(text);
-            lblResult.Text = text;
+            ResultLabel.Text = text;
         }
 
         protected override void OnAppearing()
@@ -29,7 +29,7 @@
             base.OnAppearing();
 
             // Start barcode detection manually
-            cameraView.StartDetection();
+            CameraView.StartDetection();
         }
 
         protected override void OnDisappearing()
@@ -37,9 +37,9 @@
             base.OnDisappearing();
 
             // Stop barcode detection manually
-            cameraView.StopDetection();
+            CameraView.StopDetection();
 
-            cameraView.Handler?.DisconnectHandler();
+            CameraView.Handler?.DisconnectHandler();
         }
 
         private void CameraView_OnOnBarcodeScanResult(Barcode.Core.BarcodeScannerResult result)

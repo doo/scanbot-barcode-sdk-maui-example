@@ -10,7 +10,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
-            cameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration(
+            CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
@@ -26,8 +26,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void HandleScannerResults(Barcode.Core.BarcodeScannerResult result)
         {
             string text = string.Empty;
-
-            if (result?.Barcodes != null)
+            if (result.Barcodes != null)
             {
                 foreach (var barcode in result.Barcodes)
                 {
@@ -36,7 +35,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
 
             System.Diagnostics.Debug.WriteLine(text);
-            lblResult.Text = text;
+            ResultLabel.Text = text;
         }
 
         protected override void OnAppearing()
@@ -44,7 +43,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             base.OnAppearing();
 
             // Start barcode detection manually
-            cameraView.StartDetection();
+            CameraView.StartDetection();
         }
 
         protected override void OnDisappearing()
@@ -52,8 +51,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
             base.OnDisappearing();
 
             // Stop barcode detection manually
-            cameraView.StopDetection();
-            cameraView.Handler?.DisconnectHandler();
+            CameraView.StopDetection();
+            CameraView.Handler?.DisconnectHandler();
         }
         
         private void CameraView_OnOnSelectBarcodeResult(Barcode.Core.BarcodeScannerResult result)

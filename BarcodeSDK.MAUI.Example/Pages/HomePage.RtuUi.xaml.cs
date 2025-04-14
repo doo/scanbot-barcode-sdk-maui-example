@@ -1,9 +1,6 @@
 ﻿using ScanbotSDK.MAUI.Example.Models;
 using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Common;
-using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.BarcodeScannerConfiguration;
-using ImageSource = Microsoft.Maui.Controls.ImageSource;
 
 namespace ScanbotSDK.MAUI.Example.Pages;
 
@@ -19,18 +16,26 @@ public partial class HomePage
     {
         try
         {
-            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerScreenConfiguration
-            {
-                ScannerConfiguration = new BarcodeScannerConfiguration
-                {
-                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                    Gs1Handling = Gs1Handling.DecodeStructure
-                },
-                UseCase = new SingleScanningMode()
-                {
-                    ConfirmationSheetEnabled = true
-                }
-            });
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+            
+            // Create single scanning mode.    
+            var useCase = new SingleScanningMode();
+            
+            // Enable and configure the confirmation sheet.
+            useCase.ConfirmationSheetEnabled = true;
+
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
             // Comment out the above and use the below to try some of our snippets instead:
             // var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
@@ -53,18 +58,29 @@ public partial class HomePage
     {
         try
         {
+            // Create the default configuration object.
             var config = new BarcodeScannerScreenConfiguration();
-            var useCase = new SingleScanningMode()
-            {
-                ArOverlay = new ArOverlayGeneralConfiguration()
-                {
-                    Visible = true
-                },
-            };
+            
+            // Create single scanning mode.    
+            var useCase = new SingleScanningMode();
+            
+            // Enable and configure the confirmation sheet.
+            useCase.ConfirmationSheetEnabled = true;
 
+            // Turn on the barcode AR overlay 
+            useCase.ArOverlay.Visible = true;
+
+            // Configure other parameters, pertaining to single-scanning mode as needed.
             config.UseCase = useCase;
-            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
-            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(config);
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
             await DisplayResults(result);
         }
@@ -86,17 +102,26 @@ public partial class HomePage
     {
         try
         {
-            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerScreenConfiguration
-            {
-                ScannerConfiguration = new BarcodeScannerConfiguration
-                {
-                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                },
-                UseCase = new MultipleScanningMode
-                {
-                    Mode = MultipleBarcodesScanningMode.Counting
-                }
-            });
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+                
+            // Create multiple scanning mode
+            var useCase = new MultipleScanningMode();
+            
+            // Set the counting mode.
+            useCase.Mode = MultipleBarcodesScanningMode.Counting;
+
+            // Set the sheet mode for the barcodes preview.
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
+
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
             await DisplayResults(result);
         }
@@ -115,30 +140,32 @@ public partial class HomePage
     {
         try
         {
-            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(new BarcodeScannerScreenConfiguration
-            {
-                UseCase = new MultipleScanningMode
-                {
-                    Mode = MultipleBarcodesScanningMode.Unique,
-                    SheetContent = new SheetContent
-                    {
-                        ManualCountChangeEnabled = false
-                    },
-                    Sheet = new Sheet
-                    {
-                        Mode = SheetMode.CollapsedSheet
-                    },
-                    ArOverlay = new ArOverlayGeneralConfiguration
-                    {
-                        Visible = true,
-                        AutomaticSelectionEnabled = false
-                    }
-                },
-                UserGuidance = new UserGuidanceConfiguration
-                {
-                    Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." }
-                }
-            });
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+                
+            // Create multiple scanning mode
+            var useCase = new MultipleScanningMode();
+
+            // Turn on the barcode AR overlay 
+            useCase.ArOverlay.Visible = true;
+            
+            // Set the counting mode
+            useCase.Mode = MultipleBarcodesScanningMode.Unique;
+
+            // Set the sheet mode for the barcodes preview.
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
+
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+
+            // Set the user guidance hint
+            config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
             await DisplayResults(result);
         }
@@ -183,13 +210,13 @@ public partial class HomePage
             findAndPickConfig.SheetContent.SubmitButton.Foreground.Color = new ColorValue("#000000"); //arg string
 
             // Set the expected barcodes.
-            findAndPickConfig.ExpectedBarcodes = new ExpectedBarcode[]
-            {
+            findAndPickConfig.ExpectedBarcodes =
+            [
                 new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode",
                     image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
                 new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode",
-                    image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-            };
+                    image: "https://avatars.githubusercontent.com/u/1454920", count: 4)
+            ];
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             configuration.UseCase = findAndPickConfig;

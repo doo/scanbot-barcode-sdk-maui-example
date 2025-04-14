@@ -1,4 +1,5 @@
-﻿using ScanbotSDK.MAUI.Barcode;
+﻿using Microsoft.Maui.Graphics.Platform;
+using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Utils;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
@@ -45,6 +46,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private void InitMenuItems()
         {
+            // Please remove v2 from everywhere since we removed v1 completely and there is no more different versions
             MenuItems = new List<HomePageMenuItem>
             {
                 new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
@@ -68,18 +70,21 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// <param name="e"></param>
         private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
+            // For "View License Info" item we should proceed with the event
             if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
+                // It can be another reason. Maybe better to go with invalid if we don't know the exact reason
                 CommonUtils.Alert(this, "Alert", "The license is expired.");
-                CollectionView_MenuItems.SelectedItem = null;
+                CollectionViewMenuItems.SelectedItem = null;
                 return;
             }
 
             if (e?.CurrentSelection?.FirstOrDefault() is HomePageMenuItem selectedItem)
             {
+                // I think it will be better without await. Please try
                 await selectedItem.NavigationAction();
             }
-            CollectionView_MenuItems.SelectedItem = null;
+            CollectionViewMenuItems.SelectedItem = null;
         }
 
         /// <summary>
@@ -87,12 +92,21 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private async Task DetectBarcodesOnImage()
         {
-            // Optain an image from somewhere.
-            // In this case, the user picks an image with our helper.
-            var image = await ScanbotSDKMain.ImagePicker.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
-
-            if (image == null)
+            PlatformImage image;
+            try
             {
+                // Obtain an image from somewhere.
+                // In this case, the user picks an image with our helper.
+                image = await ScanbotSDKMain.ImagePicker.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
+                if (image == null)
+                {
+                    return;
+                }
+            }
+            // Handle cancel button click for ImagePicker.
+            catch (TaskCanceledException e)
+            {
+                Console.WriteLine(e);
                 return;
             }
 
@@ -101,7 +115,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 Formats = Models.BarcodeTypes.Instance.AcceptedTypes
             };
             
-
             // Configure the barcode detector for detecting many barcodes in one image.
             var configuration = new BarcodeScannerConfiguration
             {
@@ -110,33 +123,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
             };
 
             var result = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
-            var source = ImageSource.FromStream(() => image?.AsStream(quality: 0.7f));
+            var source = ImageSource.FromStream(() => image.AsStream(quality: 0.7f));
             
             // Handle the result in your app as needed.
             await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList(), source));
         }
-
-        // /// <summary>
-        // /// Clear storage.
-        // /// </summary>
-        // private void ClearStorage()
-        // {
-        //     if (!ScanbotSDKMain.LicenseInfo.IsValid)
-        //     {
-        //         return;
-        //     }
-        //
-        //     var result = ScanbotSDKMain.CommonOperations.ClearStorageDirectory();
-        //
-        //     if (result.Status == OperationResult.Ok)
-        //     {
-        //         CommonUtils.Alert(this, "Success!", "Cleared image storage");
-        //     }
-        //     else
-        //     {
-        //         CommonUtils.Alert(this, "Oops!", result.Error);
-        //     }
-        // }
 
         /// <summary>
         /// View Current License Information

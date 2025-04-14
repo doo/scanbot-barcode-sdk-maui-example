@@ -1,5 +1,4 @@
-﻿
-using ScanbotSDK.MAUI.Example.Models;
+﻿using ScanbotSDK.MAUI.Example.Models;
 using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -8,13 +7,15 @@ namespace ScanbotSDK.MAUI.Example.Pages
     {
         public BarcodeSelectionPage()
         {
-            Title = "ACCEPTED BARCODES";
+            Title = "Accepted Barcodes";
 
-            var list = new ListView();
-            list.ItemTemplate = new DataTemplate(typeof(BarcodeFormatCell));
-            list.ItemsSource = BarcodeTypes.Instance.List;
-            list.RowHeight = 50;
-            list.BackgroundColor = Colors.White;
+            var list = new ListView
+            {
+                ItemTemplate = new DataTemplate(typeof(BarcodeFormatCell)),
+                ItemsSource = BarcodeTypes.Instance.List,
+                RowHeight = 50,
+                BackgroundColor = Colors.White,
+            };
             Content = list;
         }
     }
@@ -39,14 +40,13 @@ namespace ScanbotSDK.MAUI.Example.Pages
             Switch = new Switch
             {
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.EndAndExpand
+                HorizontalOptions = LayoutOptions.Fill
             };
 
-            View = new StackLayout()
+            View = new HorizontalStackLayout
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 Margin = new Thickness(0, 0, 10, 0),
                 Children = { Label, Switch }
             };

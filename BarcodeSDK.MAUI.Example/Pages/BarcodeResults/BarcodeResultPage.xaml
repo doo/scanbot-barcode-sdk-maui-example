@@ -2,26 +2,24 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultPage"
-             Title="BarcodeResultPage"
-             xmlns:barcodeTempalte="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
              xmlns:converter="clr-namespace:ScanbotSDK.MAUI.Example.Utils.XamlValueConverters"
-             xmlns:maui="clr-namespace:ScanbotSDK.MAUI;assembly=ScanbotSDK.Shared"
-             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Barcode.Core;assembly=ScanbotSDK.Shared">
+             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Barcode.Core;assembly=ScanbotSDK.Shared"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultPage"
+             Title="Barcode Results">
     <ContentPage.Resources>
         <converter:ImageRefToSourceConverter x:Key="convertImageRefToSource" />
     </ContentPage.Resources>
-    <StackLayout>
-        <StackLayout Grid.Row="0">
-            <Image Grid.Row="1"
-                   x:Name="imageView"
+    <StackLayout 
+        BackgroundColor="White">
+        <StackLayout>
+            <Image x:Name="BarcodeImageView"
                    Aspect="AspectFit"
                    MaximumHeightRequest="300"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand"
                    BackgroundColor="Transparent" />
         </StackLayout>
-        <ListView x:Name="ListView_Results"
+        <ListView x:Name="ListViewResults"
                   HasUnevenRows="True"
                   ItemSelected="ListView_Results_OnItemSelected">
             <ListView.ItemTemplate>
@@ -39,19 +37,20 @@
                                 VerticalOptions="Fill"
                                 Aspect="AspectFit"
                                 Source="{Binding SourceImage, Converter={StaticResource convertImageRefToSource}}" />
-                            <StackLayout
+                            <VerticalStackLayout
                                 Grid.Column="1"
                                 Margin="5">
                                 <Label Margin="0,5,0,0"
-                                       Text="Barcode Type: "
+                                       Text="Format:"
                                        FontAttributes="Bold"
                                        FontSize="18"
-                                       TextColor="DarkGray" />
+                                       TextColor="Black" />
                                 <Label
                                     Text="{Binding Format}"
                                     VerticalOptions="Start"
                                     HorizontalOptions="Start"
-                                    FontAttributes="Bold" />
+                                    FontAttributes="Bold"
+                                    TextColor="Black" />
                                 <Label
                                     Margin="0,5,0,0"
                                     Text="Text: "
@@ -60,7 +59,7 @@
                                     TextColor="DarkGray" />
                                 <Label Text="{Binding Text}"
                                        MaxLines="3" />
-                            </StackLayout>
+                            </VerticalStackLayout>
                             <Grid Grid.Column="2">
                                 <Label Text=">"
                                        FontSize="20"
@@ -72,11 +71,6 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.FooterTemplate>
-                <DataTemplate>
-                    <Grid BackgroundColor="#c8193c" HeightRequest="50" />
-                </DataTemplate>
-            </ListView.FooterTemplate>
         </ListView>
     </StackLayout>
 </ContentPage>
