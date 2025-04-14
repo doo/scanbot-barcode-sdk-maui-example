@@ -28,7 +28,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             {
                 View child = LayoutInflater.Inflate(Resource.Layout.barcode_item, parent, false);
                 InitItemData(child, item);
-                parent.AddView(child);
+                parent?.AddView(child);
             }
         }
         
@@ -38,7 +38,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             var barFormat = child.FindViewById<TextView>(Resource.Id.barcodeFormat);
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
 
-            image.SetImageBitmap(item.SourceImage?.ToBitmap());
+            image?.SetImageBitmap(item.SourceImage?.ToBitmap());
             barFormat.Text = "Format: " + item.Format.Name();
             docText.Text = "Content: " + item.Text;
 
