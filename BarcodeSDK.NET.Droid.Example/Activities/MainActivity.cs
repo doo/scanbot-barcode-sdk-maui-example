@@ -28,6 +28,8 @@ namespace BarcodeSDK.NET.Droid
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_single).Click += SingleScanning;
+            // Please add SingleScanning usecase with image result and show how to handle it 
+            // todo: They should also be in iOS?
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_ar_overlay).Click += SingleScanningWithArOverlay;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_batch).Click += BatchBarcodeScanning;
             FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_unique).Click += MultipleUniqueBarcodeScanning;
@@ -48,7 +50,7 @@ namespace BarcodeSDK.NET.Droid
 
             try
             {
-                // Optain an image from somewhere.
+                // Obtain an image from somewhere.
                 // In this case, the user picks an image with our helper.
                 var bitmap = await PickImageAsync();
 
@@ -98,7 +100,7 @@ namespace BarcodeSDK.NET.Droid
 
         private void OnLicenseInfoClick(object sender, EventArgs e)
         {
-            var status = SDK.LicenseInfo.Status;
+            var status = SDK.LicenseInfo.Status.Name();
             var date = SDK.LicenseInfo.ExpirationDate;
             var validity = SDK.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
             var message = validity + $"\n\n- Status: {status}";
@@ -126,7 +128,7 @@ namespace BarcodeSDK.NET.Droid
                 {
                     var barcodes = resultUiResult.ScannerUiResult().Items.Select(item => item.Barcode).ToList();
                     var result = new BarcodeScannerResult(barcodes, true);
-                    OnRTUv2ActivityResult(result);
+                    OnRTUActivityResult(result);
                 }
                 return;
             }
@@ -180,6 +182,27 @@ namespace BarcodeSDK.NET.Droid
             StartActivityForResult(chooser, SELECT_IMAGE_FROM_GALLERY);
             
             return pendingBitmap.Task;
+        }
+        
+        private void OnBarcodeCameraXDemoClick(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
+            intent.PutExtra("useCameraX", true);
+            StartActivity(intent);
+        }
+
+        private void OnBarcodeCameraScanAndCountClick(object sender, EventArgs e)
+        {
+            if (!Alert.CheckLicense(this, SDK))
+            {
+                return;
+            }
+            var intent = new Intent(this, typeof(BarcodeScanAndCountActivity));
+            StartActivity(intent);
         }
     }
 }

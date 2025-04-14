@@ -109,7 +109,7 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         public void OnCameraOpen()
         {
-            Alert.Toast(this, "The Scanbot license is invalid or expired.");
+            // Handler on camera open callback here.
         }
 
         public void OnLicenseError()

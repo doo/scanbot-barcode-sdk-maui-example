@@ -46,7 +46,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             barcodeScanner.SetConfiguration(barcodeScannerConfigs);
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
-            barcodeScannerView?.InitCamera(new CameraUiSettings(Intent.GetBooleanExtra("useCameraX", false)));
+            barcodeScannerView?.InitCamera(new CameraUiSettings(true));
             barcodeScannerView?.InitDetectionBehavior(barcodeScanner, OnBarcodeResult, (
                 onCameraOpen: OnCameraOpened,
                 onPictureTaken: OnPictureTaken,
@@ -135,6 +135,8 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         public void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
         {
+            // Is this code used at all ? 
+            // Reply: Currently no. This code will be used only if we add a button click. 
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
                 return;

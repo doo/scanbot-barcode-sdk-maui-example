@@ -11,6 +11,8 @@ public class DetailedItemDataActivity : AppCompatActivity
     {
         base.OnCreate(savedInstanceState);
 
+
+        // todo: We show less info here than in the list view. Please show more info about the item here
         SetContentView(Resource.Layout.detailed_item_data);
         var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
         SetSupportActionBar(toolbar);

@@ -9,8 +9,8 @@ namespace BarcodeSDK.NET.Droid
         internal readonly Dictionary<BarcodeFormat, bool> AcceptedBarcodesDictionary;
         
         public BarcodeFormat[] AcceptedTypes => AcceptedBarcodesDictionary
-            ?.Where(item => item.Value)
-            .Select(item => item.Key).ToArray() ?? [];
+            .Where(item => item.Value)
+            .Select(item => item.Key).ToArray();
         
         private BarcodeTypes()
         {

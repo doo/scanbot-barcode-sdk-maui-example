@@ -148,14 +148,14 @@ namespace BarcodeSDK.NET.Droid
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             configuration.UseCase = findAndPickConfig;
-            configuration.ScannerConfiguration.BarcodeFormats = BarcodeFormat.Values().ToList();
+            configuration.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
 
             resultContract = new BarcodeScannerActivity.ResultContract();
             var intent = resultContract.CreateIntent(this, configuration);
             StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
         }
         
-        private void OnRTUv2ActivityResult(BarcodeScannerResult barcode)
+        private void OnRTUActivityResult(BarcodeScannerResult barcode)
         {
             var intent = new Intent(this, typeof(BarcodeResultActivity));
             var bundle = new BaseBarcodeResult<BarcodeScannerResult>(barcode).ToBundle();
