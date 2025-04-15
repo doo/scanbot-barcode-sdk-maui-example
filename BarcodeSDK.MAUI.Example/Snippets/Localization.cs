@@ -11,6 +11,7 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
+                // Configure the strings.
                 config.Localization.TopBarTitle = "Custom top bar title";
                 config.Localization.UserGuidance = "Custom guidance title";
                 config.Localization.BarcodeInfoMappingErrorStateCancelButton = "Custom Cancel title";

@@ -11,7 +11,7 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
-                // Initialize the use case for multiple scanning.
+                // Create and configure the use case for find and pick scanning mode.
                 var useCase = new FindAndPickScanningMode();
 
                 // Set the sheet mode for the barcodes preview.
@@ -31,15 +31,14 @@ namespace ScanbotSDK.MAUI.Example
 
                 // Configure the submit button.
                 useCase.SheetContent.SubmitButton.Text = "Submit";
-                
                 useCase.SheetContent.SubmitButton.Foreground.Color = new ColorValue("#000000"); //arg string
 
                 // Set the expected barcodes.
-                useCase.ExpectedBarcodes = new ExpectedBarcode[]
-                {
+                useCase.ExpectedBarcodes =
+                [
                     new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
                     new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
-                };
+                ];
 
                 // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
                 config.UseCase = useCase;

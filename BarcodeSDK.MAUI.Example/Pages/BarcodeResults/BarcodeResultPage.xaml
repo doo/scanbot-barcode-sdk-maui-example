@@ -7,9 +7,9 @@
              x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultPage"
              Title="Barcode Results">
     <ContentPage.Resources>
-        <converter:ImageRefToSourceConverter x:Key="convertImageRefToSource" />
+        <converter:ImageRefToSourceConverter x:Key="ConvertImageRefToSource" />
     </ContentPage.Resources>
-    <StackLayout 
+    <StackLayout
         BackgroundColor="White">
         <StackLayout>
             <Image x:Name="BarcodeImageView"
@@ -36,29 +36,32 @@
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Fill"
                                 Aspect="AspectFit"
-                                Source="{Binding SourceImage, Converter={StaticResource convertImageRefToSource}}" />
+                                Source="{Binding SourceImage, Converter={StaticResource ConvertImageRefToSource}}" />
                             <VerticalStackLayout
                                 Grid.Column="1"
                                 Margin="5">
                                 <Label Margin="0,5,0,0"
                                        Text="Format:"
                                        FontAttributes="Bold"
-                                       FontSize="18"
+                                       FontSize="16"
                                        TextColor="Black" />
                                 <Label
                                     Text="{Binding Format}"
                                     VerticalOptions="Start"
                                     HorizontalOptions="Start"
                                     FontAttributes="Bold"
+                                    FontSize="14"
                                     TextColor="Black" />
                                 <Label
-                                    Margin="0,5,0,0"
+                                    Margin="0,9,0,0"
                                     Text="Text: "
                                     FontAttributes="Bold"
-                                    FontSize="18"
-                                    TextColor="DarkGray" />
+                                    FontSize="16"
+                                    TextColor="Black" />
                                 <Label Text="{Binding Text}"
-                                       MaxLines="3" />
+                                       FontSize="14"
+                                       MaxLines="3"
+                                       TextColor="Black" />
                             </VerticalStackLayout>
                             <Grid Grid.Column="2">
                                 <Label Text=">"

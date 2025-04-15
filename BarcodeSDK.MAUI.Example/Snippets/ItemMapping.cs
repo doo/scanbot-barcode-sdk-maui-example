@@ -12,10 +12,15 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
+                // Create and configure the use case for single scan mode.
                 var useCase = new SingleScanningMode();
+                
                 var productTitle = "Some product title";
 
+                // Enable the confirmation sheet.
                 useCase.ConfirmationSheetEnabled = true;
+                
+                // Configure the barcode item mapping.
                 useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
                 {
                     BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
