@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
+             xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeClassicVisibility"
+             ios:Page.UseSafeArea="true"
+             Title="Classic Component"
+             NavigationPage.HasNavigationBar="True">
+    <ContentPage.Content>
+        <Grid RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+              <classicComponent:BarcodeScannerView
+                        x:Name="CameraView"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+            </Grid>
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout>
+                    <ScrollView Orientation="Horizontal">
+                        <HorizontalStackLayout Spacing="5">
+                            <Button Text="Visibility" Clicked="Visibility_OnClicked" />
+                            <Button Text="Start/Stop" Clicked="StartStop_OnClicked" />
+                            <Button Text="Freeze/UnFreeze" Clicked="FreezeUnfreeze_OnClicked" />
+                            <Button Text="Navigate" Clicked="Navigate_OnClicked" />
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                    <Label
+                        Text="Result"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+                    <Label
+                        x:Name="ResultLabel"
+                        Margin="15,10"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

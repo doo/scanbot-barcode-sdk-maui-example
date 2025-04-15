@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.ClassicBSGridInGridLayout">
+    <ContentPage.Content>
+        <Grid RowDefinitions="1*,8*,1*">
+            <Label
+                Grid.Row="0"
+                Text="Grid - Grid - Scanner"
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                BackgroundColor="DimGray" />
+            <Grid
+                BackgroundColor="DimGray"
+                ColumnDefinitions="25,*,25"
+                Grid.Row="1">
+                <classicComponent:BarcodeScannerView
+                    Grid.Column="1"
+                    x:Name="CameraView"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+            </Grid>
+            <VerticalStackLayout Grid.Row="2">
+                <Label
+                    x:Name="ResultLabel"
+                    Margin="5"
+                    MaxLines="1"
+                    LineBreakMode="TailTruncation"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+                <Button
+                    Margin="5"
+                    HorizontalOptions="Center"
+                    Text="Visibility"
+                    Clicked="Button_OnClicked" />
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

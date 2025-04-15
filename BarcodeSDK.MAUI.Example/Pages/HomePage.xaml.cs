@@ -41,6 +41,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void InitMenuItems()
         {
             MenuItems = [
+                new HomePageMenuItem("Classic BS - Property Test View", ()=> Navigation.PushAsync(new BarcodeClassicVisibility(), true)),
+                new HomePageMenuItem("Classic BS - Grid-in-Grid", ()=> Navigation.PushAsync(new ClassicBSGridInGridLayout(), true)),
+                new HomePageMenuItem("Classic BS - Stack-in-Grid", ()=> Navigation.PushAsync(new ClassicBSStackInGridLayout(), true)),
+                new HomePageMenuItem("Classic BS - VStackLayout", ()=> Navigation.PushAsync(new ClassicBSStackLayout(), true)),
                 new HomePageMenuItem("RTU - Single Scanning", SingleScanning),
                 new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
                 new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanning),
@@ -60,7 +64,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+        private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
             if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
@@ -71,7 +75,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             if (e?.CurrentSelection?.FirstOrDefault() is HomePageMenuItem selectedItem)
             {
-                selectedItem.NavigationAction();
+               await selectedItem.NavigationAction();
             }
             CollectionViewMenuItems.SelectedItem = null;
         }

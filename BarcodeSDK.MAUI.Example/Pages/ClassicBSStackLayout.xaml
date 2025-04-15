@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
+             x:Class="ScanbotSDK.MAUI.Example.Pages.ClassicBSStackLayout">
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Label
+                Text="VStackLayout - ScannerView"
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                HeightRequest="50"
+                BackgroundColor="DimGray" />
+            <classicComponent:BarcodeScannerView
+                HeightRequest="300"
+                x:Name="CameraView"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
+            <VerticalStackLayout>
+                <Label
+                    x:Name="ResultLabel"
+                    Margin="5"
+                    MaxLines="1"
+                    LineBreakMode="TailTruncation"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+                <Button
+                    Margin="5"
+                    HorizontalOptions="Center"
+                    Text="Visibility"
+                    Clicked="Button_OnClicked" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
