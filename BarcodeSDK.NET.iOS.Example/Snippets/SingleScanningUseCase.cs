@@ -11,12 +11,14 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for single scan mode.
             var useCase = new SBSDKUI2SingleScanningMode();
+            
             // Enable and configure the confirmation sheet.
             useCase.ConfirmationSheetEnabled = true;
             useCase.SheetColor = new SBSDKUI2Color("#FFFFFF");
 
-            // Hide/unhide the barcode image.
+            // Hide/Show the barcode image.
             useCase.BarcodeImageVisible = true;
 
             // Configure the barcode title of the confirmation sheet.

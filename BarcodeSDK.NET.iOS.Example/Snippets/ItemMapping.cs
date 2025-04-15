@@ -10,15 +10,20 @@ public static partial class Snippets
         {
             // Create the default configuration object.
             var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
-
             
+            // Create and configure the use case for single scan mode.
             var useCase = new SBSDKUI2SingleScanningMode();
 
+            // Enable the confirmation sheet.
             useCase.ConfirmationSheetEnabled = true;
+            
+            // Set the item mapper.
             useCase.BarcodeInfoMapping = new SBSDKUI2BarcodeInfoMapping()
             {
                 BarcodeItemMapper = new CustomMapper()
             };
+           
+            // Set the configured use case.
             config.UseCase = useCase;
             
             return config;

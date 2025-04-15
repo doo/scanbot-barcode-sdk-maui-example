@@ -96,8 +96,8 @@ namespace BarcodeSDK.NET.iOS
 
                 if (result?.Success != true)
                 {
-                    return;
                     // Please show some dialog with "No barcodes detected."
+                    return;
                 }
 
                 // Handle the result in your app as needed.

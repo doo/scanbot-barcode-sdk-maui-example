@@ -13,7 +13,9 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for single scanning mode.
             var useCase = new SingleScanningMode();
+            
             // Enable and configure the confirmation sheet.
             useCase.ConfirmationSheetEnabled = true;
             useCase.SheetColor = new ScanbotColor("#FFFFFF");
@@ -45,7 +47,6 @@ public static partial class Snippets
             // Set an array of accepted barcode types
             config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
             
-
             return config;
         }
     }
