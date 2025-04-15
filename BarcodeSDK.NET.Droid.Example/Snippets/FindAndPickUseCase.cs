@@ -13,7 +13,7 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new BarcodeScannerScreenConfiguration();
             
-            // Initialize the use case for multiple scanning.
+            // Create and configure the use case for find and pick scanning mode.
             var useCase = new FindAndPickScanningMode();
 
             // Set the sheet mode for the barcodes preview.

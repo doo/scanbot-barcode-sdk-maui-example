@@ -11,6 +11,7 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
+            // Configure the strings.
             config.Localization.TopBarTitle = "Custom top bar title";
             config.Localization.UserGuidance = "Custom guidance title";
             config.Localization.BarcodeInfoMappingErrorStateCancelButton = "Custom Cancel title";

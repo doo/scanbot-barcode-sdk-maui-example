@@ -13,6 +13,7 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for single scanning mode.
             var useCase = new SingleScanningMode();
 
             useCase.ConfirmationSheetEnabled = true;
