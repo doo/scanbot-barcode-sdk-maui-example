@@ -34,16 +34,18 @@ namespace ScanbotSDK.MAUI.Example.Pages
             {
                 VerticalTextAlignment = TextAlignment.Center,
                 Margin = new Thickness(10, 0, 0, 0),
-                TextColor = Colors.Black
+                TextColor = Colors.Black,
+                HorizontalOptions =  LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.Center
             };
 
             Switch = new Switch
             {
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Fill
+                HorizontalOptions = LayoutOptions.End
             };
 
-            View = new HorizontalStackLayout
+            View = new Grid
             {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,

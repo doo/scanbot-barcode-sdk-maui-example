@@ -11,7 +11,9 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
+                // Create and configure the use case for multiple scanning mode.
                 var useCase = new MultipleScanningMode();
+                
                 // Set the counting mode.
                 useCase.Mode = MultipleBarcodesScanningMode.Counting;
 

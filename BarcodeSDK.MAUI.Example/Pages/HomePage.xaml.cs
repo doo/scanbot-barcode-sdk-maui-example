@@ -6,17 +6,11 @@ using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerC
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
-    public struct HomePageMenuItem
+    public struct HomePageMenuItem(string title, Func<Task> action)
     {
-        public HomePageMenuItem(string title, Func<Task> action)
-        {
-            Title = title;
-            NavigationAction = action;
-        }
+        public string Title { get; private set; } = title;
 
-        public string Title { get; private set; }
-
-        public Func<Task> NavigationAction { get; private set; }
+        public Func<Task> NavigationAction { get; private set; } = action;
     }
 
     /// <summary>
@@ -42,25 +36,23 @@ namespace ScanbotSDK.MAUI.Example.Pages
         }
 
         /// <summary>
-        /// Init the Liist View.
+        /// Init the List View.
         /// </summary>
         private void InitMenuItems()
         {
-            // Please remove v2 from everywhere since we removed v1 completely and there is no more different versions
-            MenuItems = new List<HomePageMenuItem>
-            {
-                new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
-                new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
-                new HomePageMenuItem("RTU v2 - Batch Barcode Scanning", BatchBarcodeScanning),
-                new HomePageMenuItem("RTU v2 - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
-                new HomePageMenuItem("RTU v2 - Find and Pick Barcode Scanning", FindAndPickScanning),
+            MenuItems = [
+                new HomePageMenuItem("RTU - Single Scanning", SingleScanning),
+                new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
+                new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanning),
+                new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
+                new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanning),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeSelectionPage())),
-                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo()))
-            };
+                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo))
+            ];
         }
 
         /// <summary>
@@ -68,21 +60,18 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+        private void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
         {
-            // For "View License Info" item we should proceed with the event
             if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
-                // It can be another reason. Maybe better to go with invalid if we don't know the exact reason
-                CommonUtils.Alert(this, "Alert", "The license is expired.");
+                CommonUtils.Alert(this, "Alert", "The license is not valid.");
                 CollectionViewMenuItems.SelectedItem = null;
                 return;
             }
 
             if (e?.CurrentSelection?.FirstOrDefault() is HomePageMenuItem selectedItem)
             {
-                // I think it will be better without await. Please try
-                await selectedItem.NavigationAction();
+                selectedItem.NavigationAction();
             }
             CollectionViewMenuItems.SelectedItem = null;
         }

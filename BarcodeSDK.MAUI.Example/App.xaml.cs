@@ -1,8 +1,8 @@
 ﻿namespace ScanbotSDK.MAUI.Example;
 
-public partial class App : Application
+public partial class App
 {
-    private Color ScanbotColor => Color.FromRgb(200, 25, 60);
+    public static Color ScanbotColor => Color.FromRgb(200, 25, 60);
 
     public App()
     {

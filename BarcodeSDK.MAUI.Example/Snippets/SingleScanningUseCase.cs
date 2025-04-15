@@ -11,7 +11,9 @@ namespace ScanbotSDK.MAUI.Example
                 // Create the default configuration object.
                 var config = new BarcodeScannerScreenConfiguration();
                 
+                // Create and configure the use case for single scan mode.
                 var useCase = new SingleScanningMode();
+                
                 // Enable and configure the confirmation sheet.
                 useCase.ConfirmationSheetEnabled = true;
                 useCase.SheetColor = new ColorValue("#FFFFFF");
