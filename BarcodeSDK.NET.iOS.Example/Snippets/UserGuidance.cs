@@ -10,7 +10,7 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
-            // Hide/unhide the user guidance.
+            // Hide/Show the user guidance.
             config.UserGuidance.Visible = true;
 
             // Configure the title.

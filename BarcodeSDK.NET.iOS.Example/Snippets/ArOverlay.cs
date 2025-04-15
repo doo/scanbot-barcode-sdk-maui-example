@@ -11,8 +11,8 @@ public static partial class Snippets
             // Create the default configuration object.
             var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for multiple scanning mode.
             var useCase = new SBSDKUI2MultipleScanningMode();
-
             useCase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Unique;
             useCase.Sheet.Mode = SBSDKUI2SheetMode.CollapsedSheet;
             useCase.Sheet.CollapsedVisibleHeight = SBSDKUI2CollapsedVisibleHeight.Small;
