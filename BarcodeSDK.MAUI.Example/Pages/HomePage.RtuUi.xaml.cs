@@ -29,7 +29,7 @@ public partial class HomePage
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
             
             // Set an array of accepted barcode types.
             config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
@@ -74,7 +74,7 @@ public partial class HomePage
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
             
             // Set an array of accepted barcode types.
             config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
@@ -118,7 +118,7 @@ public partial class HomePage
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
             
             // Launch the barcode scanner.
             var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
@@ -159,7 +159,7 @@ public partial class HomePage
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
             // Set the user guidance hint
             config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };

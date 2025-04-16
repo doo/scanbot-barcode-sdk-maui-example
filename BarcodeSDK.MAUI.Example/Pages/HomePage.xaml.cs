@@ -60,7 +60,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+        private void MenuItemSelected(object sender, SelectionChangedEventArgs e)
         {
             if (!ScanbotSDKMain.LicenseInfo.IsValid)
             {
