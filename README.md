@@ -45,51 +45,42 @@ Assuming you already have your development machine setup, the following commands
 
 #### iOS
 
-To build the iOS example project for both net7.0-ios and net8.0-ios, forcing packages to be restored and everything to be compiled from scratch:
+To build the iOS example project for both net8.0-ios and net9.0-ios, forcing packages to be restored and everything to be compiled from scratch:
 
 ```
 dotnet build BarcodeSDK.NET.iOS.Example --force --no-incremental
 ```
 
-To run the project on a real device, specify a target framework with `-f net8.0-ios` and the Run target via `-t:Run`, yielding the following:
+To run the project on a real device, specify a target framework with `-f net9.0-ios` and the Run target via `-t:Run`, yielding the following:
 
-```
-dotnet build BarcodeSDK.NET.iOS.Example -f net8.0-ios -t:Run --force --no-incremental
-```
+```dotnet build BarcodeSDK.NET.iOS.Example -f net9.0-ios -t:Run --force --no-incremental```
 
-#### Android
-
-To build the Android example project for both net7.0-android and net8.0-android, forcing packages to be restored and everything to be compiled from scratch:
+##### Android
+To build the Android example project for both net8.0-android and net9.0-android, forcing packages to be restored and everything to be compiled from scratch:
 
 ```
 dotnet build BarcodeSDK.NET.Droid.Example --force --no-incremental
 ```
 
-To run the project on a real device, specify a target framework with `-f net8.0-android` and the Run target via `-t:Run`, yielding the following:
+To run the project on a real device, specify a target framework with `-f net9.0-android` and the Run target via `-t:Run`, yielding the following:
 
-```
-dotnet build BarcodeSDK.NET.Droid.Example -f net8.0-android -t:Run --force --no-incremental
-```
+```dotnet build BarcodeSDK.NET.Droid.Example -f net9.0-android -t:Run --force --no-incremental```
 
 ### MAUI
 
-To build the MAUI example project for all supported target frameworks (net7.0-android, net7.0-ios, net8.0-android and net8.0-ios) and forcing packages to be restored and everything to be compiled from scratch, execute:
+To build the MAUI example project for all supported target frameworks (net8.0-android, net8.0-ios, net9.0-android and net9.0-ios) and forcing packages to be restored and everything to be compiled from scratch, execute:
 
 ```
 dotnet build BarcodeSDK.MAUI.Example --force --no-incremental
 ```
 
-To run the project on a real iOS device, specify a target framework with `-f net8.0-ios` and the Run target via `-t:Run`, yielding the following:
+To run the project on a real iOS device, specify a target framework with `-f net9.0-ios` and the Run target via `-t:Run`, yielding the following:
 
-```
-dotnet build BarcodeSDK.MAUI.Example -f net8.0-ios -t:Run --force --no-incremental
-```
+```dotnet build BarcodeSDK.MAUI.Example -f net9.0-ios -t:Run --force --no-incremental```
 
-To run the project on a real Android device, specify a target framework with `-f net8.0-android` and the Run target via `-t:Run`, yielding the following:
+To run the project on a real Android device, specify a target framework with `-f net9.0-android` and the Run target via `-t:Run`, yielding the following:
 
-```
-dotnet build BarcodeSDK.MAUI.Example -f net8.0-android -t:Run --force --no-incremental
-```
+```dotnet build BarcodeSDK.MAUI.Example -f net9.0-android -t:Run --force --no-incremental```
 
 ## Features of the .NET MAUI Barcode Scanner SDK
 

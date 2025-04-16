@@ -1,6 +1,4 @@
-﻿using BarcodeSDK.NET.iOS;
-
-namespace BarcodeSDK.NET.iOS
+﻿namespace BarcodeSDK.NET.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
