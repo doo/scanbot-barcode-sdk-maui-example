@@ -17,8 +17,9 @@ public class BarcodeDetailModel(string name, string value)
 public partial class BarcodeResultDetailPage : ContentPage
 {
     private BarcodeItem barcodeItem;
-    
+
     private List<BarcodeDetailModel> barcodeDetailList = new List<BarcodeDetailModel>();
+
     public List<BarcodeDetailModel> BarcodeDetailList
     {
         get => barcodeDetailList;
@@ -28,6 +29,7 @@ public partial class BarcodeResultDetailPage : ContentPage
             OnPropertyChanged(nameof(BarcodeDetailList));
         }
     }
+
     public BarcodeResultDetailPage()
     {
         InitializeComponent();
@@ -49,13 +51,13 @@ public partial class BarcodeResultDetailPage : ContentPage
     {
         var list = new List<BarcodeDetailModel>
         {
-            new (nameof(barcodeItem.Format), barcodeItem.Format.ToString()),
-            new (nameof(barcodeItem.Text), barcodeItem.Text)
+            new(nameof(barcodeItem.Format), barcodeItem.Format.ToString()),
+            new(nameof(barcodeItem.Text), barcodeItem.Text)
         };
-        
+
         if (!string.IsNullOrEmpty(barcodeItem.UpcEanExtension))
         {
-            list.Add(new ("Extension", barcodeItem.UpcEanExtension));
+            list.Add(new("Extension", barcodeItem.UpcEanExtension));
         }
 
         if (barcodeItem.ExtractedDocument != null)
@@ -79,31 +81,30 @@ public partial class BarcodeResultDetailPage : ContentPage
                     new("Issuer identification number", amvaDocument.IssuerIdentificationNumber.Value?.Text),
                     new("Jurisdiction identification number", amvaDocument.JurisdictionVersionNumber?.Value?.Text)
                 ];
-                case nameof(BoardingPass):
-            var boardingPass = new BoardingPass(document);
-            return
-            [
-                new("Name", boardingPass.Name.Value?.Text),
-                new("Security data", boardingPass.SecurityData.Value?.Text),
-                new("Electronic ticket", boardingPass.ElectronicTicket.Value?.Text),
-                new("Number of legs", boardingPass.NumberOfLegs.Value?.Text)
-            ];
+            case nameof(BoardingPass):
+                var boardingPass = new BoardingPass(document);
+                return
+                [
+                    new("Name", boardingPass.Name.Value?.Text),
+                    new("Security data", boardingPass.SecurityData.Value?.Text),
+                    new("Electronic ticket", boardingPass.ElectronicTicket.Value?.Text),
+                    new("Number of legs", boardingPass.NumberOfLegs.Value?.Text)
+                ];
             case nameof(DEMedicalPlan):
-            var deMedicalPlan = new DEMedicalPlan(document);
-            return
-            [
-                // todo: Check Required Document Type
-                // new("Document type", deMedicalPlan.RequiredDocumentType),
-                new("Name", deMedicalPlan.DocumentVersionNumber.Value?.Text),
-                new("Security data", deMedicalPlan.TotalNumberOfPages.Value?.Text),
-                new("Patch version number", deMedicalPlan.PatchVersionNumber.Value?.Text),
-                new("Language country code", deMedicalPlan.LanguageCountryCode.Value?.Text)
-            ];
+                var deMedicalPlan = new DEMedicalPlan(document);
+                return
+                [
+                    new("Name", deMedicalPlan.DocumentVersionNumber.Value?.Text),
+                    new("Security data", deMedicalPlan.TotalNumberOfPages.Value?.Text),
+                    new("Patch version number", deMedicalPlan.PatchVersionNumber.Value?.Text),
+                    new("Language country code", deMedicalPlan.LanguageCountryCode.Value?.Text)
+                ];
             case nameof(GS1):
                 var gs1Document = new GS1(document);
                 foreach (var element in gs1Document.Children.Elements)
                 {
-                  return  [
+                    return
+                    [
                         new("Description", element.ElementDescription.Value?.Text),
                         new("Raw value", element.RawValue.Value?.Text),
                         new("Data title", element.DataTitle.Value?.Text),
@@ -111,11 +112,13 @@ public partial class BarcodeResultDetailPage : ContentPage
                         new("Validation errors", element.Children.ValidationErrors.Count().ToString())
                     ];
                 }
+
                 break;
-            
+
             case nameof(HIBC):
                 var hibcDocument = new HIBC(document);
-               return [
+                return
+                [
                     new("Serial Number", hibcDocument.SerialNumber?.Value?.Text),
                     new("Quantity", hibcDocument.Quantity?.Value?.Text),
                     new("Date Of Manufacture", hibcDocument.DateOfManufacture?.Value?.Text),
@@ -124,7 +127,7 @@ public partial class BarcodeResultDetailPage : ContentPage
                     new("Labeler Id", hibcDocument.LabelerIdentificationCode.Value?.Text),
                     new("Labeler product/catalog number", hibcDocument.LabelersProductOrCatalogNumber.Value?.Text)
                 ];
-            
+
             case nameof(IDCardPDF417):
                 var idCardDocument = new IDCardPDF417(document);
                 return
@@ -137,7 +140,7 @@ public partial class BarcodeResultDetailPage : ContentPage
                     new("Birth date", idCardDocument.BirthDate.Value?.Text),
                     new("Optional", idCardDocument.Optional.Value?.Text)
                 ];
-            
+
             case nameof(MedicalCertificate):
                 var medicalCertificateDocument = new MedicalCertificate(document);
                 return
@@ -148,7 +151,7 @@ public partial class BarcodeResultDetailPage : ContentPage
                     new("Doctor number", medicalCertificateDocument.DoctorNumber?.Value?.Text),
                     new("Health insurance number", medicalCertificateDocument.HealthInsuranceNumber?.Value?.Text)
                 ];
-                
+
             case nameof(SEPA):
                 var sepaDocument = new SEPA(document);
                 return
@@ -177,7 +180,7 @@ public partial class BarcodeResultDetailPage : ContentPage
                     new("Debtor name", swissQrDocument.DebtorName?.Value?.Text),
                     new("IBAN", swissQrDocument.IBAN?.Value?.Text)
                 ];
-            
+
             case nameof(VCard):
                 var vCardDocument = new VCard(document);
                 return
@@ -192,6 +195,7 @@ public partial class BarcodeResultDetailPage : ContentPage
             default:
                 return [];
         }
+        
         return [];
     }
 }
