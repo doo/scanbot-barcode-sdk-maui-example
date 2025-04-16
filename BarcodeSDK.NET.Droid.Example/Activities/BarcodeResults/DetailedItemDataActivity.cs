@@ -1,9 +1,8 @@
-using Android.Runtime;
 using Android.Views;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
 using IO.Scanbot.Sdk.Barcode;
-using JetBrains.Annotations;
 
 namespace BarcodeSDK.NET.Droid.Activities;
 
@@ -15,7 +14,7 @@ public class BarcodeDetailsModel(string name, string value)
 }
 
 [Activity(Theme = "@style/AppTheme")]
-public partial class DetailedItemDataActivity : AppCompatActivity
+public partial class DetailedItemDataActivity : AppCompatActivity, IOnApplyWindowInsetsListener
 {
     private List<BarcodeDetailsModel> BarcodeDetailList;
 
@@ -24,21 +23,22 @@ public partial class DetailedItemDataActivity : AppCompatActivity
         base.OnCreate(savedInstanceState);
 
         SetContentView(Resource.Layout.detailed_item_data);
+        AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
         var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
         SetSupportActionBar(toolbar);
 
-        var item = Intent.GetParcelableExtra("SelectedBarcodeItem") as BarcodeItem;
+        var item = Intent?.GetParcelableExtra("SelectedBarcodeItem") as BarcodeItem;
         if (item == null)
         {
             return;
         }
 
-        BarcodeDetailList = new List<BarcodeDetailsModel>
-        {
+        BarcodeDetailList =
+        [
             new BarcodeDetailsModel(nameof(item.Format), item.Format.Name()),
             new BarcodeDetailsModel(nameof(item.Text), item.Text),
-        };
+        ];
 
         if (!string.IsNullOrEmpty(item.UpcEanExtension))
         {
@@ -61,6 +61,11 @@ public partial class DetailedItemDataActivity : AppCompatActivity
 
         var manager = new LinearLayoutManager(this);
         recyclerView.SetLayoutManager(manager);
+    }
+    
+    public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+    {
+        return AndroidUtils.ApplyWindowInsets(v, windowInsets);
     }
 }
 

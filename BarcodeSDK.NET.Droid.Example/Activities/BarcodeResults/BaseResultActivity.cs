@@ -1,14 +1,18 @@
 using Android.Graphics;
+using Android.Views;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.View;
 
 namespace BarcodeSDK.NET.Droid.Activities;
 
-public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity where TNativeBarcodeResult : global::Java.Lang.Object, global::Android.OS.IParcelable
+public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity, IOnApplyWindowInsetsListener where TNativeBarcodeResult : global::Java.Lang.Object, global::Android.OS.IParcelable
 {
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
         SetContentView(Resource.Layout.barcode_result);
+        AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
+        
         SetupToolbar();
         DisplayBarcodeResult();
     }
@@ -45,5 +49,10 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity where 
         var view = LayoutInflater.Inflate(Resource.Layout.snap_image_item, items, false);
         items?.AddView(view);
         return view?.FindViewById<ImageView>(Resource.Id.snapImage);
+    }
+    
+    public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+    {
+        return AndroidUtils.ApplyWindowInsets(v, windowInsets);
     }
 }

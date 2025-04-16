@@ -3,6 +3,7 @@ using Android.Graphics;
 using Android.Runtime;
 using Android.Views;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using BarcodeSDK.NET.Droid.Activities;
 using IO.Scanbot.Sdk.Barcode;
@@ -12,7 +13,7 @@ using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfigu
 namespace BarcodeSDK.NET.Droid
 {
     [Activity(MainLauncher = true, Theme = "@style/AppTheme")]
-    public partial class MainActivity : AppCompatActivity
+    public partial class MainActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
         internal static ScanbotBarcodeScannerSDK SDK;
 
@@ -22,18 +23,19 @@ namespace BarcodeSDK.NET.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            
             SDK = new ScanbotBarcodeScannerSDK(this);
 
             SetContentView(Resource.Layout.activity_main);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
+            
             FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
             FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single).Click += SingleScanning;
-            // Please add SingleScanning usecase with image result and show how to handle it 
-            // todo: They should also be in iOS?
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_single_ar_overlay).Click += SingleScanningWithArOverlay;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_batch).Click += BatchBarcodeScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_multiple_unique).Click += MultipleUniqueBarcodeScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_v2_find_and_pick).Click += FindAndPickScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_single).Click += SingleScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_single_ar_overlay).Click += SingleScanningWithArOverlay;
+            FindViewById<TextView>(Resource.Id.rtu_ui_batch).Click += BatchBarcodeScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_multiple_unique).Click += MultipleUniqueBarcodeScanning;
+            FindViewById<TextView>(Resource.Id.rtu_ui_find_and_pick).Click += FindAndPickScanning;
             
             FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
             FindViewById<TextView>(Resource.Id.settings).Click += OnSettingsClick;
@@ -56,7 +58,7 @@ namespace BarcodeSDK.NET.Droid
 
                 // Configure the barcode scanner for scanning many barcodes in one image.
                 var barcodeScanner = SDK.CreateBarcodeScanner();
-                var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeFormats.All };
+                var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
                 var barcodeScannerConfigs = new BarcodeScannerConfiguration
                 {
                     BarcodeFormatConfigurations = [barcodeFormatConfig],
@@ -103,8 +105,9 @@ namespace BarcodeSDK.NET.Droid
             var status = SDK.LicenseInfo.Status.Name();
             var date = SDK.LicenseInfo.ExpirationDate;
             var validity = SDK.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
-            var message = validity + $"\n\n- Status: {status}";
-            if (date != null)
+            var message = validity + $"\n\n- {status}";
+            
+            if (SDK.LicenseInfo.IsValid && date != null)
             {
                 message += $"\n- Valid until: {date}";
             }
@@ -130,10 +133,7 @@ namespace BarcodeSDK.NET.Droid
                     var result = new BarcodeScannerResult(barcodes, true);
                     OnRTUActivityResult(result);
                 }
-                return;
-            }
-
-            if (requestCode == SELECT_IMAGE_FROM_GALLERY)
+            } else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
             {
                 if (resultCode != Result.Ok)
                 {
@@ -191,7 +191,6 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
             var intent = new Intent(this, typeof(BarcodeClassicComponentActivity));
-            intent.PutExtra("useCameraX", true);
             StartActivity(intent);
         }
 
@@ -203,6 +202,11 @@ namespace BarcodeSDK.NET.Droid
             }
             var intent = new Intent(this, typeof(BarcodeScanAndCountActivity));
             StartActivity(intent);
+        }
+
+        public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+        {
+            return AndroidUtils.ApplyWindowInsets(v, windowInsets);
         }
     }
 }

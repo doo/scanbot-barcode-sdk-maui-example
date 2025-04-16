@@ -24,7 +24,7 @@ namespace BarcodeSDK.NET.Droid
             {
                 ScannerConfiguration = new BarcodeScannerConfiguration
                 {
-                    BarcodeFormats = BarcodeFormats.All,
+                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
                     Gs1Handling = Gs1Handling.DecodeStructure
                 },
                 UseCase = new SingleScanningMode()
@@ -71,7 +71,7 @@ namespace BarcodeSDK.NET.Droid
             {
                 ScannerConfiguration = new BarcodeScannerConfiguration
                 {
-                    BarcodeFormats = BarcodeFormats.All,           
+                    BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,           
                 },
                 UseCase = new MultipleScanningMode
                 {
@@ -148,7 +148,7 @@ namespace BarcodeSDK.NET.Droid
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             configuration.UseCase = findAndPickConfig;
-            configuration.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+            configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
             resultContract = new BarcodeScannerActivity.ResultContract();
             var intent = resultContract.CreateIntent(this, configuration);
