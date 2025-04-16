@@ -18,6 +18,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
     /// </summary>
     public partial class HomePage : ContentPage
     {
+        private const string ViewLicenseInfoItem = "View License Info";
+        private const string LicenseInvalidMessage = "The license is invalid or expired.";
+        
         /// <summary>
         /// List binding to UI ListView1
         /// </summary>
@@ -51,7 +54,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeSelectionPage())),
-                new HomePageMenuItem("View License Info", () => Task.FromResult(ViewLicenseInfo))
+                new HomePageMenuItem(ViewLicenseInfoItem, () => Task.Run(ViewLicenseInfo))
             ];
         }
 
@@ -62,17 +65,17 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// <param name="e"></param>
         private void MenuItemSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (!ScanbotSDKMain.LicenseInfo.IsValid)
+            if (e?.CurrentSelection?.FirstOrDefault() is not HomePageMenuItem selectedItem)
+                return;
+            
+            if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
-                CommonUtils.Alert(this, "Alert", "The license is not valid.");
+                selectedItem.NavigationAction();
                 CollectionViewMenuItems.SelectedItem = null;
                 return;
             }
 
-            if (e?.CurrentSelection?.FirstOrDefault() is HomePageMenuItem selectedItem)
-            {
-                selectedItem.NavigationAction();
-            }
+            CommonUtils.Alert(this, "Alert", LicenseInvalidMessage);
             CollectionViewMenuItems.SelectedItem = null;
         }
 
@@ -121,18 +124,23 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// <summary>
         /// View Current License Information
         /// </summary>
-        private LicenseInfo ViewLicenseInfo()
+        private void ViewLicenseInfo()
         {
             var info = ScanbotSDKMain.LicenseInfo;
-            var message = $"License status {info.Status}";
-
-            if (info.IsValid)
+            var message = $"License status: {info.Status}\n";
+            if (info.IsValid) 
             {
-                message += $" until {info.ExpirationDate?.ToLocalTime()}";
+                message += $"It is valid until {info.ExpirationDate?.ToLocalTime()}.";
+            }
+            else
+            {
+                message = LicenseInvalidMessage;
             }
 
-            CommonUtils.Alert(this, "Info", message);
-            return info;
+            MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                CommonUtils.Alert(this, "Info", message);
+            });
         }
     }
 }
