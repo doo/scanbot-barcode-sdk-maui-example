@@ -1,23 +1,25 @@
-﻿namespace ScanbotSDK.MAUI.Example.Pages
+﻿using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.Models;
+
+namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeClassicComponentPage : BaseComponentPage
     {
         public BarcodeClassicComponentPage()
         {
             InitializeComponent();
+            CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
         }
 
-        private void HandleScannerResults(Barcode.Core.BarcodeScannerResult result)
+        private void HandleScannerResults(BarcodeItem[] barcodeItems)
         {
-            string text = string.Empty;
+            if (barcodeItems.Length == 0)
+                return;
 
-            if (result.Barcodes != null)
+            string text = string.Empty;
+            foreach (var barcode in barcodeItems)
             {
-                foreach (var barcode in result.Barcodes)
-                {
-                    text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
-                    text += "--------------------------\n";
-                }
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
 
             System.Diagnostics.Debug.WriteLine(text);
@@ -42,9 +44,9 @@
             CameraView.Handler?.DisconnectHandler();
         }
 
-        private void CameraView_OnOnBarcodeScanResult(Barcode.Core.BarcodeScannerResult result)
+        private void CameraView_OnOnBarcodeScanResult(object sender, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(result);
+            HandleScannerResults(barcodeItems);
         }
     }
 }

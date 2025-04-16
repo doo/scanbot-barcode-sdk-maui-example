@@ -14,13 +14,10 @@
             <RowDefinition Height="7*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-
         <Grid Grid.Row="0">
-            <classicComponent:ScanbotClassicUIContainer>
-                <classicComponent:BarcodeScannerView
-                    x:Name="CameraView"
-                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
-            </classicComponent:ScanbotClassicUIContainer>
+            <classicComponent:BarcodeScannerView
+                x:Name="CameraView"
+                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult" />
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout>
