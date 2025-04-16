@@ -18,7 +18,7 @@
             Grid.Row="0">
             <classicComponent:BarcodeScannerView
                 x:Name="CameraView"
-                OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
+                OnSelectBarcodeResult="CameraView_OnSelectBarcodeResult" />
         </classicComponent:ScanbotClassicUIContainer>
         <StackLayout
             Grid.Row="1">

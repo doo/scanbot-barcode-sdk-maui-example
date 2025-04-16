@@ -1,3 +1,5 @@
+using ScanbotSDK.MAUI.Barcode.Core;
+
 namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
@@ -23,12 +25,12 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
 
-        private void HandleScannerResults(Barcode.Core.BarcodeScannerResult result)
+        private void HandleScannerResults(BarcodeItem[] barcodeItems)
         {
             string text = string.Empty;
-            if (result.Barcodes != null)
+            if (barcodeItems != null && barcodeItems.Length > 0)
             {
-                foreach (var barcode in result.Barcodes)
+                foreach (var barcode in barcodeItems)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
                 }
@@ -55,9 +57,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
             CameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(Barcode.Core.BarcodeScannerResult result)
+        private void CameraView_OnSelectBarcodeResult(object cameraView, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(result);
+            HandleScannerResults(barcodeItems);
         }
     }
 }

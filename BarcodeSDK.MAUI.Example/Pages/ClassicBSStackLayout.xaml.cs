@@ -14,9 +14,9 @@ public partial class ClassicBSStackLayout : ContentPage
         InitializeComponent();
     }
     
-    private void CameraView_OnOnBarcodeScanResult(ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerResult result)
+    private void CameraView_OnOnBarcodeScanResult(object cameraView, BarcodeItem[] barcodeItems)
     {
-        ResultLabel.Text = result.Barcodes.First().Text;
+        ResultLabel.Text = barcodeItems.First().Text;
     }
 
     private void Button_OnClicked(object sender, EventArgs e)

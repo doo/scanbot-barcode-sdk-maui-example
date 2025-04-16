@@ -65,9 +65,9 @@ public partial class BarcodeClassicVisibility : ContentPage
         _isScanning = !_isScanning;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(BarcodeScannerResult result)
+    private void CameraView_OnOnBarcodeScanResult(object cameraView, BarcodeItem[] barcodeItems)
     {
-       ResultLabel.Text = result.Barcodes.First().Text;
+       ResultLabel.Text = barcodeItems.First().Text;
     }
 
     private void Navigate_OnClicked(object sender, EventArgs e)

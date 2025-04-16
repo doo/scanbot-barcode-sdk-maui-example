@@ -1,4 +1,6 @@
-﻿namespace ScanbotSDK.MAUI.Example.Pages
+﻿using ScanbotSDK.MAUI.Barcode.Core;
+
+namespace ScanbotSDK.MAUI.Example.Pages
 {
     public partial class BarcodeClassicComponentPage : BaseComponentPage
     {
@@ -7,13 +9,13 @@
             InitializeComponent();
         }
 
-        private void HandleScannerResults(Barcode.Core.BarcodeScannerResult result)
+        private void HandleScannerResults(BarcodeItem[] barcodeItems)
         {
             string text = string.Empty;
 
-            if (result.Barcodes != null)
+            if (barcodeItems != null && barcodeItems.Length > 0)
             {
-                foreach (var barcode in result.Barcodes)
+                foreach (var barcode in barcodeItems)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
                     text += "--------------------------\n";
@@ -42,9 +44,9 @@
             CameraView.Handler?.DisconnectHandler();
         }
 
-        private void CameraView_OnOnBarcodeScanResult(Barcode.Core.BarcodeScannerResult result)
+        private void CameraView_OnOnBarcodeScanResult(object cameraView, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(result);
+            HandleScannerResults(barcodeItems);
         }
     }
 }

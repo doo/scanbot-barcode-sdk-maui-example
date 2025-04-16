@@ -1,3 +1,5 @@
+using ScanbotSDK.MAUI.Barcode.Core;
+
 namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
@@ -58,12 +60,9 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void CameraView_OnOnBarcodeScanResult(Barcode.Core.BarcodeScannerResult result)
     {
-        if (!result.Success)
-            return;
-        
         string text = string.Empty;
         
-        if (result.Barcodes != null)
+        if (result.Barcodes.Length > 0)
         {
             foreach (var barcode in result.Barcodes)
             {
