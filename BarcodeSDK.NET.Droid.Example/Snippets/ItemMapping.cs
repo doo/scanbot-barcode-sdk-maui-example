@@ -1,6 +1,5 @@
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using IO.Scanbot.Sdk.Ui_v2.Common;
 
 namespace BarcodeSDK.NET.Droid;
 
@@ -29,15 +28,15 @@ public static partial class Snippets
         }
     }
     
-    public class CustomMapper : global::Java.Lang.Object, IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.IBarcodeItemMapper
+    public class CustomMapper : global::Java.Lang.Object, IBarcodeItemMapper
     {
         public void MapBarcodeItem(BarcodeItem item, IBarcodeMappingResultCallback resultCallback, IBarcodeMappingErrorCallback errorCallback)
         {
-            var title = $"Some product {item.UpcEanExtension}";
+            var title = $"Some product {item.Text}";
             var subTitle = item.Format.Name();
-            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
+            var image = "https://avatars.githubusercontent.com/u/1454920";
             
-            if (item.UpcEanExtension == "Error occurred!")
+            if (item.Text == "Error occurred!")
             {
                 errorCallback.OnError();
             }

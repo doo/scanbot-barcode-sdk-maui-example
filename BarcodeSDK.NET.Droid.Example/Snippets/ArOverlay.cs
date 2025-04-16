@@ -1,5 +1,4 @@
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using IO.Scanbot.Sdk.Ui_v2.Common;
 
 namespace BarcodeSDK.NET.Droid;
 

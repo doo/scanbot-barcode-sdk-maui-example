@@ -127,7 +127,7 @@
 				android:background="#50000000" />
 
             <TextView
-				android:id="@+id/rtu_ui_v2_single"
+				android:id="@+id/rtu_ui_single"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -144,7 +144,7 @@
 
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_single_ar_overlay"
+				android:id="@+id/rtu_ui_single_ar_overlay"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -160,7 +160,7 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_batch"
+				android:id="@+id/rtu_ui_batch"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -176,7 +176,7 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_multiple_unique"
+				android:id="@+id/rtu_ui_multiple_unique"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
@@ -192,7 +192,7 @@
 				android:background="#50000000" />
 
 			<TextView
-				android:id="@+id/rtu_ui_v2_find_and_pick"
+				android:id="@+id/rtu_ui_find_and_pick"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"

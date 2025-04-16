@@ -1,6 +1,7 @@
 ﻿using Android;
 using Android.Content.PM;
 using Android.Graphics;
+using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
@@ -15,7 +16,7 @@ using Intent = Android.Content.Intent;
 namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeClassicComponentActivity : AppCompatActivity
+    public class BarcodeClassicComponentActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
         private BarcodeScannerView barcodeScannerView;
         private ImageView resultView;
@@ -33,9 +34,10 @@ namespace BarcodeSDK.NET.Droid.Activities
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.barcode_classic_activity);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
             var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
-            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeFormats.All };
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
             var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
                 BarcodeFormatConfigurations = [barcodeFormatConfig],
@@ -135,8 +137,6 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         public void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
         {
-            // Is this code used at all ? 
-            // Reply: Currently no. This code will be used only if we add a button click. 
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
                 return;
@@ -160,6 +160,11 @@ namespace BarcodeSDK.NET.Droid.Activities
                 barcodeScannerView.ViewController.ContinuousFocus();
                 barcodeScannerView.ViewController.StartPreview();
             });
+        }
+        
+        public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+        {
+            return AndroidUtils.ApplyWindowInsets(v, windowInsets);
         }
     }
 }

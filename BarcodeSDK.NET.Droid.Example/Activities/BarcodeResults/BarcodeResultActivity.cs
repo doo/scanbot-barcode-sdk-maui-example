@@ -1,8 +1,6 @@
 using Android.Content;
-using Android.Graphics;
 using Android.Views;
 using IO.Scanbot.Sdk.Barcode;
-using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
@@ -19,10 +17,10 @@ namespace BarcodeSDK.NET.Droid.Activities
         
         private void ShowBarcodeResult(BarcodeScannerResult result)
         {
-            var parent = FindViewById<LinearLayout>(Resource.Id.recognisedItems);
-
             if (result == null)
                 return;
+            
+            var parent = FindViewById<LinearLayout>(Resource.Id.recognisedItems);
 
             foreach (var item in result.Barcodes)
             {

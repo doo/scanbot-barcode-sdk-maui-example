@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using Android;
 using Android.Content.PM;
+using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
+using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
@@ -11,7 +13,7 @@ using IO.Scanbot.Sdk.Barcode_scanner;
 namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeScanAndCountActivity : AppCompatActivity
+    public class BarcodeScanAndCountActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
         private BarcodeScanAndCountView scanAndCountView;
         private TextView resultView;
@@ -28,9 +30,10 @@ namespace BarcodeSDK.NET.Droid.Activities
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.barcode_scan_and_count_activity);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
             var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
-            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeFormats.All };
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
             var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
                 BarcodeFormatConfigurations = [barcodeFormatConfig],
@@ -125,6 +128,11 @@ namespace BarcodeSDK.NET.Droid.Activities
         public void OnScanAndCountStarted()
         {
             // Handler On scan started
+        }
+        
+        public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+        {
+            return AndroidUtils.ApplyWindowInsets(v, windowInsets);
         }
     }
 }
