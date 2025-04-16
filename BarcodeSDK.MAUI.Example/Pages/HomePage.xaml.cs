@@ -22,7 +22,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private const string LicenseInvalidMessage = "The license is invalid or expired.";
         
         /// <summary>
-        /// List binding to UI ListView1
+        /// MenuItems List to bind the CollectionView UI. 
         /// </summary>
         public List<HomePageMenuItem> MenuItems { get; set; }
 
@@ -39,7 +39,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         }
 
         /// <summary>
-        /// Init the List View.
+        /// Init the MenuItems list.
         /// </summary>
         private void InitMenuItems()
         {
@@ -59,7 +59,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
         }
 
         /// <summary>
-        /// ListView Item selected Event.
+        /// CollectionView SelectionChanged event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
