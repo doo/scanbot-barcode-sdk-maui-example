@@ -1,17 +1,18 @@
+using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using IO.Scanbot.Sdk.Ui_v2.Common;
 
 namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration ItemMapping
+    public static BarcodeScannerScreenConfiguration ItemMapping
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for single scanning mode.
             var useCase = new SingleScanningMode();
 
             useCase.ConfirmationSheetEnabled = true;
@@ -26,22 +27,22 @@ public static partial class Snippets
             return config;
         }
     }
-
-    public class CustomMapper : global::Java.Lang.Object, global::Java.IO.ISerializable, IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration.IBarcodeItemMapper
+    
+    public class CustomMapper : global::Java.Lang.Object, IBarcodeItemMapper
     {
-        public void MapBarcodeItem(BarcodeItem barcodeItem, IBarcodeMappingResult result)
+        public void MapBarcodeItem(BarcodeItem item, IBarcodeMappingResultCallback resultCallback, IBarcodeMappingErrorCallback errorCallback)
         {
-            var title = $"Some product {barcodeItem.TextWithExtension}";
-            var subTitle = barcodeItem.Type.Name();
-            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
-
-            if (barcodeItem.TextWithExtension == "Error occurred!")
+            var title = $"Some product {item.Text}";
+            var subTitle = item.Format.Name();
+            var image = "https://avatars.githubusercontent.com/u/1454920";
+            
+            if (item.Text == "Error occurred!")
             {
-                result.OnError();
+                errorCallback.OnError();
             }
             else
             {
-                result.OnResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
+                resultCallback.OnResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
             }
         }
     }

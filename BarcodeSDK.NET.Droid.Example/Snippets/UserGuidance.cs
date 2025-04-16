@@ -5,14 +5,14 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration UserGuidance
+    public static BarcodeScannerScreenConfiguration UserGuidance
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
-            // Hide/unhide the user guidance.
+            // Hide/Show the user guidance.
             config.UserGuidance.Visible = true;
 
             // Configure the title.

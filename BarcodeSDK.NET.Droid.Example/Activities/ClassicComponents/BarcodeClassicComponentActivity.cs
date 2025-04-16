@@ -1,22 +1,22 @@
 ﻿using Android;
-using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
+using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode;
-using IO.Scanbot.Sdk.Barcode.Entity;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
 using IO.Scanbot.Sdk.UI.Camera;
+using Intent = Android.Content.Intent;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeClassicComponentActivity : AppCompatActivity
+    public class BarcodeClassicComponentActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
         private BarcodeScannerView barcodeScannerView;
         private ImageView resultView;
@@ -34,26 +34,29 @@ namespace BarcodeSDK.NET.Droid.Activities
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.barcode_classic_activity);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
-            var barcodeDetector = new ScanbotBarcodeScannerSDK(this).CreateBarcodeDetector();
-            barcodeDetector.ModifyConfig(detectorConfig =>
+            var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
+            var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
-                var defaultConfig = new BarcodeScannerAdditionalConfig();
-                detectorConfig.SetBarcodeFormats(BarcodeTypes.Instance.AcceptedTypes);
-                detectorConfig.SetEngineMode(EngineMode.NextGen);
-                detectorConfig.SetSaveCameraPreviewFrame(false);
-            });
+                BarcodeFormatConfigurations = [barcodeFormatConfig],
+                ExtractedDocumentFormats = BarcodeDocumentFormats.All,
+                ReturnBarcodeImage = true
+            };
+                
+            barcodeScanner.SetConfiguration(barcodeScannerConfigs);
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
-            barcodeScannerView.InitCamera(new CameraUiSettings(Intent.GetBooleanExtra("useCameraX", false)));
-            barcodeScannerView.InitDetectionBehavior(barcodeDetector, OnBarcodeResult, (
+            barcodeScannerView?.InitCamera(new CameraUiSettings(true));
+            barcodeScannerView?.InitDetectionBehavior(barcodeScanner, OnBarcodeResult, (
                 onCameraOpen: OnCameraOpened,
                 onPictureTaken: OnPictureTaken,
                 onSelectionOverlayBarcodeClicked: OnSelectionOverlayBarcodeClicked
             ));
 
-            barcodeScannerView.SelectionOverlayController.SetEnabled(selectionOverlayEnabled);
-            barcodeScannerView.SelectionOverlayController.SetBarcodeAppearanceDelegate(
+            barcodeScannerView?.SelectionOverlayController.SetEnabled(selectionOverlayEnabled);
+            barcodeScannerView?.SelectionOverlayController.SetBarcodeAppearanceDelegate(
             (
                 getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
                     fillColor: Color.Yellow,
@@ -75,14 +78,16 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         private void OnSelectionOverlayBarcodeClicked(BarcodeItem e)
         {
-            var intent = new Intent(this, typeof(V1.BarcodeResultActivity));
-            var result = new BaseBarcodeResult<BarcodeScanningResult>(new BarcodeScanningResult(new List<BarcodeItem> { e }, 0));
+            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            var result = new BaseBarcodeResult<BarcodeScannerResult>(
+                new BarcodeScannerResult(new List<BarcodeItem> { e },
+                                        false));
             intent.PutExtra(("BarcodeResult"), result.ToBundle());
             StartActivity(intent);
             Finish();
         }
 
-        private bool OnBarcodeResult(BarcodeScanningResult result, IO.Scanbot.Sdk.SdkLicenseError _)
+        private bool OnBarcodeResult(BarcodeScannerResult result, IO.Scanbot.Sdk.SdkLicenseError _)
         {
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
@@ -93,8 +98,8 @@ namespace BarcodeSDK.NET.Droid.Activities
 
             if (shouldHandleBarcode && result != null)
             {
-               var intent = new Intent(this, typeof(V1.BarcodeResultActivity));
-               intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScanningResult>(result).ToBundle());
+               var intent = new Intent(this, typeof(BarcodeResultActivity));
+               intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle());
                StartActivity(intent);
                Finish();
             }
@@ -155,6 +160,11 @@ namespace BarcodeSDK.NET.Droid.Activities
                 barcodeScannerView.ViewController.ContinuousFocus();
                 barcodeScannerView.ViewController.StartPreview();
             });
+        }
+        
+        public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+        {
+            return AndroidUtils.ApplyWindowInsets(v, windowInsets);
         }
     }
 }

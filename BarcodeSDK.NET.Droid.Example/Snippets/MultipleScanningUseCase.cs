@@ -1,3 +1,4 @@
+using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using IO.Scanbot.Sdk.Ui_v2.Common;
 
@@ -5,14 +6,16 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration MultipleScanningUseCase
+    public static BarcodeScannerScreenConfiguration MultipleScanningUseCase
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for multiple scanning mode.
             var useCase = new MultipleScanningMode();
+            
             // Set the counting mode.
             useCase.Mode = MultipleBarcodesScanningMode.Counting;
 
@@ -36,7 +39,7 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.RecognizerConfiguration.BarcodeFormats = BarcodeFormat.CommonCodes.ToList();
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
 
             return config;
         }

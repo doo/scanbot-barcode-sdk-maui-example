@@ -1,5 +1,4 @@
 ﻿using ScanbotSDK.iOS;
-using UIKit;
 
 namespace BarcodeSDK.NET.iOS
 {
@@ -8,16 +7,12 @@ namespace BarcodeSDK.NET.iOS
         private UITableView tableView;
         private ScanResultListSource listSource;
 
-        public ScanResultListView(SBSDKBarcodeScannerResult[] items)
+        public ScanResultListView(SBSDKBarcodeItem[] items)
         {
             tableView = new UITableView();
             tableView.RegisterClassForCellReuse(typeof(ScanResultCell), ScanResultCell.Identifier);
             tableView.Source = listSource = new ScanResultListSource(items);
 
-            if (items.Length > 0)
-            {
-                tableView.ReloadData();
-            }
             AddSubview(tableView);
         }
 
@@ -43,9 +38,9 @@ namespace BarcodeSDK.NET.iOS
         private class ScanResultListSource : UITableViewSource
         {
             internal EventHandler<EventArgs> itemClick;
-            private SBSDKBarcodeScannerResult[] items;
+            private SBSDKBarcodeItem[] items;
 
-            public ScanResultListSource(SBSDKBarcodeScannerResult[] items)
+            public ScanResultListSource(SBSDKBarcodeItem[] items)
             {
                 this.items = items;
             }
