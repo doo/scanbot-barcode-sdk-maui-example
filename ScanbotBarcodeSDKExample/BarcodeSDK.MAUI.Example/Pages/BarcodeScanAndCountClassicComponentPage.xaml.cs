@@ -10,7 +10,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration
+        cameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -56,15 +56,15 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ContinueScanningButton.IsEnabled = false;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnOnBarcodeScanResult(object sender, Barcode.Core.BarcodeItem[] barcodeItems)
     {
-        if (result.Status != OperationResult.Ok)
+        if (barcodeItems.Length == 0)
             return;
         
         string text = string.Empty;
-        if (result?.Barcodes != null)
+        if (barcodeItems.Length > 0)
         {
-            foreach (var barcode in result?.Barcodes)
+            foreach (var barcode in barcodeItems)
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
@@ -74,9 +74,9 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         lblResult.Text = text;
     }
 
-    private void CameraView_OnOnScanAndCountFinished(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnScanAndCountFinished(object sender, Barcode.Core.BarcodeItem[] barcodeItems)
     {
-        if (result.Status == OperationResult.Ok)
+        if (barcodeItems.Length > 0)
         {
             StartScanningButton.IsEnabled = false;
             ContinueScanningButton.IsEnabled = true;

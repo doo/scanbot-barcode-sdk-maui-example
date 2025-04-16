@@ -2,213 +2,246 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Common;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Pages;
+
+/// <summary>
+/// Home Page of the Application
+/// </summary>
+public partial class HomePage
 {
     /// <summary>
-    /// Home Page of the Application
+    /// Starts the Barcode scanning.
     /// </summary>
-    public partial class HomePage
+    private async Task SingleScanning()
     {
-        /// <summary>
-        /// Starts the Barcode scanning.
-        /// </summary>
-        private async Task SingleScanning()
-        { 
-            try
-            {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
-                {
-                    RecognizerConfiguration = new BarcodeRecognizerConfiguration
-                    {
-                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                        Gs1Handling = Gs1Handling.Decode
-                    },
-                    UseCase = new SingleScanningMode()
-                    {
-                        ConfirmationSheetEnabled = true
-                    }
-                });
-
-                // Comment out the above and use the below to try some of our snippets instead:
-                // var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(Snippets.SingleScanningUseCase);
-                // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
-
-                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
-                                                 .FirstOrDefault() ?? string.Empty;
-
-                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
-            }
-            catch (TaskCanceledException)
-            {
-                // for when the user cancels the action
-            }
-            catch (Exception ex)
-            {
-                // for any other errors that occur
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private async Task SingleScanningWithArOverlay()
-        { 
-            try
-            {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
-                {
-                    UseCase = new SingleScanningMode()
-                    {
-                        ArOverlay = new ArOverlayGeneralConfiguration() 
-                        {
-                            Visible = true
-                        }    
-                    }
-                });
-
-                var barcodeAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}")
-                                                 .FirstOrDefault() ?? string.Empty;
-
-                await DisplayAlert("Found barcode", barcodeAsText, "Finish");
-            }
-            catch (TaskCanceledException)
-            {
-                // for when the user cancels the action
-            }
-            catch (Exception ex)
-            {
-                // for any other errors that occur
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Starts the Batch Barcode Scanning.
-        /// </summary>
-        private async Task BatchBarcodeScanning()
-        {           
-            try
-            {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
-                {
-                    RecognizerConfiguration = new BarcodeRecognizerConfiguration
-                    {
-                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,           
-                    },
-                    UseCase = new MultipleScanningMode
-                    {
-                        Mode = MultipleBarcodesScanningMode.Counting
-                    }
-                });
-
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
-            }
-            catch (TaskCanceledException)
-            {
-                // for when the user cancels the action
-            }
-            catch (Exception ex)
-            {
-                // for any other errors that occur
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private async Task MultipleUniqueBarcodeScanning()
+        try
         {
-            try
-            {
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(new BarcodeScannerConfiguration
-                {
-                    UseCase = new MultipleScanningMode
-                    {
-                        Mode = MultipleBarcodesScanningMode.Unique,
-                        SheetContent = new SheetContent
-                        {
-                            ManualCountChangeEnabled = false
-                        },
-                        Sheet = new Sheet
-                        {
-                            Mode = SheetMode.CollapsedSheet
-                        },
-                        ArOverlay = new ArOverlayGeneralConfiguration
-                        {
-                            Visible = true, 
-                            AutomaticSelectionEnabled = false
-                        }
-                    },
-                    UserGuidance = new UserGuidanceConfiguration
-                    {
-                        Title = new StyledText{ Text = "Please align the QR-/Barcode in the frame above to scan it." }
-                    }
-                });
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+            
+            // Create single scanning mode.    
+            var useCase = new SingleScanningMode();
+            
+            // Enable and configure the confirmation sheet.
+            useCase.ConfirmationSheetEnabled = true;
 
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
-            }
-            catch (TaskCanceledException)
-            {
-                // for when the user cancels the action
-            }
-            catch (Exception ex)
-            {
-                // for any other errors that occur
-                Console.WriteLine(ex.Message);
-            }
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+
+            // Comment out the above and use the below to try some of our snippets instead:
+            // var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
+            // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
+
+            await DisplayResults(result);
         }
-
-        private async Task FindAndPickScanning()
+        catch (TaskCanceledException)
         {
-            try
-            {
-                var configuration = new BarcodeScannerConfiguration();
+            // for when the user cancels the action
+        }
+        catch (Exception ex)
+        {
+            // for any other errors that occur
+            Console.WriteLine(ex.Message);
+        }
+    }
 
-                // Initialize the use case for multiple scanning.
-                var findAndPickConfig = new FindAndPickScanningMode();
+    private async Task SingleScanningWithArOverlay()
+    {
+        try
+        {
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+            
+            // Create single scanning mode.    
+            var useCase = new SingleScanningMode();
+            
+            // Enable and configure the confirmation sheet.
+            useCase.ConfirmationSheetEnabled = true;
 
-                // Set the sheet mode for the barcodes preview.
-                findAndPickConfig.Sheet.Mode = SheetMode.CollapsedSheet;
+            // Turn on the barcode AR overlay 
+            useCase.ArOverlay.Visible = true;
 
-                // Enable/Disable the automatic selection.
-                findAndPickConfig.ArOverlay.AutomaticSelectionEnabled = false;
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
 
-                // Set the height for the collapsed sheet.
-                findAndPickConfig.Sheet.CollapsedVisibleHeight = CollapsedVisibleHeight.Large;
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
-                // Enable manual count change.
-                findAndPickConfig.SheetContent.ManualCountChangeEnabled = true;
+            await DisplayResults(result);
+        }
+        catch (TaskCanceledException)
+        {
+            // for when the user cancels the action
+        }
+        catch (Exception ex)
+        {
+            // for any other errors that occur
+            Console.WriteLine(ex.Message);
+        }
+    }
 
-                // Set the delay before same barcode counting repeat.
-                findAndPickConfig.CountingRepeatDelay = 1000;
-
-                // Configure the submit button.
-                findAndPickConfig.SheetContent.SubmitButton.Text = "Submit";
+    /// <summary>
+    /// Starts the Batch Barcode Scanning.
+    /// </summary>
+    private async Task BatchBarcodeScanning()
+    {
+        try
+        {
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
                 
-                findAndPickConfig.SheetContent.SubmitButton.Foreground.Color = new ColorValue("#000000"); //arg string
+            // Create multiple scanning mode
+            var useCase = new MultipleScanningMode();
+            
+            // Set the counting mode.
+            useCase.Mode = MultipleBarcodesScanningMode.Counting;
 
-                // Set the expected barcodes.
-                findAndPickConfig.ExpectedBarcodes = new ExpectedBarcode[]
-                {
-                    new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-                    new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", count: 4),
-                };
+            // Set the sheet mode for the barcodes preview.
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
 
-                // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
-                configuration.UseCase = findAndPickConfig;
-                configuration.RecognizerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
 
-                var result = await ScanbotBarcodeSDK.BarcodeScanner.OpenBarcodeScannerAsync(configuration);
-                var barcodesAsText = result.Items.Select(barcode => $"{barcode.Type}: {barcode.Text}").ToArray();
-                await DisplayActionSheet("Found barcodes", "Finish", null, barcodesAsText);
-            }
-            catch (TaskCanceledException)
-            {
-                // for when the user cancels the action
-            }
-            catch (Exception ex)
-            {
-                // for any other errors that occur
-                Console.WriteLine(ex.Message);
-            }
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+
+            await DisplayResults(result);
+        }
+        catch (TaskCanceledException)
+        {
+            // for when the user cancels the action
+        }
+        catch (Exception ex)
+        {
+            // for any other errors that occur
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task MultipleUniqueBarcodeScanning()
+    {
+        try
+        {
+            // Create the default configuration object.
+            var config = new BarcodeScannerScreenConfiguration();
+                
+            // Create multiple scanning mode
+            var useCase = new MultipleScanningMode();
+
+            // Turn on the barcode AR overlay 
+            useCase.ArOverlay.Visible = true;
+            
+            // Set the counting mode
+            useCase.Mode = MultipleBarcodesScanningMode.Unique;
+
+            // Set the sheet mode for the barcodes preview.
+            useCase.Sheet.Mode = SheetMode.CollapsedSheet;
+
+            // Configure other parameters, pertaining to single-scanning mode as needed.
+            config.UseCase = useCase;
+
+            // Set an array of accepted barcode types.
+            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.All;
+
+            // Set the user guidance hint
+            config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
+            
+            // Launch the barcode scanner.
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+
+            await DisplayResults(result);
+        }
+        catch (TaskCanceledException)
+        {
+            // for when the user cancels the action
+        }
+        catch (Exception ex)
+        {
+            // for any other errors that occur
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task FindAndPickScanning()
+    {
+        try
+        {
+            var configuration = new BarcodeScannerScreenConfiguration();
+
+            // Initialize the use case for multiple scanning.
+            var findAndPickConfig = new FindAndPickScanningMode();
+
+            // Set the sheet mode for the barcodes preview.
+            findAndPickConfig.Sheet.Mode = SheetMode.CollapsedSheet;
+
+            // Enable/Disable the automatic selection.
+            findAndPickConfig.ArOverlay.AutomaticSelectionEnabled = false;
+
+            // Set the height for the collapsed sheet.
+            findAndPickConfig.Sheet.CollapsedVisibleHeight = CollapsedVisibleHeight.Large;
+
+            // Enable manual count change.
+            findAndPickConfig.SheetContent.ManualCountChangeEnabled = true;
+
+            // Set the delay before same barcode counting repeat.
+            findAndPickConfig.CountingRepeatDelay = 1000;
+
+            // Configure the submit button.
+            findAndPickConfig.SheetContent.SubmitButton.Text = "Submit";
+
+            findAndPickConfig.SheetContent.SubmitButton.Foreground.Color = new ColorValue("#000000"); //arg string
+
+            // Set the expected barcodes.
+            findAndPickConfig.ExpectedBarcodes =
+            [
+                new ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode",
+                    image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+                new ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode",
+                    image: "https://avatars.githubusercontent.com/u/1454920", count: 4)
+            ];
+
+            // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
+            configuration.UseCase = findAndPickConfig;
+            configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+
+            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration);
+            await DisplayResults(result);
+        }
+        catch (TaskCanceledException)
+        {
+            // for when the user cancels the action
+        }
+        catch (Exception ex)
+        {
+            // for any other errors that occur
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task DisplayResults(BarcodeScannerUiResult result)
+    {
+        if (result?.Items?.Length > 0)
+        {
+            var items = result.Items.Select(item => item.Barcode);
+            await Navigation.PushAsync(new BarcodeResultPage(items.ToList()));
         }
     }
 }

@@ -3,7 +3,7 @@
 <pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
                          xmlns:local="clr-namespace:ScanbotSDK.MAUI.Example.CustomView"
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
                          ios:Page.UseSafeArea="true"
@@ -23,15 +23,11 @@
         <Grid Grid.Row="1"
                              HorizontalOptions="Fill"
                              VerticalOptions="Fill">
-            <classicComponent:ScanbotClassicUIContainer
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
                 <classicComponent:BarcodeScannerView
                     x:Name="cameraView"
-                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                    OnSelectBarcodeResult="CameraView_OnSelectBarcodeResult"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill" InputTransparent="True" />
-            </classicComponent:ScanbotClassicUIContainer>
         </Grid>
         <StackLayout Grid.Row="2">
             <Button

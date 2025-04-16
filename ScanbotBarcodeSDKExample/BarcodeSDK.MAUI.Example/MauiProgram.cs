@@ -4,18 +4,18 @@
     {
         // Without a license key, the Scanbot Barcode SDK will work for 1 minute.
         // To scan longer, register for a trial license key here: https://scanbot.io/trial/
-        public const string LicenseKey =     "G9pzyJ4ka6JaNtpxOu5YAe5aIPpwAf" +
-  "Bb41PbhtxpxRzvGNx//g3U/ohvE6+b" +
-  "u8naAp/yrJ475nQDlOpB5c9GCND78L" +
-  "ZEs9jPHlSFSuj5ureFpkVo4SdQwexV" +
-  "W6CypIl163sX9FWWbjTiJwoapB9i4x" +
-  "bYNX1GMH0mIumaiTch3Xn98DgzwXx/" +
-  "r525DohivYNVk45JdS7NTYviMRmHvi" +
-  "P+YLMVRl88HMqcD7dS93jpmYmzhDTm" +
-  "YMfr8UcTmyXe9RjPPRvBrmai46249D" +
-  "x0JgQFXYrXWa/KRYrEmrhL/qgvjpxW" +
-  "rt3ZREBJYqVo7+Kb6qPDNNBLWQL6Ho" +
-  "CNobqKxqFFlA==\nU2NhbmJvdFNESw" +
+        public const string LicenseKey =      "fTCEeZDmpAP06/KQtze6/zSK4HOe00" +
+  "KLrU+JbT9EadupcrN8TKJ5rfWx0VVY" +
+  "rW3Mbe49p6Jnfo6JJzwSVJZT/MAZCt" +
+  "IEcTgtR5VXW1i3K9sN7hD9EkaHanSB" +
+  "Y9xzSKaZIDa71EJ1PtbfYZ3GS5X0xV" +
+  "B+MBFkyBrQbHVJbBYvOB/12go1oMry" +
+  "2DbcMazF05pFJIz3xYSk0VOEhYVTZG" +
+  "duFna9Ntf/qiCQnREO7lXUZf41TelJ" +
+  "qqJcb4ypqqtqgKlTGYkNuX0M+6WOde" +
+  "QDaf3OYnF4G5TnXoB/5AbiwSALntAN" +
+  "DZn92sbdeSmy15R2HCqeUzbQ7oyH+z" +
+  "LQbccChqnV6A==\nU2NhbmJvdFNESw" +
   "pkb28uc2NhbmJvdC5jYXBhY2l0b3Iu" +
   "ZXhhbXBsZXxpby5zY2FuYm90LmV4YW" +
   "1wbGUuZG9jdW1lbnQudXNlY2FzZXMu" +
@@ -84,23 +84,22 @@
   "c2NhbmJvdC5zZGstd3JhcHBlci5kZW" +
   "1vLmRvY3VtZW50fGlvLnNjYW5ib3Qu" +
   "c2RrLmludGVybmFsZGVtb3xsb2NhbG" +
-  "hvc3R8T3BlcmF0aW5nU3lzdGVtU3Rh" +
-  "bmRhbG9uZXxzY2FuYm90c2RrLXFhLT" +
-  "EuczMtZXUtd2VzdC0xLmFtYXpvbmF3" +
-  "cy5jb218c2NhbmJvdHNkay1xYS0yLn" +
-  "MzLWV1LXdlc3QtMS5hbWF6b25hd3Mu" +
-  "Y29tfHNjYW5ib3RzZGstcWEtMy5zMy" +
-  "1ldS13ZXN0LTEuYW1hem9uYXdzLmNv" +
-  "bXxzY2FuYm90c2RrLXFhLTQuczMtZX" +
-  "Utd2VzdC0xLmFtYXpvbmF3cy5jb218" +
-  "c2NhbmJvdHNkay1xYS01LnMzLWV1LX" +
-  "dlc3QtMS5hbWF6b25hd3MuY29tfHNj" +
-  "YW5ib3RzZGstd2FzbS1kZWJ1Z2hvc3" +
-  "QuczMtZXUtd2VzdC0xLmFtYXpvbmF3" +
-  "cy5jb218d2Vic2RrLWRlbW8taW50ZX" +
-  "JuYWwuc2NhbmJvdC5pb3wqLnFhLnNj" +
-  "YW5ib3QuaW8KMTc0MDg3MzU5OQo4Mz" +
-  "g4NjA3CjMx\n";
+  "hvc3R8c2NhbmJvdHNkay1xYS0xLnMz" +
+  "LWV1LXdlc3QtMS5hbWF6b25hd3MuY2" +
+  "9tfHNjYW5ib3RzZGstcWEtMi5zMy1l" +
+  "dS13ZXN0LTEuYW1hem9uYXdzLmNvbX" +
+  "xzY2FuYm90c2RrLXFhLTMuczMtZXUt" +
+  "d2VzdC0xLmFtYXpvbmF3cy5jb218c2" +
+  "NhbmJvdHNkay1xYS00LnMzLWV1LXdl" +
+  "c3QtMS5hbWF6b25hd3MuY29tfHNjYW" +
+  "5ib3RzZGstcWEtNS5zMy1ldS13ZXN0" +
+  "LTEuYW1hem9uYXdzLmNvbXxzY2FuYm" +
+  "90c2RrLXdhc20tZGVidWdob3N0LnMz" +
+  "LWV1LXdlc3QtMS5hbWF6b25hd3MuY2" +
+  "9tfHdlYnNkay1kZW1vLWludGVybmFs" +
+  "LnNjYW5ib3QuaW98Ki5xYS5zY2FuYm" +
+  "90LmlvCjE3NDYxNDM5OTkKODM4ODYw" +
+  "NwozMQ==\n";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -119,10 +118,9 @@
 
         private static void ScanbotSDKInitialize(MauiAppBuilder mauiApp)
         {
-            ScanbotBarcodeSDK.Initialize(mauiApp, new InitializationOptions
+            SBSDKInitializer.Initialize(mauiApp, LicenseKey, new SBSDKConfiguration
             {
-                LicenseKey = LicenseKey,
-                LoggingEnabled = true,
+                EnableLogging = true,
                 ErrorHandler = (status, feature) =>
                 {
                     Console.WriteLine($"License error: {status}, {feature}");

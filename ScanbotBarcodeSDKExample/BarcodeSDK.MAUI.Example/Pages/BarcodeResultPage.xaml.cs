@@ -1,4 +1,4 @@
-﻿using ScanbotSDK.MAUI.Barcode;
+﻿using ScanbotSDK.MAUI.Barcode.Core;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -9,39 +9,56 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
-        public BarcodeResultPage(BarcodeItem[] barcodes)
+        public BarcodeResultPage(List<BarcodeItem> barcodes, string imagePath)
         {
             InitializeComponent();
-        }
-
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, string imagePath)
-        {
-            InitializeComponent();
-            ListView_Results.ItemsSource = barcodes;
+            ListViewResults.ItemsSource = barcodes;
             if (!string.IsNullOrEmpty(imagePath))
             {
-                imageView.IsVisible = true;
-                imageView.Source = ImageSource.FromFile(imagePath);
+                BarcodeImageView.IsVisible = true;
+                BarcodeImageView.Source = ImageSource.FromFile(imagePath);
             }
             else
             {
-                imageView.IsVisible = false;
+                BarcodeImageView.IsVisible = false;
             }
         }
 
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, ImageSource imageSource)
+        public BarcodeResultPage(List<BarcodeItem> barcodes, ImageSource imageSource)
         {
             InitializeComponent();
-            ListView_Results.ItemsSource = barcodes;
+            ListViewResults.ItemsSource = barcodes;
             if (imageSource != null)
             {
-                imageView.IsVisible = true;
-                imageView.Source = imageSource;
+                BarcodeImageView.IsVisible = true;
+                BarcodeImageView.Source = imageSource;
             }
             else
             {
-                imageView.IsVisible = false;
+                BarcodeImageView.IsVisible = false;
             }
         }
+
+        public BarcodeResultPage(List<BarcodeItem> barcodes)
+        {
+            InitializeComponent();
+            ListViewResults.ItemsSource = barcodes;
+            BarcodeImageView.IsVisible = false;
+        }
+
+        // private void ListView_Results_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        // {
+        //     if (e.SelectedItem is BarcodeItem barcodeItem)
+        //     {
+        //         var resultPage = new BarcodeResultDetailPage();
+        //         resultPage.NavigateData(barcodeItem);
+        //         Navigation.PushAsync(resultPage);
+        //     }
+        //
+        //     if (sender is ListView listView)
+        //     {
+        //         listView.SelectedItem = null;
+        //     }
+        // }
     }
 }

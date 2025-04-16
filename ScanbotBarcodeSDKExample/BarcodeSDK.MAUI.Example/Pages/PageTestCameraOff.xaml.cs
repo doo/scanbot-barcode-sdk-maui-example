@@ -16,7 +16,7 @@ public partial class PageTestCameraOff : ContentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+        cameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration(
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
             textColor: Colors.Yellow,
@@ -29,13 +29,13 @@ public partial class PageTestCameraOff : ContentPage
             polygonBackgroundHighlightedColor: Colors.Transparent);
     }
 
-    private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
+    private void HandleScannerResults(Barcode.Core.BarcodeItem[] barcodeItems)
     {
         string text = string.Empty;
 
-        if (result?.Barcodes != null)
+        if (barcodeItems.Length > 0)
         {
-            foreach (var barcode in result.Barcodes)
+            foreach (var barcode in barcodeItems)
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
@@ -62,9 +62,9 @@ public partial class PageTestCameraOff : ContentPage
         cameraView.Handler?.DisconnectHandler();
     }
 
-    private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnSelectBarcodeResult(object sender, Barcode.Core.BarcodeItem[] barcodeItems)
     {
-        HandleScannerResults(result);
+        HandleScannerResults(barcodeItems);
     }
 
     private void StartCameraBtn_OnClicked(object sender, EventArgs e)

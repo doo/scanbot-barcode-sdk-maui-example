@@ -7,13 +7,13 @@
             InitializeComponent();
         }
 
-        private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
+        private void HandleScannerResults(Barcode.Core.BarcodeItem[] barcodeItems)
         {
             string text = string.Empty;
 
-            if (result?.Barcodes != null)
+            if (barcodeItems.Length > 0)
             {
-                foreach (var barcode in result.Barcodes)
+                foreach (var barcode in barcodeItems)
                 {
                     text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
                     text += "--------------------------\n";
@@ -27,7 +27,7 @@
         protected override void OnAppearing()
         {
             base.OnAppearing();
-  cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+  cameraView.OverlayConfiguration = new ScanbotSDK.MAUI.Barcode.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
@@ -53,9 +53,9 @@
             cameraView.Handler?.DisconnectHandler();
         }
 
-        private void CameraView_OnOnBarcodeScanResult(RTU.v1.BarcodeResultBundle result)
+        private void CameraView_OnBarcodeScanResult(object sender, Barcode.Core.BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(result);
+            HandleScannerResults(barcodeItems);
         }
     }
 }

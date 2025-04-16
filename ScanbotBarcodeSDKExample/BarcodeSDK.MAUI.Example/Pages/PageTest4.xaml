@@ -5,21 +5,19 @@
              x:Class="ScanbotSDK.MAUI.Example.Pages.PageTest4"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="true"
-             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
              NavigationPage.HasNavigationBar="True"
              Title="VStack->VStack->Classic">
     <ContentPage.Content>
         <VerticalStackLayout BackgroundColor="Orange">
             <VerticalStackLayout BackgroundColor="Aqua" HorizontalOptions="Fill" VerticalOptions="Fill"
                                  HeightRequest="500">
-                <classicComponent:ScanbotClassicUIContainer>
                     <classicComponent:BarcodeScannerView
                         x:Name="cameraView"
-                        OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                        OnSelectBarcodeResult="CameraView_OnSelectBarcodeResult"
                         BackgroundColor="Red"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill" />
-                </classicComponent:ScanbotClassicUIContainer>
                 <StackLayout
                     BackgroundColor="Pink"
                     MinimumHeightRequest="300"

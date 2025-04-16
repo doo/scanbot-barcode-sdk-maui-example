@@ -13,13 +13,13 @@ public partial class PageTest5 : ContentPage
        
     }
 
-    private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
+    private void HandleScannerResults(Barcode.Core.BarcodeItem[] barcodeItems)
     {
         string text = string.Empty;
 
-        if (result?.Barcodes != null)
+        if (barcodeItems.Length > 0)
         {
-            foreach (var barcode in result.Barcodes)
+            foreach (var barcode in barcodeItems)
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
@@ -45,9 +45,9 @@ public partial class PageTest5 : ContentPage
         cameraView.Handler?.DisconnectHandler();
     }
 
-    private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnSelectBarcodeResult(object sender, Barcode.Core.BarcodeItem[] barcodeItems)
     {
-        HandleScannerResults(result);
+        HandleScannerResults(barcodeItems);
     }
 
     private void StartCameraBtn_OnClicked(object sender, EventArgs e)
