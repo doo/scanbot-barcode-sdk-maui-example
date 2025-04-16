@@ -1,5 +1,4 @@
-﻿using System;
-namespace BarcodeSDK.NET.iOS.Utils
+﻿namespace BarcodeSDK.NET.iOS.Utils
 {
     public class Texts
     {

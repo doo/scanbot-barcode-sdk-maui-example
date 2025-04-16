@@ -92,11 +92,11 @@ namespace BarcodeSDK.NET.iOS
                 };
                 
                 var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration);
-                var result = scanner.ScanFromImage(image, false, optimizeOverlays: true); // Live mode prop should be removed from native ? :thinking_face:
+                var result = scanner.ScanFromImage(image, false, optimizeOverlays: true);
 
                 if (result?.Success != true)
                 {
-                    // Please show some dialog with "No barcodes detected."
+                    Alert.Show(this, "Alert", "No barcodes found on the input image.");
                     return;
                 }
 
