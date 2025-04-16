@@ -15,7 +15,7 @@
                 <classicComponent:ScanbotClassicUIContainer>
                     <classicComponent:BarcodeScannerView
                         x:Name="cameraView"
-                        OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                        OnSelectBarcodeResult="CameraView_OnSelectBarcodeResult"
                         BackgroundColor="Red"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill" />

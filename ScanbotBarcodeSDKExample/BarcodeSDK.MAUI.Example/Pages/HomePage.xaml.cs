@@ -50,9 +50,9 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     new HomePageMenuItem("Debugging From Scratch", () => Navigation.PushAsync(new FreshStart())),
                 
                 // #if LEGACY_EXAMPLES
-                    new HomePageMenuItem("RTU v1 Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
-                    new HomePageMenuItem("RTU v1 Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
-                    new HomePageMenuItem("RTU v1 Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
+                    new HomePageMenuItem("Barcode.RTU.v1.Barcode Scanning", () => StartLegacyBarcodeScanner(withImage: false)),
+                    new HomePageMenuItem("Barcode.RTU.v1.Barcode Scanning with Image", () => StartLegacyBarcodeScanner(withImage: true)),
+                    new HomePageMenuItem("Barcode.RTU.v1.Batch Barcode Scanning", StartLegacyBatchBarcodeScanner),
                 // #else
                     new HomePageMenuItem("RTU v2 - Single Scanning", SingleScanning),
                     new HomePageMenuItem("RTU v2 - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
@@ -113,20 +113,17 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
 
             // Configure the barcode detector for detecting many barcodes in one image.
-            var configuration = new RTU.v1.BarcodeDetectionConfiguration
+            var configuration = new BarcodeDetectionConfiguration
             {
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
                 EngineMode = EngineMode.NextGen,
-                AdditionalParameters = new RTU.v1.BarcodeScannerAdditionalParameters
-                {
-                    CodeDensity = CodeDensity.High
-                }
+                
             };
-
-            var barcodes = await ScanbotBarcodeSDK.BarcodeDetector.DetectBarcodesFrom(imageSource, configuration);
+            var source = ImageSource.FromStream(() => imageSource.AsStream());
+            var barcodes = await ScanbotBarcodeSDK.BarcodeDetector.DetectBarcodesFrom(source, configuration);
 
             // Handle the result in your app as needed.
-            await Navigation.PushAsync(new BarcodeResultPage(barcodes, imageSource));
+            await Navigation.PushAsync(new BarcodeResultPage(barcodes, source));
         }
 
         /// <summary>

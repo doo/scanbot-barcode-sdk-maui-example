@@ -13,7 +13,7 @@
         <Platforms>x64;ARM64</Platforms>
         <CreatePackage>false</CreatePackage>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
-        <!-- Comment this out to see RTU v1 in the example -->
+        <!-- Comment this out to see Barcode.RTU.v1.in the example -->
         <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
     <ItemGroup>

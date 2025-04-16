@@ -13,7 +13,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
-            cameraView.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+            cameraView.OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
@@ -26,7 +26,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
 
-        private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
+        private void HandleScannerResults(Barcode.RTU.v1.BarcodeResultBundle result)
         {
             string text = string.Empty;
 
@@ -59,7 +59,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             cameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
+        private void CameraView_OnSelectBarcodeResult(Barcode.RTU.v1.BarcodeResultBundle result)
         {
             HandleScannerResults(result);
         }

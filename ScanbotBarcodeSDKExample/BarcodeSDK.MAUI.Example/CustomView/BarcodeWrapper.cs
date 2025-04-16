@@ -18,7 +18,7 @@ public class BarcodeWrapper : ContentView
     {
         Content = new BarcodeScannerView
         {
-            OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+            OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,

@@ -1,3 +1,5 @@
+using ScanbotSDK.MAUI.Barcode.RTU.v1;
+
 namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class PageTest5 : ContentPage
@@ -13,7 +15,7 @@ public partial class PageTest5 : ContentPage
        
     }
 
-    private void HandleScannerResults(RTU.v1.BarcodeResultBundle result)
+    private void HandleScannerResults(Barcode.RTU.v1.BarcodeResultBundle result)
     {
         string text = string.Empty;
 
@@ -45,7 +47,7 @@ public partial class PageTest5 : ContentPage
         cameraView.Handler?.DisconnectHandler();
     }
 
-    private void CameraView_OnOnSelectBarcodeResult(RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnSelectBarcodeResult(BarcodeResultBundle result)
     {
         HandleScannerResults(result);
     }

@@ -28,7 +28,7 @@
                 VerticalOptions="Fill">
                 <classicComponent:BarcodeScannerView
                     x:Name="cameraView"
-                    OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult"
+                    OnSelectBarcodeResult="CameraView_OnSelectBarcodeResult"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill" InputTransparent="True" />
             </classicComponent:ScanbotClassicUIContainer>

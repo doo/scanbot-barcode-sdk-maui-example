@@ -14,7 +14,7 @@
             <classicComponent:ScanbotClassicUIContainer HeightRequest="300">
                 <classicComponent:BarcodeScannerView
                     x:Name="cameraView"
-                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
+                    OnBarcodeScanResult="CameraView_OnBarcodeScanResult"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill" />
             </classicComponent:ScanbotClassicUIContainer>

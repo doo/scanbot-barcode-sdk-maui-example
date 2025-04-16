@@ -23,7 +23,7 @@
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
         <Platforms>x64;ARM64</Platforms>
-        <!-- Comment this out to see RTU v1 in the example -->
+        <!-- Comment this out to see Barcode.RTU.v1.in the example -->
         <!-- <DefineConstants>$(DefineConstants);LEGACY_EXAMPLES</DefineConstants> -->
     </PropertyGroup>
     <ItemGroup>

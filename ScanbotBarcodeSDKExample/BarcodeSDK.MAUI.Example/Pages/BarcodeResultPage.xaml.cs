@@ -14,7 +14,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
         }
 
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, string imagePath)
+        public BarcodeResultPage(List<Barcode.RTU.v1.Barcode> barcodes, string imagePath)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;
@@ -29,7 +29,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             }
         }
 
-        public BarcodeResultPage(List<RTU.v1.Barcode> barcodes, ImageSource imageSource)
+        public BarcodeResultPage(List<Barcode.RTU.v1.Barcode> barcodes, ImageSource imageSource)
         {
             InitializeComponent();
             ListView_Results.ItemsSource = barcodes;

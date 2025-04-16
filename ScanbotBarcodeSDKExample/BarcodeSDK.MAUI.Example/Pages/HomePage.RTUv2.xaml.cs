@@ -20,8 +20,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 {
                     RecognizerConfiguration = new BarcodeRecognizerConfiguration
                     {
-                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                        Gs1Handling = Gs1Handling.Decode
+                        BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes
                     },
                     UseCase = new SingleScanningMode()
                     {

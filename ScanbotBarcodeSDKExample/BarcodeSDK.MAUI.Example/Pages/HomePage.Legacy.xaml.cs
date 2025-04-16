@@ -14,14 +14,13 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private async Task StartLegacyBarcodeScanner(bool withImage)
         {
-            var configuration = new RTU.v1.BarcodeScannerConfiguration
+            var configuration = new Barcode.RTU.v1.BarcodeScannerConfiguration
             {
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
-                CodeDensity = CodeDensity.High,
                 EngineMode = EngineMode.NextGen,
                 SuccessBeepEnabled = true,
                 CameraZoomLevel = 0.5f,
-                CameraZoomRange = new RTU.v1.ZoomRange(1.0f, 4.0f),
+                CameraZoomRange = new Barcode.RTU.v1.ZoomRange(1.0f, 4.0f),
 
                 //Specify this property so then it could detect barcodes from accepted documents (but it will handle only these types)
                 //AcceptedDocumentFormats = Enum.GetValues<BarcodeDocumentFormat>().ToList()
@@ -29,10 +28,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             if (withImage)
             {
-                configuration.BarcodeImageGenerationType = RTU.v1.BarcodeImageGenerationType.FromVideoFrame;
+                configuration.BarcodeImageGenerationType = Barcode.RTU.v1.BarcodeImageGenerationType.FromVideoFrame;
             }
 
-            configuration.OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+            configuration.OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration(
                         automaticSelectionEnabled: false,
                         overlayFormat: BarcodeTextFormat.Code,
                         strokeColor: Colors.Yellow,
@@ -51,7 +50,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
             try
             {
-                var result = await ScanbotBarcodeSDK.LegacyBarcodeScanner.OpenBarcodeScannerView(configuration);
+                var result = await ScanbotBarcodeSDK.LegacyBarcodeScanner.LaunchBarcodeScannerAsync(configuration);
                 
                 if (result.Status == OperationResult.Ok)
                 {
@@ -70,11 +69,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private async Task StartLegacyBatchBarcodeScanner()
         {
-            var configuration = new RTU.v1.BatchBarcodeScannerConfiguration
+            var configuration = new Barcode.RTU.v1.BatchBarcodeScannerConfiguration
             {
                 FinderEnabled = false,
                 BarcodeFormats = Models.BarcodeTypes.Instance.AcceptedTypes.ToList(),
-                OverlayConfiguration = new RTU.v1.SelectionOverlayConfiguration(
+                OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration(
                     automaticSelectionEnabled: true,
                     overlayFormat: BarcodeTextFormat.Code,
                     textColor: Colors.Yellow,
@@ -86,11 +85,10 @@ namespace ScanbotSDK.MAUI.Example.Pages
                     polygonBackgroundColor: Colors.Green,
                     polygonBackgroundHighlightedColor: Colors.Aquamarine),
                 SuccessBeepEnabled = true,
-                CodeDensity = CodeDensity.High,
                 EngineMode = EngineMode.NextGen
             };
 
-            var result = await ScanbotBarcodeSDK.LegacyBarcodeScanner.OpenBatchBarcodeScannerView(configuration);
+            var result = await ScanbotBarcodeSDK.LegacyBarcodeScanner.LaunchBatchBarcodeScannerAsync(configuration);
             if (result.Status == OperationResult.Ok)
             {
                 await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes, ""));
