@@ -1,3 +1,6 @@
+using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.Models;
+
 namespace ScanbotSDK.MAUI.Example.Pages;
 
 public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
@@ -10,7 +13,8 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        cameraView.OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration
+        CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
+        CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -30,7 +34,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         base.OnAppearing();
         
         // Start barcode detection manually
-        cameraView.StartDetection();
+        CameraView.StartDetection();
     }
 
     protected override void OnDisappearing()
@@ -38,45 +42,42 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         base.OnDisappearing();
 
         // Stop barcode detection manually
-        cameraView.StopDetection();
-        cameraView.Handler.DisconnectHandler();
+        CameraView.StopDetection();
+        CameraView.Handler?.DisconnectHandler();
     }
 
     void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
     {
         // Start scanning
-        cameraView.StartScanAndCount();
+        CameraView.StartScanAndCount();
     }
 
     void ConitueScanningButton_Clicked(System.Object sender, System.EventArgs e)
     {
-        cameraView.ContinueScanning();
+        CameraView.ContinueScanning();
 
         StartScanningButton.IsEnabled = true;
         ContinueScanningButton.IsEnabled = false;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(Barcode.RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnOnBarcodeScanResult(object sender, BarcodeItem[] barcodeItems)
     {
-        if (result.Status != OperationResult.Ok)
+        if (barcodeItems.Length == 0)
             return;
-        
+
         string text = string.Empty;
-        if (result?.Barcodes != null)
+        foreach (var barcode in barcodeItems)
         {
-            foreach (var barcode in result?.Barcodes)
-            {
-                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
-            }
+            text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
         }
 
         System.Diagnostics.Debug.WriteLine(text);
-        lblResult.Text = text;
+        ResultLabel.Text = text;
     }
 
-    private void CameraView_OnOnScanAndCountFinished(Barcode.RTU.v1.BarcodeResultBundle result)
+    private void CameraView_OnOnScanAndCountFinished(object sender, BarcodeItem[] barcodeItems)
     {
-        if (result.Status == OperationResult.Ok)
+        if (barcodeItems.Length > 0)
         {
             StartScanningButton.IsEnabled = false;
             ContinueScanningButton.IsEnabled = true;

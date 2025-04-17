@@ -1,4 +1,5 @@
-using ScanbotSDK.MAUI.Barcode.RTU.v1;
+using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages
 {
@@ -12,7 +13,8 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
-            cameraView.OverlayConfiguration = new Barcode.RTU.v1.SelectionOverlayConfiguration(
+            CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
+            CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
@@ -25,20 +27,19 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
 
-        private void HandleScannerResults(Barcode.RTU.v1.BarcodeResultBundle result)
+        private void HandleScannerResults(BarcodeItem[] barcodeItems)
         {
-            string text = string.Empty;
+            if (barcodeItems.Length == 0)
+                return;
 
-            if (result?.Barcodes != null)
+            string text = string.Empty;
+            foreach (var barcode in barcodeItems)
             {
-                foreach (var barcode in result.Barcodes)
-                {
-                    text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
-                }
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
 
             System.Diagnostics.Debug.WriteLine(text);
-            lblResult.Text = text;
+            ResultLabel.Text = text;
         }
 
         protected override void OnAppearing()
@@ -46,7 +47,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             base.OnAppearing();
 
             // Start barcode detection manually
-            cameraView.StartDetection();
+            CameraView.StartDetection();
         }
 
         protected override void OnDisappearing()
@@ -54,13 +55,13 @@ namespace ScanbotSDK.MAUI.Example.Pages
             base.OnDisappearing();
 
             // Stop barcode detection manually
-            cameraView.StopDetection();
-            cameraView.Handler?.DisconnectHandler();
+            CameraView.StopDetection();
+            CameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(Barcode.RTU.v1.BarcodeResultBundle result)
+        private void CameraView_OnOnSelectBarcodeResult(object ssender, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(result);
+            HandleScannerResults(barcodeItems);
         }
     }
 }

@@ -1,28 +1,34 @@
 using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Barcode.Core;
 
 namespace ScanbotSDK.MAUI.Example
 {
-    public partial class Snippets : IStaticBarcodeItemMapper
+    public partial class Snippets 
     {
-        public static BarcodeScannerConfiguration ItemMapping
+        public static BarcodeScannerScreenConfiguration ItemMapping
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
+                // Create and configure the use case for single scan mode.
                 var useCase = new SingleScanningMode();
+                
                 var productTitle = "Some product title";
 
+                // Enable the confirmation sheet.
                 useCase.ConfirmationSheetEnabled = true;
+                
+                // Configure the barcode item mapping.
                 useCase.BarcodeInfoMapping = new BarcodeInfoMapping()
                 {
                     BarcodeItemMapper = new DelegateBarcodeItemMapper((barcodeItem, onResult, onError) => {
-                        var title = $"{productTitle} {barcodeItem.TextWithExtension}";
+                        var title = $"{productTitle} {barcodeItem.Text}";
                         var subTitle = "Subtitle";
-                        var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
+                        var image = "https://avatars.githubusercontent.com/u/1454920";
 
-                        if (barcodeItem.TextWithExtension == "Error occurred!")
+                        if (barcodeItem.Text == "Error occurred!")
                         {
                             onError();
                         }
@@ -30,33 +36,13 @@ namespace ScanbotSDK.MAUI.Example
                         {
                             onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
                         }
-                    }),
-
-                    // Comment out the above and uncomment below to use static item mappers.
-                    // The class has to implement IStaticBarcodeItemMapper.
-                    //BarcodeItemMapper = new StaticBarcodeItemMapper<Snippets>()
+                    })
                 };
 
                 // Configure other parameters, pertaining to single-scanning mode as needed.
                 config.UseCase = useCase;
 
                 return config;
-            }
-        }
-
-        public static void MapBarcodeItem(BarcodeItem barcodeItem, Action<BarcodeMappedData> onResult, Action onError)
-        {
-            var title = $"Static item mapper product {barcodeItem.TextWithExtension}";
-            var subTitle = "Subtitle";
-            var image = "https://raw.githubusercontent.com/doo/scanbot-sdk-examples/master/sdk-logo.png";
-
-            if (barcodeItem.TextWithExtension == "Error occurred!")
-            {
-                onError();
-            }
-            else
-            {
-                onResult(new BarcodeMappedData(title: title, subtitle: subTitle, barcodeImage: image));
             }
         }
     }
