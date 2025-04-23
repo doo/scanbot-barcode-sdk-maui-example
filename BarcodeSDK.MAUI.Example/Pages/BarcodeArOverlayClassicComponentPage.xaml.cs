@@ -1,3 +1,4 @@
+using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Models;
 
@@ -13,16 +14,30 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
-            CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
-            CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration(
+            CameraView.BarcodeFormatConfigurations =
+            [
+                new BarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeFormats.All
+                },
+
+                // You may add more advanced format configurations like shown below
+                // new BarcodeFormatAztecConfiguration
+                // {
+                //     Gs1Handling = Gs1Handling.DecodeStructure,
+                //     AddAdditionalQuietZone = true
+                // }
+            ];
+
+            CameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
                 automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
                 textContainerColor: Colors.Black,
                 strokeColor: Colors.Yellow,
                 highlightedStrokeColor: Colors.Red,
-                highlightedTextColor: Colors.Yellow,
-                highlightedTextContainerColor: Colors.DarkOrchid,
+                highlightedTextColor: Colors.Red,
+                highlightedTextContainerColor: Colors.Black,
                 polygonBackgroundColor: Colors.Transparent,
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
