@@ -11,17 +11,17 @@ namespace ScanbotSDK.MAUI.Example.Pages
             InitializeComponent();
             CameraView.BarcodeFormatConfigurations =  
             [
-                // new BarcodeFormatCommonConfiguration
-                // {
-                //     Formats = BarcodeFormats.All
-                // },
+                new BarcodeFormatCommonConfiguration
+                {
+                     Formats = BarcodeFormats.All
+                },
                 
                 // You may add more advanced format configurations like shown below
-                new BarcodeFormatAztecConfiguration
-                {
-                    Gs1Handling = Gs1Handling.DecodeStructure,
-                    AddAdditionalQuietZone = true
-                }
+                // new BarcodeFormatAztecConfiguration
+                // {
+                //     Gs1Handling = Gs1Handling.DecodeStructure,
+                //     AddAdditionalQuietZone = true
+                // }
             ];
         }
 
