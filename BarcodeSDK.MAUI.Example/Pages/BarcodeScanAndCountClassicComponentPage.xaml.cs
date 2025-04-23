@@ -1,3 +1,4 @@
+using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Models;
 
@@ -13,7 +14,20 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
     private void SetupViews()
     {
-        CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
+        CameraView.BarcodeFormatConfigurations = 
+        [
+            new BarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeFormats.All
+            },
+                
+            // You may add more advanced format configurations like shown below
+            // new BarcodeFormatAztecConfiguration
+            // {
+            //     Gs1Handling = Gs1Handling.DecodeStructure,
+            //     AddAdditionalQuietZone = true
+            // }
+        ];
         CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             automaticSelectionEnabled: false,

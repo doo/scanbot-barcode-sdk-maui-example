@@ -1,4 +1,5 @@
-﻿using ScanbotSDK.MAUI.Barcode.Core;
+﻿using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Models;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -8,7 +9,20 @@ namespace ScanbotSDK.MAUI.Example.Pages
         public BarcodeClassicComponentPage()
         {
             InitializeComponent();
-            CameraView.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToList();
+            CameraView.BarcodeFormatConfigurations =  
+            [
+                new BarcodeFormatCommonConfiguration
+                {
+                     Formats = BarcodeFormats.All
+                },
+                
+                // You may add more advanced format configurations like shown below
+                // new BarcodeFormatAztecConfiguration
+                // {
+                //     Gs1Handling = Gs1Handling.DecodeStructure,
+                //     AddAdditionalQuietZone = true
+                // }
+            ];
         }
 
         private void HandleScannerResults(BarcodeItem[] barcodeItems)
