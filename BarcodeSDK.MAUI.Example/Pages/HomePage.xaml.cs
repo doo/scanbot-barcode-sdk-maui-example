@@ -111,14 +111,20 @@ namespace ScanbotSDK.MAUI.Example.Pages
             var configuration = new BarcodeScannerConfiguration
             {
                 BarcodeFormatConfigurations = [configs],
-                EngineMode = BarcodeScannerEngineMode.NextGen,
+                EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
             var result = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
-            var source = ImageSource.FromStream(() => image.AsStream(quality: 0.7f));
-            
-            // Handle the result in your app as needed.
-            await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList(), source));
+
+            if (result.Success)
+            {
+                // Handle the result in your app as needed.
+                await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList()));
+            }
+            else
+            {
+                CommonUtils.Alert(this, "Warning", "No barcodes found.");
+            }
         }
 
         /// <summary>
