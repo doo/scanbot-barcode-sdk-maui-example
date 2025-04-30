@@ -11,14 +11,6 @@
     </ContentPage.Resources>
     <StackLayout
         BackgroundColor="White">
-        <StackLayout>
-            <Image x:Name="BarcodeImageView"
-                   Aspect="AspectFit"
-                   MaximumHeightRequest="300"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"
-                   BackgroundColor="Transparent" />
-        </StackLayout>
         <ListView x:Name="ListViewResults"
                   HasUnevenRows="True"
                   ItemSelected="ListView_Results_OnItemSelected">
