@@ -77,7 +77,10 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
     private void CameraView_OnOnBarcodeScanResult(object sender, BarcodeItem[] barcodeItems)
     {
         if (barcodeItems.Length == 0)
+        {
+            ResultLabel.Text = "No barcodes captured";
             return;
+        }
 
         string text = string.Empty;
         foreach (var barcode in barcodeItems)
@@ -85,16 +88,12 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
         }
 
-        System.Diagnostics.Debug.WriteLine(text);
         ResultLabel.Text = text;
     }
 
     private void CameraView_OnOnScanAndCountFinished(object sender, BarcodeItem[] barcodeItems)
     {
-        if (barcodeItems.Length > 0)
-        {
-            StartScanningButton.IsEnabled = false;
-            ContinueScanningButton.IsEnabled = true;
-        }
+        StartScanningButton.IsEnabled = false;
+        ContinueScanningButton.IsEnabled = true;
     }
 }
