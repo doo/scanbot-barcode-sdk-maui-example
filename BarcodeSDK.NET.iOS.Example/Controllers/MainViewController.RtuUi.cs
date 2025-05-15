@@ -123,6 +123,9 @@ public partial class MainViewController
 
     private void ShowBarcodeResults(SBSDKUI2BarcodeScannerUIItem[] items)
     {
+        if (items == null || items.Length == 0)
+            return;
+        
         var viewController = new ScanResultListController(items);
         NavigationController?.PushViewController(viewController, true);
     }
