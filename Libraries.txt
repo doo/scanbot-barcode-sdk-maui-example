@@ -3149,7 +3149,7 @@ Version 1.1.0
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 7.0.1:
+Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 7.0.2:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
