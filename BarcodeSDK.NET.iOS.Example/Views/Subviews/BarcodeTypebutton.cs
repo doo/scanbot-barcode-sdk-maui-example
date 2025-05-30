@@ -4,31 +4,13 @@ namespace BarcodeSDK.NET.iOS
 {
     public class BarcodeTypeButton : UIView
     {
-        public SBSDKBarcodeType Code { get; private set; }
+        public SBSDKBarcodeFormat Code { get; private set; }
 
         public UILabel Title { get; set; }
 
         public UISwitch Switch { get; private set; }
 
-        public BarcodeTypeButton(SBSDKBarcodeType code)
-        {
-            Code = code;
-
-            Title = new UILabel();
-            Title.TextColor = UIColor.DarkGray;
-            Title.Font = UIFont.FromName("HelveticaNeue", 14);
-            AddSubview(Title);
-
-            Switch = new UISwitch();
-            Switch.On = true;
-            Switch.UserInteractionEnabled = false;
-            Switch.Layer.Opacity = 1.0f;
-            AddSubview(Switch);
-
-            Title.Text = code.Name;
-        }
-
-        public BarcodeTypeButton(KeyValuePair<SBSDKBarcodeType, bool> item)
+        public BarcodeTypeButton(KeyValuePair<SBSDKBarcodeFormat, bool> item)
         {
             Code = item.Key;
 

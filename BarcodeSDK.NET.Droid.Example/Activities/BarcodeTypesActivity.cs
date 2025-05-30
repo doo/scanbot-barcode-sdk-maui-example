@@ -1,16 +1,19 @@
 ﻿using Android.Views;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeTypesActivity : AppCompatActivity
+    public class BarcodeTypesActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            
             SetContentView(Resource.Layout.barcode_types);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
             var list = FindViewById<RecyclerView>(Resource.Id.barcode_types_list);
             list.HasFixedSize = true;
@@ -30,6 +33,11 @@ namespace BarcodeSDK.NET.Droid.Activities
         public void OnApplyClick(object sender, EventArgs e)
         {
             Finish();
+        }
+        
+        public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
+        {
+            return AndroidUtils.ApplyWindowInsets(v, windowInsets);
         }
     }
 }

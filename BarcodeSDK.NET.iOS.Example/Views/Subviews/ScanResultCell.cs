@@ -10,7 +10,7 @@ namespace BarcodeSDK.NET.iOS
         UILabel text;
         UILabel type;
 
-        public SBSDKBarcodeScannerResult Barcode { get; private set; }
+        public SBSDKBarcodeItem Barcode { get; private set; }
 
         public ScanResultCell(IntPtr handle) : base(handle)
         {
@@ -67,13 +67,13 @@ namespace BarcodeSDK.NET.iOS
             type.Frame = new CGRect(x, y, w, h);
         }
 
-        public void Update(SBSDKBarcodeScannerResult item)
+        public void Update(SBSDKBarcodeItem item)
         {
             Barcode = item;
 
-            image.Image = item.BarcodeImage;
-            text.Text = item.RawTextString;
-            type.Text = item.Type.Name;
+            image.Image = item.SourceImage?.ToUIImage();
+            text.Text = item.Text;
+            type.Text = item.Format.Name;
         }
     }
 }

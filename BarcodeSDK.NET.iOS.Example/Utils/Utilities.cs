@@ -48,6 +48,6 @@ namespace BarcodeSDK.NET.iOS.Utils
             }
 
             return isGranted;
-        } 
+        }
     }
 }

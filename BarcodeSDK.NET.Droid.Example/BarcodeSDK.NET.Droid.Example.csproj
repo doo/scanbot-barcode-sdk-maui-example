@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net8.0-android</TargetFrameworks>
+        <TargetFramework>net9.0-android</TargetFramework>
         <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
         <OutputType>Exe</OutputType>
         <Nullable>disable</Nullable>
@@ -8,15 +8,23 @@
         <ApplicationId>io.scanbot.example.sdk.barcode.net</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+        <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
         <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
-        <Platforms>x64;ARM64</Platforms>
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
         <WarningsAsErrors>NU1603</WarningsAsErrors>
     </PropertyGroup>
     
+    <!-- Speeds up debug builds -->
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugType>portable</DebugType>
+        <RunAOTCompilation>false</RunAOTCompilation>
+        <PublishTrimmed>false</PublishTrimmed>
+        <UseInterpreter>false</UseInterpreter>
+        <AndroidLinkMode>None</AndroidLinkMode>
+        <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
+    </PropertyGroup>
     <ItemGroup>
-         <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.0.0" />
     </ItemGroup>
 </Project>

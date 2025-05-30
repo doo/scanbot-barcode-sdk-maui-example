@@ -4,14 +4,16 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration MultipleScanningUseCase
+    public static SBSDKUI2BarcodeScannerScreenConfiguration MultipleScanningUseCase
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for multiple scanning mode.
             var useCase = new SBSDKUI2MultipleScanningMode();
+            
             // Set the counting mode.
             useCase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Counting;
 
@@ -25,7 +27,7 @@ public static partial class Snippets
             useCase.SheetContent.ManualCountChangeEnabled = true;
 
             // Set the delay before same barcode counting repeat.
-            useCase.CountingRepeatDelay = 1000;
+            useCase.CountingRepeatDelay = new IntPtr(1000);
 
             // Configure the submit button.
             useCase.SheetContent.SubmitButton.Text = "Submit";
@@ -35,7 +37,7 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.RecognizerConfiguration.BarcodeFormats = SBSDKUI2BarcodeFormat.CommonFormats;
+            config.ScannerConfiguration.BarcodeFormats = SBSDKBarcodeFormats.Common;
 
             return config;
         }

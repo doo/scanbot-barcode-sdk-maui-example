@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net8.0-ios</TargetFramework>
+        <TargetFramework>net9.0-ios</TargetFramework>
         <OutputType>Exe</OutputType>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -17,18 +17,13 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
         <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
-        <MtouchLink>None</MtouchLink>
+        <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>Automatic</CodesignProvision>
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
-        <Platforms>x64;ARM64</Platforms>
-        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
-        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">iossimulator-x64</RuntimeIdentifier>
-        <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
     </PropertyGroup>
-   
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="6.1.0" />
+       <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.0.0" /> 
     </ItemGroup>
 </Project>

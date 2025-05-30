@@ -2,45 +2,46 @@
 
 namespace BarcodeSDK.NET.iOS
 {
-    public class ScanResultListController : UIViewController
+    public class ScanResultListController : BaseViewController
     {
-        private UIImage scannedPage;
+        private UIImage barcodeImageResult;
 
-        private SBSDKBarcodeScannerResult[] items;
+        private SBSDKBarcodeItem[] items;
+        
+        public ScanResultListView ContentView { get; set; }
 
-        public ScanResultListController(UIImage scannedPage, SBSDKBarcodeScannerResult[] list)
+        public ScanResultListController(SBSDKBarcodeItem[] list)
         {
-            this.scannedPage = scannedPage;
+            if (list == null || list.Length <= 0) return;
+            barcodeImageResult = list.First().SourceImage?.ToUIImage();
             items = list;
         }
-
-        public ScanResultListView ContentView { get; set; }
+        
+        public ScanResultListController(SBSDKUI2BarcodeScannerUIItem[] list)
+        {
+            if (list == null || list.Length <= 0) return;
+            barcodeImageResult = list.First().Barcode.SourceImage?.ToUIImage();
+            items = list.Select(item => item.Barcode).ToArray();
+        }
+        
         public override void ViewDidLoad()
         {
+            PageTitle = "Barcode Results";
             base.ViewDidLoad();
 
-            View = ContentView = new ScanResultListView(items);
-        }
-
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
-
+            ContentView = new ScanResultListView(items);
             ContentView.ItemClick += RowSelected;
-        }
 
-        public override void ViewWillDisappear(bool animated)
-        {
-            base.ViewWillDisappear(animated);
-
-            ContentView.ItemClick -= RowSelected;
+            View = ContentView;
         }
 
         private void RowSelected(object sender, EventArgs e)
         {
-            var barcode = (SBSDKBarcodeScannerResult)sender;
-            var controller = new BarcodeDetailsController(barcode);
-            NavigationController.PushViewController(controller, true);
+            if (sender is SBSDKBarcodeItem barcode)
+            {
+                var controller = new BarcodeDetailsController(barcode);
+                NavigationController?.PushViewController(controller, true);
+            }
         }
     }
 }

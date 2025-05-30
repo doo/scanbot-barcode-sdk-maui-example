@@ -6,11 +6,12 @@ using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
 {
-    public partial class BarcodeScanAndCountResultViewController : UIViewController
+    public partial class BarcodeScanAndCountResultViewController : BaseViewController
     {
         List<SBSDKBarcodeScannerAccumulatingResult> ScannedBarcodes;
         public BarcodeScanAndCountResultViewController(IntPtr handle) : base(handle)
         {
+            PageTitle = "ScanAndCountView Results";
         }
 
         internal void NavigateData(List<SBSDKBarcodeScannerAccumulatingResult> scannedBarcodes)
@@ -23,7 +24,7 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
             base.ViewDidLoad();
 
             SetUpTableView();
-            this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Texts.Done, UIBarButtonItemStyle.Done, (sender, e) => NavigationController.PopToRootViewController(true));
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Texts.Done, UIBarButtonItemStyle.Done, (sender, e) => NavigationController?.PopToRootViewController(true));
         }
 
         private void SetUpTableView()
@@ -48,8 +49,8 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(nameof(BarcodeScanAndCountResultCell), indexPath) as BarcodeScanAndCountResultCell;
-            cell.PopulateData(scannedBarcodes[indexPath.Row]);
-            return cell;
+            cell?.PopulateData(scannedBarcodes[indexPath.Row]);
+            return cell ?? new UITableViewCell();
         }
 
         public override nint RowsInSection(UITableView tableView, nint section)

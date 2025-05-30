@@ -3,14 +3,14 @@ using ScanbotSDK.iOS;
 namespace BarcodeSDK.NET.iOS;
 public static partial class Snippets
 {
-    public static SBSDKUI2BarcodeScannerConfiguration UserGuidance
+    public static SBSDKUI2BarcodeScannerScreenConfiguration UserGuidance
     {
         get
         {
             // Create the default configuration object.
-            var config = new SBSDKUI2BarcodeScannerConfiguration();
+            var config = new SBSDKUI2BarcodeScannerScreenConfiguration();
             
-            // Hide/unhide the user guidance.
+            // Hide/Show the user guidance.
             config.UserGuidance.Visible = true;
 
             // Configure the title.

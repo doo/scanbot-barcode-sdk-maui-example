@@ -1,17 +1,17 @@
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
-using IO.Scanbot.Sdk.Ui_v2.Common;
 
 namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static BarcodeScannerConfiguration ArOverlay
+    public static BarcodeScannerScreenConfiguration ArOverlay
     {
         get
         {
             // Create the default configuration object.
-            var config = new BarcodeScannerConfiguration();
+            var config = new BarcodeScannerScreenConfiguration();
             
+            // Create and configure the use case for multiple scanning mode.
             var useCase = new MultipleScanningMode();
 
             useCase.Mode = MultipleBarcodesScanningMode.Unique;

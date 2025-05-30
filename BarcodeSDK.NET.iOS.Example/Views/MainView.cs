@@ -1,50 +1,40 @@
-﻿using System.Linq;
+﻿using BarcodeSDK.NET.iOS.Utils;
 
 namespace BarcodeSDK.NET.iOS
 {
     public class MainView : UIView
     {
-        private UIColor scanbotColor = UIColor.FromRGB(0xc8, 0x19, 0x3c);
         private readonly Dictionary<EventHandler, UIButton> buttons = new Dictionary<EventHandler, UIButton>();
         private readonly List<UIView> sorting = new List<UIView>();
 
         public MainView()
         {
-            BackgroundColor = UIColor.White;
+            BackgroundColor = UIColor.Black;
         }
 
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
 
-            nfloat padding = 10;
-
-            nfloat x = padding;
+            nfloat x = 0;
             nfloat y = 0;
-            nfloat w = Frame.Width - 2 * padding;
-            nfloat h = w / 8.5f;
-
-            if (Frame.Width > Frame.Height)
-            {
-                w = Frame.Height - 2 * padding;
-                h = w / 8.5f;
-            }
+            nfloat w = Frame.Width;
+            nfloat h = 50;
             
             foreach (var control in sorting)
             {
-                control.Frame = new CGRect(0, y, Frame.Width, h);
+                control.Frame = new CGRect(x, y, w, h);
 
                 if (control is UITextView textView)
                 {
                     var contentSize = textView.SizeThatFits(Bounds.Size);
-                    textView.ContentInset = new UIEdgeInsets((h - contentSize.Height) / 2, 0, (h - contentSize.Height) / 2, 0);
+                    textView.ContentInset = new UIEdgeInsets((h - contentSize.Height) / 2, 10, (h - contentSize.Height) / 2, 0);
                 }
-
-                y += h + 5;
+                y += h + 2;
             }
         }
 
-        public UITextView CreateText(string text)
+        public UITextView CreateHeader(string text)
         {
             var existing = sorting.OfType<UITextView>().FirstOrDefault(l => l.Text == text);
 
@@ -56,15 +46,18 @@ namespace BarcodeSDK.NET.iOS
             var label = new UITextView();
             label.Text = text;
             label.TextColor = UIColor.White;
-            label.BackgroundColor = scanbotColor;
-            label.Font = UIFont.FromName("HelveticaNeue", 14);
+            label.BackgroundColor = Colors.ScanbotRed;
+            label.TextAlignment = UITextAlignment.Left;
+            label.Font = UIFont.FromName("HelveticaNeue-Bold", 16);
+            label.ScrollEnabled = false;
+            label.Editable = false;
             AddSubview(label);
             sorting.Add(label);
-
+            
             return label;
         }
 
-        public UIButton CreateButton(string text, EventHandler action)
+        public UIButton CreateItem(string text, EventHandler action)
         {
             if (buttons.TryGetValue(action, out var existing))
             {
@@ -73,43 +66,18 @@ namespace BarcodeSDK.NET.iOS
 
             var button = new UIButton();
             button.SetTitle(text, UIControlState.Normal);
-            button.SetTitleColor(UIColor.FromRGB(10, 132, 255), UIControlState.Normal);
-            button.TitleLabel.Font = UIFont.FromName("HelveticaNeue", 14);
+            button.SetTitleColor(UIColor.White, UIControlState.Normal);
+            button.TitleLabel.Font = UIFont.FromName("HelveticaNeue-Bold", 16);
+            button.TitleLabel.TextAlignment = UITextAlignment.Left;
+            button.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+            button.BackgroundColor = UIColor.FromRGB(52, 54, 56);
+            button.TitleEdgeInsets = new UIEdgeInsets(0, 15, 0, 0);
             AddSubview(button);
             button.TouchUpInside += action;
             buttons.Add(action, button);
             sorting.Add(button);
 
             return button;
-        }
-
-        public void RemoveButton(EventHandler action)
-        {
-            if (buttons.TryGetValue(action, out var button))
-            {
-                button.TouchUpInside -= action;
-                buttons.Remove(action);
-                sorting.Remove(button);
-                button.RemoveFromSuperview();
-            }
-        }
-
-        public void RemoveAllControls()
-        {
-            var keys = buttons.Keys;
-
-            foreach (var key in keys)
-            {
-                RemoveButton(key);
-            }
-
-            var controlsToRemove = sorting.ToArray();
-
-            foreach (var control in controlsToRemove)
-            {
-                sorting.Remove(control);
-                control.RemoveFromSuperview();
-            }
         }
     }
 }
