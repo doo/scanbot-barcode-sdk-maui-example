@@ -48,7 +48,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             barcodeScanner.SetConfiguration(barcodeScannerConfigs);
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
-            barcodeScannerView?.InitCamera(new CameraUiSettings(true));
+            barcodeScannerView?.InitCamera();
             barcodeScannerView?.InitDetectionBehavior(barcodeScanner, OnBarcodeResult, (
                 onCameraOpen: OnCameraOpened,
                 onPictureTaken: OnPictureTaken,

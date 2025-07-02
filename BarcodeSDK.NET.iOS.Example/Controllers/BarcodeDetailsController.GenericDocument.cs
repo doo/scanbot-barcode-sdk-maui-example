@@ -20,9 +20,9 @@ public partial class BarcodeDetailsController
         {
             var boardingPass = new SBSDKBarcodeDocumentModelBoardingPass(document);
             barcodeDetails.AddRange([
-                new("Name", boardingPass.Name?.Value?.Text),
+                new("Name", boardingPass.PassengerName?.Value?.Text),
                 new("Security data", boardingPass.SecurityData?.Value?.Text),
-                new("Electronic ticket", boardingPass.ElectronicTicket?.Value?.Text),
+                new("Electronic ticket", boardingPass.ElectronicTicketIndicator?.Value?.Text),
                 new("Number of legs", boardingPass.NumberOfLegs?.Value?.Text)
             ]);
         } else if (SBSDKBarcodeDocumentModelConstants.DeMedicalPlanDocumentType == docType)
@@ -114,11 +114,11 @@ public partial class BarcodeDetailsController
             var vCardDocument = new SBSDKBarcodeDocumentModelVCard(document);
             barcodeDetails.AddRange([
                 new("Name", vCardDocument.Name?.RawValue?.Value?.Text),
-                new("Title", vCardDocument.Title?.RawValue?.Value?.Text),
-                new("First name", vCardDocument.FirstName?.RawValue?.Value?.Text),
+                new("Title", vCardDocument.Titles?.FirstOrDefault()?.RawValue?.Value?.Text),
+                new("Formatted name", vCardDocument.FormattedName?.RawValue?.Value?.Text),
                 new("Birthday", vCardDocument.Birthday?.RawValue?.Value?.Text),
-                new("Email", vCardDocument.Email?.RawValue?.Value?.Text),
-                new("Role", vCardDocument.Role?.RawValue?.Value?.Text)
+                new("Email", vCardDocument.Emails?.FirstOrDefault()?.RawValue?.Value?.Text),
+                new("Role", vCardDocument.Roles?.FirstOrDefault()?.RawValue?.Value?.Text)
             ]);
         }
     }
