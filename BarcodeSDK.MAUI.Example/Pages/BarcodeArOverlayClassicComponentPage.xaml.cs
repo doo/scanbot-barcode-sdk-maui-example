@@ -30,7 +30,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
             ];
 
             CameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-                automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
                 textContainerColor: Colors.Black,

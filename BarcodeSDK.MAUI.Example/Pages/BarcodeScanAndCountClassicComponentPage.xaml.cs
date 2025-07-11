@@ -30,7 +30,6 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ];
         CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
-            automaticSelectionEnabled: false,
             overlayFormat: BarcodeTextFormat.CodeAndType,
             textColor: Colors.Yellow,
             textContainerColor: Colors.Black,
