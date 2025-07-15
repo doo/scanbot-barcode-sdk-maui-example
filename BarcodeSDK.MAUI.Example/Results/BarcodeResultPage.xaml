@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:ScanbotSDK.MAUI.Example.Utils.XamlValueConverters"
              xmlns:models="clr-namespace:ScanbotSDK.MAUI.Barcode.Core;assembly=ScanbotSDK.Shared"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultPage"
+             x:Class="ScanbotSDK.MAUI.Example.Results.BarcodeResultPage"
              Title="Barcode Results">
     <ContentPage.Resources>
         <converter:ImageRefToSourceConverter x:Key="ConvertImageRefToSource" />

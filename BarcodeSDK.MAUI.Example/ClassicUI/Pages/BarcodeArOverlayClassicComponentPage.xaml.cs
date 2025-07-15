@@ -2,7 +2,7 @@ using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Models;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 {
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
     {
@@ -14,6 +14,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
+
             CameraView.BarcodeFormatConfigurations =
             [
                 new BarcodeFormatCommonConfiguration
@@ -73,7 +74,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             CameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(object ssender, BarcodeItem[] barcodeItems)
+        private void CameraView_OnOnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)
         {
             HandleScannerResults(barcodeItems);
         }

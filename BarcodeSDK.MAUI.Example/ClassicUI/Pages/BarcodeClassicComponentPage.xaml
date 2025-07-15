@@ -4,8 +4,8 @@
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                          xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
                          xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
-                         xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
-                         x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeClassicComponentPage"
+                         xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.ClassicUI"
+                         x:Class="ScanbotSDK.MAUI.Example.ClassicUI.Pages.BarcodeClassicComponentPage"
                          ios:Page.UseSafeArea="true"
                          Title="Classic Component"
                          NavigationPage.HasNavigationBar="True">

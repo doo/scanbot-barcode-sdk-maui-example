@@ -1,4 +1,7 @@
-﻿namespace ScanbotSDK.MAUI.Example.Utils
+﻿using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Example.Results;
+
+namespace ScanbotSDK.MAUI.Example.Utils
 {
     public static class CommonUtils
     {
@@ -14,6 +17,15 @@
             Task<Stream> task = streamImageSource.Stream(cancellationToken);
             Stream stream = task.Result;
             return ImageSource.FromStream(() => stream);
+        }
+
+        public static async Task DisplayResults(BarcodeScannerUiResult result)
+        {
+            if (result?.Items?.Length > 0)
+            {
+                var items = result.Items.Select(item => item.Barcode);
+                await Application.Current.MainPage.Navigation.PushAsync(new BarcodeResultPage(items.ToList()));
+            }
         }
     }
 }

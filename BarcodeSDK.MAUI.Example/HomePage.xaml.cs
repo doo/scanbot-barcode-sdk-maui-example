@@ -1,10 +1,13 @@
 ﻿using Microsoft.Maui.Graphics.Platform;
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
+using ScanbotSDK.MAUI.Example.ReadyToUseUI;
+using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example
 {
     public struct HomePageMenuItem(string title, Func<Task> action)
     {
@@ -44,11 +47,11 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void InitMenuItems()
         {
             MenuItems = [
-                new HomePageMenuItem("RTU - Single Scanning", SingleScanning),
-                new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
-                new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanning),
-                new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
-                new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanning),
+                new HomePageMenuItem("RTU - Single Scanning", SingleScanningFeature.StartSingleScanningAsync),
+                new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlayFeature.StartSingleScanningWithArOverlayAsync),
+                new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanningFeature.StartBatchBarcodeScanningAsync),
+                new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanningFeature.StartMultipleUniqueBarcodeScanningAsync),
+                new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanningFeature.StartFindAndPickScanningAsync),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),

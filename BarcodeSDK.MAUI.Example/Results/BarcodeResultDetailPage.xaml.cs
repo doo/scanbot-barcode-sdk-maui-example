@@ -3,7 +3,7 @@ using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.BarcodeDocumentModel;
 using ScanbotSDK.MAUI.Common;
 
-namespace ScanbotSDK.MAUI.Example.Pages;
+namespace ScanbotSDK.MAUI.Example.Results;
 
 /// <summary>
 /// Model used to display the Barcode details in a collection view via binding.

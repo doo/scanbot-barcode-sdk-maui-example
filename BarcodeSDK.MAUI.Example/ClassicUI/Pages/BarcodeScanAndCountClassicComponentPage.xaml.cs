@@ -2,7 +2,7 @@ using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.Example.Models;
 
-namespace ScanbotSDK.MAUI.Example.Pages;
+namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
 public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 {

@@ -1,6 +1,6 @@
 ﻿using ScanbotSDK.MAUI.Barcode.Core;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Results
 {
     public partial class BarcodeResultPage : ContentPage
     {

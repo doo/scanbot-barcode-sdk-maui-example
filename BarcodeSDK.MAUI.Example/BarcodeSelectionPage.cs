@@ -1,7 +1,7 @@
 ﻿using ScanbotSDK.MAUI.Example.Models;
 using ScanbotSDK.MAUI.Barcode;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example
 {
     public class BarcodeSelectionPage : ContentPage
     {
