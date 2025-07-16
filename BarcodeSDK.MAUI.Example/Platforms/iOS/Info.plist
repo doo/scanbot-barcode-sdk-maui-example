@@ -47,5 +47,7 @@
 	<string>Application would like to use photos app for importing images</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Application would like to use photos app for importing images</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
