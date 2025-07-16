@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Graphics.Platform;
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
@@ -53,6 +54,7 @@ namespace ScanbotSDK.MAUI.Example
                 new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanningFeature.StartMultipleUniqueBarcodeScanningAsync),
                 new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanningFeature.StartFindAndPickScanningAsync),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("Classic Component - Barcode Scanning (MVVM)", () => Navigation.PushAsync(new BarcodeClassicComponentView())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),

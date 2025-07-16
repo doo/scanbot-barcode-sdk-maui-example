@@ -36,6 +36,7 @@
                                     Text="{Binding Title}"
                                     VerticalOptions="CenterAndExpand"
                                     HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
                                     FontSize="Default"
                                     TextColor="Black" />
                                 <StackLayout

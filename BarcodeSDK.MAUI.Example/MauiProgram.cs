@@ -1,4 +1,6 @@
-﻿namespace ScanbotSDK.MAUI.Example
+﻿using CommunityToolkit.Maui;
+
+namespace ScanbotSDK.MAUI.Example
 {
     public static class MauiProgram
     {
@@ -10,6 +12,7 @@
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

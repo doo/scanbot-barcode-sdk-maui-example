@@ -86,7 +86,7 @@ public partial class BarcodeResultDetailPage : ContentPage
                 return
                 [
                     new("Name", boardingPass.PassengerName.Value?.Text),
-                    new("Security data", boardingPass.SecurityData.Value?.Text),
+                    new("Security data", boardingPass.SecurityData?.Value?.Text),
                     new("Electronic ticket", boardingPass.ElectronicTicketIndicator.Value?.Text),
                     new("Number of legs", boardingPass.NumberOfLegs.Value?.Text)
                 ];
