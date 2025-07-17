@@ -34,13 +34,11 @@ public static class SingleScanningWithArOverlayFeature
             config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
 
             // Launch the barcode scanner.
-            var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+            var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+            if (rtuResult.Status != OperationResult.Ok)
+                return;
 
-            await CommonUtils.DisplayResults(result);
-        }
-        catch (TaskCanceledException)
-        {
-            // for when the user cancels the action
+            await CommonUtils.DisplayResults(rtuResult.Result);
         }
         catch (Exception ex)
         {
