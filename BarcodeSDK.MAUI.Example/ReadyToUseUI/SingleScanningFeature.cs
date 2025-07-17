@@ -32,12 +32,13 @@ public static class SingleScanningFeature
 
             // Launch the barcode scanner.
             var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
-            if (rtuResult.Status != OperationResult.Ok)
-                return;
 
             // Comment out the above and use the below to try some of our snippets instead:
-            // var result = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
+            // var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
             // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
+
+            if (rtuResult.Status != OperationResult.Ok)
+                return;
 
             await CommonUtils.DisplayResults(rtuResult.Result);
         }
