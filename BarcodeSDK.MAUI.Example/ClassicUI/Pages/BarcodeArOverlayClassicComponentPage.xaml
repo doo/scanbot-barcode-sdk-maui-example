@@ -7,17 +7,12 @@
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.ClassicUI"
                          x:Class="ScanbotSDK.MAUI.Example.ClassicUI.Pages.BarcodeArOverlayClassicComponentPage"
                          ios:Page.UseSafeArea="true"
-                         Title="Classic AR Overlay"
-                         NavigationPage.HasNavigationBar="True">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="3*" />
-        </Grid.RowDefinitions>
+                         Title="Classic AR Overlay">
+    <Grid RowDefinitions="7*,3*">
         <classicComponent:BarcodeScannerView
             x:Name="CameraView"
             Grid.Row="0"
-            OnSelectBarcodeResult="CameraView_OnOnSelectBarcodeResult" />
+            OnSelectBarcodeResult="OnSelectBarcodeResult" />
         <StackLayout
             Grid.Row="1">
             <Label

@@ -30,13 +30,13 @@ public class BarcodeClassicComponentViewModel : BaseViewModel
 
     public ICommand BarcodeScanResultCommand { get; private set; }
 
-    private string _resultLabel;
+    private string resultLabel;
     public string ResultLabel
     {
-        get => _resultLabel;
+        get => resultLabel;
         set
         {
-            _resultLabel = value;
+            resultLabel = value;
             OnPropertyChanged();
         }
     }

@@ -10,10 +10,9 @@
              x:Class="ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views.BarcodeClassicComponentView"
              ios:Page.UseSafeArea="true"
              Title="Classic Component (MVVM)"
-             NavigationPage.HasNavigationBar="True"
              x:DataType="viewModels:BarcodeClassicComponentViewModel">
     <Grid RowSpacing="10"
-          RowDefinitions="7*, 3*">
+          RowDefinitions="7*,3*">
 
         <Grid Grid.Row="0">
             <classicComponent:BarcodeScannerView

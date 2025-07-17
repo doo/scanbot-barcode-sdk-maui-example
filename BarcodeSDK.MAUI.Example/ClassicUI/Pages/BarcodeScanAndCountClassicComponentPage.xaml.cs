@@ -1,6 +1,5 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
-using ScanbotSDK.MAUI.Example.Models;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
@@ -59,13 +58,13 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         CameraView.Handler?.DisconnectHandler();
     }
 
-    void StartScanningButton_Clicked(System.Object sender, System.EventArgs e)
+    private void OnStartScanningButtonClicked(object sender, EventArgs e)
     {
         // Start scanning
         CameraView.StartScanAndCount();
     }
 
-    void ConitueScanningButton_Clicked(System.Object sender, System.EventArgs e)
+    private void OnContinueScanningButtonClicked(object sender, EventArgs e)
     {
         CameraView.ContinueScanning();
 
@@ -73,7 +72,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ContinueScanningButton.IsEnabled = false;
     }
 
-    private void CameraView_OnOnBarcodeScanResult(object sender, BarcodeItem[] barcodeItems)
+    private void OnBarcodeScanResult(object sender, BarcodeItem[] barcodeItems)
     {
         if (barcodeItems.Length == 0)
         {
@@ -90,7 +89,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
         ResultLabel.Text = text;
     }
 
-    private void CameraView_OnOnScanAndCountFinished(object sender, BarcodeItem[] barcodeItems)
+    private void OnScanAndCountFinished(object sender, BarcodeItem[] barcodeItems)
     {
         StartScanningButton.IsEnabled = false;
         ContinueScanningButton.IsEnabled = true;

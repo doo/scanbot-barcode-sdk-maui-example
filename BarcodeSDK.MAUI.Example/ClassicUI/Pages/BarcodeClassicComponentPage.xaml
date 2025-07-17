@@ -7,13 +7,9 @@
                          xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.ClassicUI"
                          x:Class="ScanbotSDK.MAUI.Example.ClassicUI.Pages.BarcodeClassicComponentPage"
                          ios:Page.UseSafeArea="true"
-                         Title="Classic Component"
-                         NavigationPage.HasNavigationBar="True">
-    <Grid RowSpacing="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="3*" />
-        </Grid.RowDefinitions>
+                         Title="Classic Component">
+    <Grid RowSpacing="10"
+          RowDefinitions="7*,3*">
         <Grid Grid.Row="0">
             <classicComponent:BarcodeScannerView
                 x:Name="CameraView"

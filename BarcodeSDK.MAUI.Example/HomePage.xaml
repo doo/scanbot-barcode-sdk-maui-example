@@ -5,7 +5,7 @@
              xmlns:model="clr-namespace:ScanbotSDK.MAUI.Example"
              x:Class="ScanbotSDK.MAUI.Example.HomePage">
     <Grid
-        BackgroundColor="{DynamicResource ScanbotRed}"
+        BackgroundColor="{StaticResource ScanbotRed}"
         RowDefinitions="Auto,*">
         <VerticalStackLayout
             Grid.Row="0"
@@ -32,6 +32,18 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:HomePageMenuItem">
                             <StackLayout HeightRequest="55" Padding="10,0">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor"
+                                                        Value="Transparent"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
                                 <Label
                                     Text="{Binding Title}"
                                     VerticalOptions="CenterAndExpand"

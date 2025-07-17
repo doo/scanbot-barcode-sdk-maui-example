@@ -7,8 +7,8 @@ public class BarcodeDetectionEventArgsConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var eventArgs = value as BarcodeItem[];
-        return eventArgs;
+        var barcodeItems = value as BarcodeItem[];
+        return barcodeItems;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

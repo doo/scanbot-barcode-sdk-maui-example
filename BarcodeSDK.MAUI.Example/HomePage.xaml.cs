@@ -109,7 +109,7 @@ namespace ScanbotSDK.MAUI.Example
 
             var configs = new BarcodeFormatCommonConfiguration
             {
-                Formats = Models.BarcodeTypes.Instance.AcceptedTypes
+                Formats = BarcodeTypes.Instance.AcceptedTypes
             };
             
             // Configure the barcode detector for detecting many barcodes in one image.

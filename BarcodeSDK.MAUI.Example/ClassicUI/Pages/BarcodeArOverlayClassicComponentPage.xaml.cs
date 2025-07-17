@@ -1,6 +1,5 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
-using ScanbotSDK.MAUI.Example.Models;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 {
@@ -42,21 +41,6 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
                 polygonBackgroundHighlightedColor: Colors.Transparent);
         }
 
-        private void HandleScannerResults(BarcodeItem[] barcodeItems)
-        {
-            if (barcodeItems.Length == 0)
-                return;
-
-            string text = string.Empty;
-            foreach (var barcode in barcodeItems)
-            {
-                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
-            }
-
-            System.Diagnostics.Debug.WriteLine(text);
-            ResultLabel.Text = text;
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -74,9 +58,19 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             CameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)
+        private void OnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(barcodeItems);
+            if (barcodeItems.Length == 0)
+                return;
+
+            string text = string.Empty;
+            foreach (var barcode in barcodeItems)
+            {
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
+            }
+
+            System.Diagnostics.Debug.WriteLine(text);
+            ResultLabel.Text = text;
         }
     }
 }

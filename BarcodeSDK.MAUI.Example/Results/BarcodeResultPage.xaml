@@ -13,22 +13,27 @@
         BackgroundColor="White">
         <ListView x:Name="ListViewResults"
                   HasUnevenRows="True"
-                  ItemSelected="ListView_Results_OnItemSelected">
+                  ItemSelected="OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:BarcodeItem">
                     <ViewCell>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="50" />
-                            </Grid.ColumnDefinitions>
+                        <Grid ColumnDefinitions="Auto,*,50">
                             <Image
                                 Grid.Column="0"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Fill"
                                 Aspect="AspectFit"
-                                Source="{Binding SourceImage, Converter={StaticResource ConvertImageRefToSource}}" />
+                                WidthRequest="90"
+                                Source="{Binding SourceImage, Converter={StaticResource ConvertImageRefToSource}}">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image"
+                                                 Binding="{Binding SourceImage, TargetNullValue=''}"
+                                                 Value="">
+                                        <Setter Property="IsVisible"
+                                                Value="False"/>
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
                             <VerticalStackLayout
                                 Grid.Column="1"
                                 Margin="5">
@@ -59,6 +64,7 @@
                                 <Label Text=">"
                                        FontSize="20"
                                        FontAttributes="Bold"
+                                       TextColor="Black"
                                        VerticalOptions="Center"
                                        HorizontalOptions="Center" />
                             </Grid>

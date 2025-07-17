@@ -1,4 +1,4 @@
-﻿using ScanbotSDK.MAUI.Example.Models;
+﻿using ScanbotSDK.MAUI.Example.Utils;
 using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example
