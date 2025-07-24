@@ -10,42 +10,34 @@ public static class SingleScanningFeature
     /// </summary>
     public static async Task StartSingleScanningAsync()
     {
-        try
-        {
-            // Create the default configuration object.
-            var config = new BarcodeScannerScreenConfiguration();
+        // Create the default configuration object.
+        var config = new BarcodeScannerScreenConfiguration();
 
-            // Create single scanning mode.
-            var useCase = new SingleScanningMode();
+        // Create single scanning mode.
+        var useCase = new SingleScanningMode();
 
-            // Enable and configure the confirmation sheet.
-            useCase.ConfirmationSheetEnabled = true;
+        // Enable and configure the confirmation sheet.
+        useCase.ConfirmationSheetEnabled = true;
 
-            // Configure other parameters, pertaining to single-scanning mode as needed.
-            config.UseCase = useCase;
+        // Configure other parameters, pertaining to single-scanning mode as needed.
+        config.UseCase = useCase;
 
-            // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
+        // Set an array of accepted barcode types.
+        config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
-            // Set an array of accepted barcode types.
-            config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+        // Set an array of accepted barcode types.
+        config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
 
-            // Launch the barcode scanner.
-            var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+        // Launch the barcode scanner.
+        var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
 
-            // Comment out the above and use the below to try some of our snippets instead:
-            // var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
-            // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
+        // Comment out the above and use the below to try some of our snippets instead:
+        // var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
+        // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
-            if (rtuResult.Status != OperationResult.Ok)
-                return;
+        if (rtuResult.Status != OperationResult.Ok)
+            return;
 
-            await CommonUtils.DisplayResults(rtuResult.Result);
-        }
-        catch (Exception ex)
-        {
-            // for any other errors that occur
-            Console.WriteLine(ex.Message);
-        }
+        await CommonUtils.DisplayResults(rtuResult.Result);
     }
 }
