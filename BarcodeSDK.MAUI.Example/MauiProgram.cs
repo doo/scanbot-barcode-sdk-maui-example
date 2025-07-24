@@ -6,7 +6,7 @@ namespace ScanbotSDK.MAUI.Example
     {
         // Without a license key, the Scanbot Barcode SDK will work for 1 minute.
         // To scan longer, register for a trial license key here: https://scanbot.io/trial/
-        private const string LicenseKey = "";
+        public const string LicenseKey = "";
 
         public static MauiApp CreateMauiApp()
         {
