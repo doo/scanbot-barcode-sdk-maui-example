@@ -40,6 +40,6 @@
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="7.0.3-alpha.1" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="7.0.3-rc.1" />
     </ItemGroup>
 </Project>
