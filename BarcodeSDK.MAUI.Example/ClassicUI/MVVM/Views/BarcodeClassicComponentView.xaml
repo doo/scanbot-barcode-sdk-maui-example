@@ -16,12 +16,13 @@
 
         <Grid Grid.Row="0">
             <classicComponent:BarcodeScannerView
+                BarcodeFormatConfigurations="{Binding BarcodeFormatConfigurations}"
                 x:Name="CameraView">
                 <classicComponent:BarcodeScannerView.Behaviors>
                     <toolkit:EventToCommandBehavior
                         EventName="OnBarcodeScanResult"
                         Command="{Binding BarcodeScanResultCommand}"
-                        EventArgsConverter="{converters:BarcodeDetectionEventArgsConverter}}"/>
+                        EventArgsConverter="{converters:BarcodeDetectionEventArgsConverter}"/>
                 </classicComponent:BarcodeScannerView.Behaviors>
             </classicComponent:BarcodeScannerView>
         </Grid>
