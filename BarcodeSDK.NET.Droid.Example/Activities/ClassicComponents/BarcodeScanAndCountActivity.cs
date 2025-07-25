@@ -46,7 +46,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             resultView.Visibility = Android.Views.ViewStates.Gone;
 
             scanAndCountView = FindViewById<BarcodeScanAndCountView>(Resource.Id.camera);
-            scanAndCountView.InitDetectionBehavior(barcodeScanner: barcodeScanner,
+            scanAndCountView.InitScanningBehavior(barcodeScanner: barcodeScanner,
                 scannerViewCallbacks: (onCameraOpen: OnCameraOpen,
                     onLicenseError: OnLicenseError,
                     onScanAndCountFinished: OnScanAndCountFinished,
