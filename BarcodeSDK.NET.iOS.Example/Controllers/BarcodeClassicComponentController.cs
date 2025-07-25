@@ -38,6 +38,8 @@ namespace BarcodeSDK.NET.iOS
 
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = UIColor.Red;
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundSelectedColor = UIColor.Red.ColorWithAlpha(0.25f);
+            scannerController.TrackingOverlayController.Configuration.TextStyle.HighlightedTextColor = UIColor.Red;
+            scannerController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundHighlightedColor = UIColor.Black;
 
             scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
             scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
