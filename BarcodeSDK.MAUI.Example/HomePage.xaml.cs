@@ -89,23 +89,9 @@ namespace ScanbotSDK.MAUI.Example
         /// </summary>
         private async Task DetectBarcodesOnImage()
         {
-            PlatformImage image;
-            try
-            {
-                // Obtain an image from somewhere.
-                // In this case, the user picks an image with our helper.
-                image = await ScanbotSDKMain.ImagePicker.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
-                if (image == null)
-                {
-                    return;
-                }
-            }
-            // Handle cancel button click for ImagePicker.
-            catch (TaskCanceledException e)
-            {
-                Console.WriteLine(e);
+            var image = await PickImageAsync();
+            if (image == null)
                 return;
-            }
 
             var configs = new BarcodeFormatCommonConfiguration
             {
@@ -130,6 +116,34 @@ namespace ScanbotSDK.MAUI.Example
             {
                 CommonUtils.Alert(this, "Warning", "No barcodes found.");
             }
+        }
+
+        /// <summary>
+        /// Picks image from the photos application.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<PlatformImage> PickImageAsync()
+        {
+            try
+            {
+                // Pick the photo
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+
+                if (photo != null)
+                {
+                    // Optionally display or process the image
+                    using var stream = await photo.OpenReadAsync();
+
+                    // It returns a common interface IIMage which is implemented in PlatformImage.
+                    return (PlatformImage)PlatformImage.FromStream(stream, ImageFormat.Jpeg);
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", $"Unable to pick image: {ex.Message}", "OK");
+            }
+
+            return null;
         }
 
         /// <summary>
