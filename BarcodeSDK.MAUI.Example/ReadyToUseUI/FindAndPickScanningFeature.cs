@@ -45,7 +45,7 @@ public static class FindAndPickScanningFeature
         configuration.UseCase = findAndPickConfig;
         configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
 
-        var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration);
+        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 

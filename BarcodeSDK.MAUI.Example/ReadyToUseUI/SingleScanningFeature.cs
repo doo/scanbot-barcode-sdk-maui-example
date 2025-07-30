@@ -29,10 +29,10 @@ public static class SingleScanningFeature
         config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
 
         // Comment out the above and use the below to try some of our snippets instead:
-        // var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
+        // var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(Snippets.SingleScanningUseCase);
         // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
         if (rtuResult.Status != OperationResult.Ok)

@@ -29,7 +29,7 @@ public static class BatchBarcodeScanningFeature
         config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.RTU.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 
