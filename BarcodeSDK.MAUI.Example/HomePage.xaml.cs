@@ -140,7 +140,7 @@ namespace ScanbotSDK.MAUI.Example
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"Unable to pick image: {ex.Message}", "OK");
+                CommonUtils.Alert(this, "Error", $"Unable to pick image: {ex.Message}");
             }
 
             return null;
