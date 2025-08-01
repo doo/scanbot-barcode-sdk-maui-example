@@ -2,8 +2,8 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:page="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
-             x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeResultDetailPage"
+             xmlns:page="clr-namespace:ScanbotSDK.MAUI.Example.Results"
+             x:Class="ScanbotSDK.MAUI.Example.Results.BarcodeResultDetailPage"
              x:DataType="page:BarcodeResultDetailPage"
              Title="Barcode Details">
     <ContentPage.Content>
