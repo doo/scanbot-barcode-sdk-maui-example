@@ -1,12 +1,19 @@
-﻿namespace ScanbotSDK.MAUI.Example
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿namespace ScanbotSDK.MAUI.Example;
 
-            MainPage = new NavigationPage(new Pages.HomePage());
-        }
+public partial class App
+{
+    public static Color ScanbotColor => Color.FromRgb(200, 25, 60);
+
+    public App()
+    {
+        InitializeComponent();
+        
+        var navigationPage = new NavigationPage(new Pages.HomePage())
+        {
+            BarBackgroundColor = ScanbotColor,
+            BarTextColor = Colors.White
+        };
+        
+        MainPage = navigationPage;
     }
 }

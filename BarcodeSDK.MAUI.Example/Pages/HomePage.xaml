@@ -1,43 +1,52 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ScanbotSDK.MAUI.Example.Pages.HomePage"
-             Title="HomePage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*" />
-            <RowDefinition Height="8.5*" />
-        </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0" BackgroundColor="#c8193c">
-            <Label Text="Scanbot SDK - MAUI"
-                 VerticalOptions="CenterAndExpand"
-                 HorizontalOptions="CenterAndExpand"
-                 TextColor="White"
-                 BackgroundColor="Transparent"
-                 FontSize="34"/>
-        </StackLayout>
-        <ScrollView Grid.Row="1">
-            <StackLayout >
-                <CollectionView x:Name="CollectionView_MenuItems"
+             xmlns:model="clr-namespace:ScanbotSDK.MAUI.Example.Pages">
+    <Grid
+        BackgroundColor="{DynamicResource ScanbotRed}"
+        RowDefinitions="Auto,*">
+        <VerticalStackLayout
+            Grid.Row="0"
+            Padding="9">
+            <Label
+                Text="ScanbotBarcodeSDK MAUI"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                TextColor="White"
+                BackgroundColor="Transparent"
+                FontSize="24" />
+        </VerticalStackLayout>
+        <ScrollView
+            Grid.Row="1"
+            BackgroundColor="White">
+            <StackLayout>
+                <CollectionView
+                    x:Name="CollectionViewMenuItems"
                     ItemsSource="{Binding MenuItems}"
                     SelectionChanged="MenuItemSelected"
                     SelectionMode="Single">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout HeightRequest="55"  Padding="10,0">
-                                <Label Text="{Binding Title}"
-                               VerticalOptions="CenterAndExpand"
-                               HorizontalOptions="CenterAndExpand"
-                               FontSize="Default"/>
+                        <DataTemplate x:DataType="model:HomePageMenuItem">
+                            <StackLayout HeightRequest="55" Padding="10,0">
+                                <Label
+                                    Text="{Binding Title}"
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="CenterAndExpand"
+                                    FontSize="Default"
+                                    TextColor="Black" />
                                 <StackLayout
-                                BackgroundColor="LightGray"
-                                HeightRequest="0.5" />
+                                    BackgroundColor="LightGray"
+                                    HeightRequest="0.5" />
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.FooterTemplate>
                         <DataTemplate>
-                            <Grid BackgroundColor="#c8193c" HeightRequest="50"/>
+                            <Grid HeightRequest="50" />
                         </DataTemplate>
                     </CollectionView.FooterTemplate>
                 </CollectionView>

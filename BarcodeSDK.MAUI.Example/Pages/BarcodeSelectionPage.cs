@@ -1,5 +1,4 @@
-﻿
-using ScanbotSDK.MAUI.Example.Models;
+﻿using ScanbotSDK.MAUI.Example.Models;
 using ScanbotSDK.MAUI.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Pages
@@ -8,13 +7,15 @@ namespace ScanbotSDK.MAUI.Example.Pages
     {
         public BarcodeSelectionPage()
         {
-            Title = "ACCEPTED BARCODES";
+            Title = "Accepted Barcodes";
 
-            var list = new ListView();
-            list.ItemTemplate = new DataTemplate(typeof(BarcodeFormatCell));
-            list.ItemsSource = BarcodeTypes.Instance.List;
-            list.RowHeight = 50;
-            list.BackgroundColor = Colors.White;
+            var list = new ListView
+            {
+                ItemTemplate = new DataTemplate(typeof(BarcodeFormatCell)),
+                ItemsSource = BarcodeTypes.Instance.List,
+                RowHeight = 50,
+                BackgroundColor = Colors.White,
+            };
             Content = list;
         }
     }
@@ -33,20 +34,21 @@ namespace ScanbotSDK.MAUI.Example.Pages
             {
                 VerticalTextAlignment = TextAlignment.Center,
                 Margin = new Thickness(10, 0, 0, 0),
-                TextColor = Colors.Black
+                TextColor = Colors.Black,
+                HorizontalOptions =  LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.Center
             };
 
             Switch = new Switch
             {
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.EndAndExpand
+                HorizontalOptions = LayoutOptions.End
             };
 
-            View = new StackLayout()
+            View = new Grid
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 Margin = new Thickness(0, 0, 10, 0),
                 Children = { Label, Switch }
             };
