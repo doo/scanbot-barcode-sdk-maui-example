@@ -105,7 +105,7 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
+            var result = await ScanbotSDKMain.Detector.Barcode.DetectBarcodesAsync(image, configuration);
 
             if (result.Success)
             {
