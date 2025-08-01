@@ -1,27 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <pages:BaseComponentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                   xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.ClassicComponent;assembly=ScanbotSDK.Shared"
-                   xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
-                   x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
-                   ios:Page.UseSafeArea="true"
-                   Title="BarcodeClassicScanAndCountComponentPage"
-                   NavigationPage.HasNavigationBar="True">
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                         xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
+                         xmlns:pages="clr-namespace:ScanbotSDK.MAUI.Example.Pages"
+                         x:Class="ScanbotSDK.MAUI.Example.Pages.BarcodeScanAndCountClassicComponentPage"
+                         ios:Page.UseSafeArea="true"
+                         Title="Classic ScanAndCount"
+                         NavigationPage.HasNavigationBar="True">
     <Grid RowSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <Grid 
+        <Grid
             Grid.Row="0">
-            <classicComponent:ScanbotClassicUIContainer 
-                Grid.Row="1">
-                <classicComponent:BarcodeScanAndCountView
-                    x:Name="cameraView"
-                    OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
-                    OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished"/>
-            </classicComponent:ScanbotClassicUIContainer>
+            <classicComponent:BarcodeScanAndCountView
+                x:Name="CameraView"
+                OnBarcodeScanResult="CameraView_OnOnBarcodeScanResult"
+                OnScanAndCountFinished="CameraView_OnOnScanAndCountFinished" />
         </Grid>
         <ScrollView Grid.Row="1">
             <StackLayout>
@@ -33,18 +31,17 @@
                     <Button
                         x:Name="StartScanningButton"
                         Text="Capture"
-                        VerticalOptions="Center" 
-                        Clicked="StartScanningButton_Clicked"/>
+                        VerticalOptions="Center"
+                        Clicked="StartScanningButton_Clicked" />
                     <Button
                         x:Name="ContinueScanningButton"
                         Text="Continue"
                         VerticalOptions="Center"
                         IsEnabled="False"
-                        Clicked="ConitueScanningButton_Clicked"/>
+                        Clicked="ConitueScanningButton_Clicked" />
                 </StackLayout>
                 <StackLayout>
                     <Label
-                        x:Name="lblResultCaption"
                         Text="Result"
                         FontAttributes="Bold"
                         FontSize="18"
@@ -53,7 +50,7 @@
                         VerticalOptions="Center"
                         HorizontalOptions="Center" />
                     <Label
-                        x:Name="lblResult"
+                        x:Name="ResultLabel"
                         Margin="15,10"
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"

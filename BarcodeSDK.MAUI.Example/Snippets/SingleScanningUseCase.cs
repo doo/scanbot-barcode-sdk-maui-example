@@ -4,19 +4,21 @@ namespace ScanbotSDK.MAUI.Example
 {
     public partial class Snippets
     {
-        public static BarcodeScannerConfiguration SingleScanningUseCase
+        public static BarcodeScannerScreenConfiguration SingleScanningUseCase
         {
             get
             {
                 // Create the default configuration object.
-                var config = new BarcodeScannerConfiguration();
+                var config = new BarcodeScannerScreenConfiguration();
                 
+                // Create and configure the use case for single scan mode.
                 var useCase = new SingleScanningMode();
+                
                 // Enable and configure the confirmation sheet.
                 useCase.ConfirmationSheetEnabled = true;
                 useCase.SheetColor = new ColorValue("#FFFFFF");
 
-                // Hide/unhide the barcode image.
+                // Hide/Show the user guidance. the barcode image.
                 useCase.BarcodeImageVisible = true;
 
                 // Configure the barcode title of the confirmation sheet.
@@ -41,7 +43,7 @@ namespace ScanbotSDK.MAUI.Example
                 config.UseCase = useCase;
 
                 // Set an array of accepted barcode types.
-                config.RecognizerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+                config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
 
                 return config;
             }
