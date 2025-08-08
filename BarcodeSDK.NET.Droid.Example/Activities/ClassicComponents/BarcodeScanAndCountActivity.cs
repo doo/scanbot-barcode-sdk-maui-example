@@ -86,7 +86,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             };
         }
 
-        private void HandleBarcodeSnanningResult(IDictionary<BarcodeItem, Java.Lang.Integer> barcodes)
+        private void HandleBarcodeScanningResult(IDictionary<BarcodeItem, Java.Lang.Integer> barcodes)
         {
             var sb = new StringBuilder();
 
@@ -122,7 +122,7 @@ namespace BarcodeSDK.NET.Droid.Activities
 
         public void OnScanAndCountFinished(IList<BarcodeItem> barcodes)
         {
-            HandleBarcodeSnanningResult(scanAndCountView.CountedBarcodes);
+            HandleBarcodeScanningResult(scanAndCountView.CountedBarcodes);
         }
 
         public void OnScanAndCountStarted()
