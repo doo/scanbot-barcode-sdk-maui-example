@@ -8,4 +8,7 @@
 	
 	<!-- Below permission is required for downloading the images from URLs in the RTU UI -->
 	<uses-permission android:name="android.permission.INTERNET" />
+
+	<!-- Below permission is required for the mock camera. Uncomment if you want to use it -->
+	<!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
 </manifest>

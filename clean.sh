@@ -11,5 +11,5 @@ set -e
   done
 
   # For visual studio and jetbrains:rider project cache
-  rm -rf ./.vs
-  rm -rf ./.idea
+  rm -rf .vs
+  rm -rf .idea
