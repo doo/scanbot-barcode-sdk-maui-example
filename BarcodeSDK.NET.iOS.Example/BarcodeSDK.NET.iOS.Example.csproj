@@ -24,6 +24,6 @@
         <MtouchDebug>true</MtouchDebug>
     </PropertyGroup>
     <ItemGroup>
-       <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.1.0-rc.1" />
+       <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.1.0" />
     </ItemGroup>
 </Project>
