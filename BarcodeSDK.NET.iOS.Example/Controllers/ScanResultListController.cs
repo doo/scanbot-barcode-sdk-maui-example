@@ -13,14 +13,14 @@ namespace BarcodeSDK.NET.iOS
         public ScanResultListController(SBSDKBarcodeItem[] list)
         {
             if (list == null || list.Length <= 0) return;
-            barcodeImageResult = list.First().SourceImage?.ToUIImage();
+            barcodeImageResult = list.First().SourceImage?.ToUIImageAndReturnError(out _);
             items = list;
         }
         
         public ScanResultListController(SBSDKUI2BarcodeScannerUIItem[] list)
         {
             if (list == null || list.Length <= 0) return;
-            barcodeImageResult = list.First().Barcode.SourceImage?.ToUIImage();
+            barcodeImageResult = list.First().Barcode.SourceImage?.ToUIImageAndReturnError(out _);
             items = list.Select(item => item.Barcode).ToArray();
         }
         

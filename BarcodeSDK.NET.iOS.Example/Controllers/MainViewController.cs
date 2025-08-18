@@ -91,8 +91,8 @@ namespace BarcodeSDK.NET.iOS
                     ReturnBarcodeImage = true
                 };
                 
-                var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration);
-                var result = scanner.ScanFromImage(image, false, optimizeOverlays: true);
+                var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration, out _);
+                var result = scanner.RunWithImage(SBSDKImageRef.FromUIImageWithImage(image, new SBSDKRawImageLoadOptions()), out _);
 
                 if (result?.Success != true)
                 {
