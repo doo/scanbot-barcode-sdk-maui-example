@@ -30,7 +30,6 @@ namespace BarcodeSDK.NET.iOS
             
             scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
             scannerController.IsTrackingOverlayEnabled = true;
-            scannerController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled = false;
             scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = UIColor.Yellow;
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundColor = UIColor.Yellow.ColorWithAlpha(0.25f);
@@ -39,8 +38,8 @@ namespace BarcodeSDK.NET.iOS
 
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = UIColor.Red;
             scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundSelectedColor = UIColor.Red.ColorWithAlpha(0.25f);
-            scannerController.TrackingOverlayController.Configuration.TextStyle.SelectedTextColor = UIColor.Red;
-            scannerController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundSelectedColor = UIColor.Black;
+            scannerController.TrackingOverlayController.Configuration.TextStyle.HighlightedTextColor = UIColor.Red;
+            scannerController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundHighlightedColor = UIColor.Black;
 
             scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
             scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
@@ -73,7 +72,7 @@ namespace BarcodeSDK.NET.iOS
                     return;
                 }
                 
-                var shouldHandleBarcode = barcodeController.TrackingOverlayController.Configuration.IsAutomaticSelectionEnabled || !barcodeController.IsTrackingOverlayEnabled;
+                var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled;
 
                 if (!shouldHandleBarcode)
                 {
