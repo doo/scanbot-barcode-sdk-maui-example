@@ -9,6 +9,7 @@ using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
+using ScanbotSDK.Droid.Helpers;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
@@ -32,7 +33,6 @@ namespace BarcodeSDK.NET.Droid.Activities
             SetContentView(Resource.Layout.barcode_scan_and_count_activity);
             AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
-            var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
             var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
             var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
@@ -40,7 +40,8 @@ namespace BarcodeSDK.NET.Droid.Activities
                 ExtractedDocumentFormats = BarcodeDocumentFormats.All
             };
 
-            barcodeScanner.SetConfiguration(barcodeScannerConfigs);
+            var barcodeScannerResult = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner(barcodeScannerConfigs);
+            var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
             resultView = FindViewById<TextView>(Resource.Id.result);
             resultView.Visibility = Android.Views.ViewStates.Gone;

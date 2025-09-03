@@ -1,6 +1,8 @@
 using Android.Content;
 using Android.Views;
+using Android.Graphics;
 using IO.Scanbot.Sdk.Barcode;
+using ScanbotSDK.Droid.Helpers;
 
 namespace BarcodeSDK.NET.Droid.Activities
 {
@@ -36,7 +38,11 @@ namespace BarcodeSDK.NET.Droid.Activities
             var barFormat = child.FindViewById<TextView>(Resource.Id.barcodeFormat);
             var docText = child.FindViewById<TextView>(Resource.Id.docText);
 
-            image?.SetImageBitmap(item.SourceImage?.ToBitmap());
+            if (item.SourceImage != null)
+            {
+                image?.SetImageBitmap(ResultHelper.Get<Bitmap>(item.SourceImage.ToBitmap()));
+            }
+
             barFormat.Text = "Format: " + item.Format.Name();
             docText.Text = "Content: " + item.Text;
 

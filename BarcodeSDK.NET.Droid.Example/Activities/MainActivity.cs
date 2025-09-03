@@ -6,9 +6,14 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using BarcodeSDK.NET.Droid.Activities;
+using IO.Scanbot.Common;
 using IO.Scanbot.Sdk.Barcode;
+using IO.Scanbot.Sdk.Image;
+using IO.Scanbot.Sdk.Licensing;
 using IO.Scanbot.Sdk.Ui_v2.Barcode;
+using ScanbotSDK.Droid.Helpers;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration;
+using Result = Android.App.Result;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -50,34 +55,27 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
 
-            try
+            // Obtain an image from somewhere.
+            // In this case, the user picks an image with our helper.
+            var bitmap = await PickImageAsync();
+
+            // Configure the barcode scanner for scanning many barcodes in one image.
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
+            var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
-                // Obtain an image from somewhere.
-                // In this case, the user picks an image with our helper.
-                var bitmap = await PickImageAsync();
+                BarcodeFormatConfigurations = [barcodeFormatConfig],
+                ExtractedDocumentFormats = BarcodeDocumentFormats.All
+            };
 
-                // Configure the barcode scanner for scanning many barcodes in one image.
-                var barcodeScanner = SDK.CreateBarcodeScanner();
-                var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
-                var barcodeScannerConfigs = new BarcodeScannerConfiguration
-                {
-                    BarcodeFormatConfigurations = [barcodeFormatConfig],
-                    ExtractedDocumentFormats = BarcodeDocumentFormats.All
-                };
-                
-                barcodeScanner.SetConfiguration(barcodeScannerConfigs);
+            var barcodeScannerResult = SDK.CreateBarcodeScanner(barcodeScannerConfigs);
+            var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
-                var result = barcodeScanner.ScanFromBitmap(bitmap, 0);
+            var result = barcodeScanner.Run(ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions()));
 
-                // Handle the result in your app as needed.
-                var intent = new Intent(this, typeof(BarcodeResultActivity));
-                intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(result, bitmap).ToBundle());
-                StartActivity(intent);
-            }
-            catch(TaskCanceledException)
-            {
-
-            }
+            // Handle the result in your app as needed.
+            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), bitmap).ToBundle());
+            StartActivity(intent);
         }
 
         private void OnSettingsClick(object sender, EventArgs e)
@@ -158,7 +156,7 @@ namespace BarcodeSDK.NET.Droid
             if (warningView == null)
                 return;
 
-            if (SDK.LicenseInfo.Status == IO.Scanbot.Sap.Status.StatusTrial)
+            if (SDK.LicenseInfo.Status == LicenseStatus.Trial)
             {
                 warningView.Visibility = ViewStates.Visible;
             }
