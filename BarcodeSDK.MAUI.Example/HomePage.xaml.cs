@@ -1,12 +1,11 @@
 ﻿using Microsoft.Maui.Graphics.Platform;
-using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
-using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
+using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Core.Barcode.BarcodeScannerConfiguration;
 
 namespace ScanbotSDK.MAUI.Example
 {

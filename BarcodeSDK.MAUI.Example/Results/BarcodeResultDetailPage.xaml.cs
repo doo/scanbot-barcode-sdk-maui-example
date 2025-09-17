@@ -1,7 +1,8 @@
 using System.Collections.ObjectModel;
-using ScanbotSDK.MAUI.Barcode.Core;
 using ScanbotSDK.MAUI.BarcodeDocumentModel;
 using ScanbotSDK.MAUI.Common;
+using ScanbotSDK.MAUI.Core.Barcode;
+using ScanbotSDK.MAUI.Core.GenericDocument;
 
 namespace ScanbotSDK.MAUI.Example.Results;
 

@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:ScanbotSDK.MAUI.Example.Utils.XamlValueConverters"
-             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Barcode.Core;assembly=ScanbotSDK.Shared"
+             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Core.Barcode;assembly=ScanbotSDK.Shared"
              x:Class="ScanbotSDK.MAUI.Example.Results.BarcodeResultPage"
              Title="Barcode Results">
     <ContentPage.Resources>

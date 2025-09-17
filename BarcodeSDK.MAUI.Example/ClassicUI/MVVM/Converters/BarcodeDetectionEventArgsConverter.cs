@@ -1,5 +1,5 @@
 using System.Globalization;
-using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Core.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Converters;
 
