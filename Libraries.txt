@@ -1,6 +1,70 @@
-Open Source libraries used in the Scanbot Barcode SDK for .NET and MAUI version 7.1.0:
+Open Source libraries used in the Scanbot Barcode SDK for .NET and MAUI version 7.1.1:
 
 --------------------------------------------------------------------------------------
+.NET for Android (formerly Xamarin.Android) bindings for Square.OkHttp3: 
+.NET for Android bindings for the Android Java library 'androidx.activity:activity-compose'.
+
+Library description: Compose integration with Activity: 
+.NET for Android bindings for the Android Java library 'androidx.activity:activity-ktx'.
+
+Library description: Kotlin extensions for 'activity' artifact: 
+.NET for Android bindings for the Android Java library 'androidx.appcompat:appcompat'.
+
+Library description: Provides backwards-compatible implementations of UI-related Android SDK functionality, including dark mode and Material theming.: 
+.NET for Android bindings for the Android Java library 'androidx.camera:camera-camera2'.
+
+Library description: Camera2 implementation and extensions for the Jetpack Camera Library, a library providing a consistent and reliable camera foundation that enables great camera driven experiences across all of Android.: 
+.NET for Android bindings for the Android Java library 'androidx.camera:camera-extensions'.
+
+Library description: OEM Extensions for the Jetpack Camera Library, a library providing interfaces to integrate with OEM specific camera features.: 
+.NET for Android bindings for the Android Java library 'androidx.camera:camera-view'.
+
+Library description: UI tools for the Jetpack Camera Library, a library providing a consistent and reliable camera foundation that enables great camera driven experiences across all of Android.: 
+.NET for Android bindings for the Android Java library 'androidx.collection:collection-ktx'.
+
+Library description: Kotlin extensions for 'collection' artifact: 
+.NET for Android bindings for the Android Java library 'androidx.compose.material:material'. Note this package only adds the Java library to the application. C# bindings are not provided.
+
+Library description: Compose Material Design Components library: 
+.NET for Android bindings for the Android Java library 'androidx.compose.material3:material3'. Note this package only adds the Java library to the application. C# bindings are not provided.
+
+Library description: Compose Material You Design Components library: 
+.NET for Android bindings for the Android Java library 'androidx.compose.ui:ui-viewbinding'. Note this package only adds the Java library to the application. C# bindings are not provided.
+
+Library description: Compose integration with ViewBinding: 
+Xamarin.Android bindings for AndroidX - constraintlayout-core: 
+Xamarin.Android bindings for AndroidX - legacy-support-v4: 
+.NET for Android bindings for the Android Java library 'androidx.navigation:navigation-compose'.
+
+Library description: Compose integration with Navigation: 
+.NET for Android (formerly Xamarin.Android) bindings for AndroidX library 'androidx.preference:preference'.: 
+Xamarin.Android bindings for AndroidX - security-crypto: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-appcompat-theme'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-drawablepainter'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-flowlayout'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-pager-indicators'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-permissions'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-placeholder'.
+
+Library description: Utilities for Jetpack Compose: 
+.NET for Android bindings for the Android Java library 'com.google.accompanist:accompanist-systemuicontroller'.
+
+Library description: Utilities for Jetpack Compose: 
+Xamarin.Android bindings for AndroidX - material: 
+.NET for Android (formerly Xamarin.Android) bindings for Google Dagger: 
+.NET for Android bindings for the Android Java library 'org.jetbrains.kotlin:kotlin-parcelize-runtime'.
+
+Library description: Runtime library for the Parcelize compiler plugin: 
 
 The MIT License (MIT)
 
@@ -14,7 +78,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 7.1.0
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 7.1.2
 
 CWAC-Camera
 
@@ -187,7 +251,29 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+limitations under the License.
+
+
+PdfiumAndroid
+
+Version 103d5855f797af78a6f33f94cb306ef1c23b2290
+(https://github.com/barteksc/PdfiumAndroid)
+
+Original work Copyright 2015 Bekket McClane
+Modified work Copyright 2016 Bartosz Schiller
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 Boost C++
 
@@ -3276,7 +3362,7 @@ Version 1.1.0
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 7.1.0:
+Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 7.1.3:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
