@@ -1,5 +1,6 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Common;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ReadyToUseUI;
@@ -27,13 +28,20 @@ public static class MultipleUniqueBarcodeScanningFeature
         config.UseCase = useCase;
 
         // Set an array of accepted barcode types.
-        config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
-
+        // todo: Check the format configs
+        config.ScannerConfiguration.BarcodeFormatConfigurations =
+        [
+            new BarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            }
+        ];
+         
         // Set the user guidance hint
         config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSdkMain.BarcodeScanner.LaunchAsync(configuration: config);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 

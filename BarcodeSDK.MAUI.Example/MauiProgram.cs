@@ -20,12 +20,12 @@ namespace ScanbotSDK.MAUI.Example
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            SBSDKInitializer.Initialize(builder, LicenseKey, new SBSDKConfiguration
+            ScanbotSdkMain.Initialize(builder, LicenseKey, new ScanbotSdkConfiguration
             {
                 EnableLogging = true,
-                ErrorHandler = (status, feature) =>
+                ErrorHandler = (status, feature, message) =>
                 {
-                    Console.WriteLine($"License error: {status}, {feature}");
+                    Console.WriteLine($"License error: {status}, {feature}, {message}");
                 }
             });
 

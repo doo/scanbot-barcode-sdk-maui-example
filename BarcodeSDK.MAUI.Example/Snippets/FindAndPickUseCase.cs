@@ -43,7 +43,15 @@ namespace ScanbotSDK.MAUI.Example
 
                 // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
                 config.UseCase = useCase;
-                config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+                
+                // todo: Check the format configs
+                config.ScannerConfiguration.BarcodeFormatConfigurations =
+                [
+                    new BarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeFormats.Common
+                    }
+                ];
     
                 return config;
             }

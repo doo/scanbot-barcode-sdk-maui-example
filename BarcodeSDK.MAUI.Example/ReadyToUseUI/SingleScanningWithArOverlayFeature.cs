@@ -26,14 +26,20 @@ public static class SingleScanningWithArOverlayFeature
         // Configure other parameters, pertaining to single-scanning mode as needed.
         config.UseCase = useCase;
 
-        // Set an array of accepted barcode types.
-        config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
+        // create barcode format configurations
+        var barcodeFormatConfiguration = new BarcodeFormatCommonConfiguration
+        {
+            // Set an array of accepted barcode types.
+            Formats = BarcodeTypes.Instance.AcceptedTypes,
+            // Set an array of accepted barcode types.
+            Gs1Handling = Gs1Handling.DecodeStructure
+        };
 
-        // Set an array of accepted barcode types.
-        config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+        // Set an array of barcode format configurations
+        config.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSdkMain.BarcodeScanner.LaunchAsync(configuration: config);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 

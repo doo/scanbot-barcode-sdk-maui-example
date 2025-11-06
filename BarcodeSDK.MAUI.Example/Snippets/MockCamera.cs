@@ -13,7 +13,7 @@ public partial class Snippets
             if (ImageSource.FromFile(image.FullPath) is not FileImageSource fileImage)
                 return;
 
-            ScanbotSDKMain.CommonOperations.ConfigureMockCamera(new MockCameraConfiguration(fileImage.File, fileImage.File, "Barcode SDK Mock Camera", true));
+            ScanbotSdkMain.MockCamera.ConfigureMockCamera(new MockCameraConfiguration(fileImage.File, fileImage.File, "Barcode SDK Mock Camera", true));
         }
     }
 }

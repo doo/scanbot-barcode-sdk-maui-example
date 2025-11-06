@@ -1,4 +1,5 @@
 using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ReadyToUseUI;
@@ -43,9 +44,15 @@ public static class FindAndPickScanningFeature
 
         // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
         configuration.UseCase = findAndPickConfig;
-        configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes.ToArray();
+        configuration.ScannerConfiguration.BarcodeFormatConfigurations =
+        [
+            new BarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            }
+        ];
 
-        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration);
+        var rtuResult = await ScanbotSdkMain.BarcodeScanner.LaunchAsync(configuration);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 

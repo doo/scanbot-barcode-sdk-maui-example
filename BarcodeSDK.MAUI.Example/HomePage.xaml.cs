@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Graphics.Platform;
-using ScanbotSDK.MAUI.Core.Barcode;
+﻿using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
@@ -72,7 +71,7 @@ namespace ScanbotSDK.MAUI.Example
             if (e?.CurrentSelection?.FirstOrDefault() is not HomePageMenuItem selectedItem)
                 return;
             
-            if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
+            if (ScanbotSdkMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
                 selectedItem.NavigationAction();
                 CollectionViewMenuItems.SelectedItem = null;
@@ -104,7 +103,7 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Detector.Barcode.DetectBarcodesAsync(image, configuration);
+            var result = await ScanbotSdkMain.BarcodeScanner.ScanFromImageAsync(image, configuration);
 
             if (result.Success)
             {
@@ -121,21 +120,16 @@ namespace ScanbotSDK.MAUI.Example
         /// Picks image from the photos application.
         /// </summary>
         /// <returns></returns>
-        private async Task<PlatformImage> PickImageAsync()
+        private async Task<ImageSource> PickImageAsync()
         {
             try
             {
                 // Pick the photo
                 FileResult photo = await MediaPicker.Default.PickPhotoAsync();
 
-                if (photo != null)
-                {
-                    // Optionally display or process the image
-                    using var stream = await photo.OpenReadAsync();
-
-                    // It returns a common interface IIMage which is implemented in PlatformImage.
-                    return (PlatformImage)PlatformImage.FromStream(stream, ImageFormat.Jpeg);
-                }
+                if (photo == null) return null;
+                
+                return ImageSource.FromFile(photo.FullPath);
             }
             catch (Exception ex)
             {
@@ -150,11 +144,11 @@ namespace ScanbotSDK.MAUI.Example
         /// </summary>
         private void ViewLicenseInfo()
         {
-            var info = ScanbotSDKMain.LicenseInfo;
+            var info = ScanbotSdkMain.LicenseInfo;
             var message = $"License status: {info.Status}\n";
             if (info.IsValid) 
             {
-                message += $"It is valid until {info.ExpirationDate?.ToLocalTime()}.";
+                message += $"It is valid until {info.ExpirationDateString}.";
             }
             else
             {
