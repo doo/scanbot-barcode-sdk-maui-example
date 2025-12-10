@@ -39,7 +39,7 @@ public static class SingleScanningWithArOverlayFeature
         config.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSdkMain.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(configuration: config);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 

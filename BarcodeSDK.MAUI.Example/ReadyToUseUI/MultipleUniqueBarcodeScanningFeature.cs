@@ -41,7 +41,7 @@ public static class MultipleUniqueBarcodeScanningFeature
         config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSdkMain.BarcodeScanner.LaunchAsync(configuration: config);
+        var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(configuration: config);
         if (rtuResult.Status != OperationResult.Ok)
             return;
 
