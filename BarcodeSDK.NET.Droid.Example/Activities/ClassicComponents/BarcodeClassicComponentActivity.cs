@@ -50,7 +50,9 @@ namespace BarcodeSDK.NET.Droid.Activities
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
             barcodeScannerView?.InitCamera();
-            barcodeScannerView?.InitScanningBehavior(barcodeScanner, OnBarcodeResult, (
+            barcodeScannerView?.InitScanningBehavior(barcodeScanner: barcodeScanner, 
+                onBarcodeResult: OnBarcodeResult,
+                scannerViewCallbacks: (
                 onCameraOpen: OnCameraOpened,
                 onPictureTaken: OnPictureTaken,
                 onSelectionOverlayBarcodeClicked: OnSelectionOverlayBarcodeClicked
@@ -88,7 +90,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             Finish();
         }
 
-        private bool OnBarcodeResult(BarcodeScannerResult result, IO.Scanbot.Sdk.SdkLicenseError _)
+        private bool OnBarcodeResult(BarcodeScannerResult result, FrameHandler.Frame _)
         {
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {

@@ -101,22 +101,21 @@ namespace BarcodeSDK.NET.Droid
         private void OnLicenseInfoClick(object sender, EventArgs e)
         {
             var status = SDK.LicenseInfo.Status.Name();
-            var date = SDK.LicenseInfo.ExpirationDate;
             var validity = SDK.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
             var message = validity + $"\n\n- {status}";
             
-            if (SDK.LicenseInfo.IsValid && date != null)
+            if (SDK.LicenseInfo.IsValid)
             {
-                message += $"\n- Valid until: {date}";
+                message += $"\n- Valid until: {SDK.LicenseInfo.ExpirationDateString}";
             }
 
             Alert.ShowInfoDialog(this, "License Info", message);
         }
-        
+
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-        
+
             if (resultCode != Result.Ok && !Alert.CheckLicense(this, SDK))
             {
                 return;
@@ -124,20 +123,22 @@ namespace BarcodeSDK.NET.Droid
 
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
             {
-                var bsResult = resultContract.ParseResult((int)resultCode, data);
-                if (bsResult is BarcodeScannerActivity.BarcodeScannerActivityResult resultUiResult && resultUiResult?.Result != null)
+                var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data);
+                if (parsedResult != null)
                 {
-                    var barcodes = resultUiResult.ScannerUiResult().Items.Select(item => item.Barcode).ToList();
+                    var barcodes = parsedResult.Items.Select(item => item.Barcode).ToList();
                     var result = new BarcodeScannerResult(barcodes, true);
                     OnRTUActivityResult(result);
                 }
-            } else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
+            }
+            else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
             {
                 if (resultCode != Result.Ok)
                 {
                     pendingBitmap.SetCanceled();
                     return;
                 }
+
                 var stream = ContentResolver.OpenInputStream(data.Data);
                 pendingBitmap.SetResult(BitmapFactory.DecodeStream(stream));
             }
