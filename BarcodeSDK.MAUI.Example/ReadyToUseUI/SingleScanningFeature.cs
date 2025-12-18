@@ -39,15 +39,13 @@ public static class SingleScanningFeature
         config.ScannerConfiguration.ReturnBarcodeImage = true;
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(configuration: config);
+        var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(configuration: config);
 
         // Comment out the above and use the below to try some of our snippets instead:
-        // var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(Snippets.SingleScanningUseCase);
+        // var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(Snippets.SingleScanningUseCase);
         // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
 
-        if (rtuResult.Status != OperationResult.Ok)
-            return;
-
-        await CommonUtils.DisplayResults(rtuResult.Result);
+        if (rtuResult.IsSuccess)
+            await CommonUtils.DisplayResults(rtuResult.Value);
     }
 }

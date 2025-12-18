@@ -52,10 +52,8 @@ public static class FindAndPickScanningFeature
             }
         ];
 
-        var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(configuration);
-        if (rtuResult.Status != OperationResult.Ok)
-            return;
-
-        await CommonUtils.DisplayResults(rtuResult.Result);
+        var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(configuration);
+        if (rtuResult.IsSuccess)
+            await CommonUtils.DisplayResults(rtuResult.ValueOrNull);
     }
 }

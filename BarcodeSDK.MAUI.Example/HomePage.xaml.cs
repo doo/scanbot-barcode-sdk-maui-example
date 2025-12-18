@@ -66,20 +66,18 @@ namespace ScanbotSDK.MAUI.Example
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemSelected(object sender, SelectionChangedEventArgs e)
+        private void MeuItemTapped(object sender, TappedEventArgs e)
         {
-            if (e?.CurrentSelection?.FirstOrDefault() is not HomePageMenuItem selectedItem)
+            if (e.Parameter is not HomePageMenuItem selectedItem)
                 return;
             
-            if (ScanbotSdkMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
+            if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
                 selectedItem.NavigationAction();
-                CollectionViewMenuItems.SelectedItem = null;
                 return;
             }
 
             CommonUtils.Alert(this, "Alert", LicenseInvalidMessage);
-            CollectionViewMenuItems.SelectedItem = null;
         }
 
         /// <summary>
@@ -103,12 +101,11 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSdkMain.BarcodeScanner.ScanFromImageAsync(image, configuration);
-
-            if (result.Success)
+            var result = await ScanbotSDKMain.BarcodeScanner.ScanFromImageAsync(image, configuration);
+            if (result.IsSuccess)
             {
                 // Handle the result in your app as needed.
-                await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList()));
+                await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
             }
             else
             {
@@ -119,17 +116,25 @@ namespace ScanbotSDK.MAUI.Example
         /// <summary>
         /// Picks image from the photos application.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ImageSource object.</returns>
         private async Task<ImageSource> PickImageAsync()
         {
             try
             {
-                // Pick the photo
-                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                var options = new MediaPickerOptions
+                {
+                    Title = "Select a photo",
+                    SelectionLimit = 1
+                };
 
-                if (photo == null) return null;
-                
-                return ImageSource.FromFile(photo.FullPath);
+                var pickedList = await MediaPicker.Default.PickPhotosAsync(options);
+
+                var file = pickedList.FirstOrDefault();
+                if (file is not null)
+                {
+                    var stream = await file.OpenReadAsync();
+                    return ImageSource.FromStream(() => stream);
+                }
             }
             catch (Exception ex)
             {
@@ -139,12 +144,13 @@ namespace ScanbotSDK.MAUI.Example
             return null;
         }
 
+
         /// <summary>
         /// View Current License Information
         /// </summary>
         private void ViewLicenseInfo()
         {
-            var info = ScanbotSdkMain.LicenseInfo;
+            var info = ScanbotSDKMain.LicenseInfo;
             var message = $"License status: {info.Status}\n";
             if (info.IsValid) 
             {

@@ -28,7 +28,6 @@ public static class MultipleUniqueBarcodeScanningFeature
         config.UseCase = useCase;
 
         // Set an array of accepted barcode types.
-        // todo: Check the format configs
         config.ScannerConfiguration.BarcodeFormatConfigurations =
         [
             new BarcodeFormatCommonConfiguration
@@ -41,10 +40,8 @@ public static class MultipleUniqueBarcodeScanningFeature
         config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSdkMain.BarcodeScanner.StartScannerAsync(configuration: config);
-        if (rtuResult.Status != OperationResult.Ok)
-            return;
-
-        await CommonUtils.DisplayResults(rtuResult.Result);
+        var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(configuration: config);
+        if (rtuResult.IsSuccess)
+            await CommonUtils.DisplayResults(rtuResult.Value);
     }
 }

@@ -20,7 +20,7 @@ namespace ScanbotSDK.MAUI.Example
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            ScanbotSdkMain.Initialize(builder, LicenseKey, new ScanbotSdkConfiguration
+            ScanbotSDKMain.Initialize(builder, LicenseKey, new ScanbotSdkConfiguration
             {
                 EnableLogging = true,
                 ErrorHandler = (status, feature, message) =>

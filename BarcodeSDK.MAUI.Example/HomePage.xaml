@@ -20,50 +20,50 @@
                 BackgroundColor="Transparent"
                 FontSize="24" />
         </VerticalStackLayout>
-        <ScrollView
+        <StackLayout
             Grid.Row="1"
             BackgroundColor="White">
-            <StackLayout>
-                <CollectionView
-                    x:Name="CollectionViewMenuItems"
-                    ItemsSource="{Binding MenuItems}"
-                    SelectionChanged="MenuItemSelected"
-                    SelectionMode="Single">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:HomePageMenuItem">
-                            <StackLayout HeightRequest="55" Padding="10,0">
-
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup Name="CommonStates">
-                                        <VisualState Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor"
-                                                        Value="Transparent"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-
-                                <Label
-                                    Text="{Binding Title}"
-                                    VerticalOptions="CenterAndExpand"
-                                    HorizontalOptions="CenterAndExpand"
-                                    HorizontalTextAlignment="Center"
-                                    FontSize="Default"
-                                    TextColor="Black" />
-                                <StackLayout
-                                    BackgroundColor="LightGray"
-                                    HeightRequest="0.5" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.FooterTemplate>
-                        <DataTemplate>
-                            <Grid HeightRequest="50" />
-                        </DataTemplate>
-                    </CollectionView.FooterTemplate>
-                </CollectionView>
-            </StackLayout>
-        </ScrollView>
+            <CollectionView
+                x:Name="CollectionViewMenuItems"
+                ItemsSource="{Binding MenuItems}"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:HomePageMenuItem">
+                        <StackLayout HeightRequest="55" Padding="10,0">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor"
+                                                    Value="Transparent" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="MeuItemTapped" CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
+                            
+                            <Label
+                                Text="{Binding Title}"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                FontSize="Default"
+                                TextColor="Black" />
+                            <StackLayout
+                                BackgroundColor="LightGray"
+                                HeightRequest="0.5" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid HeightRequest="50" />
+                    </DataTemplate>
+                </CollectionView.FooterTemplate>
+            </CollectionView>
+        </StackLayout>
     </Grid>
 </ContentPage>

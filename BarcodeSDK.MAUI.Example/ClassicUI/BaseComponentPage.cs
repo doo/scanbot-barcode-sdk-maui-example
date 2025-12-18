@@ -16,7 +16,7 @@ public class BaseComponentPage : ContentPage
 
     public void CheckLicense()
     {
-        if (!ScanbotSdkMain.LicenseInfo.IsValid)
+        if (!ScanbotSDKMain.LicenseInfo.IsValid)
         {
             DisplayAlert("Error", "Your SDK license has expired", "Close");
         }
