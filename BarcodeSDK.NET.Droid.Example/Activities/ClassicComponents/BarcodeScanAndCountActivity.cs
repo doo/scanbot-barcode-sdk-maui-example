@@ -2,6 +2,7 @@
 using _Microsoft.Android.Resource.Designer;
 using Android;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
@@ -57,7 +58,7 @@ namespace BarcodeSDK.NET.Droid.Activities
                     onError:OnErrorHandler)
             );
 
-            // scanAndCountView.CounterOverlayController.SetBarcodeAppearanceDelegate(
+            // _scanAndCountView.CounterOverlayController.SetBarcodeAppearanceDelegate(
             //         getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
             //             fillHighlightedColor: Color.Black,
             //             fillColor: Color.Yellow,
