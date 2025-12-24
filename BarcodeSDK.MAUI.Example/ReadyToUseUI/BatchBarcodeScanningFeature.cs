@@ -40,7 +40,7 @@ public static class BatchBarcodeScanningFeature
         config.ScannerConfiguration.ReturnBarcodeImage = true;
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(configuration: config);
+        var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
         if (rtuResult.IsSuccess)
             await CommonUtils.DisplayResults(rtuResult.Value);
     }

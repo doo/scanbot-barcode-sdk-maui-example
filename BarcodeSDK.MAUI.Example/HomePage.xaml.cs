@@ -101,7 +101,7 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.BarcodeScanner.ScanFromImageAsync(image, configuration);
+            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(image, configuration);
             if (result.IsSuccess)
             {
                 // Handle the result in your app as needed.

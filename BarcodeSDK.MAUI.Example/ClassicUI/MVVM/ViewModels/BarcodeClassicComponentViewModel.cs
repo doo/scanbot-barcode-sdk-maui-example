@@ -28,15 +28,15 @@ public class BarcodeClassicComponentViewModel : BaseViewModel
 
     public List<BarcodeFormatConfigurationBase> BarcodeFormatConfigurations { get; private set; }
 
-    public ICommand BarcodeScanResultCommand { get; private set; }
+    public ICommand BarcodeScanResultCommand { get; set; }
 
-    private string resultLabel;
+    private string _resultLabel;
     public string ResultLabel
     {
-        get => resultLabel;
+        get => _resultLabel;
         set
         {
-            resultLabel = value;
+            _resultLabel = value;
             OnPropertyChanged();
         }
     }
