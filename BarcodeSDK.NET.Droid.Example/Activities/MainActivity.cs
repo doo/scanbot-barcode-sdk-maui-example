@@ -11,6 +11,7 @@ using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Image;
 using IO.Scanbot.Sdk.Licensing;
 using IO.Scanbot.Sdk.Ui_v2.Barcode;
+using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using ScanbotSDK.Droid.Helpers;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration;
 using Result = Android.App.Result;
@@ -123,7 +124,7 @@ namespace BarcodeSDK.NET.Droid
 
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
             {
-                var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data);
+                var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
                 if (parsedResult != null)
                 {
                     var barcodes = parsedResult.Items.Select(item => item.Barcode).ToList();
