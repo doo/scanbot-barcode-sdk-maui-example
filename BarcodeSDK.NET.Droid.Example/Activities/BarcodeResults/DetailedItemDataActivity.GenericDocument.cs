@@ -1,5 +1,5 @@
 using IO.Scanbot.Sdk.Barcode.Entity;
-using IO.Scanbot.Sdk.Genericdocument.Entity;
+using IO.Scanbot.Sdk.Genericdocument;
 
 namespace BarcodeSDK.NET.Droid.Activities;
 

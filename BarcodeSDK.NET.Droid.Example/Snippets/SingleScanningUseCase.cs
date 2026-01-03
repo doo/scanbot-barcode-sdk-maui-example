@@ -45,7 +45,13 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            config.ScannerConfiguration.BarcodeFormatConfigurations =
+            [
+                new BarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeTypes.Instance.AcceptedTypes
+                }
+            ];
             
             return config;
         }

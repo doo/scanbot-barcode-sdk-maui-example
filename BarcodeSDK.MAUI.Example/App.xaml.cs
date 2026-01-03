@@ -8,7 +8,7 @@ public partial class App
     {
         InitializeComponent();
         
-        var navigationPage = new NavigationPage(new Pages.HomePage())
+        var navigationPage = new NavigationPage(new HomePage())
         {
             BarBackgroundColor = ScanbotColor,
             BarTextColor = Colors.White

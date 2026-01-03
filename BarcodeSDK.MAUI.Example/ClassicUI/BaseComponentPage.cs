@@ -1,6 +1,6 @@
 using ScanbotSDK.MAUI.Example.Utils;
 
-namespace ScanbotSDK.MAUI.Example.Pages;
+namespace ScanbotSDK.MAUI.Example.ClassicUI;
 
 public class BaseComponentPage : ContentPage
 {

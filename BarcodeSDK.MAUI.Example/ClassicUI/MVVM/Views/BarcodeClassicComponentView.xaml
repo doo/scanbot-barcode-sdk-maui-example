@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:classicComponent="clr-namespace:ScanbotSDK.MAUI.Barcode.ClassicComponent;assembly=ScanbotSDK.Shared"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Converters"
+             xmlns:viewModels="clr-namespace:ScanbotSDK.MAUI.Example.ClassicUI.MVVM.ViewModels"
+             x:Class="ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views.BarcodeClassicComponentView"
+             ios:Page.UseSafeArea="true"
+             Title="Classic Component (MVVM)"
+             x:DataType="viewModels:BarcodeClassicComponentViewModel">
+    <Grid RowSpacing="10"
+          RowDefinitions="7*,3*">
+
+        <Grid Grid.Row="0">
+            <classicComponent:BarcodeScannerView
+                BarcodeFormatConfigurations="{Binding BarcodeFormatConfigurations}"
+                x:Name="CameraView">
+                <classicComponent:BarcodeScannerView.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="OnBarcodeScanResult"
+                        Command="{Binding BarcodeScanResultCommand}"
+                        EventArgsConverter="{converters:BarcodeDetectionEventArgsConverter}"/>
+                </classicComponent:BarcodeScannerView.Behaviors>
+            </classicComponent:BarcodeScannerView>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <Label
+                    Text="Result"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+                <Label
+                    Text="{Binding ResultLabel}"
+                    Margin="15,10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

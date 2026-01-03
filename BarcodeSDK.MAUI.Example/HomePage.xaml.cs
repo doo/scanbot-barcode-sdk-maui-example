@@ -1,10 +1,14 @@
 ﻿using Microsoft.Maui.Graphics.Platform;
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
+using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
+using ScanbotSDK.MAUI.Example.ReadyToUseUI;
+using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example
 {
     public struct HomePageMenuItem(string title, Func<Task> action)
     {
@@ -44,16 +48,17 @@ namespace ScanbotSDK.MAUI.Example.Pages
         private void InitMenuItems()
         {
             MenuItems = [
-                new HomePageMenuItem("RTU - Single Scanning", SingleScanning),
-                new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlay),
-                new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanning),
-                new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanning),
-                new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanning),
+                new HomePageMenuItem("RTU - Single Scanning", SingleScanningFeature.StartSingleScanningAsync),
+                new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlayFeature.StartSingleScanningWithArOverlayAsync),
+                new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanningFeature.StartBatchBarcodeScanningAsync),
+                new HomePageMenuItem("RTU - Multiple Unique Barcode Scanning", MultipleUniqueBarcodeScanningFeature.StartMultipleUniqueBarcodeScanningAsync),
+                new HomePageMenuItem("RTU - Find and Pick Barcode Scanning", FindAndPickScanningFeature.StartFindAndPickScanningAsync),
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
+                new HomePageMenuItem("Classic Component - Barcode Scanning (MVVM)", () => Navigation.PushAsync(new BarcodeClassicComponentView())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
-                new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeSelectionPage())),
+                new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeTypesSelectionPage())),
                 new HomePageMenuItem(ViewLicenseInfoItem, () => Task.Run(ViewLicenseInfo))
             ];
         }
@@ -84,27 +89,13 @@ namespace ScanbotSDK.MAUI.Example.Pages
         /// </summary>
         private async Task DetectBarcodesOnImage()
         {
-            PlatformImage image;
-            try
-            {
-                // Obtain an image from somewhere.
-                // In this case, the user picks an image with our helper.
-                image = await ScanbotSDKMain.ImagePicker.PickImageAsync(new ImagePickerConfiguration { Title = "Gallery" });
-                if (image == null)
-                {
-                    return;
-                }
-            }
-            // Handle cancel button click for ImagePicker.
-            catch (TaskCanceledException e)
-            {
-                Console.WriteLine(e);
+            var image = await PickImageAsync();
+            if (image == null)
                 return;
-            }
 
             var configs = new BarcodeFormatCommonConfiguration
             {
-                Formats = Models.BarcodeTypes.Instance.AcceptedTypes
+                Formats = BarcodeTypes.Instance.AcceptedTypes
             };
             
             // Configure the barcode detector for detecting many barcodes in one image.
@@ -114,7 +105,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Detectors.Barcode.DetectBarcodesAsync(image, configuration);
+            var result = await ScanbotSDKMain.Detector.Barcode.DetectBarcodesAsync(image, configuration);
 
             if (result.Success)
             {
@@ -125,6 +116,34 @@ namespace ScanbotSDK.MAUI.Example.Pages
             {
                 CommonUtils.Alert(this, "Warning", "No barcodes found.");
             }
+        }
+
+        /// <summary>
+        /// Picks image from the photos application.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<PlatformImage> PickImageAsync()
+        {
+            try
+            {
+                // Pick the photo
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+
+                if (photo != null)
+                {
+                    // Optionally display or process the image
+                    using var stream = await photo.OpenReadAsync();
+
+                    // It returns a common interface IIMage which is implemented in PlatformImage.
+                    return (PlatformImage)PlatformImage.FromStream(stream, ImageFormat.Jpeg);
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonUtils.Alert(this, "Error", $"Unable to pick image: {ex.Message}");
+            }
+
+            return null;
         }
 
         /// <summary>

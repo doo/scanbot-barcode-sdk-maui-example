@@ -10,7 +10,8 @@ using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using IO.Scanbot.Sdk.Camera;
-using IO.Scanbot.Sdk.UI.Camera;
+using IO.Scanbot.Sdk.Image;
+using ScanbotSDK.Droid.Helpers;
 using Intent = Android.Content.Intent;
 
 namespace BarcodeSDK.NET.Droid.Activities
@@ -36,7 +37,6 @@ namespace BarcodeSDK.NET.Droid.Activities
             SetContentView(Resource.Layout.barcode_classic_activity);
             AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
 
-            var barcodeScanner = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner();
             var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
             var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
@@ -44,12 +44,15 @@ namespace BarcodeSDK.NET.Droid.Activities
                 ExtractedDocumentFormats = BarcodeDocumentFormats.All,
                 ReturnBarcodeImage = true
             };
-                
-            barcodeScanner.SetConfiguration(barcodeScannerConfigs);
+
+            var barcodeScannerResult = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner(barcodeScannerConfigs);
+            var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
             barcodeScannerView = FindViewById<BarcodeScannerView>(Resource.Id.camera);
             barcodeScannerView?.InitCamera();
-            barcodeScannerView?.InitScanningBehavior(barcodeScanner, OnBarcodeResult, (
+            barcodeScannerView?.InitScanningBehavior(barcodeScanner: barcodeScanner, 
+                onBarcodeResult: OnBarcodeResult,
+                scannerViewCallbacks: (
                 onCameraOpen: OnCameraOpened,
                 onPictureTaken: OnPictureTaken,
                 onSelectionOverlayBarcodeClicked: OnSelectionOverlayBarcodeClicked
@@ -87,7 +90,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             Finish();
         }
 
-        private bool OnBarcodeResult(BarcodeScannerResult result, IO.Scanbot.Sdk.SdkLicenseError _)
+        private bool OnBarcodeResult(BarcodeScannerResult result, FrameHandler.Frame _)
         {
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
@@ -99,7 +102,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             if (shouldHandleBarcode && result != null)
             {
                var intent = new Intent(this, typeof(BarcodeResultActivity));
-               intent.PutExtra(("BarcodeResult"), new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle());
+               intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle());
                StartActivity(intent);
                Finish();
             }
@@ -135,14 +138,14 @@ namespace BarcodeSDK.NET.Droid.Activities
             }, 300);
         }
 
-        public void OnPictureTaken(byte[] image, CaptureInfo captureInfo)
+        public void OnPictureTaken(ImageRef image, CaptureInfo captureInfo)
         {
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
                 return;
             }
 
-            var bitmap = BitmapFactory.DecodeByteArray(image, 0, captureInfo.ImageOrientation);
+            var bitmap = BitmapFactory.DecodeByteArray(image.ToArray<byte>(), 0, captureInfo.ImageOrientation);
 
             if (bitmap == null)
             {

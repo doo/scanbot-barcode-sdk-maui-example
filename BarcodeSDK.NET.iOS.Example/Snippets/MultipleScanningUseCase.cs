@@ -27,7 +27,7 @@ public static partial class Snippets
             useCase.SheetContent.ManualCountChangeEnabled = true;
 
             // Set the delay before same barcode counting repeat.
-            useCase.CountingRepeatDelay = new IntPtr(1000);
+            useCase.CountingRepeatDelay = 1000;
 
             // Configure the submit button.
             useCase.SheetContent.SubmitButton.Text = "Submit";
@@ -37,7 +37,17 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = SBSDKBarcodeFormats.Common;
+            config.ScannerConfiguration = new SBSDKBarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations =
+                [
+                    new SBSDKBarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeTypes.Instance.AcceptedTypes,
+                        Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                    }
+                ]
+            };
 
             return config;
         }

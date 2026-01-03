@@ -45,7 +45,13 @@ public static partial class Snippets
 
             // Configure other parameters, pertaining to findAndPick-scanning mode as needed.
             config.UseCase = useCase;
-            config.ScannerConfiguration.BarcodeFormats = BarcodeFormats.Common;
+            config.ScannerConfiguration.BarcodeFormatConfigurations =
+            [
+                new BarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeTypes.Instance.AcceptedTypes
+                }
+            ];
  
             return config;
         }
