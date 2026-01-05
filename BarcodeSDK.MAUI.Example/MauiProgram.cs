@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using ScanbotSDK.MAUI.Core.SdkConfiguration;
 
 namespace ScanbotSDK.MAUI.Example
 {
@@ -20,14 +21,14 @@ namespace ScanbotSDK.MAUI.Example
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            ScanbotSDKMain.Initialize(builder, LicenseKey, new ScanbotSdkConfiguration
+            ScanbotSDKMain.Initialize(new SdkConfiguration
             {
                 EnableLogging = true,
-                ErrorHandler = (status, feature, message) =>
-                {
-                    Console.WriteLine($"License error: {status}, {feature}, {message}");
-                }
-            });
+                // ErrorHandler = (status, feature, message) =>
+                // {
+                //     Console.WriteLine($"License error: {status}, {feature}, {message}");
+                // }
+            }, builder);
 
             return builder.Build();
         }
