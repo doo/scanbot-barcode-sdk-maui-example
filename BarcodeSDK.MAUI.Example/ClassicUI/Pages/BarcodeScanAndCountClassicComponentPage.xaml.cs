@@ -26,6 +26,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             //     AddAdditionalQuietZone = true
             // }
         ];
+
         CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             overlayFormat: BarcodeTextFormat.CodeAndType,

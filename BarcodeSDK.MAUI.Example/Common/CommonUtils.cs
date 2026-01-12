@@ -1,4 +1,5 @@
 ﻿using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Core.GenericDocument;
 using ScanbotSDK.MAUI.Example.Results;
 
 namespace ScanbotSDK.MAUI.Example.Utils
@@ -17,6 +18,21 @@ namespace ScanbotSDK.MAUI.Example.Utils
                 var items = result.Items.Select(item => item.Barcode);
                 await Application.Current.MainPage.Navigation.PushAsync(new BarcodeResultPage(items.ToList()));
             }
+        }
+        
+        internal static string ToGdrString(this GenericDocument document)
+        {
+            var formattedString = string.Empty;
+            if (document?.Fields == null) return formattedString;
+		
+            foreach (var field in document.Fields)
+            {
+                if (string.IsNullOrEmpty(field?.Type?.Name))
+                    continue;
+                formattedString += $"{field.Type.Name}: {field.Value?.Text ?? "-"}\n";
+            }
+
+            return formattedString;
         }
     }
 }
