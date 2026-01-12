@@ -17,7 +17,9 @@ using ScanbotSDK.Droid.Helpers;
 namespace BarcodeSDK.NET.Droid.Activities
 {
     [Activity(Theme = "@style/AppTheme")]
-    public class BarcodeScanAndCountActivity : AppCompatActivity, IOnApplyWindowInsetsListener
+    public class BarcodeScanAndCountActivity : AppCompatActivity, IOnApplyWindowInsetsListener, 
+        BarcodePolygonsStaticView.IBarcodeItemViewBinder,
+        BarcodePolygonsStaticView.IBarcodeItemViewFactory
     {
         private BarcodeScanAndCountView _scanAndCountView;
         private TextView _resultView;
@@ -25,10 +27,9 @@ namespace BarcodeSDK.NET.Droid.Activities
         private Button _continueScanningButton;
 
         private const int RequestPermissionCode = 200;
-        private static readonly string[] Permissions = [ Manifest.Permission.Camera ];
-
+        private static readonly string[] Permissions = [Manifest.Permission.Camera];
         private bool _flashEnabled;
-
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -42,28 +43,32 @@ namespace BarcodeSDK.NET.Droid.Activities
                 BarcodeFormatConfigurations = [barcodeFormatConfig],
                 ExtractedDocumentFormats = BarcodeDocumentFormats.All
             };
-
+            
             var barcodeScannerResult = new ScanbotBarcodeScannerSDK(this).CreateBarcodeScanner(barcodeScannerConfigs);
             var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
             _resultView = FindViewById<TextView>(ResourceConstant.Id.result)!;
             _resultView.Visibility = ViewStates.Gone;
 
-            _scanAndCountView = FindViewById<BarcodeScanAndCountView>(ResourceConstant.Id.camera);
+            _scanAndCountView = FindViewById<BarcodeScanAndCountView>(ResourceConstant.Id.camera)!;
             _scanAndCountView.InitScanningBehavior(barcodeScanner: barcodeScanner,
                 scannerViewCallbacks: (onCameraOpen: OnCameraOpen,
                     onLicenseError: OnLicenseError,
                     onScanAndCountFinished: OnScanAndCountFinished,
                     onScanAndCountStarted: OnScanAndCountStarted,
-                    onError:OnErrorHandler)
+                    onError: OnErrorHandler)
             );
+            
+            _scanAndCountView.CounterOverlayController.SetBarcodeItemViewBinder(this);
+            // note: If you don't set this view. The above method 'SetBarcodeItemViewBinder(this)' will never receive callbacks.
+            _scanAndCountView.CounterOverlayController.SetBarcodeItemViewFactory(this);
 
             // _scanAndCountView.CounterOverlayController.SetBarcodeAppearanceDelegate(
-            //         getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
-            //             fillHighlightedColor: Color.Black,
-            //             fillColor: Color.Yellow,
-            //             strokeColor: Color.AliceBlue,
-            //             strokeHighlightedColor: Color.Orange
+            //     getPolygonStyle: (defaultStyle, _) => defaultStyle.Copy(
+            //         fillHighlightedColor: Color.Black,
+            //         fillColor: Color.Yellow,
+            //         strokeColor: Color.AliceBlue,
+            //         strokeHighlightedColor: Color.Orange
             //     ));
 
             FindViewById<Button>(ResourceConstant.Id.flash)!.Click += delegate
@@ -134,15 +139,36 @@ namespace BarcodeSDK.NET.Droid.Activities
         {
             // Handler On scan started
         }
-        
+
         private void OnErrorHandler(IResult.Failure obj)
         {
             Alert.ShowInfoDialog(this, "Alert", obj.Message);
         }
-        
+
         public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)
         {
             return AndroidUtils.ApplyWindowInsets(v, windowInsets);
+        }
+
+        private void HandleBarcodeItemViewBinder(Android.Views.View view, IO.Scanbot.Sdk.Barcode.BarcodeItem item, bool bindViewAction)
+        {
+            if (view is ImageView imageView) // access the ImageView set from the CreateView()
+            {
+                imageView.SetScaleType(ImageView.ScaleType.FitCenter);
+                // Set your custom image here. 
+                imageView.SetImageResource(_Microsoft.Android.Resource.Designer.Resource.Drawable.ic_scanbot_checkmark);
+            }
+        }
+
+        public void BindView(View view, BarcodeItem barcodeItem, bool isBarcodeAccepted)
+        {
+            HandleBarcodeItemViewBinder(view, barcodeItem, isBarcodeAccepted);
+        }
+
+        public View CreateView()
+        {
+            // Pass the ImageView here. You may pass your required View.
+            return new ImageView(this);
         }
     }
 }

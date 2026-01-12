@@ -18,13 +18,13 @@
     <!-- Speeds up debug builds -->
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DebugType>portable</DebugType>
-        <RunAOTCompilation>false</RunAOTCompilation>
+        <RunAOTCompilation>false</RunAOTCompilation>                                                                                                               
         <PublishTrimmed>false</PublishTrimmed>
         <UseInterpreter>false</UseInterpreter>
         <AndroidLinkMode>None</AndroidLinkMode>
         <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0-alpha.1" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0-alpha.2" />
     </ItemGroup>
 </Project>
