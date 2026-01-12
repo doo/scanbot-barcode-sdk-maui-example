@@ -1,3 +1,4 @@
+using Android.Util;
 using Android.Views;
 using AndroidX.Core.View;
 
@@ -26,5 +27,10 @@ public static class AndroidUtils
         }
             
         return WindowInsetsCompat.Consumed;
+    }
+    
+    internal static int DpToPx(Android.Content.Context context, int dp)
+    {
+        return (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, dp, context.Resources.DisplayMetrics);
     }
 }

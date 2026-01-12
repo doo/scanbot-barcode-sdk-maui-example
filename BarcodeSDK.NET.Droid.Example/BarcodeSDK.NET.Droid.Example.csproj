@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net9.0-android</TargetFramework>
+        <TargetFramework>net10.0-android</TargetFramework>
         <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
         <OutputType>Exe</OutputType>
         <Nullable>disable</Nullable>
@@ -18,13 +18,13 @@
     <!-- Speeds up debug builds -->
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DebugType>portable</DebugType>
-        <RunAOTCompilation>false</RunAOTCompilation>
+        <RunAOTCompilation>false</RunAOTCompilation>                                                                                                               
         <PublishTrimmed>false</PublishTrimmed>
         <UseInterpreter>false</UseInterpreter>
         <AndroidLinkMode>None</AndroidLinkMode>
         <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="7.1.1" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0-alpha.2" />
     </ItemGroup>
 </Project>
