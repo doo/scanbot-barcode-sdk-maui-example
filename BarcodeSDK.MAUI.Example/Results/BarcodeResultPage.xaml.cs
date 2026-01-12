@@ -1,6 +1,6 @@
 ﻿using ScanbotSDK.MAUI.Barcode.Core;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.Results
 {
     public partial class BarcodeResultPage : ContentPage
     {
@@ -15,7 +15,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
             ListViewResults.ItemsSource = barcodes;
         }
 
-        private void ListView_Results_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem is BarcodeItem barcodeItem)
             {

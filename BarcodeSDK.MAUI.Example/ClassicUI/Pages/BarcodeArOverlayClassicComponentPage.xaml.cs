@@ -1,8 +1,7 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Barcode.Core;
-using ScanbotSDK.MAUI.Example.Models;
 
-namespace ScanbotSDK.MAUI.Example.Pages
+namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 {
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
     {
@@ -14,6 +13,7 @@ namespace ScanbotSDK.MAUI.Example.Pages
 
         private void SetupViews()
         {
+
             CameraView.BarcodeFormatConfigurations =
             [
                 new BarcodeFormatCommonConfiguration
@@ -30,7 +30,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
             ];
 
             CameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-                automaticSelectionEnabled: false,
                 overlayFormat: BarcodeTextFormat.CodeAndType,
                 textColor: Colors.Yellow,
                 textContainerColor: Colors.Black,
@@ -40,21 +39,6 @@ namespace ScanbotSDK.MAUI.Example.Pages
                 highlightedTextContainerColor: Colors.Black,
                 polygonBackgroundColor: Colors.Transparent,
                 polygonBackgroundHighlightedColor: Colors.Transparent);
-        }
-
-        private void HandleScannerResults(BarcodeItem[] barcodeItems)
-        {
-            if (barcodeItems.Length == 0)
-                return;
-
-            string text = string.Empty;
-            foreach (var barcode in barcodeItems)
-            {
-                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
-            }
-
-            System.Diagnostics.Debug.WriteLine(text);
-            ResultLabel.Text = text;
         }
 
         protected override void OnAppearing()
@@ -74,9 +58,19 @@ namespace ScanbotSDK.MAUI.Example.Pages
             CameraView.Handler?.DisconnectHandler();
         }
         
-        private void CameraView_OnOnSelectBarcodeResult(object ssender, BarcodeItem[] barcodeItems)
+        private void OnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)
         {
-            HandleScannerResults(barcodeItems);
+            if (barcodeItems.Length == 0)
+                return;
+
+            string text = string.Empty;
+            foreach (var barcode in barcodeItems)
+            {
+                text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
+            }
+
+            System.Diagnostics.Debug.WriteLine(text);
+            ResultLabel.Text = text;
         }
     }
 }
