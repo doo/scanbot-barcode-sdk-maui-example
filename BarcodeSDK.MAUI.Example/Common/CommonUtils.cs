@@ -8,7 +8,7 @@ namespace ScanbotSDK.MAUI.Example.Utils
     {
         public static async void Alert(ContentPage context, string title, string message)
         {
-            await context.DisplayAlert(title, message, "Close");
+            await context.DisplayAlertAsync(title, message, "Close");
         }
 
         public static async Task DisplayResults(BarcodeScannerUiResult result)

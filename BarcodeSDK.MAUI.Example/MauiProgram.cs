@@ -23,12 +23,12 @@ namespace ScanbotSDK.MAUI.Example
 
             ScanbotSDKMain.Initialize(new SdkConfiguration
             {
-                EnableLogging = true,
-                LicenseKey = LicenseKey
-                // ErrorHandler = (status, feature, message) =>
-                // {
-                //     Console.WriteLine($"License error: {status}, {feature}, {message}");
-                // }
+                LoggingEnabled = true,
+                LicenseKey = LicenseKey,
+                ErrorHandler = (status, feature, message) =>
+                {
+                    Console.WriteLine($"License error: {status}, {feature}, {message}");
+                }
             }, builder);
 
             return builder.Build();
