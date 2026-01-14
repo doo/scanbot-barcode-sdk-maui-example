@@ -6,6 +6,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.View;
+using IO.Scanbot.Common;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Barcode.UI;
 using IO.Scanbot.Sdk.Barcode_scanner;
@@ -90,7 +91,7 @@ namespace BarcodeSDK.NET.Droid.Activities
             Finish();
         }
 
-        private bool OnBarcodeResult(BarcodeScannerResult result, FrameHandler.Frame _)
+        private bool OnBarcodeResult(IResult result, FrameHandler.Frame _)
         {
             if (!MainActivity.SDK.LicenseInfo.IsValid)
             {
@@ -98,11 +99,14 @@ namespace BarcodeSDK.NET.Droid.Activities
             }
 
             var shouldHandleBarcode = selectionOverlayEnabled ? autoSelectionEnabled : true;
-
-            if (shouldHandleBarcode && result != null)
+            
+            // extracts the barcode result from the result wrapper object.
+            var barcodeResult = result?.Get<BarcodeScannerResult>();
+            
+            if (shouldHandleBarcode && barcodeResult != null)
             {
                var intent = new Intent(this, typeof(BarcodeResultActivity));
-               intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(result).ToBundle());
+               intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(barcodeResult).ToBundle());
                StartActivity(intent);
                Finish();
             }
