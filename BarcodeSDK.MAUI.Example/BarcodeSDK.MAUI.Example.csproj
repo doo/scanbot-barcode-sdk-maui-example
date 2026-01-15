@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net9.0-ios;net9.0-android</TargetFrameworks>
+        <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <RootNamespace>ScanbotSDK.MAUI.Example</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -22,6 +22,10 @@
         <WarningsAsErrors>NU1603</WarningsAsErrors>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' And $(TargetFramework.Contains('-ios'))">
+        <CreatePackage>false</CreatePackage>
+        <RuntimeIdentifiers>ios-arm64;iossimulator-x64</RuntimeIdentifiers>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -40,9 +44,8 @@
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="7.1.1" />
-        <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.51" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.51" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="7.1.2-beta.1" />
     </ItemGroup>
 </Project>

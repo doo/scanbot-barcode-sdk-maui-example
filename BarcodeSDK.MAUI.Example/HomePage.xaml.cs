@@ -64,24 +64,22 @@ namespace ScanbotSDK.MAUI.Example
         }
 
         /// <summary>
-        /// CollectionView SelectionChanged event.
+        /// CollectionView Item Tapped event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemSelected(object sender, SelectionChangedEventArgs e)
+        private void MeuItemTapped(object sender, TappedEventArgs e)
         {
-            if (e?.CurrentSelection?.FirstOrDefault() is not HomePageMenuItem selectedItem)
+            if (e.Parameter is not HomePageMenuItem selectedItem)
                 return;
-            
+
             if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
                 selectedItem.NavigationAction();
-                CollectionViewMenuItems.SelectedItem = null;
                 return;
             }
 
             CommonUtils.Alert(this, "Alert", LicenseInvalidMessage);
-            CollectionViewMenuItems.SelectedItem = null;
         }
 
         /// <summary>
