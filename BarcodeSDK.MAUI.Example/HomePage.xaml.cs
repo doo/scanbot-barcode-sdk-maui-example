@@ -1,10 +1,13 @@
 ﻿using ScanbotSDK.MAUI.Core.Barcode;
+using ScanbotSDK.MAUI.Core.Image;
 using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
+using ScanbotSDK.MAUI.Storage;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Core.Barcode.BarcodeScannerConfiguration;
+using ImageSource = Microsoft.Maui.Controls.ImageSource;
 
 namespace ScanbotSDK.MAUI.Example
 {
@@ -56,10 +59,12 @@ namespace ScanbotSDK.MAUI.Example
                 new HomePageMenuItem("Classic Component - Barcode Scanning (MVVM)", () => Navigation.PushAsync(new BarcodeClassicComponentView())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
-                new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImageAsync),
-                new HomePageMenuItem("Detect Barcodes on PDF", DetectBarcodesOnPdfAsync),
-                new HomePageMenuItem("Detect BarcodeDocument on Image", DetectBarcodeDocumentOnImageAsync),
+                new HomePageMenuItem("Scan Barcodes From Image", ScanBarcodesFromImageAsync),
+                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync),  // todo: To remove
+                new HomePageMenuItem("Detect BarcodeDocument on Image", DetectBarcodeDocumentFromImageAsync), // todo: To remove
+                new HomePageMenuItem("Configure Mock Camera", ConfigureMockCameraAsync), // todo: To remove
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeTypesSelectionPage())),
+                new HomePageMenuItem("Clean Storage", CleanStorage),
                 new HomePageMenuItem(ViewLicenseInfoItem, () => Task.Run(ViewLicenseInfo))
             ];
         }
@@ -86,11 +91,13 @@ namespace ScanbotSDK.MAUI.Example
         /// <summary>
         /// Detects barcodes on an image selected by the user.
         /// </summary>
-        private async Task DetectBarcodesOnImageAsync()
+        private async Task ScanBarcodesFromImageAsync()
         {
-            var image = await PickImageAsync();
+            var image = await ImagePicker.PickImageAsPathAsync();
             if (image == null)
                 return;
+
+            var imageRef = ImageRef.FromPath(image);
 
             var configs = new BarcodeFormatCommonConfiguration
             {
@@ -104,7 +111,7 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(image, configuration);
+            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(imageRef, configuration);
             if (result.IsSuccess)
             {
                 // Handle the result in your app as needed.
@@ -116,81 +123,34 @@ namespace ScanbotSDK.MAUI.Example
             }
         }
 
-        /// <summary>
-        /// Picks image from the photos application.
-        /// </summary>
-        /// <returns>ImageSource object.</returns>
-        private async Task<ImageSource> PickImageAsync()
+        private async Task DetectBarcodesFromPdfAsync()
         {
-            try
-            {
-                var options = new MediaPickerOptions
-                {
-                    Title = "Select a photo",
-                    SelectionLimit = 1
-                };
-
-                var pickedList = await MediaPicker.Default.PickPhotosAsync(options);
-
-                var file = pickedList.FirstOrDefault();
-                if (file is not null)
-                {
-                    var stream = await file.OpenReadAsync();
-                    return ImageSource.FromStream(() => stream);
-                }
-            }
-            catch (Exception ex)
-            {
-                CommonUtils.Alert(this, "Error", $"Unable to pick image: {ex.Message}");
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// View Current License Information
-        /// </summary>
-        private void ViewLicenseInfo()
-        {
-            var info = ScanbotSDKMain.LicenseInfo;
-            var message = $"License status: {info.Status}\n";
-            if (info.IsValid)
-            {
-                message += $"It is valid until {info.ExpirationDateString}.";
-            }
-            else
-            {
-                message = LicenseInvalidMessage;
-            }
-
-            MainThread.InvokeOnMainThreadAsync(() => { CommonUtils.Alert(this, "Info", message); });
-        }
-
-        private async Task DetectBarcodesOnPdfAsync()
-        {
-            
             var file = await FilePicker.Default.PickAsync(new PickOptions
             {
                 FileTypes = FilePickerFileType.Pdf,
                 PickerTitle = "Select a pdf file",
             });
 
-            if (file != null)
+            if (file == null)
             {
-                var result = await ScanbotSDKMain.Barcode.ScanFromPdfAsync(file.FullPath, new BarcodeScannerConfiguration());
-                if (result.IsSuccess)
-                {
-                    await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
-                }
+                CommonUtils.Alert(this, "Alert", "Something went wrong while picking the file from the storage.");
+                return;
+            }
+
+            var result = await ScanbotSDKMain.Barcode.ScanFromPdfAsync(file.FullPath, new BarcodeScannerConfiguration());
+            if (result.IsSuccess)
+            {
+                await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
             }
         }
 
-        private async Task DetectBarcodeDocumentOnImageAsync()
+        private async Task DetectBarcodeDocumentFromImageAsync()
         {
-            var image = await PickImageAsync();
+            var image = await ImagePicker.PickImageAsPathAsync();
             if (image == null)
                 return;
 
+            var imageRef = ImageRef.FromPath(image);
             var configs = new BarcodeFormatCommonConfiguration
             {
                 Formats = BarcodeTypes.Instance.AcceptedTypes
@@ -203,7 +163,7 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(image, configuration);
+            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(imageRef, configuration);
 
             if (!result.IsSuccess)
             {
@@ -224,6 +184,44 @@ namespace ScanbotSDK.MAUI.Example
             {
                 CommonUtils.Alert(this, "Document Result String",genericDocumentResult.Value.ParsedDocument.ToGdrString());
             }
+        }
+
+        private async Task ConfigureMockCameraAsync()
+        {
+            var imagePath = await ImagePicker.PickImageAsPathAsync();
+            ScanbotSDKMain.MockCamera(imagePath);
+        }
+
+        private async Task CleanStorage()
+        {
+            var result = await ScanbotSDKMain.CleanupStorageAsync();
+            if (result.IsSuccess)
+            {
+                CommonUtils.Alert(this, "Alert", "Storage cleared successfully.");
+            }
+            else
+            {
+                CommonUtils.Alert(this, "Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
+            }
+        }
+
+        /// <summary>
+        /// View Current License Information
+        /// </summary>
+        private void ViewLicenseInfo()
+        {
+            var info = ScanbotSDKMain.LicenseInfo;
+            var message = $"License status: {info.Status}\n";
+            if (info.IsValid)
+            {
+                message += $"It is valid until {info.ExpirationDateString}.";
+            }
+            else
+            {
+                message = LicenseInvalidMessage;
+            }
+
+            MainThread.InvokeOnMainThreadAsync(() => { CommonUtils.Alert(this, "Info", message); });
         }
     }
 }
