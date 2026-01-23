@@ -1,4 +1,5 @@
 using System.Globalization;
+using ScanbotSDK.MAUI.Image;
 
 namespace ScanbotSDK.MAUI.Example.Utils.XamlValueConverters;
 

@@ -5,6 +5,7 @@ using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
+using ScanbotSDK.MAUI.Image;
 using ScanbotSDK.MAUI.Storage;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Core.Barcode.BarcodeScannerConfiguration;
 using ImageSource = Microsoft.Maui.Controls.ImageSource;

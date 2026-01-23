@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using ScanbotSDK.MAUI.Core.SdkConfiguration;
+using ScanbotSDK.MAUI.Core.Sdk;
 
 namespace ScanbotSDK.MAUI.Example
 {

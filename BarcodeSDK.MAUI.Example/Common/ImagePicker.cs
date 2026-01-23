@@ -2,7 +2,6 @@ namespace ScanbotSDK.MAUI.Example.Utils;
 
 public class ImagePicker
 {
-
     private static async Task<FileResult> PickImageAsync()
     {
         var options = new MediaPickerOptions
@@ -14,7 +13,6 @@ public class ImagePicker
         var pickedList = await MediaPicker.Default.PickPhotosAsync(options);
        return pickedList.FirstOrDefault();
     }
-
 
     /// <summary>
     /// Picks image from the photos application.
