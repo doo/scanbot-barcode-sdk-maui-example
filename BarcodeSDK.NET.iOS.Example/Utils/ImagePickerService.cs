@@ -1,3 +1,4 @@
+using MobileCoreServices;
 using PhotosUI;
 using ScanbotSDK.iOS;
 
@@ -5,17 +6,22 @@ namespace BarcodeSDK.NET.iOS.Example.Utils;
 
 public class ImagePickerService : NSObject, IPHPickerViewControllerDelegate
 {
+    /// <summary>
+    /// Update this flag to receive ImageRef from path.
+    /// </summary>
+    private const bool ImageRefFromPath = false;
+
     public static async Task<SBSDKImageRef> PickImageAsync()
     {
         var service = new ImagePickerService();
-        var image = await service.PickNativeImageAsync();
-        return SBSDKImageRef.FromUIImageWithImage(image, new SBSDKRawImageLoadOptions());
+        return await service.PickNativeImageAsync();
     }
-    
-    private static  TaskCompletionSource<UIImage> _taskCompletionSource;
-    private Task<UIImage> PickNativeImageAsync()
+
+    private static TaskCompletionSource<SBSDKImageRef> _taskCompletionSource;
+
+    private Task<SBSDKImageRef> PickNativeImageAsync()
     {
-        _taskCompletionSource = new TaskCompletionSource<UIImage>();
+        _taskCompletionSource = new TaskCompletionSource<SBSDKImageRef>();
 
         // Configure picker
         var config = new PHPickerConfiguration
@@ -42,14 +48,50 @@ public class ImagePickerService : NSObject, IPHPickerViewControllerDelegate
     {
         picker.DismissViewController(true, null);
 
-        if (results.Length == 0)
+        if (results.Length == 0 || results[0] == null)
         {
             _taskCompletionSource.SetResult(null);
             return;
         }
 
         var provider = results[0].ItemProvider;
+        if (ImageRefFromPath)
+        {
+            ExtractImageRefFromPath(provider);
+        }
+        else
+        {
+            ExtractImageRefFromUIImage(provider);
+        }
+    }
 
+    private void ExtractImageRefFromPath(NSItemProvider provider)
+    {
+        // Public image type
+        var typeIdentifier = UTType.Image;
+
+        if (!provider.HasItemConformingTo(typeIdentifier))
+        {
+            _taskCompletionSource.SetResult(null);
+            return;
+        }
+
+        // Get SBSDKImageRef from path
+        provider.LoadInPlaceFileRepresentation(typeIdentifier, (url, inPlace, error) =>
+        {
+            if (error != null || url?.Path == null)
+            {
+                _taskCompletionSource.SetResult(null);
+                return;
+            }
+
+            var imageRef = SBSDKImageRef.FromPathWithPath(url.Path, new SBSDKPathImageLoadOptions());
+            _taskCompletionSource.SetResult(imageRef);
+        });
+    }
+
+    private void ExtractImageRefFromUIImage(NSItemProvider provider)
+    {
         if (provider.CanLoadObject(typeof(UIImage)))
         {
             provider.LoadObject<UIImage>((image, error) =>
@@ -59,8 +101,9 @@ public class ImagePickerService : NSObject, IPHPickerViewControllerDelegate
                     _taskCompletionSource.SetException(new NSErrorException(error));
                     return;
                 }
-                
-                _taskCompletionSource.SetResult(image);
+
+                var imageRef = SBSDKImageRef.FromUIImageWithImage(image, new SBSDKRawImageLoadOptions());
+                _taskCompletionSource.SetResult(imageRef);
             });
         }
         else
