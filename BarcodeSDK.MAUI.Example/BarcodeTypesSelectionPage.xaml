@@ -23,7 +23,8 @@
                         <Label
                             Grid.Column="0"
                             Text="{Binding Key}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center"
+                            TextColor="Black" />
                         <Switch
                             Grid.Column="1"
                             IsToggled="{Binding Value}"
