@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace ScanbotSDK.MAUI.Example.Utils;
 
 public class ImagePicker
@@ -9,9 +11,8 @@ public class ImagePicker
             Title = "Select a photo",
             SelectionLimit = 1
         };
-
         var pickedList = await MediaPicker.Default.PickPhotosAsync(options);
-       return pickedList.FirstOrDefault();
+        return pickedList.FirstOrDefault();
     }
 
     /// <summary>
@@ -35,7 +36,7 @@ public class ImagePicker
         }
         catch (Exception ex)
         {
-            CommonUtils.Alert(Application.Current.MainPage as ContentPage, "Error", $"Unable to pick image: {ex.Message}");
+            App.Navigation.CurrentPage.Alert("Error", $"Unable to pick image: {ex.Message}");
         }
 
         return null;
@@ -81,7 +82,7 @@ public class ImagePicker
         }
         catch (Exception ex)
         {
-            CommonUtils.Alert(Application.Current.MainPage as ContentPage, "Error", $"Unable to pick image: {ex.Message}");
+            App.Navigation.CurrentPage.Alert("Error", $"Unable to pick image: {ex.Message}");
         }
 
         return null;
@@ -99,6 +100,7 @@ public class ImagePicker
         }
         catch (Exception e)
         {
+            Debug.WriteLine("The file could not be found. For more details:\n" + e.Message);
             return false;
         }
     }
