@@ -14,15 +14,15 @@ public class BaseComponentPage : ContentPage
         CheckLicense();
     }
 
-    private void CheckLicense()
+    private async void CheckLicense()
     {
         if (!ScanbotSDKMain.LicenseInfo.IsValid)
         {
-            this.Alert("Error", "Your SDK license has expired");
+            await Alert.ShowAsync("Error", "Your SDK license has expired");
         }
         else if (string.IsNullOrEmpty(MauiProgram.LicenseKey))
         {
-            this.Alert("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.");
+            await Alert.ShowAsync("Welcome", "You are using the Trial SDK License. The SDK will be active for one minute.");
         }
     }
 }

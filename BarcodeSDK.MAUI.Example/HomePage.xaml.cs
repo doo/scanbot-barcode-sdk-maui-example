@@ -71,18 +71,18 @@ namespace ScanbotSDK.MAUI.Example;
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MeuItemTapped(object sender, TappedEventArgs e)
+        private async void MeuItemTapped(object sender, TappedEventArgs e)
         {
             if (e.Parameter is not HomePageMenuItem selectedItem)
                 return;
 
             if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
-                selectedItem.NavigationAction();
+                await selectedItem.NavigationAction();
                 return;
             }
 
-            this.Alert("Alert", LicenseInvalidMessage);
+            await Alert.ShowAsync("Alert", LicenseInvalidMessage);
         }
 
         /// <summary>
@@ -109,15 +109,14 @@ namespace ScanbotSDK.MAUI.Example;
             };
 
             var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(imageRef, configuration);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                // Handle the result in your app as needed.
-                await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
+                await Alert.ShowAsync("Warning", "No barcodes found.");
+                return;
             }
-            else
-            {
-                this.Alert("Warning", "No barcodes found.");
-            }
+            
+            // Handle the result in your app as needed.
+            await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
         }
 
         private async Task DetectBarcodesFromPdfAsync()
@@ -130,7 +129,7 @@ namespace ScanbotSDK.MAUI.Example;
 
             if (file == null)
             {
-                this.Alert("Alert", "Something went wrong while picking the file from the storage.");
+                await Alert.ShowAsync("Alert", "Something went wrong while picking the file from the storage.");
                 return;
             }
 
@@ -164,13 +163,13 @@ namespace ScanbotSDK.MAUI.Example;
 
             if (!result.IsSuccess)
             {
-                this.Alert("Warning", "No barcodes found. \n Error:" + result.Error?.Message);
+                await Alert.ShowAsync("Warning", "No barcodes found. \n Error:" + result.Error?.Message);
                 return;
             }
 
             if (result.Value.Barcodes.Length == 0)
             {
-                this.Alert("Warning", "No barcodes found.");
+                await Alert.ShowAsync("Warning", "No barcodes found.");
                 return;
             }
 
@@ -179,7 +178,7 @@ namespace ScanbotSDK.MAUI.Example;
             var genericDocumentResult = await ScanbotSDKMain.Barcode.ParseDocumentAsync(text, BarcodeDocumentFormats.All);
             if (genericDocumentResult.IsSuccess)
             {
-                this.Alert("Document Result String", genericDocumentResult.Value.ParsedDocument.ToGdrString());
+                await Alert.ShowAsync("Document Result String", genericDocumentResult.Value.ParsedDocument.ToGdrString());
             }
         }
 
@@ -194,18 +193,18 @@ namespace ScanbotSDK.MAUI.Example;
             var result = await ScanbotSDKMain.CleanupStorageAsync();
             if (result.IsSuccess)
             {
-                this.Alert("Alert", "Storage cleared successfully.");
+                await Alert.ShowAsync("Alert", "Storage cleared successfully.");
             }
             else
             {
-                this.Alert("Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
+                await Alert.ShowAsync("Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
             }
         }
 
         /// <summary>
         /// View Current License Information
         /// </summary>
-        private void ViewLicenseInfo()
+        private async void ViewLicenseInfo()
         {
             var info = ScanbotSDKMain.LicenseInfo;
             var message = $"License status: {info.Status}\n";
@@ -218,22 +217,6 @@ namespace ScanbotSDK.MAUI.Example;
                 message = LicenseInvalidMessage;
             }
 
-            MainThread.InvokeOnMainThreadAsync(() => { this.Alert("Info", message); });
-        }
-        
-        /// <summary>
-        /// Invokes the Force closing of scanner after the specified time span if the feature is enabled from App.xaml.cs file.
-        /// </summary>
-        /// <param name="action">Invokes the Scanner ForceClose after the given interval.</param>
-        internal static void TestForceCloseScanner(Action action)
-        {
-            if (App.TestForceCloseFeature)
-            {
-                Task.Run(async () =>
-                {
-                    await Task.Delay(App.ForceCloseInterval);
-                    action?.Invoke();
-                });
-            }
+            await Alert.ShowAsync("Info", message);
         }
     }

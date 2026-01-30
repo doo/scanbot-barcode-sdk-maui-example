@@ -26,17 +26,17 @@ public class ImagePicker
             var file = await PickImageAsync();
             if (file is null)
             {
-                 //add error
+                //add error
                 return null;
             }
 
             var stream = await file.OpenReadAsync();
-                return ImageSource.FromStream(() => stream);
+            return ImageSource.FromStream(() => stream);
             
         }
         catch (Exception ex)
         {
-            App.Navigation.CurrentPage.Alert("Error", $"Unable to pick image: {ex.Message}");
+            await Alert.ShowAsync("Error", $"Unable to pick image: {ex.Message}");
         }
 
         return null;
@@ -82,7 +82,7 @@ public class ImagePicker
         }
         catch (Exception ex)
         {
-            App.Navigation.CurrentPage.Alert("Error", $"Unable to pick image: {ex.Message}");
+            await Alert.ShowAsync("Error", $"Unable to pick image: {ex.Message}");
         }
 
         return null;

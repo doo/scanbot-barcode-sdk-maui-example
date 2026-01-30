@@ -38,15 +38,26 @@ public static class SingleScanningWithArOverlayFeature
         // Set an array of barcode format configurations
         config.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
 
-        // Enable `App.TestForceCloseFeature` flag to test the Force close scanner feature.  
-        HomePage.TestForceCloseScanner(async void () =>
-        {
-            await ScanbotSDKMain.Barcode.ForceCloseScannerAsync();
-        });
-        
         // Launch the barcode scanner.
         var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
+        
+        // The scanner was canceled.
+        if (rtuResult.IsCanceled)
+        {
+            return;
+        }
+
+        // The scanning was failed
+        if (!rtuResult.IsSuccess && rtuResult.Error != null)
+        {
+            await Alert.ShowAsync(rtuResult.Error);
+            return;
+        }
+
+        // The scanning was success
         if (rtuResult.IsSuccess)
-            await CommonUtils.DisplayResults(rtuResult.Value);
+        {
+            await CommonUtils.DisplayResultAsync(rtuResult.Value);
+        }
     }
 }

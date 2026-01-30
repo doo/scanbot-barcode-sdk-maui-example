@@ -12,7 +12,7 @@ public static class BatchBarcodeScanningFeature
     public static async Task StartBatchBarcodeScanningAsync()
     {
         // Create the default configuration object.
-        var config = new BarcodeScannerScreenConfiguration();
+        var configuration = new BarcodeScannerScreenConfiguration();
 
         // Create multiple scanning mode
         var useCase = new MultipleScanningMode();
@@ -24,7 +24,7 @@ public static class BatchBarcodeScanningFeature
         useCase.Sheet.Mode = SheetMode.CollapsedSheet;
 
         // Configure other parameters, pertaining to single-scanning mode as needed.
-        config.UseCase = useCase;
+        configuration.UseCase = useCase;
         
         // create barcode format configurations
         var barcodeFormatConfiguration = new BarcodeFormatCommonConfiguration
@@ -34,20 +34,31 @@ public static class BatchBarcodeScanningFeature
         };
 
         // Set an array of barcode format configurations
-        config.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
+        configuration.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
         
         // Enable return of barcode image.
-        config.ScannerConfiguration.ReturnBarcodeImage = true;
-
-        // Enable `App.TestForceCloseFeature` flag to test the Force close scanner feature.
-        HomePage.TestForceCloseScanner(async void () =>
-        {
-            await ScanbotSDKMain.Barcode.ForceCloseScannerAsync();
-        });
+        configuration.ScannerConfiguration.ReturnBarcodeImage = true;
         
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
+        var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration);
+        
+        // The scanner was canceled.
+        if (rtuResult.IsCanceled)
+        {
+            return;
+        }
+
+        // The scanning was failed
+        if (!rtuResult.IsSuccess && rtuResult.Error != null)
+        {
+            await Alert.ShowAsync(rtuResult.Error);
+            return;
+        }
+
+        // The scanning was success
         if (rtuResult.IsSuccess)
-            await CommonUtils.DisplayResults(rtuResult.Value);
+        {
+            await CommonUtils.DisplayResultAsync(rtuResult.Value);
+        }
     }
 }

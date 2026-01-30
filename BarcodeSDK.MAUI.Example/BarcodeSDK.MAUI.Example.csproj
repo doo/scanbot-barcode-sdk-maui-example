@@ -2,7 +2,7 @@
     <PropertyGroup>
         <!-- .NET 10 TargetFrameworks -->
         <TargetFrameworks>net10.0-ios;net10.0-android</TargetFrameworks>
-        
+
         <OutputType>Exe</OutputType>
         <RootNamespace>ScanbotSDK.MAUI.Example</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -56,8 +56,6 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
     </ItemGroup>
     <ItemGroup>
-        
         <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="8.0.0-alpha.7" />
-       <!-- <ProjectReference Include="..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" /> -->
     </ItemGroup>
 </Project>

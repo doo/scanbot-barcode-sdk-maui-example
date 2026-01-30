@@ -12,14 +12,14 @@ public class Validation
         {
             // Prompt the user to turn on in settings
             // On iOS once a permission has been denied it may not be requested again from the application
-            await App.Navigation.CurrentPage.AlertAsync("Validation Issue: Camera permission", "Permission Denied. Please change permission in the application settings.");
+            await Alert.ShowAsync("Validation Issue: Camera permission", "Permission Denied. Please change permission in the application settings.");
             return status;
         }
 
         if (Permissions.ShouldShowRationale<Permissions.Camera>())
         {
             // Prompt the user with additional information as to why the permission is needed
-            await App.Navigation.CurrentPage.AlertAsync("Validation Issue: Camera permission", "Please grant permission to access the camera in order to proceed.");
+            await Alert.ShowAsync("Validation Issue: Camera permission", "Please grant permission to access the camera in order to proceed.");
         }
 
         status = await Permissions.RequestAsync<Permissions.Camera>();
