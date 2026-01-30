@@ -55,7 +55,6 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
         // Stop barcode detection manually
         CameraView.StopDetection();
-        CameraView.Handler?.DisconnectHandler();
     }
 
     private void OnStartScanningButtonClicked(object sender, EventArgs e)

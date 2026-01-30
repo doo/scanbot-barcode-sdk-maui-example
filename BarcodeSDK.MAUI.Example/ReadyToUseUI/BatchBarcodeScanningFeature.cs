@@ -39,6 +39,12 @@ public static class BatchBarcodeScanningFeature
         // Enable return of barcode image.
         config.ScannerConfiguration.ReturnBarcodeImage = true;
 
+        // Enable `App.TestForceCloseFeature` flag to test the Force close scanner feature.
+        HomePage.TestForceCloseScanner(async void () =>
+        {
+            await ScanbotSDKMain.Barcode.ForceCloseScannerAsync();
+        });
+        
         // Launch the barcode scanner.
         var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
         if (rtuResult.IsSuccess)

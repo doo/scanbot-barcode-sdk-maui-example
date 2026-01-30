@@ -51,6 +51,12 @@ public static class FindAndPickScanningFeature
                 Formats = BarcodeTypes.Instance.AcceptedTypes
             }
         ];
+        
+        // Enable `App.TestForceCloseFeature` flag to test the Force close scanner feature.  
+        HomePage.TestForceCloseScanner(async void () =>
+        {
+            await ScanbotSDKMain.Barcode.ForceCloseScannerAsync();
+        });
 
         var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration);
         if (rtuResult.IsSuccess)

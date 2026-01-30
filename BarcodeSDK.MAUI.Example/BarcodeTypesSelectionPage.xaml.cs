@@ -8,55 +8,18 @@ public partial class BarcodeTypesSelectionPage : ContentPage
     public BarcodeTypesSelectionPage()
     {
         InitializeComponent();
-        TypesList.ItemsSource = BarcodeTypes.Instance.List;
-    }
-}
-
-public class BarcodeFormatCell : ViewCell
-{
-    public KeyValuePair<BarcodeFormat, bool> Source { get; private set; }
-
-    public Label Label { get; set; }
-
-    public Switch Switch { get; set; }
-
-    public BarcodeFormatCell()
-    {
-        Label = new Label()
-        {
-            VerticalTextAlignment = TextAlignment.Center,
-            Margin = new Thickness(10, 0, 0, 0),
-            TextColor = Colors.Black,
-            HorizontalOptions =  LayoutOptions.Start,
-            VerticalOptions = LayoutOptions.Center
-        };
-
-        Switch = new Switch
-        {
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.End
-        };
-
-        View = new Grid
-        {
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            Margin = new Thickness(0, 0, 10, 0),
-            Children = { Label, Switch }
-        };
-
-        Switch.Toggled += delegate
-        {
-            BarcodeTypes.Instance.Update(Source.Key, Switch.IsToggled);
-        };
+        // Create a copy and remove the type None from the list
+        Dictionary<BarcodeFormat, bool> removedTypeNone = new Dictionary<BarcodeFormat, bool>(BarcodeTypes.Instance.List);
+        removedTypeNone.Remove(BarcodeFormat.None);
+        
+        TypesList.ItemsSource = removedTypeNone;
     }
 
-    protected override void OnBindingContextChanged()
+    private void Switch_OnToggled(object sender, ToggledEventArgs e)
     {
-        Source = (KeyValuePair<BarcodeFormat, bool>)BindingContext;
-        Label.Text = Source.Key.ToString();
-        Switch.IsToggled = Source.Value;
+        if ((sender as Switch)?.BindingContext is not KeyValuePair<BarcodeFormat, bool> item) return;
 
-        base.OnBindingContextChanged();
+        // updated the item.
+        BarcodeTypes.Instance.Update(item.Key, e.Value);
     }
 }

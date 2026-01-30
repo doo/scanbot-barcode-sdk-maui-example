@@ -24,7 +24,5 @@ public partial class BarcodeClassicComponentView : ContentPage
 
         // Stop barcode detection manually
         CameraView.StopDetection();
-
-        CameraView.Handler?.DisconnectHandler();
     }
 }

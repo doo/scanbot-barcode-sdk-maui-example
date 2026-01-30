@@ -55,7 +55,6 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
             // Stop barcode detection manually
             CameraView.StopDetection();
-            CameraView.Handler?.DisconnectHandler();
         }
         
         private void OnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)

@@ -1,17 +1,13 @@
 ﻿using ScanbotSDK.MAUI.Core.Barcode;
-using ScanbotSDK.MAUI.Core.Image;
 using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
 using ScanbotSDK.MAUI.Image;
-using ScanbotSDK.MAUI.Storage;
 using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Core.Barcode.BarcodeScannerConfiguration;
-using ImageSource = Microsoft.Maui.Controls.ImageSource;
 
-namespace ScanbotSDK.MAUI.Example
-{
+namespace ScanbotSDK.MAUI.Example;
     public struct HomePageMenuItem(string title, Func<Task> action)
     {
         public string Title { get; private set; } = title;
@@ -61,7 +57,7 @@ namespace ScanbotSDK.MAUI.Example
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Scan Barcodes From Image", ScanBarcodesFromImageAsync),
-                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync),  // todo: To remove
+                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync), // todo: To remove
                 new HomePageMenuItem("Detect BarcodeDocument on Image", DetectBarcodeDocumentFromImageAsync), // todo: To remove
                 new HomePageMenuItem("Configure Mock Camera", ConfigureMockCameraAsync), // todo: To remove
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeTypesSelectionPage())),
@@ -86,7 +82,7 @@ namespace ScanbotSDK.MAUI.Example
                 return;
             }
 
-            CommonUtils.Alert(this, "Alert", LicenseInvalidMessage);
+            this.Alert("Alert", LicenseInvalidMessage);
         }
 
         /// <summary>
@@ -120,7 +116,7 @@ namespace ScanbotSDK.MAUI.Example
             }
             else
             {
-                CommonUtils.Alert(this, "Warning", "No barcodes found.");
+                this.Alert("Warning", "No barcodes found.");
             }
         }
 
@@ -134,7 +130,7 @@ namespace ScanbotSDK.MAUI.Example
 
             if (file == null)
             {
-                CommonUtils.Alert(this, "Alert", "Something went wrong while picking the file from the storage.");
+                this.Alert("Alert", "Something went wrong while picking the file from the storage.");
                 return;
             }
 
@@ -168,13 +164,13 @@ namespace ScanbotSDK.MAUI.Example
 
             if (!result.IsSuccess)
             {
-                CommonUtils.Alert(this, "Warning", "No barcodes found. \n Error:" + result.Error?.Message);
+                this.Alert("Warning", "No barcodes found. \n Error:" + result.Error?.Message);
                 return;
             }
 
             if (result.Value.Barcodes.Length == 0)
             {
-                CommonUtils.Alert(this, "Warning", "No barcodes found.");
+                this.Alert("Warning", "No barcodes found.");
                 return;
             }
 
@@ -183,7 +179,7 @@ namespace ScanbotSDK.MAUI.Example
             var genericDocumentResult = await ScanbotSDKMain.Barcode.ParseDocumentAsync(text, BarcodeDocumentFormats.All);
             if (genericDocumentResult.IsSuccess)
             {
-                CommonUtils.Alert(this, "Document Result String",genericDocumentResult.Value.ParsedDocument.ToGdrString());
+                this.Alert("Document Result String", genericDocumentResult.Value.ParsedDocument.ToGdrString());
             }
         }
 
@@ -198,11 +194,11 @@ namespace ScanbotSDK.MAUI.Example
             var result = await ScanbotSDKMain.CleanupStorageAsync();
             if (result.IsSuccess)
             {
-                CommonUtils.Alert(this, "Alert", "Storage cleared successfully.");
+                this.Alert("Alert", "Storage cleared successfully.");
             }
             else
             {
-                CommonUtils.Alert(this, "Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
+                this.Alert("Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
             }
         }
 
@@ -222,7 +218,22 @@ namespace ScanbotSDK.MAUI.Example
                 message = LicenseInvalidMessage;
             }
 
-            MainThread.InvokeOnMainThreadAsync(() => { CommonUtils.Alert(this, "Info", message); });
+            MainThread.InvokeOnMainThreadAsync(() => { this.Alert("Info", message); });
+        }
+        
+        /// <summary>
+        /// Invokes the Force closing of scanner after the specified time span if the feature is enabled from App.xaml.cs file.
+        /// </summary>
+        /// <param name="action">Invokes the Scanner ForceClose after the given interval.</param>
+        internal static void TestForceCloseScanner(Action action)
+        {
+            if (App.TestForceCloseFeature)
+            {
+                Task.Run(async () =>
+                {
+                    await Task.Delay(App.ForceCloseInterval);
+                    action?.Invoke();
+                });
+            }
         }
     }
-}

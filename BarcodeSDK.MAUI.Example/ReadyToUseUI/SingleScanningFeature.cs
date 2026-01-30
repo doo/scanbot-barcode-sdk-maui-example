@@ -44,6 +44,12 @@ public static class SingleScanningFeature
         // Comment out the above and use the below to try some of our snippets instead:
         // var rtuResult = await ScanbotSDKMain.BarcodeScanner.StartScannerAsync(Snippets.SingleScanningUseCase);
         // Or Snippets.MultipleScanningUseCase, Snippets.FindAndPickUseCase, Snippets.ActionBar, etc.
+        
+        // Enable `App.TestForceCloseFeature` flag to test the Force close scanner feature.  
+        HomePage.TestForceCloseScanner(async void () =>
+        {
+            await ScanbotSDKMain.Barcode.ForceCloseScannerAsync();
+        });
 
         if (rtuResult.IsSuccess)
             await CommonUtils.DisplayResults(rtuResult.Value);
