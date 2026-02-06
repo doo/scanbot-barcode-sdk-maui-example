@@ -21,7 +21,7 @@
                 <classicComponent:BarcodeScannerView.Behaviors>
                     <toolkit:EventToCommandBehavior
                         EventName="OnBarcodeScanResult"
-                        Command="{Binding BarcodeScanResultCommand}"
+                        Command="{Binding BindingContext.BarcodeScanResultCommand, Source={x:Reference CameraView}}"
                         EventArgsConverter="{converters:BarcodeDetectionEventArgsConverter}"/>
                 </classicComponent:BarcodeScannerView.Behaviors>
             </classicComponent:BarcodeScannerView>

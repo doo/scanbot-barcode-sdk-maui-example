@@ -1,33 +1,32 @@
-﻿using ScanbotSDK.MAUI.Barcode.Core;
+﻿using ScanbotSDK.MAUI.Core.Barcode;
 
-namespace ScanbotSDK.MAUI.Example.Results
+namespace ScanbotSDK.MAUI.Example.Results;
+
+public partial class BarcodeResultPage : ContentPage
 {
-    public partial class BarcodeResultPage : ContentPage
+    public BarcodeResultPage()
     {
-        public BarcodeResultPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        public BarcodeResultPage(List<BarcodeItem> barcodes)
-        {
-            InitializeComponent();
-            ListViewResults.ItemsSource = barcodes;
-        }
+    public BarcodeResultPage(List<BarcodeItem> barcodes)
+    {
+        InitializeComponent();
+        ListViewResults.ItemsSource = barcodes;
+    }
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is BarcodeItem barcodeItem)
-            {
-                var resultPage = new BarcodeResultDetailPage();
-                resultPage.NavigateData(barcodeItem);
-                Navigation.PushAsync(resultPage);
-            }
+    private void ResultItemTapped(object sender, TappedEventArgs e)
+    {
+        if (e.Parameter is not BarcodeItem barcodeItem)
+            return;
 
-            if (sender is ListView listView)
-            {
-                listView.SelectedItem = null;
-            }
+        var resultPage = new BarcodeResultDetailPage();
+        resultPage.NavigateData(barcodeItem);
+        Navigation.PushAsync(resultPage);
+
+        if (sender is CollectionView collectionView)
+        {
+            collectionView.SelectedItem = null;
         }
     }
 }

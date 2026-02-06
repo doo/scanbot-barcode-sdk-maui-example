@@ -1,5 +1,5 @@
 using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Core.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 {
@@ -55,7 +55,6 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
             // Stop barcode detection manually
             CameraView.StopDetection();
-            CameraView.Handler?.DisconnectHandler();
         }
         
         private void OnSelectBarcodeResult(object sender, BarcodeItem[] barcodeItems)
