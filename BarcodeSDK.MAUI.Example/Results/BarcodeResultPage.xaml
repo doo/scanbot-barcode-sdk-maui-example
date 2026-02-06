@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:ScanbotSDK.MAUI.Example.Utils.XamlValueConverters"
-             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Barcode.Core;assembly=ScanbotSDK.Shared"
+             xmlns:models="clr-namespace:ScanbotSDK.MAUI.Core.Barcode;assembly=ScanbotSDK.Shared"
              x:Class="ScanbotSDK.MAUI.Example.Results.BarcodeResultPage"
              Title="Barcode Results">
     <ContentPage.Resources>
@@ -11,67 +11,75 @@
     </ContentPage.Resources>
     <StackLayout
         BackgroundColor="White">
-        <ListView x:Name="ListViewResults"
-                  HasUnevenRows="True"
-                  ItemSelected="OnItemSelected">
-            <ListView.ItemTemplate>
+        <CollectionView x:Name="ListViewResults"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:BarcodeItem">
-                    <ViewCell>
-                        <Grid ColumnDefinitions="Auto,*,50">
-                            <Image
-                                Grid.Column="0"
-                                HorizontalOptions="Fill"
-                                VerticalOptions="Fill"
-                                Aspect="AspectFit"
-                                WidthRequest="90"
-                                Source="{Binding SourceImage, Converter={StaticResource ConvertImageRefToSource}}">
-                                <Image.Triggers>
-                                    <DataTrigger TargetType="Image"
-                                                 Binding="{Binding SourceImage, TargetNullValue=''}"
-                                                 Value="">
-                                        <Setter Property="IsVisible"
-                                                Value="False"/>
-                                    </DataTrigger>
-                                </Image.Triggers>
-                            </Image>
-                            <VerticalStackLayout
-                                Grid.Column="1"
-                                Margin="5">
-                                <Label Margin="0,5,0,0"
-                                       Text="Format:"
-                                       FontAttributes="Bold"
-                                       FontSize="16"
-                                       TextColor="Black" />
-                                <Label
-                                    Text="{Binding Format}"
-                                    VerticalOptions="Start"
-                                    HorizontalOptions="Start"
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    TextColor="Black" />
-                                <Label
-                                    Margin="0,9,0,0"
-                                    Text="Text: "
-                                    FontAttributes="Bold"
-                                    FontSize="16"
-                                    TextColor="Black" />
-                                <Label Text="{Binding Text}"
-                                       FontSize="14"
-                                       MaxLines="3"
-                                       TextColor="Black" />
-                            </VerticalStackLayout>
-                            <Grid Grid.Column="2">
-                                <Label Text=">"
-                                       FontSize="20"
-                                       FontAttributes="Bold"
-                                       TextColor="Black"
-                                       VerticalOptions="Center"
-                                       HorizontalOptions="Center" />
-                            </Grid>
+                    <Grid ColumnDefinitions="Auto,*,50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ResultItemTapped" CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <Image
+                            Grid.Column="0"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            Aspect="AspectFit"
+                            WidthRequest="90"
+                            Source="{Binding SourceImage, Converter={StaticResource ConvertImageRefToSource}}">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding SourceImage, TargetNullValue=''}"
+                                             Value="">
+                                    <Setter Property="IsVisible"
+                                            Value="False" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Margin="5">
+                            <Label Margin="0,5,0,0"
+                                   Text="Format:"
+                                   FontAttributes="Bold"
+                                   FontSize="16"
+                                   TextColor="Black" />
+                            <Label
+                                Text="{Binding Format}"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Start"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                TextColor="Black" />
+                            <Label
+                                Margin="0,9,0,0"
+                                Text="Text: "
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                TextColor="Black" />
+                            <Label Text="{Binding Text}"
+                                   FontSize="14"
+                                   MaxLines="3"
+                                   TextColor="Black" />
+                        </VerticalStackLayout>
+                        <Grid Grid.Column="2">
+                            <Path
+                                Stroke="Gray"
+                                StrokeThickness="2"
+                                Data="M 0 0 L 8 8 L 0 16" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center" />
                         </Grid>
-                    </ViewCell>
+                        <BoxView 
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            BackgroundColor="LightGray"
+                            Margin="5,0"
+                            VerticalOptions="End"
+                            HeightRequest="1"
+                            HorizontalOptions="Fill" />
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
 </ContentPage>
