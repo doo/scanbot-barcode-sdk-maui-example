@@ -57,9 +57,8 @@ namespace ScanbotSDK.MAUI.Example;
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Scan Barcodes From Image", ScanBarcodesFromImageAsync),
-                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync), // todo: To remove
-                new HomePageMenuItem("Detect BarcodeDocument on Image", DetectBarcodeDocumentFromImageAsync), // todo: To remove
-                new HomePageMenuItem("Configure Mock Camera", ConfigureMockCameraAsync), // todo: To remove
+                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync),
+                new HomePageMenuItem("Parse BarcodeDocument from Text", DetectBarcodeDocumentFromImageAsync),
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeTypesSelectionPage())),
                 new HomePageMenuItem("Clean Storage", CleanStorage),
                 new HomePageMenuItem(ViewLicenseInfoItem, () => Task.Run(ViewLicenseInfo))
@@ -180,12 +179,6 @@ namespace ScanbotSDK.MAUI.Example;
             {
                 await Alert.ShowAsync("Document Result String", genericDocumentResult.Value.ParsedDocument.ToGdrString());
             }
-        }
-
-        private async Task ConfigureMockCameraAsync()
-        {
-            var imagePath = await ImagePicker.PickImageAsPathAsync();
-            ScanbotSDKMain.MockCamera(imagePath);
         }
 
         private async Task CleanStorage()
