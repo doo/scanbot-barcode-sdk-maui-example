@@ -43,7 +43,17 @@ public static partial class Snippets
             config.UseCase = useCase;
 
             // Set an array of accepted barcode types.
-            config.ScannerConfiguration.BarcodeFormats = SBSDKBarcodeFormats.Common;
+            config.ScannerConfiguration = new SBSDKBarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations =
+                [
+                    new SBSDKBarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeTypes.Instance.AcceptedTypes,
+                        Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                    }
+                ]
+            };
 
             return config;
         }

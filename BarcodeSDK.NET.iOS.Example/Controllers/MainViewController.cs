@@ -1,5 +1,7 @@
 ﻿using BarcodeSDK.NET.iOS.Controllers.ClassicComponents;
+using BarcodeSDK.NET.iOS.Example.Utils;
 using BarcodeSDK.NET.iOS.Utils;
+using PhotosUI;
 using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS
@@ -72,9 +74,8 @@ namespace BarcodeSDK.NET.iOS
             // In this case, the user picks an image with our helper.
             try
             {
-                UIImage image = await PickImageAsync();
-
-                if (image == null)
+                var imageRef = await ImagePickerService.PickImageAsync();
+                if (imageRef == null)
                 {
                     return;
                 }
@@ -91,9 +92,8 @@ namespace BarcodeSDK.NET.iOS
                     ReturnBarcodeImage = true
                 };
                 
-                var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration);
-                var result = scanner.ScanFromImage(image, false, optimizeOverlays: true);
-
+                var scanner = new SBSDKBarcodeScanner(configuration: scannerConfiguration, out _);
+                var result = scanner.RunWithImage(imageRef, out _);
                 if (result?.Success != true)
                 {
                     Alert.Show(this, "Alert", "No barcodes found on the input image.");
@@ -134,38 +134,6 @@ namespace BarcodeSDK.NET.iOS
             }
 
             Alert.Show(this, "Status", message);
-        }
-
-        private Task<UIImage> PickImageAsync()
-        {
-            var imagePicker = new UIImagePickerController
-            {
-                SourceType = UIImagePickerControllerSourceType.PhotoLibrary,
-                MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary),
-                // This will prevent the ImagePicker from getting closed by swiping down.
-                // The closing of ImagePicker by "Swiping Down" creates an issue in returning the taskSource. It never returns task cancelled.
-                ModalPresentationStyle = UIModalPresentationStyle.FullScreen
-            };
-            
-            var taskCompletionSource = new TaskCompletionSource<UIImage>();
-
-            // Set event handlers
-            imagePicker.FinishedPickingMedia += (object sender, UIImagePickerMediaPickedEventArgs args) => {
-                UIImage image = args.EditedImage ?? args.OriginalImage;
-                imagePicker.DismissViewController(true, () => taskCompletionSource.SetResult(image));
-            };
-            imagePicker.Canceled += (object sender, EventArgs args) =>
-            {
-                taskCompletionSource.SetCanceled();
-                imagePicker.DismissViewController(true, null);
-            };
-
-            // Present UIImagePickerController;
-            UIWindow window = UIApplication.SharedApplication.KeyWindow;
-            var viewController = window?.RootViewController;
-            viewController?.PresentViewController(imagePicker, true, null);
-
-            return taskCompletionSource.Task;
         }
     }
 }

@@ -6,9 +6,15 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using BarcodeSDK.NET.Droid.Activities;
+using IO.Scanbot.Common;
 using IO.Scanbot.Sdk.Barcode;
+using IO.Scanbot.Sdk.Image;
+using IO.Scanbot.Sdk.Licensing;
 using IO.Scanbot.Sdk.Ui_v2.Barcode;
+using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
+using ScanbotSDK.Droid.Helpers;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration;
+using Result = Android.App.Result;
 
 namespace BarcodeSDK.NET.Droid
 {
@@ -50,34 +56,27 @@ namespace BarcodeSDK.NET.Droid
                 return;
             }
 
-            try
+            // Obtain an image from somewhere.
+            // In this case, the user picks an image with our helper.
+            var bitmap = await PickImageAsync();
+
+            // Configure the barcode scanner for scanning many barcodes in one image.
+            var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
+            var barcodeScannerConfigs = new BarcodeScannerConfiguration
             {
-                // Obtain an image from somewhere.
-                // In this case, the user picks an image with our helper.
-                var bitmap = await PickImageAsync();
+                BarcodeFormatConfigurations = [barcodeFormatConfig],
+                ExtractedDocumentFormats = BarcodeDocumentFormats.All
+            };
 
-                // Configure the barcode scanner for scanning many barcodes in one image.
-                var barcodeScanner = SDK.CreateBarcodeScanner();
-                var barcodeFormatConfig = new BarcodeFormatCommonConfiguration { Formats = BarcodeTypes.Instance.AcceptedTypes };
-                var barcodeScannerConfigs = new BarcodeScannerConfiguration
-                {
-                    BarcodeFormatConfigurations = [barcodeFormatConfig],
-                    ExtractedDocumentFormats = BarcodeDocumentFormats.All
-                };
-                
-                barcodeScanner.SetConfiguration(barcodeScannerConfigs);
+            var barcodeScannerResult = SDK.CreateBarcodeScanner(barcodeScannerConfigs);
+            var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
-                var result = barcodeScanner.ScanFromBitmap(bitmap, 0);
+            var result = barcodeScanner.Run(ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions()));
 
-                // Handle the result in your app as needed.
-                var intent = new Intent(this, typeof(BarcodeResultActivity));
-                intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(result, bitmap).ToBundle());
-                StartActivity(intent);
-            }
-            catch(TaskCanceledException)
-            {
-
-            }
+            // Handle the result in your app as needed.
+            var intent = new Intent(this, typeof(BarcodeResultActivity));
+            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), bitmap).ToBundle());
+            StartActivity(intent);
         }
 
         private void OnSettingsClick(object sender, EventArgs e)
@@ -103,22 +102,21 @@ namespace BarcodeSDK.NET.Droid
         private void OnLicenseInfoClick(object sender, EventArgs e)
         {
             var status = SDK.LicenseInfo.Status.Name();
-            var date = SDK.LicenseInfo.ExpirationDate;
             var validity = SDK.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
             var message = validity + $"\n\n- {status}";
             
-            if (SDK.LicenseInfo.IsValid && date != null)
+            if (SDK.LicenseInfo.IsValid)
             {
-                message += $"\n- Valid until: {date}";
+                message += $"\n- Valid until: {SDK.LicenseInfo.ExpirationDateString}";
             }
 
             Alert.ShowInfoDialog(this, "License Info", message);
         }
-        
+
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-        
+
             if (resultCode != Result.Ok && !Alert.CheckLicense(this, SDK))
             {
                 return;
@@ -126,20 +124,22 @@ namespace BarcodeSDK.NET.Droid
 
             if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
             {
-                var bsResult = resultContract.ParseResult((int)resultCode, data);
-                if (bsResult is BarcodeScannerActivity.BarcodeScannerActivityResult resultUiResult && resultUiResult?.Result != null)
+                var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
+                if (parsedResult != null)
                 {
-                    var barcodes = resultUiResult.ScannerUiResult().Items.Select(item => item.Barcode).ToList();
+                    var barcodes = parsedResult.Items.Select(item => item.Barcode).ToList();
                     var result = new BarcodeScannerResult(barcodes, true);
                     OnRTUActivityResult(result);
                 }
-            } else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
+            }
+            else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
             {
                 if (resultCode != Result.Ok)
                 {
                     pendingBitmap.SetCanceled();
                     return;
                 }
+
                 var stream = ContentResolver.OpenInputStream(data.Data);
                 pendingBitmap.SetResult(BitmapFactory.DecodeStream(stream));
             }
@@ -158,7 +158,7 @@ namespace BarcodeSDK.NET.Droid
             if (warningView == null)
                 return;
 
-            if (SDK.LicenseInfo.Status == IO.Scanbot.Sap.Status.StatusTrial)
+            if (SDK.LicenseInfo.Status == LicenseStatus.Trial)
             {
                 warningView.Visibility = ViewStates.Visible;
             }

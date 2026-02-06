@@ -36,7 +36,7 @@ public partial class BarcodeDetailsController : BaseViewController
         {
             ContentMode = UIViewContentMode.ScaleAspectFit,
             TranslatesAutoresizingMaskIntoConstraints = false,
-            Image = barcode?.SourceImage?.ToUIImage()
+            Image = barcode?.SourceImage?.ToUIImageAndReturnError(out _)
         };
 
         tableView = new UITableView
