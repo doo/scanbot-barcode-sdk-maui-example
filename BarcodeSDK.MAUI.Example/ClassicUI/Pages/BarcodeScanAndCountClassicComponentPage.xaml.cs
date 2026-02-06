@@ -1,5 +1,4 @@
-using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
+using ScanbotSDK.MAUI.Core.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
@@ -27,6 +26,7 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             //     AddAdditionalQuietZone = true
             // }
         ];
+
         CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
         (
             overlayFormat: BarcodeTextFormat.CodeAndType,
@@ -55,7 +55,6 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
 
         // Stop barcode detection manually
         CameraView.StopDetection();
-        CameraView.Handler?.DisconnectHandler();
     }
 
     private void OnStartScanningButtonClicked(object sender, EventArgs e)

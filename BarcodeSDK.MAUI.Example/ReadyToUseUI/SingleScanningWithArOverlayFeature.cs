@@ -1,4 +1,5 @@
 using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ReadyToUseUI;
@@ -25,17 +26,38 @@ public static class SingleScanningWithArOverlayFeature
         // Configure other parameters, pertaining to single-scanning mode as needed.
         config.UseCase = useCase;
 
-        // Set an array of accepted barcode types.
-        config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
+        // create barcode format configurations
+        var barcodeFormatConfiguration = new BarcodeFormatCommonConfiguration
+        {
+            // Set an array of accepted barcode types.
+            Formats = BarcodeTypes.Instance.AcceptedTypes,
+            // Set an array of accepted barcode types.
+            Gs1Handling = Gs1Handling.DecodeStructure
+        };
 
-        // Set an array of accepted barcode types.
-        config.ScannerConfiguration.Gs1Handling = Gs1Handling.DecodeStructure;
+        // Set an array of barcode format configurations
+        config.ScannerConfiguration.BarcodeFormatConfigurations = [barcodeFormatConfiguration];
 
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
-        if (rtuResult.Status != OperationResult.Ok)
+        var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
+        
+        // The scanner was canceled.
+        if (rtuResult.IsCanceled)
+        {
             return;
+        }
 
-        await CommonUtils.DisplayResults(rtuResult.Result);
+        // The scanning was failed
+        if (!rtuResult.IsSuccess && rtuResult.Error != null)
+        {
+            await Alert.ShowAsync(rtuResult.Error);
+            return;
+        }
+
+        // The scanning was success
+        if (rtuResult.IsSuccess)
+        {
+            await CommonUtils.DisplayResultAsync(rtuResult.Value);
+        }
     }
 }

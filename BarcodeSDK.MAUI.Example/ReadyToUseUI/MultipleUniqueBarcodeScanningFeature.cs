@@ -1,5 +1,6 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Common;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ReadyToUseUI;
@@ -27,16 +28,37 @@ public static class MultipleUniqueBarcodeScanningFeature
         config.UseCase = useCase;
 
         // Set an array of accepted barcode types.
-        config.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
-
+        config.ScannerConfiguration.BarcodeFormatConfigurations =
+        [
+            new BarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            }
+        ];
+         
         // Set the user guidance hint
         config.UserGuidance.Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." };
-
+        
         // Launch the barcode scanner.
-        var rtuResult = await ScanbotSDKMain.Rtu.BarcodeScanner.LaunchAsync(configuration: config);
-        if (rtuResult.Status != OperationResult.Ok)
+        var rtuResult = await ScanbotSDKMain.Barcode.StartScannerAsync(configuration: config);
+        
+        // The scanner was canceled.
+        if (rtuResult.IsCanceled)
+        {
             return;
+        }
 
-        await CommonUtils.DisplayResults(rtuResult.Result);
+        // The scanning was failed
+        if (!rtuResult.IsSuccess && rtuResult.Error != null)
+        {
+            await Alert.ShowAsync(rtuResult.Error);
+            return;
+        }
+
+        // The scanning was success
+        if (rtuResult.IsSuccess)
+        {
+            await CommonUtils.DisplayResultAsync(rtuResult.Value);
+        }
     }
 }

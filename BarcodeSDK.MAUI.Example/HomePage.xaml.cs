@@ -1,15 +1,13 @@
-﻿using Microsoft.Maui.Graphics.Platform;
-using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
+﻿using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Example.ClassicUI.MVVM.Views;
 using ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 using ScanbotSDK.MAUI.Example.ReadyToUseUI;
 using ScanbotSDK.MAUI.Example.Results;
 using ScanbotSDK.MAUI.Example.Utils;
-using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Barcode.Core.BarcodeScannerConfiguration;
+using ScanbotSDK.MAUI.Image;
+using BarcodeScannerConfiguration = ScanbotSDK.MAUI.Core.Barcode.BarcodeScannerConfiguration;
 
-namespace ScanbotSDK.MAUI.Example
-{
+namespace ScanbotSDK.MAUI.Example;
     public struct HomePageMenuItem(string title, Func<Task> action)
     {
         public string Title { get; private set; } = title;
@@ -24,7 +22,7 @@ namespace ScanbotSDK.MAUI.Example
     {
         private const string ViewLicenseInfoItem = "View License Info";
         private const string LicenseInvalidMessage = "The license is invalid or expired.";
-        
+
         /// <summary>
         /// MenuItems List to bind the CollectionView UI. 
         /// </summary>
@@ -38,7 +36,7 @@ namespace ScanbotSDK.MAUI.Example
             InitializeComponent();
             InitMenuItems();
             BindingContext = this;
-            
+
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
@@ -47,7 +45,8 @@ namespace ScanbotSDK.MAUI.Example
         /// </summary>
         private void InitMenuItems()
         {
-            MenuItems = [
+            MenuItems =
+            [
                 new HomePageMenuItem("RTU - Single Scanning", SingleScanningFeature.StartSingleScanningAsync),
                 new HomePageMenuItem("RTU - Single Scanning Selection Overlay", SingleScanningWithArOverlayFeature.StartSingleScanningWithArOverlayAsync),
                 new HomePageMenuItem("RTU - Batch Barcode Scanning", BatchBarcodeScanningFeature.StartBatchBarcodeScanningAsync),
@@ -57,8 +56,11 @@ namespace ScanbotSDK.MAUI.Example
                 new HomePageMenuItem("Classic Component - Barcode Scanning (MVVM)", () => Navigation.PushAsync(new BarcodeClassicComponentView())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
-                new HomePageMenuItem("Detect Barcodes on Image", DetectBarcodesOnImage),
+                new HomePageMenuItem("Scan Barcodes From Image", ScanBarcodesFromImageAsync),
+                new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync),
+                new HomePageMenuItem("Parse BarcodeDocument from Text", DetectBarcodeDocumentFromImageAsync),
                 new HomePageMenuItem("Set Accepted Barcode Types", () => Navigation.PushAsync(new BarcodeTypesSelectionPage())),
+                new HomePageMenuItem("Clean Storage", CleanStorage),
                 new HomePageMenuItem(ViewLicenseInfoItem, () => Task.Run(ViewLicenseInfo))
             ];
         }
@@ -68,36 +70,36 @@ namespace ScanbotSDK.MAUI.Example
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemSelected(object sender, SelectionChangedEventArgs e)
+        private async void MeuItemTapped(object sender, TappedEventArgs e)
         {
-            if (e?.CurrentSelection?.FirstOrDefault() is not HomePageMenuItem selectedItem)
+            if (e.Parameter is not HomePageMenuItem selectedItem)
                 return;
-            
+
             if (ScanbotSDKMain.LicenseInfo.IsValid || selectedItem.Title == ViewLicenseInfoItem)
             {
-                selectedItem.NavigationAction();
-                CollectionViewMenuItems.SelectedItem = null;
+                await selectedItem.NavigationAction();
                 return;
             }
 
-            CommonUtils.Alert(this, "Alert", LicenseInvalidMessage);
-            CollectionViewMenuItems.SelectedItem = null;
+            await Alert.ShowAsync("Alert", LicenseInvalidMessage);
         }
 
         /// <summary>
         /// Detects barcodes on an image selected by the user.
         /// </summary>
-        private async Task DetectBarcodesOnImage()
+        private async Task ScanBarcodesFromImageAsync()
         {
-            var image = await PickImageAsync();
+            var image = await ImagePicker.PickImageAsPathAsync();
             if (image == null)
                 return;
+
+            var imageRef = ImageRef.FromPath(image);
 
             var configs = new BarcodeFormatCommonConfiguration
             {
                 Formats = BarcodeTypes.Instance.AcceptedTypes
             };
-            
+
             // Configure the barcode detector for detecting many barcodes in one image.
             var configuration = new BarcodeScannerConfiguration
             {
@@ -105,67 +107,109 @@ namespace ScanbotSDK.MAUI.Example
                 EngineMode = BarcodeScannerEngineMode.NextGen
             };
 
-            var result = await ScanbotSDKMain.Detector.Barcode.DetectBarcodesAsync(image, configuration);
-
-            if (result.Success)
+            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(imageRef, configuration);
+            if (!result.IsSuccess)
             {
-                // Handle the result in your app as needed.
-                await Navigation.PushAsync(new BarcodeResultPage(result.Barcodes.ToList()));
+                await Alert.ShowAsync("Warning", "No barcodes found.");
+                return;
             }
-            else
+            
+            // Handle the result in your app as needed.
+            await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
+        }
+
+        private async Task DetectBarcodesFromPdfAsync()
+        {
+            var file = await FilePicker.Default.PickAsync(new PickOptions
             {
-                CommonUtils.Alert(this, "Warning", "No barcodes found.");
+                FileTypes = FilePickerFileType.Pdf,
+                PickerTitle = "Select a pdf file",
+            });
+
+            if (file == null)
+            {
+                await Alert.ShowAsync("Alert", "Something went wrong while picking the file from the storage.");
+                return;
+            }
+
+            var result = await ScanbotSDKMain.Barcode.ScanFromPdfAsync(file.FullPath, new BarcodeScannerConfiguration());
+            if (result.IsSuccess)
+            {
+                await Navigation.PushAsync(new BarcodeResultPage(result.Value.Barcodes.ToList()));
             }
         }
 
-        /// <summary>
-        /// Picks image from the photos application.
-        /// </summary>
-        /// <returns></returns>
-        private async Task<PlatformImage> PickImageAsync()
+        private async Task DetectBarcodeDocumentFromImageAsync()
         {
-            try
+            var image = await ImagePicker.PickImageAsPathAsync();
+            if (image == null)
+                return;
+
+            var imageRef = ImageRef.FromPath(image);
+            var configs = new BarcodeFormatCommonConfiguration
             {
-                // Pick the photo
-                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            };
 
-                if (photo != null)
-                {
-                    // Optionally display or process the image
-                    using var stream = await photo.OpenReadAsync();
-
-                    // It returns a common interface IIMage which is implemented in PlatformImage.
-                    return (PlatformImage)PlatformImage.FromStream(stream, ImageFormat.Jpeg);
-                }
-            }
-            catch (Exception ex)
+            // Configure the barcode detector for detecting many barcodes in one image.
+            var configuration = new BarcodeScannerConfiguration
             {
-                CommonUtils.Alert(this, "Error", $"Unable to pick image: {ex.Message}");
+                BarcodeFormatConfigurations = [configs],
+                EngineMode = BarcodeScannerEngineMode.NextGen
+            };
+
+            var result = await ScanbotSDKMain.Barcode.ScanFromImageAsync(imageRef, configuration);
+
+            if (!result.IsSuccess)
+            {
+                await Alert.ShowAsync("Warning", "No barcodes found. \n Error:" + result.Error?.Message);
+                return;
             }
 
-            return null;
+            if (result.Value.Barcodes.Length == 0)
+            {
+                await Alert.ShowAsync("Warning", "No barcodes found.");
+                return;
+            }
+
+            // Accessing the first item only, for our example.
+            var text = result.Value.Barcodes.First().Text;
+            var genericDocumentResult = await ScanbotSDKMain.Barcode.ParseDocumentAsync(text, BarcodeDocumentFormats.All);
+            if (genericDocumentResult.IsSuccess)
+            {
+                await Alert.ShowAsync("Document Result String", genericDocumentResult.Value.ParsedDocument.ToGdrString());
+            }
+        }
+
+        private async Task CleanStorage()
+        {
+            var result = await ScanbotSDKMain.CleanupStorageAsync();
+            if (result.IsSuccess)
+            {
+                await Alert.ShowAsync("Alert", "Storage cleared successfully.");
+            }
+            else
+            {
+                await Alert.ShowAsync("Alert", "Unable to cleanup storage.\n Error: " + result.Error?.Message);
+            }
         }
 
         /// <summary>
         /// View Current License Information
         /// </summary>
-        private void ViewLicenseInfo()
+        private async void ViewLicenseInfo()
         {
             var info = ScanbotSDKMain.LicenseInfo;
             var message = $"License status: {info.Status}\n";
-            if (info.IsValid) 
+            if (info.IsValid)
             {
-                message += $"It is valid until {info.ExpirationDate?.ToLocalTime()}.";
+                message += $"It is valid until {info.ExpirationDateString}.";
             }
             else
             {
                 message = LicenseInvalidMessage;
             }
 
-            MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                CommonUtils.Alert(this, "Info", message);
-            });
+            await Alert.ShowAsync("Info", message);
         }
     }
-}

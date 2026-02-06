@@ -1,5 +1,4 @@
 using ScanbotSDK.MAUI.Barcode;
-using ScanbotSDK.MAUI.Barcode.Core;
 
 namespace ScanbotSDK.MAUI.Example
 {

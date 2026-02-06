@@ -1,4 +1,4 @@
-﻿using ScanbotSDK.MAUI.Barcode;
+﻿using ScanbotSDK.MAUI.Core.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.Utils
 {
@@ -21,8 +21,7 @@ namespace ScanbotSDK.MAUI.Example.Utils
             return AcceptedTypes.Contains(lastCheckedFormat);
         }
 
-        public List<BarcodeFormat> All =>
-            Enum.GetValues(typeof(BarcodeFormat)).Cast<BarcodeFormat>().ToList();
+        public List<BarcodeFormat> All => Enum.GetValues(typeof(BarcodeFormat)).Cast<BarcodeFormat>().ToList();
 
         private BarcodeTypes()
         {

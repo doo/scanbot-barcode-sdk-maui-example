@@ -1,4 +1,6 @@
-﻿using ScanbotSDK.iOS;
+﻿using System;
+using Foundation;
+using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 
@@ -11,10 +13,16 @@ public partial class MainViewController
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration
         {
-            ScannerConfiguration = new SBSDKUI2BarcodeScannerConfiguration
+            ScannerConfiguration =  new SBSDKBarcodeScannerConfiguration
             {
-                BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes,
-                Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                BarcodeFormatConfigurations =
+                [
+                    new SBSDKBarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeTypes.Instance.AcceptedTypes,
+                        Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                    }
+                ]
             },
             UseCase = new SBSDKUI2SingleScanningMode
             {
@@ -35,8 +43,14 @@ public partial class MainViewController
         
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
-        configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
-
+        configuration.ScannerConfiguration.BarcodeFormatConfigurations =
+        [
+            new SBSDKBarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            }
+        ];
+        
         var usecase = new SBSDKUI2SingleScanningMode();
         usecase.ConfirmationSheetEnabled = true;
         usecase.ArOverlay.Visible = true;
@@ -53,7 +67,17 @@ public partial class MainViewController
         
         // Create the default configuration object.
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
-        configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
+        configuration.ScannerConfiguration = new SBSDKBarcodeScannerConfiguration
+        {
+            BarcodeFormatConfigurations =
+            [
+                new SBSDKBarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeTypes.Instance.AcceptedTypes,
+                    Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                }
+            ]
+        };
 
         var usecase = new SBSDKUI2MultipleScanningMode();
         usecase.Mode = SBSDKUI2MultipleBarcodesScanningMode.Counting;
@@ -68,7 +92,17 @@ public partial class MainViewController
         if (!ScanbotSDKGlobal.IsLicenseValid) return;
         
         var configuration = new SBSDKUI2BarcodeScannerScreenConfiguration();
-        configuration.ScannerConfiguration.BarcodeFormats = BarcodeTypes.Instance.AcceptedTypes;
+        configuration.ScannerConfiguration = new SBSDKBarcodeScannerConfiguration
+        {
+            BarcodeFormatConfigurations =
+            [
+                new SBSDKBarcodeFormatCommonConfiguration
+                {
+                    Formats = BarcodeTypes.Instance.AcceptedTypes,
+                    Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                }
+            ]
+        };
         configuration.UserGuidance.Title.Text = "Please align the QR-/Barcode in the frame above to scan it.";
 
         var usecase = new SBSDKUI2MultipleScanningMode();
@@ -96,29 +130,24 @@ public partial class MainViewController
         usecase.ArOverlay.Visible = true;
         usecase.ArOverlay.AutomaticSelectionEnabled = true;
         usecase.ExpectedBarcodes = [
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: new IntPtr(4)),
-            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: new IntPtr(4))
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "123456", title: "numeric barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4),
+            new SBSDKUI2ExpectedBarcode(barcodeValue: "SCANBOT", title: "value barcode", image: "https://avatars.githubusercontent.com/u/1454920", count: 4)
         ];
 
         configuration.UseCase = usecase;
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 
-    private void BarcodeScannerResultHandler(SBSDKUI2BarcodeScannerViewController viewController, bool cancelled, NSError error, SBSDKUI2BarcodeScannerUIResult result)
+    private void BarcodeScannerResultHandler(SBSDKUI2BarcodeScannerViewController viewController, SBSDKUI2BarcodeScannerUIResult result, NSError error)
     {
         // disposes the object after the method scope.
-        using var disposableViewController = viewController;
-        if (!cancelled)
+        viewController?.Dispose();
+        if (error != null)
         {
-            disposableViewController?.PresentingViewController?.DismissViewController(true, delegate
-            {
-                ShowBarcodeResults(result.Items);
-            });
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+            return;
         }
-        else
-        {
-            disposableViewController?.PresentingViewController?.DismissViewController(true, null);
-        }
+        ShowBarcodeResults(result.Items);
     }
 
     private void ShowBarcodeResults(SBSDKUI2BarcodeScannerUIItem[] items)
