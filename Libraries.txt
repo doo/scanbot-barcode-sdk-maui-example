@@ -78,7 +78,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 8.0.0
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 8.0.1
 
 CWAC-Camera
 
@@ -3568,7 +3568,7 @@ Version 1.1.0
 
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in Scanbot Barcode Scanner SDK for iOS version 8.0.0:
+Open Source libraries used in Scanbot Barcode Scanner SDK for iOS version 8.0.1:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
