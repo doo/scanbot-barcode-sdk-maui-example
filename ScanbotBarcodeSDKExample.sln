@@ -2,50 +2,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeSDK.MAUI.Example", "BarcodeSDK.MAUI.Example\BarcodeSDK.MAUI.Example.csproj", "{FB3143CA-07AE-4914-9676-1F9FE52484ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.MAUI.Example", "BarcodeSDK.MAUI.Example\BarcodeSDK.MAUI.Example.csproj", "{B000D02E-0155-4268-8A83-F7B3F464969E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeSDK.NET.Droid.Example", "BarcodeSDK.NET.Droid.Example\BarcodeSDK.NET.Droid.Example.csproj", "{153D974E-6092-4B81-976A-F2A4CE1AE47C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.Droid.Example", "BarcodeSDK.NET.Droid.Example\BarcodeSDK.NET.Droid.Example.csproj", "{D82E2B6A-BA8F-4202-A2CA-30AF13562A2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeSDK.NET.iOS.Example", "BarcodeSDK.NET.iOS.Example\BarcodeSDK.NET.iOS.Example.csproj", "{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeSDK.NET.iOS.Example", "BarcodeSDK.NET.iOS.Example\BarcodeSDK.NET.iOS.Example.csproj", "{56E2576A-0724-4B25-B978-2BE5FB366C00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM64 = Debug|ARM64
-		Debug|x64 = Debug|x64
-		Release|ARM64 = Release|ARM64
-		Release|x64 = Release|x64
+						Debug|Any CPU = Debug|Any CPU
+						Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|ARM64.Build.0 = Debug|ARM64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|x64.ActiveCfg = Debug|x64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|x64.Build.0 = Debug|x64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Debug|x64.Deploy.0 = Debug|x64
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|ARM64.Build.0 = Release|Any CPU
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|x64.ActiveCfg = Release|Any CPU
-		{FB3143CA-07AE-4914-9676-1F9FE52484ED}.Release|x64.Build.0 = Release|Any CPU
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|ARM64.Build.0 = Debug|ARM64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|x64.ActiveCfg = Debug|x64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|x64.Build.0 = Debug|x64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Debug|x64.Deploy.0 = Debug|x64
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|ARM64.Build.0 = Release|Any CPU
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|x64.ActiveCfg = Release|Any CPU
-		{153D974E-6092-4B81-976A-F2A4CE1AE47C}.Release|x64.Build.0 = Release|Any CPU
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|ARM64.Build.0 = Debug|ARM64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|x64.ActiveCfg = Debug|x64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|x64.Build.0 = Debug|x64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Debug|x64.Deploy.0 = Debug|x64
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|ARM64.Build.0 = Release|Any CPU
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|x64.ActiveCfg = Release|Any CPU
-		{6BA8D7C9-5F96-4B7B-9A66-6EF128491A98}.Release|x64.Build.0 = Release|Any CPU
+		{B000D02E-0155-4268-8A83-F7B3F464969E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B000D02E-0155-4268-8A83-F7B3F464969E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B000D02E-0155-4268-8A83-F7B3F464969E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B000D02E-0155-4268-8A83-F7B3F464969E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D82E2B6A-BA8F-4202-A2CA-30AF13562A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D82E2B6A-BA8F-4202-A2CA-30AF13562A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D82E2B6A-BA8F-4202-A2CA-30AF13562A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D82E2B6A-BA8F-4202-A2CA-30AF13562A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E2576A-0724-4B25-B978-2BE5FB366C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E2576A-0724-4B25-B978-2BE5FB366C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E2576A-0724-4B25-B978-2BE5FB366C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E2576A-0724-4B25-B978-2BE5FB366C00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
