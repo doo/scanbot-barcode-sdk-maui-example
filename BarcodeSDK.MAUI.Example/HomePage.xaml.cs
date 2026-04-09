@@ -55,6 +55,8 @@ namespace ScanbotSDK.MAUI.Example;
                 new HomePageMenuItem("Classic Component - Barcode Scanning", () => Navigation.PushAsync(new BarcodeClassicComponentPage())),
                 new HomePageMenuItem("Classic Component - Barcode Scanning (MVVM)", () => Navigation.PushAsync(new BarcodeClassicComponentView())),
                 new HomePageMenuItem("Classic Component - Selection Overlay", () => Navigation.PushAsync(new BarcodeArOverlayClassicComponentPage())),
+                new HomePageMenuItem("Classic Component - Updating AR Overlay", () => Navigation.PushAsync(new BarcodeClassicArOverlayUpdatePage())),
+                
                 new HomePageMenuItem("Classic Component - Scan and Count", () => Navigation.PushAsync(new BarcodeScanAndCountClassicComponentPage())),
                 new HomePageMenuItem("Scan Barcodes From Image", ScanBarcodesFromImageAsync),
                 new HomePageMenuItem("Scan Barcodes From PDF", DetectBarcodesFromPdfAsync),

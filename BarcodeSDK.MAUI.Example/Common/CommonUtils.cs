@@ -1,4 +1,5 @@
 ﻿using ScanbotSDK.MAUI.Barcode;
+using ScanbotSDK.MAUI.Core.Barcode;
 using ScanbotSDK.MAUI.Core.GenericDocument;
 using ScanbotSDK.MAUI.Example.Results;
 
@@ -35,10 +36,15 @@ public static class CommonUtils
         if (result?.Items?.Length > 0)
         {
             var items = result.Items.Select(item => item.Barcode);
-            await App.Navigation.PushAsync(new BarcodeResultPage(items.ToList()));
+            await DisplayResultAsync(items.ToList());
         }
     }
-    
+
+    public static async Task DisplayResultAsync(List<BarcodeItem> barcodes)
+    {
+        await App.Navigation.PushAsync(new BarcodeResultPage(barcodes));
+    }
+
     internal static string ToGdrString(this GenericDocument document)
     {
         var formattedString = string.Empty;
