@@ -97,17 +97,21 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
         private OverlayTextStyle OverlayTextStyleForBarcode(BarcodeItem item)
         {
-            var color = dictionaryOverlayConfig[item.Format];
+            if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+        
+            var color = dictionaryOverlayConfig[item.Format]; 
             return new OverlayTextStyle
             {
                 TextColor = color,
-                TextContainerColor = Colors.WhiteSmoke,
-                HighlightedTextColor =  color
+                TextContainerColor = Colors.Wheat,
+                HighlightedTextColor = color
             };
         }
 
         private OverlayPolygonStyle OverlayPolygonStyleForBarcode(BarcodeItem item)
         {
+            if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+        
             var color = dictionaryOverlayConfig[item.Format];
             return new OverlayPolygonStyle
             {

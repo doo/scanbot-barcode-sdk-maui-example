@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Core.Barcode;
 
@@ -42,14 +43,7 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
         var overlayConfiguration = new SelectionOverlayConfiguration
         {
-            Enabled = true,
-            StrokeColor = Colors.DarkRed,
-            TextColor = Colors.WhiteSmoke,
-            TextContainerColor = Colors.Black,
-
-            HighlightedStrokeColor = Colors.Yellow,
-            HighlightedTextColor = Colors.Black,
-            HighlightedTextContainerColor = Colors.WhiteSmoke
+            Enabled = true
         };
 
         CameraView.OverlayConfiguration = overlayConfiguration;
@@ -64,6 +58,8 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
         return item.Text + "Loading..";
     }
 
+    private bool ApiComplete = false;
+
     private OverlayTextStyle OverlayTextStyleForBarcode(BarcodeItem item)
     {
         if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
@@ -72,7 +68,7 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
         return new OverlayTextStyle
         {
             TextColor = color,
-            TextContainerColor = Colors.WhiteSmoke,
+            TextContainerColor = Colors.Wheat,
             HighlightedTextColor = color
         };
     }
@@ -127,6 +123,7 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
     private async void StartArUpdate_Clicked(object sender, EventArgs e)
     {
+        
         if (inProgress) return;
         inProgress = true;
 
@@ -138,6 +135,8 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
             count++;
             await Task.Delay(3000); // 3 seconds delay
         }
+
+        inProgress = false;
     }
    
     private void UpdateDictionary(Color color)
