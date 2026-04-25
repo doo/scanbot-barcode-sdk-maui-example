@@ -43,14 +43,13 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
         var overlayConfiguration = new SelectionOverlayConfiguration
         {
-            Enabled = true
+            OverlayEnabled = true
         };
 
         CameraView.OverlayConfiguration = overlayConfiguration;
-
-        CameraView.OverlayPolygonStyleForBarcode = OverlayPolygonStyleForBarcode;
-        CameraView.OverlayTextStyleForBarcode = OverlayTextStyleForBarcode;
-        CameraView.OverlayOverrideTextForBarcode = OverlayOverrideTextForBarcode;
+        
+        CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleFromBarcodeItem(OverlayPolygonStyleForBarcode);
+        CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleFromBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
     }
 
     private string OverlayOverrideTextForBarcode(BarcodeItem item)
@@ -60,12 +59,12 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
     private bool ApiComplete = false;
 
-    private OverlayTextStyle OverlayTextStyleForBarcode(BarcodeItem item)
+    private OverlayTextConfiguration.Style OverlayTextStyleForBarcode(BarcodeItem item)
     {
         if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
         
         var color = dictionaryOverlayConfig[item.Format]; 
-        return new OverlayTextStyle
+        return new OverlayTextConfiguration.Style
         {
             TextColor = color,
             TextContainerColor = Colors.Wheat,
@@ -73,12 +72,12 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
         };
     }
 
-    private OverlayPolygonStyle OverlayPolygonStyleForBarcode(BarcodeItem item)
+    private OverlayPolygonConfiguration.Style OverlayPolygonStyleForBarcode(BarcodeItem item)
     {
         if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
         
         var color = dictionaryOverlayConfig[item.Format];
-        return new OverlayPolygonStyle
+        return new OverlayPolygonConfiguration.Style
         {
             StrokeColor = color,
             HighlightedStrokeColor = color

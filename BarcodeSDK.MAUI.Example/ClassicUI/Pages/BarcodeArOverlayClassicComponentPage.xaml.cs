@@ -65,29 +65,33 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             
             OverlayConfiguration = new SelectionOverlayConfiguration
             {
-                Enabled = false,
-                StrokeColor = Colors.DarkRed,
-                TextColor = Colors.WhiteSmoke,
-                TextContainerColor = Colors.Black,
-
-                HighlightedStrokeColor = Colors.Yellow,
-                HighlightedTextColor = Colors.Black,
-                HighlightedTextContainerColor = Colors.WhiteSmoke
+                OverlayEnabled = false,
+                PolygonConfiguration = new OverlayPolygonConfiguration.Style
+                {
+                    StrokeColor = Colors.DarkRed,
+                    HighlightedStrokeColor = Colors.Yellow,
+                    
+                },
+                TextConfiguration = new OverlayTextConfiguration.Style
+                {
+                    TextColor = Colors.WhiteSmoke,
+                    TextContainerColor = Colors.Black,
+                    HighlightedTextColor = Colors.Black,
+                    HighlightedTextContainerColor = Colors.WhiteSmoke
+                }
             };
         
             FinderConfiguration = new FinderConfiguration
             {
                 FinderLineColor =  Colors.Blue,
-                IsFinderEnabled =  OverlayConfiguration.Enabled,
+                IsFinderEnabled =  OverlayConfiguration.OverlayEnabled,
                 FinderLineWidth = 4,
                 FinderOverlayColor = Colors.Aqua.WithAlpha(0.5f)
             };
             
             CameraView.OverlayConfiguration = OverlayConfiguration;
-
-            CameraView.OverlayPolygonStyleForBarcode = OverlayPolygonStyleForBarcode;
-            CameraView.OverlayTextStyleForBarcode = OverlayTextStyleForBarcode;
-            CameraView.OverlayOverrideTextForBarcode = OverlayOverrideTextForBarcode;
+            CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleFromBarcodeItem(OverlayPolygonStyleForBarcode);
+            CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleFromBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
         }
 
         private string OverlayOverrideTextForBarcode(BarcodeItem item)
@@ -95,12 +99,12 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             return item.Text + "Loading..";
         }
 
-        private OverlayTextStyle OverlayTextStyleForBarcode(BarcodeItem item)
+        private OverlayTextConfiguration.Style OverlayTextStyleForBarcode(BarcodeItem item)
         {
             if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
         
             var color = dictionaryOverlayConfig[item.Format]; 
-            return new OverlayTextStyle
+            return new OverlayTextConfiguration.Style
             {
                 TextColor = color,
                 TextContainerColor = Colors.Wheat,
@@ -108,12 +112,12 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             };
         }
 
-        private OverlayPolygonStyle OverlayPolygonStyleForBarcode(BarcodeItem item)
+        private OverlayPolygonConfiguration.Style OverlayPolygonStyleForBarcode(BarcodeItem item)
         {
             if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
         
             var color = dictionaryOverlayConfig[item.Format];
-            return new OverlayPolygonStyle
+            return new OverlayPolygonConfiguration.Style
             {
                 StrokeColor = color,
                 HighlightedStrokeColor = color
@@ -147,20 +151,19 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
 
-            System.Diagnostics.Debug.WriteLine(text);
             ResultLabel.Text = text;
             
-            // await CommonUtils.DisplayResultAsync(barcodeItems.ToList());
+            // await CommonUtils.DisplayResultAsync(barcodeItesms.ToList());s
         }
 
         private int count = 0;
         
         private void Button_OnClicked(object sender, EventArgs e)
         {
-            Console.WriteLine("Button_OnClicked -- " + OverlayConfiguration.Enabled);
-            Debug.WriteLine("Button_OnClicked -- " + OverlayConfiguration.Enabled);
+            Console.WriteLine("Button_OnClicked -- " + OverlayConfiguration.OverlayEnabled);
+            Debug.WriteLine("Button_OnClicked -- " + OverlayConfiguration.OverlayEnabled);
             
-            OverlayConfiguration.Enabled = !OverlayConfiguration.Enabled;
+            OverlayConfiguration.OverlayEnabled = !OverlayConfiguration.OverlayEnabled;
             // FinderConfiguration.IsFinderEnabled = !FinderConfiguration.IsFinderEnabled;
             var strokeColour = Colors.DarkRed;
             var textColor = Colors.WhiteSmoke;
@@ -186,15 +189,24 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
             CameraView.OverlayConfiguration = new SelectionOverlayConfiguration
             {
-                Enabled =  true,
-                StrokeColor = strokeColour,
-                TextColor = textColor,
-                TextContainerColor = containerColor,
-                OverlayTextFormat = BarcodeTextFormat.None,
-                
-                HighlightedStrokeColor = Colors.Yellow,
-                HighlightedTextColor = Colors.Black,
-                HighlightedTextContainerColor = Colors.WhiteSmoke
+                OverlayEnabled = true,
+                PolygonConfiguration = new OverlayPolygonConfiguration.Style
+                {
+                    StrokeColor =strokeColour,
+                    HighlightedStrokeColor = Colors.Yellow,
+                    PolygonBackgroundColor = Colors.Transparent,
+                    PolygonBackgroundHighlightedColor = Colors.Transparent
+                },
+                TextConfiguration = new OverlayTextConfiguration.Style
+                {
+
+                    OverlayTextFormat = BarcodeTextFormat.None,
+                    TextColor = textColor,
+                    TextContainerColor = containerColor,
+
+                    HighlightedTextColor = Colors.Black,
+                    HighlightedTextContainerColor = Colors.WhiteSmoke,
+                }
             };
         
             CameraView.FinderConfiguration = new FinderConfiguration

@@ -49,8 +49,7 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             {
                 text += $"{barcode.Text} ({barcode.Format.ToString().ToUpper()})\n";
             }
-
-            System.Diagnostics.Debug.WriteLine(text);
+            
             ResultLabel.Text = text;
         }
     }

@@ -99,7 +99,7 @@ public partial class MainViewController
                 new SBSDKBarcodeFormatCommonConfiguration
                 {
                     Formats = BarcodeTypes.Instance.AcceptedTypes,
-                    Gs1Handling = SBSDKGS1Handling.DecodeStructure
+                    Gs1Handling = SBSDKGS1Handling.Parse
                 }
             ]
         };
