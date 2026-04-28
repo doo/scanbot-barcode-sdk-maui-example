@@ -1,34 +1,16 @@
 using System.Diagnostics;
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Core.Barcode;
+using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
 public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 {
-    private readonly Dictionary<BarcodeFormat, Color> dictionaryOverlayConfig;
-
     public BarcodeClassicArOverlayUpdatePage()
     {
         InitializeComponent();
         SetupViews();
-
-        dictionaryOverlayConfig = new Dictionary<BarcodeFormat, Color>
-        {
-            { BarcodeFormat.Code39, Colors.Red },
-            { BarcodeFormat.Itf, Colors.Green },
-            { BarcodeFormat.QrCode, Colors.Blue },
-            { BarcodeFormat.Code93, Colors.Yellow },
-            { BarcodeFormat.Ean8, Colors.DeepPink },
-            { BarcodeFormat.Aztec, Colors.MediumPurple },
-            { BarcodeFormat.Code128, Colors.SaddleBrown },
-            { BarcodeFormat.Ean13, Colors.LightCoral },
-            { BarcodeFormat.Pdf417, Colors.Aqua },
-            { BarcodeFormat.Codabar, Colors.Black },
-            { BarcodeFormat.UpcA, Colors.SlateBlue },
-            { BarcodeFormat.DataMatrix, Colors.Gray },
-            { BarcodeFormat.UpcE, Colors.MediumSpringGreen }
-        };
     }
 
     private void SetupViews()
@@ -48,8 +30,8 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
         CameraView.OverlayConfiguration = overlayConfiguration;
         
-        CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleFromBarcodeItem(OverlayPolygonStyleForBarcode);
-        CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleFromBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
+        CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleForBarcodeItem(OverlayPolygonStyleForBarcode);
+        CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleForBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
     }
 
     private string OverlayOverrideTextForBarcode(BarcodeItem item)
@@ -61,9 +43,9 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
     private OverlayTextConfiguration.Style OverlayTextStyleForBarcode(BarcodeItem item)
     {
-        if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+        if (!BarcodeFormatStyle.Palette.ContainsKey(item.Format)) return new OverlayTextConfiguration.Style();
         
-        var color = dictionaryOverlayConfig[item.Format]; 
+        var color = BarcodeFormatStyle.Palette[item.Format]; 
         return new OverlayTextConfiguration.Style
         {
             TextColor = color,
@@ -74,9 +56,9 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
 
     private OverlayPolygonConfiguration.Style OverlayPolygonStyleForBarcode(BarcodeItem item)
     {
-        if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+        if (!BarcodeFormatStyle.Palette.ContainsKey(item.Format)) return new OverlayPolygonConfiguration.Style();
         
-        var color = dictionaryOverlayConfig[item.Format];
+        var color = BarcodeFormatStyle.Palette[item.Format];
         return new OverlayPolygonConfiguration.Style
         {
             StrokeColor = color,
@@ -140,9 +122,9 @@ public partial class BarcodeClassicArOverlayUpdatePage : BaseComponentPage
    
     private void UpdateDictionary(Color color)
     {
-        foreach (var item in dictionaryOverlayConfig)
+        foreach (var item in BarcodeFormatStyle.Palette)
         {
-            dictionaryOverlayConfig[item.Key] = color;
+            BarcodeFormatStyle.Palette[item.Key] = color;
         }
     }
 }

@@ -1,5 +1,6 @@
 using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Core.Barcode;
+using ScanbotSDK.MAUI.Example.Utils;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
@@ -28,26 +29,26 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             // }
         ];
 
-        CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
+        // CameraView.PolygonConfiguration = new OverlayPolygonConfiguration.Style
+        // {
+        //     StrokeColor = Colors.Red,
+        //     HighlightedStrokeColor = Colors.BlueViolet,
+        //     PolygonBackgroundColor = Colors.RosyBrown.WithAlpha(0.5f),
+        //     PolygonBackgroundHighlightedColor = Colors.Black.WithAlpha(0.5f),
+        // };
+
+        CameraView.PolygonConfiguration = new OverlayPolygonConfiguration.StyleForBarcodeItem(BarcodeItemStyle);
+    }
+
+    private OverlayPolygonConfiguration.Style BarcodeItemStyle(BarcodeItem item)
+    {
+        if (!BarcodeFormatStyle.Palette.ContainsKey(item.Format)) return new OverlayPolygonConfiguration.Style();
+        
+        var color = BarcodeFormatStyle.Palette[item.Format];
+        return new OverlayPolygonConfiguration.Style
         {
-            OverlayEnabled = true,
-            PolygonConfiguration = new OverlayPolygonConfiguration.Style
-            {
-                StrokeColor = Colors.Yellow,
-                HighlightedStrokeColor = Colors.Red,
-                PolygonBackgroundColor = Colors.Transparent,
-                PolygonBackgroundHighlightedColor = Colors.Transparent
-            },
-            TextConfiguration = new OverlayTextConfiguration.Style
-            {
-
-                OverlayTextFormat = BarcodeTextFormat.CodeAndType,
-                TextColor = Colors.Yellow,
-                TextContainerColor = Colors.Black,
-
-                HighlightedTextColor = Colors.Yellow,
-                HighlightedTextContainerColor = Colors.DarkOrchid,
-            }
+            StrokeColor = color,
+            HighlightedStrokeColor = color
         };
     }
 

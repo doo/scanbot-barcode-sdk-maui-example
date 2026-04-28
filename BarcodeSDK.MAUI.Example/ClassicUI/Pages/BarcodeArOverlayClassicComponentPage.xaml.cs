@@ -8,31 +8,11 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
     public partial class BarcodeArOverlayClassicComponentPage : BaseComponentPage
     {
         public SelectionOverlayConfiguration OverlayConfiguration;
-        public FinderConfiguration FinderConfiguration;
-
-        private readonly Dictionary<BarcodeFormat, Color> dictionaryOverlayConfig;
         
         public BarcodeArOverlayClassicComponentPage()
         {
             InitializeComponent();
             SetupViews();
-
-            dictionaryOverlayConfig = new Dictionary<BarcodeFormat, Color>
-            {
-                { BarcodeFormat.Code39,  Colors.Red},
-                { BarcodeFormat.Itf,  Colors.Green},
-                { BarcodeFormat.QrCode,  Colors.Blue},
-                { BarcodeFormat.Code93,  Colors.Yellow},
-                { BarcodeFormat.Ean8,  Colors.DeepPink},
-                { BarcodeFormat.Aztec,  Colors.MediumPurple},
-                { BarcodeFormat.Code128,  Colors.SaddleBrown},
-                { BarcodeFormat.Ean13,  Colors.LightCoral},
-                { BarcodeFormat.Pdf417,  Colors.Aqua},
-                { BarcodeFormat.Codabar,  Colors.Black},
-                { BarcodeFormat.UpcA,  Colors.SlateBlue},
-                { BarcodeFormat.DataMatrix,  Colors.Gray},
-                { BarcodeFormat.UpcE,  Colors.MediumSpringGreen}
-            };
         }
 
         private void SetupViews()
@@ -51,17 +31,6 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
                 //     AddAdditionalQuietZone = true
                 // }
             ];
-
-            // OverlayConfiguration = new SelectionOverlayConfiguration(
-            //     overlayFormat: BarcodeTextFormat.CodeAndType,
-            //     textColor: Colors.Yellow,
-            //     textContainerColor: Colors.Black,
-            //     strokeColor: Colors.Yellow,
-            //     highlightedStrokeColor: Colors.Purple,
-            //     highlightedTextColor: Colors.Purple,
-            //     highlightedTextContainerColor: Colors.Black,
-            //     polygonBackgroundColor: Colors.Transparent,
-            //     polygonBackgroundHighlightedColor: Colors.Transparent);
             
             OverlayConfiguration = new SelectionOverlayConfiguration
             {
@@ -80,18 +49,10 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
                     HighlightedTextContainerColor = Colors.WhiteSmoke
                 }
             };
-        
-            FinderConfiguration = new FinderConfiguration
-            {
-                FinderLineColor =  Colors.Blue,
-                IsFinderEnabled =  OverlayConfiguration.OverlayEnabled,
-                FinderLineWidth = 4,
-                FinderOverlayColor = Colors.Aqua.WithAlpha(0.5f)
-            };
             
             CameraView.OverlayConfiguration = OverlayConfiguration;
-            CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleFromBarcodeItem(OverlayPolygonStyleForBarcode);
-            CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleFromBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
+            CameraView.OverlayConfiguration.PolygonConfiguration = new OverlayPolygonConfiguration.StyleForBarcodeItem(OverlayPolygonStyleForBarcode);
+            CameraView.OverlayConfiguration.TextConfiguration = new OverlayTextConfiguration.StyleForBarcodeItem(OverlayTextStyleForBarcode, OverlayOverrideTextForBarcode);
         }
 
         private string OverlayOverrideTextForBarcode(BarcodeItem item)
@@ -101,9 +62,9 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
         private OverlayTextConfiguration.Style OverlayTextStyleForBarcode(BarcodeItem item)
         {
-            if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+            if (!BarcodeFormatStyle.Palette.ContainsKey(item.Format)) return new OverlayTextConfiguration.Style();
         
-            var color = dictionaryOverlayConfig[item.Format]; 
+            var color = BarcodeFormatStyle.Palette[item.Format]; 
             return new OverlayTextConfiguration.Style
             {
                 TextColor = color,
@@ -114,9 +75,9 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
         private OverlayPolygonConfiguration.Style OverlayPolygonStyleForBarcode(BarcodeItem item)
         {
-            if (!dictionaryOverlayConfig.ContainsKey(item.Format)) return null;
+            if (!BarcodeFormatStyle.Palette.ContainsKey(item.Format)) return new OverlayPolygonConfiguration.Style();
         
-            var color = dictionaryOverlayConfig[item.Format];
+            var color = BarcodeFormatStyle.Palette[item.Format];
             return new OverlayPolygonConfiguration.Style
             {
                 StrokeColor = color,
@@ -153,7 +114,7 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
 
             ResultLabel.Text = text;
             
-            // await CommonUtils.DisplayResultAsync(barcodeItesms.ToList());s
+            // await CommonUtils.DisplayResultAsync(barcodeItesms.ToList());
         }
 
         private int count = 0;
@@ -164,13 +125,11 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             Debug.WriteLine("Button_OnClicked -- " + OverlayConfiguration.OverlayEnabled);
             
             OverlayConfiguration.OverlayEnabled = !OverlayConfiguration.OverlayEnabled;
-            // FinderConfiguration.IsFinderEnabled = !FinderConfiguration.IsFinderEnabled;
+            
             var strokeColour = Colors.DarkRed;
             var textColor = Colors.WhiteSmoke;
             var containerColor = Colors.Black;
-                
-                
-            var highlighted = Colors.DarkRed;
+            
             if (count % 3 == 1)
             {
                 strokeColour = Colors.HotPink;
@@ -194,27 +153,19 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
                 {
                     StrokeColor =strokeColour,
                     HighlightedStrokeColor = Colors.Yellow,
-                    PolygonBackgroundColor = Colors.Transparent,
-                    PolygonBackgroundHighlightedColor = Colors.Transparent
+                    PolygonColor = Colors.Transparent,
+                    HighlightedPolygonColor = Colors.Transparent
                 },
                 TextConfiguration = new OverlayTextConfiguration.Style
                 {
 
-                    OverlayTextFormat = BarcodeTextFormat.None,
+                    TextFormat = BarcodeTextFormat.None,
                     TextColor = textColor,
                     TextContainerColor = containerColor,
 
                     HighlightedTextColor = Colors.Black,
                     HighlightedTextContainerColor = Colors.WhiteSmoke,
                 }
-            };
-        
-            CameraView.FinderConfiguration = new FinderConfiguration
-            {
-                FinderLineColor =  Colors.Blue,
-                IsFinderEnabled =   FinderConfiguration.IsFinderEnabled,
-                FinderLineWidth = 4,
-                FinderOverlayColor = Colors.Aqua.WithAlpha(0.5f)
             };
         }
     }
