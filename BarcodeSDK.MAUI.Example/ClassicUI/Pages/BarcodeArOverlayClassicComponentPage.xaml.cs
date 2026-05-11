@@ -30,7 +30,10 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages
             {
                 PolygonConfiguration = new OverlayPolygonConfiguration.Style
                     {
-                        StrokeColor = Colors.Yellow, HighlightedStrokeColor = Colors.Red, PolygonColor = Colors.Transparent, HighlightedPolygonColor = Colors.DarkOrchid,
+                        StrokeColor = Colors.Yellow,
+                        HighlightedStrokeColor = Colors.Red,
+                        PolygonColor = Colors.Transparent,
+                        HighlightedPolygonColor = Colors.DarkOrchid,
                     },
                 TextConfiguration = new OverlayTextConfiguration.Style
                 {
