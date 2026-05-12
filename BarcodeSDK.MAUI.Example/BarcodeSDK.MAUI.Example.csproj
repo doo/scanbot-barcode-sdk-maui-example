@@ -52,6 +52,6 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="8.0.1-alpha.5" />
+        <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="8.0.1-alpha.4" />
     </ItemGroup>
 </Project>
