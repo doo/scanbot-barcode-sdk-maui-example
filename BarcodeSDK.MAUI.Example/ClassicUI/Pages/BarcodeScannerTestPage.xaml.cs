@@ -13,7 +13,7 @@ namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
 
 public partial class BarcodeScannerTestPage : ContentPage
 {
-    private const string Finder = "Finder", Flash = "Flash", Polygons = "Polygon", Start = "Start", Stop = "Stop", Visibility = "Visibility", Submit = "Submit";
+    private const string Finder = "Finder", Flash = "Flash", Polygons = "Polygon", Start = "Start", Stop = "Stop", Visibility = "Visibility", Submit = "Submit", TapToFocus = "TapToFocus";
     private bool _showResult;
 
     private bool _isFlashEnabled;
@@ -39,6 +39,19 @@ public partial class BarcodeScannerTestPage : ContentPage
             OnPropertyChanged();
         }
     }
+    
+    private bool _isTapToFocusEnabled = true;
+
+    public bool IsTapToFocusEnabled
+    {
+        get => _isTapToFocusEnabled;
+        set
+        {
+            _isTapToFocusEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+    
     
     private string _barcodeResultText = string.Empty;
 
@@ -73,16 +86,20 @@ public partial class BarcodeScannerTestPage : ContentPage
             new(Visibility, () => IsCameraVisible = !IsCameraVisible),
             new(Finder, ToggleFinderConfig),
             new(Polygons, ToggleArOverlayConfig),
-            new(Stop, null, selected:true), // This is handled inside the default ScannerButtonOnClicked handler. 
+            new(TapToFocus, () => IsTapToFocusEnabled = !IsTapToFocusEnabled, IsTapToFocusEnabled),
+            new(Stop, null, selected: true), // This is handled inside the default ScannerButtonOnClicked handler. 
             new(Submit, () => _showResult = true)
         ];
         BindingContext = this;
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
         BarcodeScanner.StartDetection();
+
+        await Task.Delay(4000);
+        await DisplayAlertAsync("Barcode Scanner", "It is still scanning he barcodes", "Ok");
     }
 
     private void ToggleArOverlayConfig()
@@ -143,6 +160,11 @@ public partial class BarcodeScannerTestPage : ContentPage
 
         selectedItem.ClickAction?.Invoke();
 
+        if (selectedItem.Title == TapToFocus)
+        {
+            selectedItem.Selected = IsTapToFocusEnabled;
+        }
+        
         if (selectedItem.Title != Start && selectedItem.Title != Stop)
             return;
 

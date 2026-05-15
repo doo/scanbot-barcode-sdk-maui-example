@@ -26,6 +26,7 @@
                 x:Name="BarcodeScanner"
                 IsFlashEnabled="{Binding IsFlashEnabled}"
                 IsVisible="{Binding IsCameraVisible}"
+                TouchToFocusEnabled="{Binding IsTapToFocusEnabled}"
                 OnBarcodeScanResult="BarcodeScanner_OnOnBarcodeScanResult"/>
             </Grid>
             
