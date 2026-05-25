@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net10.0-android</TargetFramework>
-        <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
         <OutputType>Exe</OutputType>
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -25,6 +25,9 @@
         <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0" />
+<!--      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0" />-->
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.NET.Droid\BarcodeSDK.NET.Droid.csproj" />
     </ItemGroup>
 </Project>

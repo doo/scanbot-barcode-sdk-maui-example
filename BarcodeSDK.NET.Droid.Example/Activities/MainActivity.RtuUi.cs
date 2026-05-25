@@ -13,7 +13,7 @@ public partial class MainActivity
 
     private void SingleScanning(object sender, EventArgs e)
     {
-        if (!Alert.CheckLicense(this, SDK))
+        if (!Alert.CheckLicense(this, Sdk))
         {
             return;
         }
@@ -42,12 +42,12 @@ public partial class MainActivity
         // var intent = BarcodeScannerActivity.NewIntent(this, Snippets.SingleScanningUseCase);
         // Or any other snippet (like MultipleScanningUseCase, FindAndPickUseCase, ArOverlay, etc.)
 
-        StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
+        StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
 
     private void SingleScanningWithArOverlay(object sender, EventArgs e)
     {
-        if (!Alert.CheckLicense(this, SDK))
+        if (!Alert.CheckLicense(this, Sdk))
         {
             return;
         }
@@ -61,12 +61,12 @@ public partial class MainActivity
             UseCase = useCase
         });
 
-        StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
+        StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
 
     private void BatchBarcodeScanning(object sender, EventArgs e)
     {
-        if (!Alert.CheckLicense(this, SDK))
+        if (!Alert.CheckLicense(this, Sdk))
         {
             return;
         }
@@ -89,12 +89,12 @@ public partial class MainActivity
                 Mode = MultipleBarcodesScanningMode.Counting
             }
         });
-        StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
+        StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
 
     private void MultipleUniqueBarcodeScanning(object sender, EventArgs e)
     {
-        if (!Alert.CheckLicense(this, SDK))
+        if (!Alert.CheckLicense(this, Sdk))
         {
             return;
         }
@@ -115,12 +115,12 @@ public partial class MainActivity
                 Title = new StyledText { Text = "Please align the QR-/Barcode in the frame above to scan it." }
             }
         });
-        StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
+        StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
 
     private void FindAndPickScanning(object sender, EventArgs e)
     {
-        if (!Alert.CheckLicense(this, SDK))
+        if (!Alert.CheckLicense(this, Sdk))
         {
             return;
         }
@@ -171,7 +171,7 @@ public partial class MainActivity
 
         _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, configuration);
-        StartActivityForResult(intent, BARCODE_DEFAULT_UI_REQUEST_CODE);
+        StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
 
     private void OnRTUActivityResult(BarcodeScannerResult barcode)
