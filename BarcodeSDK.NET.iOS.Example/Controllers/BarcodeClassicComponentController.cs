@@ -1,94 +1,105 @@
 ﻿using ScanbotSDK.iOS;
 
-namespace BarcodeSDK.NET.iOS
+namespace BarcodeSDK.NET.iOS;
+
+public class BarcodeClassicComponentController : BaseViewController
 {
-    public class BarcodeClassicComponentController : BaseViewController
+    private SBSDKBarcodeScannerViewController _scannerController;
+
+    public override void ViewDidLoad()
     {
-        private SBSDKBarcodeScannerViewController scannerController;
+        PageTitle = "BarcodeScannerView";
+        base.ViewDidLoad();
 
-        public override void ViewDidLoad()
+        var commonConfiguration = new SBSDKBarcodeFormatCommonConfiguration
         {
-            PageTitle = "BarcodeScannerView";
-            base.ViewDidLoad();
+            Formats = BarcodeTypes.Instance.AcceptedTypes
+        };
 
-            var commonConfiguration = new SBSDKBarcodeFormatCommonConfiguration
-            {
-                Formats = BarcodeTypes.Instance.AcceptedTypes
-            };
-            
-            // Configure different parameters for specific barcode format.
-            var dataMatrixConfig = new SBSDKBarcodeFormatCode128Configuration
-            {
-               MinimumTextLength = 10
-            };
-            
-            var config = new SBSDKBarcodeScannerConfiguration
-            {
-                BarcodeFormatConfigurations = [commonConfiguration, dataMatrixConfig],
-                ReturnBarcodeImage = true
-            };
-            
-            scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
-            scannerController.IsTrackingOverlayEnabled = true;
-            scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
-            scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = UIColor.Yellow;
-            scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundColor = UIColor.Yellow.ColorWithAlpha(0.25f);
-            scannerController.TrackingOverlayController.Configuration.TextStyle.TextColor = UIColor.Yellow;
-            scannerController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundColor = UIColor.Black;
+        // Configure different parameters for specific barcode format.
+        var dataMatrixConfig = new SBSDKBarcodeFormatCode128Configuration
+        {
+            MinimumTextLength = 10
+        };
 
-            scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = UIColor.Red;
-            scannerController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundSelectedColor = UIColor.Red.ColorWithAlpha(0.25f);
-            scannerController.TrackingOverlayController.Configuration.TextStyle.HighlightedTextColor = UIColor.Red;
-            scannerController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundHighlightedColor = UIColor.Black;
+        var config = new SBSDKBarcodeScannerConfiguration
+        {
+            BarcodeFormatConfigurations = [commonConfiguration, dataMatrixConfig],
+            ReturnBarcodeImage = true
+        };
 
-            scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
-            scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
+        _scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
+        _scannerController.IsTrackingOverlayEnabled = true;
+        _scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
 
-            // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
-            SetFlashButton(() =>
+        _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
+        _scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
+
+        // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
+        SetFlashButton(() =>
+        {
+            _scannerController.IsFlashLightEnabled = !_scannerController.IsFlashLightEnabled;
+            return _scannerController.IsFlashLightEnabled;
+        });
+    }
+
+    private class BarcodeDetectionDelegate(UINavigationController navigationController) : SBSDKBarcodeScannerViewControllerDelegate
+    {
+        public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
+        {
+            if (navigationController.TopViewController is ScanResultListController)
             {
-                scannerController.IsFlashLightEnabled = !scannerController.IsFlashLightEnabled;
-                return scannerController.IsFlashLightEnabled;
-            });
+                return;
+            }
+
+            var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled;
+
+            if (!shouldHandleBarcode)
+            {
+                return;
+            }
+
+            var resultsController = new ScanResultListController(codes);
+
+            navigationController.PopViewController(animated: false);
+            navigationController.PushViewController(resultsController, animated: true);
         }
 
-        private class BarcodeSelectionDelegate(UINavigationController navigationController): SBSDKBarcodeTrackingOverlayControllerDelegate
+        public override bool ShouldScanBarcodes(SBSDKBarcodeScannerViewController controller)
         {
-            public override void DidTapOnBarcode(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode)
-            {
-                var resultsController = new ScanResultListController([barcode]);
+            return true;
+        }
+    }
 
-                navigationController.PopViewController(animated: false);
-                navigationController.PushViewController(resultsController, animated: true);
-            }
+    private class BarcodeSelectionDelegate(UINavigationController navigationController) : SBSDKBarcodeTrackingOverlayControllerDelegate
+    {
+        public override void DidTapOnBarcode(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode)
+        {
+            var resultsController = new ScanResultListController([barcode]);
+
+            navigationController.PopViewController(animated: false);
+            navigationController.PushViewController(resultsController, animated: true);
         }
 
-        private class BarcodeDetectionDelegate(UINavigationController navigationController): SBSDKBarcodeScannerViewControllerDelegate
+        private SBSDKBarcodeTrackedViewPolygonStyle PolygonStyleFor(SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewPolygonStyle proposedStyle)
         {
-            public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
-            {
-                if (navigationController.TopViewController is ScanResultListController)
-                {
-                    return;
-                }
-                
-                var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled;
+            // Explore this object for more parameters
+            proposedStyle.PolygonColor = UIColor.Yellow;
+            proposedStyle.PolygonBackgroundColor = UIColor.Clear;
+            return proposedStyle;
+        }
 
-                if (!shouldHandleBarcode)
-                {
-                    return;
-                }
+        private SBSDKBarcodeTrackedViewTextStyle TextStyleFor(SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewTextStyle proposedStyle)
+        {
+            // Explore this object for more parameters
+            proposedStyle.TextColor = UIColor.Yellow;
+            proposedStyle.TextBackgroundColor = UIColor.Black;
+            return proposedStyle;
+        }
 
-                var resultsController = new ScanResultListController(codes);
-
-                navigationController.PopViewController(animated: false);
-                navigationController.PushViewController(resultsController, animated: true);
-            }
-
-            public override bool ShouldScanBarcodes(SBSDKBarcodeScannerViewController controller)
-            {
-                return true;
-            }
+        private string OverrideTextFor(SBSDKBarcodeItem barcode, string proposedString)
+        {
+            return "Some text";
         }
     }
 }
