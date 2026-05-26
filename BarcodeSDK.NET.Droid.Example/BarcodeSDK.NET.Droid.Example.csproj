@@ -25,9 +25,6 @@
         <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     </PropertyGroup>
     <ItemGroup>
-<!--      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="8.0.0" />-->
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.NET.Droid\BarcodeSDK.NET.Droid.csproj" />
+     <PackageReference Include="ScanbotBarcodeSDK.NET" Version="9.0.0-alpha.1" />
     </ItemGroup>
 </Project>
