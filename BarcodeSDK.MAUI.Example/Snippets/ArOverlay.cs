@@ -21,7 +21,7 @@ public partial class Snippets
             useCase.ArOverlay.Visible = true;
             useCase.ArOverlay.AutomaticSelectionEnabled = false;
 
-            // Configure other parameters, pertaining to single-scanning mode as needed.
+            // Configure other parameters, pertaining to multiple-scanning mode as needed.
             config.UseCase = useCase;
 
             return config;
