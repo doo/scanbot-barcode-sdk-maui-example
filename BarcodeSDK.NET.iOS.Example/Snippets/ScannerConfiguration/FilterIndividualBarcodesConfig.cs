@@ -10,20 +10,6 @@ public static partial class Snippets
         {
             var configs = new List<SBSDKBarcodeFormatConfigurationBase>();
 
-            var commonConfiguration = new SBSDKBarcodeFormatCommonConfiguration
-            {
-                RegexFilter = "",
-                Minimum1DQuietZoneSize = 10,
-                StripCheckDigits = false,
-                MinimumTextLength = 0,
-                MaximumTextLength = 0,
-                Gs1Handling = SBSDKGS1Handling.Parse,
-                StrictMode = true,
-                Formats = SBSDKBarcodeFormats.Common,
-                AddAdditionalQuietZone = false
-            };
-            configs.Add(commonConfiguration);
-
             // Add individual configurations for specific barcode formats
             var australiaPostConfig = new SBSDKBarcodeFormatAustraliaPostConfiguration
             {

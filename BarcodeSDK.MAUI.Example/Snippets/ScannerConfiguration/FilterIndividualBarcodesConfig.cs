@@ -10,20 +10,6 @@ public partial class Snippets
         {
             var configs = new List<BarcodeFormatConfigurationBase>();
 
-            var commonConfiguration = new BarcodeFormatCommonConfiguration
-            {
-                RegexFilter = "",
-                Minimum1DQuietZoneSize = 10,
-                StripCheckDigits = false,
-                MinimumTextLength = 0,
-                MaximumTextLength = 0,
-                Gs1Handling = Gs1Handling.Parse,
-                StrictMode = true,
-                Formats = BarcodeFormats.Common,
-                AddAdditionalQuietZone = false
-            };
-            configs.Add(commonConfiguration);
-
             // Add individual configurations for specific barcode formats
             var australiaPostConfig = new BarcodeFormatAustraliaPostConfiguration
             {
