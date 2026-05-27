@@ -58,7 +58,17 @@ public partial class MainActivity
         _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
-            UseCase = useCase
+            UseCase = useCase,
+            ScannerConfiguration = new IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations =
+                [
+                    new BarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeTypes.Instance.AcceptedTypes,
+                    }
+                ]
+            },
         });
 
         StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
@@ -109,6 +119,16 @@ public partial class MainActivity
         _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
+            ScannerConfiguration = new IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration
+            {
+                BarcodeFormatConfigurations =
+                [
+                    new BarcodeFormatCommonConfiguration
+                    {
+                        Formats = BarcodeTypes.Instance.AcceptedTypes,
+                    }
+                ]
+            },
             UseCase = useCase,
             UserGuidance = new UserGuidanceConfiguration
             {

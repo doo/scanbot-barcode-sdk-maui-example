@@ -19,7 +19,7 @@ public class BarcodeClassicComponentController : BaseViewController
         // Configure different parameters for specific barcode format.
         var dataMatrixConfig = new SBSDKBarcodeFormatCode128Configuration
         {
-            MinimumTextLength = 10
+            MinimumTextLength = new IntPtr(10)
         };
 
         var config = new SBSDKBarcodeScannerConfiguration
@@ -99,7 +99,8 @@ public class BarcodeClassicComponentController : BaseViewController
 
         public override string OverrideTextFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, string proposedString)
         {
-            return "Some text";
+            // Update the required text over the AR overlay of detected barcodes.
+            return proposedString;
         }
     }
 }
