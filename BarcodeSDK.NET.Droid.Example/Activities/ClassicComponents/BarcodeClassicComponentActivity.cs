@@ -149,7 +149,8 @@ public class BarcodeClassicComponentActivity : AppCompatActivity, IOnApplyWindow
             return;
         }
 
-        var bitmap = BitmapFactory.DecodeByteArray(image.ToArray<byte>(), 0, captureInfo.ImageOrientation);
+        var imageBytes = image.ToArray<byte>();
+        var bitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
 
         if (bitmap == null)
         {
