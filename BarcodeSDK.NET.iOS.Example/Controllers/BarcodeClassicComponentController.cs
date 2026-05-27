@@ -81,7 +81,7 @@ public class BarcodeClassicComponentController : BaseViewController
             navigationController.PushViewController(resultsController, animated: true);
         }
 
-        private SBSDKBarcodeTrackedViewPolygonStyle PolygonStyleFor(SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewPolygonStyle proposedStyle)
+        public override SBSDKBarcodeTrackedViewPolygonStyle PolygonStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewPolygonStyle proposedStyle)
         {
             // Explore this object for more parameters
             proposedStyle.PolygonColor = UIColor.Yellow;
@@ -89,7 +89,7 @@ public class BarcodeClassicComponentController : BaseViewController
             return proposedStyle;
         }
 
-        private SBSDKBarcodeTrackedViewTextStyle TextStyleFor(SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewTextStyle proposedStyle)
+        public override SBSDKBarcodeTrackedViewTextStyle TextStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewTextStyle proposedStyle)
         {
             // Explore this object for more parameters
             proposedStyle.TextColor = UIColor.Yellow;
@@ -97,7 +97,7 @@ public class BarcodeClassicComponentController : BaseViewController
             return proposedStyle;
         }
 
-        private string OverrideTextFor(SBSDKBarcodeItem barcode, string proposedString)
+        public override string OverrideTextFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, string proposedString)
         {
             return "Some text";
         }

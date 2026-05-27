@@ -141,24 +141,22 @@ namespace BarcodeSDK.NET.Droid
                     return;
                 case SelectImageFromGallery:
                 {
-                    using (var stream = ContentResolver?.OpenInputStream(data.Data))
+                    using var stream = ContentResolver?.OpenInputStream(data.Data);
+                    if (stream == null)
                     {
-                        if (stream == null)
-                        {
-                            _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to open the selected image stream."));
-                            return;
-                        }
-
-                        var bitmap = BitmapFactory.DecodeStream(stream);
-                        if (bitmap == null)
-                        {
-                            _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to decode the selected image."));
-                            return;
-                        }
-
-                        _pendingBitmap?.TrySetResult(bitmap);
+                        _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to open the selected image stream."));
                         return;
                     }
+
+                    var bitmap = BitmapFactory.DecodeStream(stream);
+                    if (bitmap == null)
+                    {
+                        _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to decode the selected image."));
+                        return;
+                    }
+
+                    _pendingBitmap?.TrySetResult(bitmap);
+                    return;
                 }
             }
         }
