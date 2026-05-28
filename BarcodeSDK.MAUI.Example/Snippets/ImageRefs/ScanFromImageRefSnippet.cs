@@ -8,7 +8,7 @@ public partial class Snippets
     public static async Task ScanBarcodeFromImageRefAsync(string imagePath)
     {
         // Create ImageRef from path
-        var imageRef = ImageRef.FromPath(path);
+        var imageRef = ImageRef.FromPath(imagePath);
 
         // Scan a barcode from ImageRef
         var result =
