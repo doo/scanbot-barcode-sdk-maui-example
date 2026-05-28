@@ -5,7 +5,7 @@ namespace ScanbotSDK.MAUI.Example;
 
 public partial class Snippets
 {
-    static void SaveImage(ImageRef imageRef, string destinationPath)
+    public static void SaveImage(ImageRef imageRef, string destinationPath)
     {
         imageRef.SaveImage(
             destinationPath,
