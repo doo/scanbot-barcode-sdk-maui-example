@@ -13,7 +13,10 @@ public static partial class Snippets
             // Returns the stored image as a byte array.
             var nsData =
                 item.Barcode.SourceImage?.EncodeImageWithOptions(options: new SBSDKEncodeImageOptions(), out _);
-            imageBuffers.Add(nsData);
+            if (nsData != null)
+            {
+                imageBuffers.Add(nsData);
+            }
 
             // Clear ImageRef from native memory if not needed anymore
             item.Barcode.SourceImage?.Close();
