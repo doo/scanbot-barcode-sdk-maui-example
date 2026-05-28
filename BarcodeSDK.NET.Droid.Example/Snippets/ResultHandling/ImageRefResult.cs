@@ -25,6 +25,7 @@ public static partial class Snippets
 
                 // Clear ImageRef from native memory if not needed anymore
                 sourceImage.Close();
+            }
         }
         catch (Exception e)
         {

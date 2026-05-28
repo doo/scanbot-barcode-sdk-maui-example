@@ -30,14 +30,16 @@ public partial class Snippets
         if (rtuResult.IsSuccess)
         {
             foreach (var item in rtuResult.Value.Items)
-                var encoded = item.Barcode.SourceImage?.EncodeImage(options: new EncodeImageOptions());
-                if (encoded != null)
+            {
+                var bytes = item.Barcode.SourceImage?.EncodeImage(options: new EncodeImageOptions());
+                if (bytes != null)
                 {
-                    imageBuffers.Add(encoded);
+                    imageBuffers.Add(bytes);
                 }
 
                 // Releases native resources stored by the ref.
                 item.Barcode.SourceImage?.Clear();
+            }
         }
 
         return imageBuffers;

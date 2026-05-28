@@ -13,6 +13,7 @@ public static partial class Snippets
         try
         {
             foreach (var item in result.Barcodes)
+            {
                 var sourceImage = item.SourceImage;
                 if (sourceImage == null)
                     continue;
@@ -23,6 +24,7 @@ public static partial class Snippets
 
                 // Clear ImageRef from native memory if not needed anymore
                 sourceImage.Close();
+            }
         }
         catch (Exception e)
         {
