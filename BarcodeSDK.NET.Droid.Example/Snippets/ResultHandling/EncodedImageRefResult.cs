@@ -13,14 +13,16 @@ public static partial class Snippets
         try
         {
             foreach (var item in result.Barcodes)
-            {
+                var sourceImage = item.SourceImage;
+                if (sourceImage == null)
+                    continue;
+
                 // Returns the stored image as a byte array.
-                var byteArray = item.SourceImage?.EncodeImage(options: new EncodeImageOptions()).GetBytesOrThrow();
+                var byteArray = sourceImage.EncodeImage(options: new EncodeImageOptions()).GetBytesOrThrow();
                 imageBuffers.Add(byteArray);
 
                 // Clear ImageRef from native memory if not needed anymore
-                item.SourceImage?.Close();
-            }
+                sourceImage.Close();
         }
         catch (Exception e)
         {
