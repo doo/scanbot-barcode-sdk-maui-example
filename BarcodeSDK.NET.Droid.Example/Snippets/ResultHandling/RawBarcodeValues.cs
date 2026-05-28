@@ -4,7 +4,7 @@ namespace BarcodeSDK.NET.Droid;
 
 public static partial class Snippets
 {
-    public static void HandleRawBarcodeValuesAsync(BarcodeScannerResult result)
+    public static void HandleRawBarcodeValues(BarcodeScannerResult result)
     {
         var mappedBarcodeItems = result.Barcodes
             .Select(barcode => new
@@ -16,6 +16,7 @@ public static partial class Snippets
             })
             .ToList();
 
-        Console.WriteLine(mappedBarcodeItems);
+        Console.WriteLine(mappedBarcodeItems.Select(barcode =>
+            $"Format: {barcode.BarcodeFormat}, Text: {barcode.TextValue}"));
     }
 }

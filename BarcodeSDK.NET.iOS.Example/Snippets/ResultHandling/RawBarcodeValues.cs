@@ -4,7 +4,7 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static void HandleRawBarcodeValuesAsync(SBSDKUI2BarcodeScannerUIResult result)
+    public static void HandleRawBarcodeValues(SBSDKUI2BarcodeScannerUIResult result)
     {
         var mappedBarcodeItems = result.Items
             .Select(item => new
@@ -16,6 +16,7 @@ public static partial class Snippets
             })
             .ToList();
 
-        Console.WriteLine(mappedBarcodeItems);
+        Console.WriteLine(mappedBarcodeItems.Select(barcode =>
+            $"Format: {barcode.BarcodeFormat}, Text: {barcode.TextValue}"));
     }
 }

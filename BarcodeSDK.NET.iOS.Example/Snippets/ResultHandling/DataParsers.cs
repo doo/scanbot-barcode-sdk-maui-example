@@ -35,7 +35,7 @@ public static partial class Snippets
             {
                 parsedData.Add(new SBSDKBarcodeDocumentModelIDCardPDF417(genericDocument).BirthDate);
             }
-            else if (SBSDKBarcodeDocumentModelConstants.IdCardPDF417DocumentType == typeName)
+            else if (SBSDKBarcodeDocumentModelConstants.Gs1DocumentType == typeName)
             {
                 var gs1Elements = new SBSDKBarcodeDocumentModelGS1(genericDocument).Elements;
                 parsedData.Add(gs1Elements.Length > 0

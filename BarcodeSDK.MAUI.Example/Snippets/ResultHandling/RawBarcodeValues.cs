@@ -20,6 +20,7 @@ public partial class Snippets
             })
             .ToList();
 
-        Console.WriteLine(mappedBarcodeItems);
+        Console.WriteLine(mappedBarcodeItems.Select(barcode =>
+            $"Format: {barcode.BarcodeFormat}, Text: {barcode.TextValue}"));
     }
 }
