@@ -1,3 +1,4 @@
+using _Microsoft.Android.Resource.Designer;
 using Android.Graphics;
 using Android.Views;
 using AndroidX.AppCompat.App;
@@ -10,16 +11,16 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity, IOnAp
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.barcode_result);
-        AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
+        SetContentView(ResourceConstant.Layout.barcode_result);
+        AndroidUtils.ApplyEdgeToEdge(FindViewById(ResourceConstant.Id.container), this);
         
         SetupToolbar();
         DisplayBarcodeResult();
     }
-    
-    protected void SetupToolbar()
+
+    private void SetupToolbar()
     {
-        var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
+        var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(ResourceConstant.Id.toolbar);
         SetSupportActionBar(toolbar);
     }
     
@@ -37,18 +38,18 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity, IOnAp
     
     protected void ShowSnapImage(string path) => AddImageView().SetImageURI(Android.Net.Uri.Parse(path));
 
-    protected void ShowSnapImage(BaseBarcodeResult<TNativeBarcodeResult> barcodeResult)
+    private void ShowSnapImage(BaseBarcodeResult<TNativeBarcodeResult> barcodeResult)
     {
         Bitmap scaled = Bitmap.CreateScaledBitmap(barcodeResult.ResultBitmap, 200, 200, true);
         AddImageView().SetImageBitmap(scaled);
     }
-    
-    protected ImageView AddImageView()
+
+    private ImageView AddImageView()
     {
-        var items = FindViewById<LinearLayout>(Resource.Id.recognisedItems);
-        var view = LayoutInflater.Inflate(Resource.Layout.snap_image_item, items, false);
+        var items = FindViewById<LinearLayout>(ResourceConstant.Id.recognisedItems);
+        var view = LayoutInflater.Inflate(ResourceConstant.Layout.snap_image_item, items, false);
         items?.AddView(view);
-        return view?.FindViewById<ImageView>(Resource.Id.snapImage);
+        return view?.FindViewById<ImageView>(ResourceConstant.Id.snapImage);
     }
     
     public WindowInsetsCompat OnApplyWindowInsets(View v, WindowInsetsCompat windowInsets)

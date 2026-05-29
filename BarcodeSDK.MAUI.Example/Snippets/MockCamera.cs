@@ -1,4 +1,3 @@
-using ScanbotSDK.MAUI.Common;
 using ScanbotSDK.MAUI.Example.Utils;
 using ImageSource = Microsoft.Maui.Controls.ImageSource;
 
