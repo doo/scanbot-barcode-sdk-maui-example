@@ -7,16 +7,25 @@ public partial class Snippets
 {
     public static BarcodeScannerView EnableSelectScanArOverlay(BarcodeScannerView cameraView)
     {
-        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration(
-            overlayFormat: BarcodeTextFormat.CodeAndType,
-            textColor: Colors.Yellow,
-            textContainerColor: Colors.Black,
-            strokeColor: Colors.Yellow,
-            highlightedStrokeColor: Colors.Red,
-            highlightedTextColor: Colors.Red,
-            highlightedTextContainerColor: Colors.Black,
-            polygonBackgroundColor: Colors.Transparent,
-            polygonBackgroundHighlightedColor: Colors.Transparent);
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration
+        {
+            OverlayEnabled = true,
+            PolygonConfiguration = new OverlayPolygonConfiguration.Style
+            {
+                StrokeColor = Colors.Yellow,
+                HighlightedStrokeColor = Colors.Red,
+                PolygonColor = Colors.Transparent,
+                HighlightedPolygonColor = Colors.Transparent
+            },
+            TextConfiguration = new OverlayTextConfiguration.Style
+            {
+                TextFormat = BarcodeTextFormat.CodeAndType,
+                TextColor = Colors.Yellow,
+                TextContainerColor = Colors.Black,
+                HighlightedTextColor = Colors.Red,
+                HighlightedTextContainerColor = Colors.Black,
+            }
+        };
 
         cameraView.OnSelectBarcodeResult += (sender, items) =>
         {
