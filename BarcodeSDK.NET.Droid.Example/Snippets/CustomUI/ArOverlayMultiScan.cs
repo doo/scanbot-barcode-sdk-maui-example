@@ -29,7 +29,8 @@ public static partial class Snippets
                 getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(
                     textColor: Color.Yellow,
                     textContainerColor: Color.Black
-                )
+                ),
+                getOverrideText: (defaultText, _) => "Some Text" // Displayed inside the TextContainer of the AR Overlay.
             ));
 
         return barcodeScannerView;
