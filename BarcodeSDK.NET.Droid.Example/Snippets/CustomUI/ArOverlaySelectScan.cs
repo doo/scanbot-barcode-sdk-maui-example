@@ -49,6 +49,6 @@ public static partial class Snippets
     private static void OnSelectionOverlayBarcodeClicked(BarcodeItem e)
     {
         // Handle selected barcode item
-        Console.WriteLine($"OnSelectionOverlayBarcodeClicked: {e}");
+        Console.WriteLine(e);
     }
 }
