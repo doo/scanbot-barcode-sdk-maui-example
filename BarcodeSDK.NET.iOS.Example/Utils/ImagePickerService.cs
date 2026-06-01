@@ -19,7 +19,6 @@ public class ImagePickerService : NSObject, IPHPickerViewControllerDelegate
 
     private static TaskCompletionSource<SBSDKImageRef> _taskCompletionSource;
 
-    
     private Task<SBSDKImageRef> PickNativeImageAsync()
     {
         _taskCompletionSource = new TaskCompletionSource<SBSDKImageRef>();
