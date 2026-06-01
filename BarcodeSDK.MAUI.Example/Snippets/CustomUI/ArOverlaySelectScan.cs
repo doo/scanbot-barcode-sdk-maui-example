@@ -27,7 +27,7 @@ public partial class Snippets
             }
         };
 
-        cameraView.OnSelectBarcodeResult += (sender, items) =>
+        cameraView.OnSelectBarcodeResult += (_, items) =>
         {
             // Handle selected barcodes
             Console.WriteLine(items);
