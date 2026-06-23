@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/snapImage"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="200dp"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -30,7 +30,12 @@ public class BaseBarcodeResult<TNativeBarcodeResult>
     public virtual BaseBarcodeResult<TNativeBarcodeResult> FromBundle(Bundle bundle)
     {
         ScanResult = bundle?.GetParcelable(ScanResultKey) as TNativeBarcodeResult;
-        ScannedImageUuid = UUID.FromString(bundle?.GetString(ScannedImageUuidKey));
+        
+        var imageUuid = bundle?.GetString(ScannedImageUuidKey);
+        if (imageUuid != null)
+        {
+            ScannedImageUuid = UUID.FromString(imageUuid);
+        }
         
         return this;
     }

@@ -17,36 +17,30 @@ public static class ImageUtils
     private static Bitmap RotateBitmapIfRequired(Bitmap bitmap, Android.Net.Uri uri, ContentResolver contentResolver)
     {
         using var inputStream = contentResolver.OpenInputStream(uri);
-        if (inputStream == null) return null;
+        if (inputStream == null) return bitmap;
 
         var exif = new AndroidX.ExifInterface.Media.ExifInterface(inputStream);
-        var orientation = exif.GetAttributeInt(Android.Media.ExifInterface.TagOrientation,
-            (int)Android.Media.Orientation.Normal);
+        var orientation = exif.GetAttributeInt(
+            AndroidX.ExifInterface.Media.ExifInterface.TagOrientation,
+            AndroidX.ExifInterface.Media.ExifInterface.OrientationNormal);
 
-        return RotateBitmap(bitmap, orientation);
+        var degrees = orientation switch
+        {
+            AndroidX.ExifInterface.Media.ExifInterface.OrientationRotate90 => 90,
+            AndroidX.ExifInterface.Media.ExifInterface.OrientationRotate180 => 180,
+            AndroidX.ExifInterface.Media.ExifInterface.OrientationRotate270 => 270,
+            _ => 0
+        };
+        
+        return RotateBitmap(bitmap, degrees);
     }
 
-    private static Bitmap RotateBitmap(Bitmap bitmap, int orientation)
+    private static Bitmap RotateBitmap(Bitmap bitmap, int degrees)
     {
+        if (degrees == 0) return bitmap;
+        
         var matrix = new Matrix();
-
-        switch (orientation)
-        {
-            case (int)Android.Media.Orientation.Rotate90:
-                matrix.PostRotate(90);
-                break;
-
-            case (int)Android.Media.Orientation.Rotate180:
-                matrix.PostRotate(180);
-                break;
-
-            case (int)Android.Media.Orientation.Rotate270:
-                matrix.PostRotate(270);
-                break;
-
-            default:
-                return bitmap;
-        }
+        matrix.PostRotate(degrees);
 
         var rotatedBitmap = Bitmap.CreateBitmap(
             bitmap, 0, 0,
