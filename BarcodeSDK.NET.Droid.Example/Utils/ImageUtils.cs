@@ -10,8 +10,15 @@ public static class ImageUtils
     {
         if (uri == null) return null;
         
-        var bitmap = MediaStore.Images.Media.GetBitmap(contentResolver, uri);
-        return bitmap == null ? null : RotateBitmapIfRequired(bitmap, uri, contentResolver);
+        try
+        {
+            var bitmap = MediaStore.Images.Media.GetBitmap(contentResolver, uri);
+            return bitmap == null ? null : RotateBitmapIfRequired(bitmap, uri, contentResolver);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static Bitmap RotateBitmapIfRequired(Bitmap bitmap, Android.Net.Uri uri, ContentResolver contentResolver)
