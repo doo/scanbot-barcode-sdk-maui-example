@@ -3,6 +3,9 @@ using Android.Graphics;
 using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.View;
+using IO.Scanbot.Sdk.Image;
+using Java.Util;
+using ScanbotSDK.Droid.Helpers;
 
 namespace BarcodeSDK.NET.Droid.Activities;
 
@@ -28,21 +31,19 @@ public class BaseResultActivity<TNativeBarcodeResult> : AppCompatActivity, IOnAp
     {
         var barcodeResult = new BaseBarcodeResult<TNativeBarcodeResult>().FromBundle(Intent?.GetBundleExtra("BarcodeResult"));
 
-        if (barcodeResult.ResultBitmap != null)
+        if (barcodeResult.ScannedImageUuid != null)
         {
-            ShowSnapImage(barcodeResult);
+            ShowSnapImage(barcodeResult.ScannedImageUuid);
         }
 
         return barcodeResult;
     }
-    
-    protected void ShowSnapImage(string path) => AddImageView().SetImageURI(Android.Net.Uri.Parse(path));
 
-    private void ShowSnapImage(BaseBarcodeResult<TNativeBarcodeResult> barcodeResult)
+    protected void ShowSnapImage(UUID imageUuid)
     {
-        Bitmap scaled = Bitmap.CreateScaledBitmap(barcodeResult.ResultBitmap, 200, 200, true);
-        AddImageView().SetImageBitmap(scaled);
-    }
+        using var imageRef = new ImageRef(imageUuid, true);
+        AddImageView().SetImageBitmap(imageRef.ToBitmap().Get<Bitmap>());  
+    } 
 
     private ImageView AddImageView()
     {

@@ -1,66 +1,50 @@
-using Android.Graphics;
+using Java.Util;
 
 namespace BarcodeSDK.NET.Droid;
 
-public class BaseBarcodeResult<TNativeBarcodeResult> where TNativeBarcodeResult : global::Java.Lang.Object, global::Android.OS.IParcelable
+public class BaseBarcodeResult<TNativeBarcodeResult>
+    where TNativeBarcodeResult : global::Java.Lang.Object, global::Android.OS.IParcelable
 {
-    public TNativeBarcodeResult ScanningResult { get; protected set; }
-    
-    public Bitmap ResultBitmap { get; protected set; }
+    private const string ScanResultKey = "scan_result";
+    private const string ScannedImageUuidKey = "scanned_image_uuid";
 
-    protected readonly MemoryStream _resultOutputStream;
+    public TNativeBarcodeResult ScanResult { get; private set; }
+
+    public UUID ScannedImageUuid { get; private set; }
 
     public BaseBarcodeResult()
     {
-        
     }
-    
+
     public BaseBarcodeResult(TNativeBarcodeResult result)
     {
-        ScanningResult = result;
+        ScanResult = result;
     }
 
-    public BaseBarcodeResult(TNativeBarcodeResult result, Bitmap resultBitmap)
+    public BaseBarcodeResult(TNativeBarcodeResult result, UUID scannedImageUuid)
     {
-        ScanningResult = result;
-        ResultBitmap = resultBitmap;
-        _resultOutputStream = new MemoryStream();
+        ScanResult = result;
+        ScannedImageUuid = scannedImageUuid;
     }
-
 
     public virtual BaseBarcodeResult<TNativeBarcodeResult> FromBundle(Bundle bundle)
     {
-        ScanningResult = bundle?.GetParcelable(nameof(ScanningResult)) as TNativeBarcodeResult;
+        ScanResult = bundle?.GetParcelable(ScanResultKey) as TNativeBarcodeResult;
+        ScannedImageUuid = UUID.FromString(bundle?.GetString(ScannedImageUuidKey));
         
-        var rawBitmapBytes = bundle?.GetByteArray(nameof(ResultBitmap)) ?? Array.Empty<byte>();
-
-        if (rawBitmapBytes.Length > 0)
-        {
-            ResultBitmap = BitmapFactory.DecodeByteArray(rawBitmapBytes, 0, rawBitmapBytes.Length);
-        }
-
         return this;
     }
     
     public virtual Bundle ToBundle()
     {
         var bundle = new Bundle();
+        bundle.PutParcelable(ScanResultKey, ScanResult);
 
-        if (_resultOutputStream != null &&
-            ResultBitmap != null)
+        if (ScannedImageUuid != null)
         {
-            // In real life, consider storing your images instead.
-            const int maxImageSize = 1 * 1024 * 1024;
-            var compressionSizeEstimate = 100 * ((float)maxImageSize / ResultBitmap.ByteCount);
+            bundle.PutString(ScannedImageUuidKey, ScannedImageUuid.ToString());
+        }
 
-            ResultBitmap.Compress(Bitmap.CompressFormat.Jpeg, Math.Clamp((int)compressionSizeEstimate, 25, 100), _resultOutputStream);
-            bundle.PutByteArray(nameof(ResultBitmap), _resultOutputStream.ToArray());
-        }
-        else
-        {
-            bundle.PutByteArray(nameof(ResultBitmap), Array.Empty<byte>());
-        }
-        bundle.PutParcelable(nameof(ScanningResult), ScanningResult);
         return bundle;
     }
 }

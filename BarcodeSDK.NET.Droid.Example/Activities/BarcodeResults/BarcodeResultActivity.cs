@@ -12,7 +12,7 @@ public class BarcodeResultActivity : BaseResultActivity<BarcodeScannerResult>
     protected override BaseBarcodeResult<BarcodeScannerResult> DisplayBarcodeResult()
     {
         var barcodeResult = base.DisplayBarcodeResult();
-        ShowBarcodeResult(barcodeResult.ScanningResult);
+        ShowBarcodeResult(barcodeResult.ScanResult);
 
         return barcodeResult;
     }
