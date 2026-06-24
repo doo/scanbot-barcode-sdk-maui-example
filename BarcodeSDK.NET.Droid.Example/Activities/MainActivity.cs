@@ -72,11 +72,12 @@ namespace BarcodeSDK.NET.Droid
             var barcodeScannerResult = Sdk.CreateBarcodeScanner(barcodeScannerConfigs);
             var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
-            var result = barcodeScanner.Run(ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions()));
+            var inputImage = ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions());
+            var result = barcodeScanner.Run(inputImage);
 
             // Handle the result in your app as needed.
             var intent = new Intent(this, typeof(BarcodeResultActivity));
-            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), bitmap).ToBundle());
+            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), inputImage.UniqueId).ToBundle());
             StartActivity(intent);
         }
 
@@ -141,14 +142,7 @@ namespace BarcodeSDK.NET.Droid
                     return;
                 case SelectImageFromGallery:
                 {
-                    using var stream = ContentResolver?.OpenInputStream(data.Data);
-                    if (stream == null)
-                    {
-                        _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to open the selected image stream."));
-                        return;
-                    }
-
-                    var bitmap = BitmapFactory.DecodeStream(stream);
+                    var bitmap = ImageUtils.LoadBitmapFromUri(data.Data, ContentResolver);
                     if (bitmap == null)
                     {
                         _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to decode the selected image."));
