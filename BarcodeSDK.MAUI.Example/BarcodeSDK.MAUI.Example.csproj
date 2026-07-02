@@ -21,7 +21,6 @@
         <!-- Supported Platforms -->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
-        <WarningsAsErrors>NU1603</WarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
