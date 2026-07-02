@@ -12,7 +12,6 @@
         <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
-        <WarningsAsErrors>NU1603</WarningsAsErrors>
     </PropertyGroup>
     
     <!-- Speeds up debug builds -->
