@@ -2,13 +2,13 @@ Open Source libraries used in the Scanbot Barcode SDK for .NET and MAUI version 
 
 --------------------------------------------------------------------------------------
 .NET for Android (formerly Xamarin.Android) bindings for Square.OkHttp3: 
-.NET for Android bindings for the Android Java library 'androidx.activity:activity-compose'.
+.NET for Android and MAUI bindings for the Android Java library 'androidx.activity:activity-compose'.
 
 Library description: Compose integration with Activity: 
 .NET for Android and MAUI bindings for the Android Java library 'androidx.activity:activity-compose'.
 
 Library description: Compose integration with Activity: 
-.NET for Android bindings for the Android Java library 'androidx.activity:activity-ktx'.
+.NET for Android and MAUI bindings for the Android Java library 'androidx.activity:activity-ktx'.
 
 Library description: Kotlin extensions for 'activity' artifact: 
 .NET for Android bindings for the Android Java library 'androidx.appcompat:appcompat'.
@@ -35,7 +35,7 @@ Library description: UI tools for the Jetpack Camera Library, a library providin
 .NET for Android and MAUI bindings for the Android Java library 'androidx.camera:camera-view'.
 
 Library description: UI tools for the Jetpack Camera Library, a library providing a consistent and reliable camera foundation that enables great camera driven experiences across all of Android.: 
-.NET for Android bindings for the Android Java library 'androidx.collection:collection-ktx'.
+.NET for Android and MAUI bindings for the Android Java library 'androidx.collection:collection-ktx'.
 
 Library description: Kotlin extensions for 'collection' artifact: 
 .NET for Android bindings for the Android Java library 'androidx.compose.material:material'. Note this package only adds the Java library to the application. C# bindings are not provided.
@@ -56,7 +56,9 @@ Library description: Compose integration with ViewBinding:
 .NET for Android and MAUI bindings for the Android Java library 'androidx.compose.ui:ui-viewbinding'. Note this package only adds the Java library to the application. C# bindings are not provided.
 
 Library description: Compose integration with ViewBinding: 
-Xamarin.Android bindings for AndroidX - constraintlayout-core: 
+.NET for Android bindings for the Android Java library 'androidx.constraintlayout:constraintlayout-core'.
+
+Library description: This library contains engines and algorithms for constraint based layout and complex animations (it is used by the ConstraintLayout library): 
 .NET for Android and MAUI bindings for the Android Java library 'androidx.constraintlayout:constraintlayout-core'.
 
 Library description: This library contains engines and algorithms for constraint based layout and complex animations (it is used by the ConstraintLayout library): 
@@ -64,7 +66,7 @@ Xamarin.Android bindings for AndroidX - legacy-support-v4:
 .NET for Android and MAUI bindings for the Android Java library 'androidx.legacy:legacy-support-v4'.
 
 Library description: The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.: 
-.NET for Android bindings for the Android Java library 'androidx.navigation:navigation-compose'.
+.NET for Android and MAUI bindings for the Android Java library 'androidx.navigation:navigation-compose'.
 
 Library description: Compose integration with Navigation: 
 .NET for Android and MAUI bindings for the Android Java library 'androidx.navigation:navigation-compose'.
@@ -2125,7 +2127,7 @@ defined by AIM ITS/04-023 International Technical Standard - Extended Channel In
 
 magic-enum
 
-Version v0.8.1
+Version v0.9.7
 (https://github.com/Neargye/magic_enum)
 
 MIT License
@@ -3635,9 +3637,13 @@ Version 1.1.0
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+
+
+
 --------------------------------------------------------------------------------------
 
-Open Source libraries used in ScanbotSDK for iOS version 9.0.0:
+Open Source libraries used in ScanbotBarcodeScannerSDK for iOS version 9.0.0:
 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -6947,3 +6953,5 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
