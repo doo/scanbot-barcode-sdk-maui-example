@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using _Microsoft.Android.Resource.Designer;
+using Android.Content;
 using Android.Graphics;
 using Android.Runtime;
 using Android.Views;
@@ -6,11 +7,9 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.View;
 using IO.Scanbot.Sdk.Barcode_scanner;
 using BarcodeSDK.NET.Droid.Activities;
-using IO.Scanbot.Common;
 using IO.Scanbot.Sdk.Barcode;
 using IO.Scanbot.Sdk.Image;
 using IO.Scanbot.Sdk.Licensing;
-using IO.Scanbot.Sdk.Ui_v2.Barcode;
 using IO.Scanbot.Sdk.Ui_v2.Barcode.Configuration;
 using ScanbotSDK.Droid.Helpers;
 using BarcodeScannerConfiguration = IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration;
@@ -21,37 +20,39 @@ namespace BarcodeSDK.NET.Droid
     [Activity(MainLauncher = true, Theme = "@style/AppTheme")]
     public partial class MainActivity : AppCompatActivity, IOnApplyWindowInsetsListener
     {
-        internal static ScanbotBarcodeScannerSDK SDK;
+        internal static ScanbotBarcodeScannerSDK Sdk;
 
-        private const int BARCODE_DEFAULT_UI_REQUEST_CODE = 910;
-        private const int SELECT_IMAGE_FROM_GALLERY = 911;
+        private TaskCompletionSource<Bitmap> _pendingBitmap;
+        
+        private const int BarcodeDefaultUiRequestCode = 910;
+        private const int SelectImageFromGallery = 911;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             
-            SDK = new ScanbotBarcodeScannerSDK(this);
+            Sdk = new ScanbotBarcodeScannerSDK(this);
 
-            SetContentView(Resource.Layout.activity_main);
-            AndroidUtils.ApplyEdgeToEdge(FindViewById(Resource.Id.container), this);
+            SetContentView(ResourceConstant.Layout.activity_main);
+            AndroidUtils.ApplyEdgeToEdge(FindViewById(ResourceConstant.Id.container), this);
             
-            FindViewById<TextView>(Resource.Id.barcode_camerax_demo).Click += OnBarcodeCameraXDemoClick;
-            FindViewById<TextView>(Resource.Id.barcode_scan_and_count).Click += OnBarcodeCameraScanAndCountClick;
-            FindViewById<TextView>(Resource.Id.rtu_ui_single).Click += SingleScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_single_ar_overlay).Click += SingleScanningWithArOverlay;
-            FindViewById<TextView>(Resource.Id.rtu_ui_batch).Click += BatchBarcodeScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_multiple_unique).Click += MultipleUniqueBarcodeScanning;
-            FindViewById<TextView>(Resource.Id.rtu_ui_find_and_pick).Click += FindAndPickScanning;
+            FindViewById<TextView>(ResourceConstant.Id.barcode_camerax_demo)!.Click += OnBarcodeCameraXDemoClick;
+            FindViewById<TextView>(ResourceConstant.Id.barcode_scan_and_count)!.Click += OnBarcodeCameraScanAndCountClick;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_single)!.Click += SingleScanning;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_single_ar_overlay)!.Click += SingleScanningWithArOverlay;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_batch)!.Click += BatchBarcodeScanning;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_multiple_unique)!.Click += MultipleUniqueBarcodeScanning;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_find_and_pick)!.Click += FindAndPickScanning;
             
-            FindViewById<TextView>(Resource.Id.rtu_ui_import).Click += OnImportClick;
-            FindViewById<TextView>(Resource.Id.settings).Click += OnSettingsClick;
-            FindViewById<TextView>(Resource.Id.clear_storage).Click += OnClearStorageClick;
-            FindViewById<TextView>(Resource.Id.license_info).Click += OnLicenseInfoClick;
+            FindViewById<TextView>(ResourceConstant.Id.rtu_ui_import)!.Click += OnImportClick;
+            FindViewById<TextView>(ResourceConstant.Id.settings)!.Click += OnSettingsClick;
+            FindViewById<TextView>(ResourceConstant.Id.clear_storage)!.Click += OnClearStorageClick;
+            FindViewById<TextView>(ResourceConstant.Id.license_info)!.Click += OnLicenseInfoClick;
         }
 
         private async void OnImportClick(object sender, EventArgs e)
         {
-            if (!Alert.CheckLicense(this, SDK))
+            if (!Alert.CheckLicense(this, Sdk))
             {
                 return;
             }
@@ -68,20 +69,21 @@ namespace BarcodeSDK.NET.Droid
                 ExtractedDocumentFormats = BarcodeDocumentFormats.All
             };
 
-            var barcodeScannerResult = SDK.CreateBarcodeScanner(barcodeScannerConfigs);
+            var barcodeScannerResult = Sdk.CreateBarcodeScanner(barcodeScannerConfigs);
             var barcodeScanner = ResultHelper.Get<IBarcodeScanner>(barcodeScannerResult);
 
-            var result = barcodeScanner.Run(ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions()));
+            var inputImage = ImageRef.FromBitmap(bitmap, new BasicImageLoadOptions());
+            var result = barcodeScanner.Run(inputImage);
 
             // Handle the result in your app as needed.
             var intent = new Intent(this, typeof(BarcodeResultActivity));
-            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), bitmap).ToBundle());
+            intent.PutExtra("BarcodeResult", new BaseBarcodeResult<BarcodeScannerResult>(ResultHelper.Get<BarcodeScannerResult>(result), inputImage.UniqueId).ToBundle());
             StartActivity(intent);
         }
 
         private void OnSettingsClick(object sender, EventArgs e)
         {
-            if (!Alert.CheckLicense(this, SDK))
+            if (!Alert.CheckLicense(this, Sdk))
             {
                 return;
             }
@@ -91,23 +93,23 @@ namespace BarcodeSDK.NET.Droid
 
         private void OnClearStorageClick(object sender, EventArgs e)
         {
-            if (!Alert.CheckLicense(this, SDK))
+            if (!Alert.CheckLicense(this, Sdk))
             {
                 return;
             }
-            SDK.CreateBarcodeFileStorage().CleanupBarcodeImagesDirectory();
+            Sdk.CreateBarcodeFileStorage().CleanupBarcodeImagesDirectory();
             Alert.Toast(this, "Cleared image storage");
         }
 
         private void OnLicenseInfoClick(object sender, EventArgs e)
         {
-            var status = SDK.LicenseInfo.Status.Name();
-            var validity = SDK.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
+            var status = Sdk.LicenseInfo.Status.Name();
+            var validity = Sdk.LicenseInfo.IsValid ? "The license is valid." : "The license is NOT valid";
             var message = validity + $"\n\n- {status}";
             
-            if (SDK.LicenseInfo.IsValid)
+            if (Sdk.LicenseInfo.IsValid)
             {
-                message += $"\n- Valid until: {SDK.LicenseInfo.ExpirationDateString}";
+                message += $"\n- Valid until: {Sdk.LicenseInfo.ExpirationDateString}";
             }
 
             Alert.ShowInfoDialog(this, "License Info", message);
@@ -117,31 +119,39 @@ namespace BarcodeSDK.NET.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            if (resultCode != Result.Ok && !Alert.CheckLicense(this, SDK))
+            if (resultCode != Result.Ok && !Alert.CheckLicense(this, Sdk))
             {
                 return;
             }
 
-            if (requestCode == BARCODE_DEFAULT_UI_REQUEST_CODE)
+            switch (requestCode)
             {
-                var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
-                if (parsedResult != null)
+                case BarcodeDefaultUiRequestCode:
                 {
+                    var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
+                    if (parsedResult == null) return;
+                    
                     var barcodes = parsedResult.Items.Select(item => item.Barcode).ToList();
                     var result = new BarcodeScannerResult(barcodes, true);
                     OnRTUActivityResult(result);
-                }
-            }
-            else if (requestCode == SELECT_IMAGE_FROM_GALLERY)
-            {
-                if (resultCode != Result.Ok)
-                {
-                    pendingBitmap.SetCanceled();
+
                     return;
                 }
+                case SelectImageFromGallery when (resultCode != Result.Ok || data?.Data == null):
+                    _pendingBitmap?.SetCanceled();
+                    return;
+                case SelectImageFromGallery:
+                {
+                    var bitmap = ImageUtils.LoadBitmapFromUri(data.Data, ContentResolver);
+                    if (bitmap == null)
+                    {
+                        _pendingBitmap?.TrySetException(new global::System.InvalidOperationException("Unable to decode the selected image."));
+                        return;
+                    }
 
-                var stream = ContentResolver.OpenInputStream(data.Data);
-                pendingBitmap.SetResult(BitmapFactory.DecodeStream(stream));
+                    _pendingBitmap?.TrySetResult(bitmap);
+                    return;
+                }
             }
         }
 
@@ -153,12 +163,12 @@ namespace BarcodeSDK.NET.Droid
 
         private void UpdateLicenseStatusWarning()
         {
-            var warningView = FindViewById<View>(Resource.Id.warning_view);
+            var warningView = FindViewById<View>(ResourceConstant.Id.warning_view);
             
             if (warningView == null)
                 return;
 
-            if (SDK.LicenseInfo.Status == LicenseStatus.Trial)
+            if (Sdk.LicenseInfo.Status.Equals(LicenseStatus.Trial))
             {
                 warningView.Visibility = ViewStates.Visible;
             }
@@ -168,25 +178,23 @@ namespace BarcodeSDK.NET.Droid
             }
         }
 
-        private TaskCompletionSource<Bitmap> pendingBitmap = new TaskCompletionSource<Bitmap>();
-
         private Task<Bitmap> PickImageAsync()
         {
-            pendingBitmap = new TaskCompletionSource<Bitmap>();
+            _pendingBitmap = new TaskCompletionSource<Bitmap>();
             // Define the Intent for getting images
             var intent = new Intent();
             intent.SetType("image/*");
             intent.SetAction(Intent.ActionGetContent);
 
             var chooser = Intent.CreateChooser(intent, "Select Image");
-            StartActivityForResult(chooser, SELECT_IMAGE_FROM_GALLERY);
+            StartActivityForResult(chooser, SelectImageFromGallery);
             
-            return pendingBitmap.Task;
+            return _pendingBitmap.Task;
         }
         
         private void OnBarcodeCameraXDemoClick(object sender, EventArgs e)
         {
-            if (!Alert.CheckLicense(this, SDK))
+            if (!Alert.CheckLicense(this, Sdk))
             {
                 return;
             }
@@ -196,7 +204,7 @@ namespace BarcodeSDK.NET.Droid
 
         private void OnBarcodeCameraScanAndCountClick(object sender, EventArgs e)
         {
-            if (!Alert.CheckLicense(this, SDK))
+            if (!Alert.CheckLicense(this, Sdk))
             {
                 return;
             }

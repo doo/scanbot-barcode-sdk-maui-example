@@ -1,8 +1,8 @@
-﻿using ScanbotSDK.iOS;
+using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 
-public class BarcodeClassicComponentController : BaseViewController
+public class BarcodeItemMapping : BaseViewController
 {
     private SBSDKBarcodeScannerViewController _scannerController;
 
@@ -16,15 +16,9 @@ public class BarcodeClassicComponentController : BaseViewController
             Formats = BarcodeTypes.Instance.AcceptedTypes
         };
 
-        // Configure different parameters for specific barcode format.
-        var dataMatrixConfig = new SBSDKBarcodeFormatCode128Configuration
-        {
-            MinimumTextLength = new IntPtr(10)
-        };
-
         var config = new SBSDKBarcodeScannerConfiguration
         {
-            BarcodeFormatConfigurations = [commonConfiguration, dataMatrixConfig],
+            BarcodeFormatConfigurations = [commonConfiguration],
             ReturnBarcodeImage = true
         };
 
@@ -34,41 +28,6 @@ public class BarcodeClassicComponentController : BaseViewController
 
         _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
         _scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
-
-        // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
-        SetFlashButton(() =>
-        {
-            _scannerController.IsFlashLightEnabled = !_scannerController.IsFlashLightEnabled;
-            return _scannerController.IsFlashLightEnabled;
-        });
-    }
-
-    private class BarcodeDetectionDelegate(UINavigationController navigationController) : SBSDKBarcodeScannerViewControllerDelegate
-    {
-        public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
-        {
-            if (navigationController.TopViewController is ScanResultListController)
-            {
-                return;
-            }
-
-            var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled;
-
-            if (!shouldHandleBarcode)
-            {
-                return;
-            }
-
-            var resultsController = new ScanResultListController(codes);
-
-            navigationController.PopViewController(animated: false);
-            navigationController.PushViewController(resultsController, animated: true);
-        }
-
-        public override bool ShouldScanBarcodes(SBSDKBarcodeScannerViewController controller)
-        {
-            return true;
-        }
     }
 
     private class BarcodeSelectionDelegate(UINavigationController navigationController) : SBSDKBarcodeTrackingOverlayControllerDelegate
@@ -99,8 +58,21 @@ public class BarcodeClassicComponentController : BaseViewController
 
         public override string OverrideTextFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, string proposedString)
         {
-            // Update the required text over the AR overlay of detected barcodes.
-            return proposedString;
+            return "Some text";
+        }
+    }
+
+    private class BarcodeDetectionDelegate(UINavigationController navigationController) : SBSDKBarcodeScannerViewControllerDelegate
+    {
+        public override void DidScanBarcodes(SBSDKBarcodeScannerViewController barcodeController, SBSDKBarcodeItem[] codes)
+        {
+            // In this example,
+            // We only focus on AR overlay i.e., DidTapOnBarcode method
+        }
+
+        public override bool ShouldScanBarcodes(SBSDKBarcodeScannerViewController controller)
+        {
+            return true;
         }
     }
 }

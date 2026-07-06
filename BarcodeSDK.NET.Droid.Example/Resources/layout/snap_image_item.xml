@@ -10,10 +10,8 @@
     <ImageView
         android:id="@+id/snapImage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxWidth="200dp"
-        android:maxHeight="200dp"
-        android:minHeight="150dp"
+        android:layout_height="200dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

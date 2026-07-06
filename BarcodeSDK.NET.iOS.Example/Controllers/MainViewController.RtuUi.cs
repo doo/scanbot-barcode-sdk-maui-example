@@ -1,6 +1,4 @@
-﻿using System;
-using Foundation;
-using ScanbotSDK.iOS;
+﻿using ScanbotSDK.iOS;
 
 namespace BarcodeSDK.NET.iOS;
 
@@ -135,6 +133,14 @@ public partial class MainViewController
         ];
 
         configuration.UseCase = usecase;
+        configuration.ScannerConfiguration.BarcodeFormatConfigurations =
+        [
+            new SBSDKBarcodeFormatCommonConfiguration
+            {
+                Formats = BarcodeTypes.Instance.AcceptedTypes
+            }
+        ];
+
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler);
     }
 

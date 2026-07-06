@@ -7,8 +7,7 @@ public partial class Snippets
 {
     public static BarcodeScannerView EnableArOverlay(BarcodeScannerView cameraView)
     {
-        cameraView.OverlayConfiguration =
-            new SelectionOverlayConfiguration(overlayFormat: BarcodeTextFormat.CodeAndType);
+        cameraView.OverlayConfiguration = new SelectionOverlayConfiguration();
 
         return cameraView;
     }

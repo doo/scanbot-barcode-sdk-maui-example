@@ -30,7 +30,8 @@ public static partial class Snippets
                 getTextViewStyle: (defaultStyle, _) => defaultStyle.Copy(
                     textColor: Color.Yellow,
                     textContainerColor: Color.Black
-                )
+                ),
+                getOverrideText: (defaultText, _) => "Some Text" // Displayed inside the TextContainer of the AR Overlay.
             ));
 
         barcodeScannerView.InitCamera();
@@ -48,6 +49,6 @@ public static partial class Snippets
     private static void OnSelectionOverlayBarcodeClicked(BarcodeItem e)
     {
         // Handle selected barcode item
-        Console.WriteLine($"OnSelectionOverlayBarcodeClicked: {e}");
+        Console.WriteLine(e);
     }
 }
