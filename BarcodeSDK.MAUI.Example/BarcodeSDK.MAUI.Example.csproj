@@ -20,12 +20,7 @@
         <ApplicationVersion>1.0</ApplicationVersion>
         <!-- Supported Platforms -->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-        <WarningsAsErrors>NU1603</WarningsAsErrors>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' And $(TargetFramework.Contains('-ios'))">
-        <CreatePackage>false</CreatePackage>
-        <RuntimeIdentifiers>ios-arm64;iossimulator-x64</RuntimeIdentifiers>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
@@ -56,6 +51,6 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="8.0.0" />
+      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="9.0.0" />
     </ItemGroup>
 </Project>

@@ -12,6 +12,6 @@ public partial class Snippets
 
         if (ImageSource.FromFile(imagePath) is not FileImageSource fileImage) return;
 
-        ScanbotSDKMain.MockCamera(fileImage.File, true);
+        ScanbotSDKMain.MockCamera(fileImage.File, "", true);
     }
 }

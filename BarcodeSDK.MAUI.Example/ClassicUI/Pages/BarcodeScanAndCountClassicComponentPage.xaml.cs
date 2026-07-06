@@ -1,3 +1,4 @@
+using ScanbotSDK.MAUI.Barcode;
 using ScanbotSDK.MAUI.Core.Barcode;
 
 namespace ScanbotSDK.MAUI.Example.ClassicUI.Pages;
@@ -27,18 +28,14 @@ public partial class BarcodeScanAndCountClassicComponentPage : BaseComponentPage
             // }
         ];
 
-        CameraView.OverlayConfiguration = new Barcode.SelectionOverlayConfiguration
-        (
-            overlayFormat: BarcodeTextFormat.CodeAndType,
-            textColor: Colors.Yellow,
-            textContainerColor: Colors.Black,
-            strokeColor: Colors.Yellow,
-            highlightedStrokeColor: Colors.Red,
-            highlightedTextColor: Colors.Yellow,
-            highlightedTextContainerColor: Colors.DarkOrchid,
-            polygonBackgroundColor: Colors.Transparent,
-            polygonBackgroundHighlightedColor: Colors.Transparent
-        );
+        CameraView.PolygonConfiguration = new OverlayPolygonConfiguration.Style
+        {
+            StrokeColor = Colors.Yellow,
+            HighlightedStrokeColor = Colors.Red,
+            
+            PolygonColor = Colors.Transparent,
+            HighlightedPolygonColor = Colors.DarkOrchid,
+        };
     }
 
     protected override void OnAppearing()
