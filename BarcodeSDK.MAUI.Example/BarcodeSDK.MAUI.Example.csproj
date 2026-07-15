@@ -22,6 +22,26 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <!-- Enable trim/AOT analyzers -->
+        <IsAotCompatible>true</IsAotCompatible>
+        <TrimMode>full</TrimMode>
+        <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration|TargetFramework)' == 'Release|net10.0-android'">
+        <!-- Temporary workaround:
+         .NET 10 Android Release currently crashes during startup
+         (UnsatisfiedLinkError: MauiApplication.n_onCreate)
+         when trimming/AOT is enabled. Keep analyzers enabled while
+         disabling runtime trimming/AOT until the issue is resolved. -->
+        <PublishTrimmed>false</PublishTrimmed>
+        <RunAOTCompilation>false</RunAOTCompilation>
+        <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+        
+    </PropertyGroup>
+    
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -31,7 +51,7 @@
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" /> 
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
@@ -50,7 +70,8 @@
         <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="9.0.0" />
+    <ItemGroup><!--      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="9.0.0" />-->
+    
+      <ProjectReference Include="..\..\scanbot-sdk-maui\BarcodeSDK\BarcodeSDK.MAUI\BarcodeSDK.MAUI.csproj" />
     </ItemGroup>
 </Project>

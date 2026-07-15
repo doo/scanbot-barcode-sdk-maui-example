@@ -21,7 +21,7 @@ namespace ScanbotSDK.MAUI.Example.Utils
             return AcceptedTypes.Contains(lastCheckedFormat);
         }
 
-        public List<BarcodeFormat> All => Enum.GetValues(typeof(BarcodeFormat)).Cast<BarcodeFormat>().ToList();
+        private List<BarcodeFormat> All => Enum.GetValues<BarcodeFormat>().ToList();
 
         private BarcodeTypes()
         {
