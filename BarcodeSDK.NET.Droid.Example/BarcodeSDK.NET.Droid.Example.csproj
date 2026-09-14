@@ -12,6 +12,7 @@
         <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
+        <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
     </PropertyGroup>
     
     <!-- Speeds up debug builds -->
@@ -24,6 +25,6 @@
         <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="ScanbotBarcodeSDK.NET" Version="9.0.0" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="10.0.0-alpha.1" />
     </ItemGroup>
 </Project>
