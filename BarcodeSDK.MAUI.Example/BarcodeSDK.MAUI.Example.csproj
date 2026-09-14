@@ -11,6 +11,9 @@
         <!-- Display name -->
         <ApplicationTitle>ScanbotSDK.Barcode.MAUI.Example</ApplicationTitle>
 
+        
+        <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
+
         <!-- App Identifier -->
         <ApplicationId>io.scanbot.example.sdk.barcode.maui</ApplicationId>
         <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
@@ -51,6 +54,6 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.*" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="9.0.0" />
+      <PackageReference Include="ScanbotBarcodeSDK.MAUI" Version="10.0.0-alpha.1" />
     </ItemGroup>
 </Project>

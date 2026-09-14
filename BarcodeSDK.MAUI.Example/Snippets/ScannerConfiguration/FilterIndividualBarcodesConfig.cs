@@ -35,8 +35,8 @@ public partial class Snippets
                 Minimum1DQuietZoneSize = 10,
                 StripCheckDigits = false,
                 MinimumTextLength = 0,
-                MaximumTextLength = 0,
-                Checksum = true
+                MaximumTextLength = 0, 
+                UseCheckDigits = true
             };
             configs.Add(code11Config);
 
