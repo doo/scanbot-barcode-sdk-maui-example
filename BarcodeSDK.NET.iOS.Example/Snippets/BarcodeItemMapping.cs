@@ -23,10 +23,10 @@ public class BarcodeItemMapping : BaseViewController
         };
 
         _scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
-        _scannerController.Model.TrackingOverlay.IsTrackingOverlayEnabled = true;
+        _scannerController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
-        _scannerController.Model.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
+        _scannerController.ViewModel.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
     }
 
     private class BarcodeSelectionDelegate(UINavigationController navigationController) : SBSDKBarcodeTrackingOverlayControllerDelegate

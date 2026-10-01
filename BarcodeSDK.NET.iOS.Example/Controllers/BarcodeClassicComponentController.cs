@@ -29,16 +29,16 @@ public class BarcodeClassicComponentController : BaseViewController
         };
 
         _scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
-        _scannerController.Model.TrackingOverlay.IsTrackingOverlayEnabled = true;
+        _scannerController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
-        _scannerController.Model.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
+        _scannerController.ViewModel.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
 
         // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
         SetFlashButton(() =>
         {
-            _scannerController.Model.Camera.IsTorchLightEnabled = !_scannerController.Model.Camera.IsTorchLightEnabled;
-            return _scannerController.Model.Camera.IsTorchLightEnabled;
+            _scannerController.ViewModel.Camera.IsTorchLightEnabled = !_scannerController.ViewModel.Camera.IsTorchLightEnabled;
+            return _scannerController.ViewModel.Camera.IsTorchLightEnabled;
         });
     }
 
@@ -51,7 +51,7 @@ public class BarcodeClassicComponentController : BaseViewController
                 return;
             }
 
-            var shouldHandleBarcode = !barcodeController.Model.TrackingOverlay.IsTrackingOverlayEnabled;
+            var shouldHandleBarcode = !barcodeController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled;
 
             if (!shouldHandleBarcode)
             {
