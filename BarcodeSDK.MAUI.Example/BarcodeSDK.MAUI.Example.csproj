@@ -11,9 +11,6 @@
         <!-- Display name -->
         <ApplicationTitle>ScanbotSDK.Barcode.MAUI.Example</ApplicationTitle>
 
-        
-        <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
-
         <!-- App Identifier -->
         <ApplicationId>io.scanbot.example.sdk.barcode.maui</ApplicationId>
         <ApplicationIdGuid>191c074d-34e0-4554-b0df-a3e850016948</ApplicationIdGuid>
@@ -24,6 +21,9 @@
         <!-- Supported Platforms -->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(TargetFramework.Contains('android'))">
+        <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
