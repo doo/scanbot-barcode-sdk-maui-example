@@ -16,7 +16,7 @@
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
-        <SupportedOSPlatformVersion>15.6</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>Automatic</CodesignProvision>
