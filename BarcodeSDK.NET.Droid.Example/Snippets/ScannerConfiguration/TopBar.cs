@@ -15,7 +15,7 @@ public static partial class Snippets
             // Configure the top bar.
 
             // Set the top bar mode.
-            configuration.TopBar.Mode = TopBarMode.Gradient;
+            configuration.TopBar.Mode = TopBarMode.Solid;
 
             // Set the background color which will be used as a gradient.
             configuration.TopBar.BackgroundColor = new ScanbotColor("#C8193C");

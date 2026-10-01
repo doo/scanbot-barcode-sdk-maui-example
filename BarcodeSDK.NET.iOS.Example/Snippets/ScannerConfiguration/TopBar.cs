@@ -14,7 +14,7 @@ public static partial class Snippets
             // Configure the top bar.
 
             // Set the top bar mode.
-            configuration.TopBar.Mode = SBSDKUI2TopBarMode.Gradient;
+            configuration.TopBar.Mode = SBSDKUI2TopBarMode.Solid;
 
             // Set the background color which will be used as a gradient.
             configuration.TopBar.BackgroundColor = new SBSDKUI2Color("#C8193C");
