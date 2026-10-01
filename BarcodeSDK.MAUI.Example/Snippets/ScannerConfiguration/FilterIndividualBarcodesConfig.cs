@@ -36,7 +36,7 @@ public partial class Snippets
                 StripCheckDigits = false,
                 MinimumTextLength = 0,
                 MaximumTextLength = 0,
-                Checksum = true
+                UseCheckDigits = true
             };
             configs.Add(code11Config);
 
