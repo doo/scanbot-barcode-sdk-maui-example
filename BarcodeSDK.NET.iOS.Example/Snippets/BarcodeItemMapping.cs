@@ -23,11 +23,10 @@ public class BarcodeItemMapping : BaseViewController
         };
 
         _scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
-        _scannerController.IsTrackingOverlayEnabled = true;
-        _scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
+        _scannerController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
-        _scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
+        _scannerController.ViewModel.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
     }
 
     private class BarcodeSelectionDelegate(UINavigationController navigationController) : SBSDKBarcodeTrackingOverlayControllerDelegate
@@ -40,25 +39,19 @@ public class BarcodeItemMapping : BaseViewController
             navigationController.PushViewController(resultsController, animated: true);
         }
 
-        public override SBSDKBarcodeTrackedViewPolygonStyle PolygonStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewPolygonStyle proposedStyle)
+        public override SBSDKBarcodeTrackingOverlayStyle StyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeTrackingOverlayItem item, SBSDKBarcodeTrackingOverlayStyle proposedStyle)
         {
             // Explore this object for more parameters
             proposedStyle.PolygonColor = UIColor.Yellow;
             proposedStyle.PolygonBackgroundColor = UIColor.Clear;
-            return proposedStyle;
-        }
-
-        public override SBSDKBarcodeTrackedViewTextStyle TextStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewTextStyle proposedStyle)
-        {
+            
             // Explore this object for more parameters
             proposedStyle.TextColor = UIColor.Yellow;
             proposedStyle.TextBackgroundColor = UIColor.Black;
+            
+            proposedStyle.TextOverride = "Some text";
+            
             return proposedStyle;
-        }
-
-        public override string OverrideTextFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, string proposedString)
-        {
-            return "Some text";
         }
     }
 

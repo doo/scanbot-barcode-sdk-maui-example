@@ -7,11 +7,11 @@ public static partial class Snippets
     public static SBSDKBarcodeScannerViewController EnableMultipleBarcodesScanMode(SBSDKBarcodeScannerViewController scannerViewController)
     {
         // Retrieve the current applied view finder configurations and modify it
-        var viewFinderConfiguration = scannerViewController.ViewFinderConfiguration;
+        var viewFinderConfiguration = scannerViewController.ViewModel.Configuration.ViewFinder;
         viewFinderConfiguration.IsViewFinderEnabled = false;
 
         // Apply the modified view finder configurations onto the scanner
-        scannerViewController.ViewFinderConfiguration = viewFinderConfiguration;
+        scannerViewController.ViewModel.Configuration.ViewFinder.ApplyFrom(viewFinderConfiguration);
 
         return scannerViewController;
     }

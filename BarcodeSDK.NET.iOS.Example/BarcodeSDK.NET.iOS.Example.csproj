@@ -16,7 +16,7 @@
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
-        <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
         <MtouchLink>SdkOnly</MtouchLink>
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>Automatic</CodesignProvision>
@@ -24,6 +24,6 @@
         <MtouchDebug>true</MtouchDebug>
     </PropertyGroup>
     <ItemGroup>
-       <PackageReference Include="ScanbotBarcodeSDK.NET" Version="9.0.0" />
+      <PackageReference Include="ScanbotBarcodeSDK.NET" Version="10.0.0-rc.1" />
     </ItemGroup>
 </Project>

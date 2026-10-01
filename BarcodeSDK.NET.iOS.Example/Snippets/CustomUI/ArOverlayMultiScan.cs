@@ -7,22 +7,22 @@ public static partial class Snippets
     public static SBSDKBarcodeScannerViewController EnableMultiScanArOverlay(SBSDKBarcodeScannerViewController scannerViewController)
     {
         // Enable the selection overlay (AR Overlay) to show the contours of detected barcodes
-        scannerViewController.IsTrackingOverlayEnabled = true;
+        scannerViewController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         // Configure AR tracking overlay for the scanner
         var trackingConfiguration = new SBSDKBarcodeTrackingOverlayConfiguration();
 
         // To configure tracked barcodes info view
-        var trackedViewTextStyle = new SBSDKBarcodeTrackedViewTextStyle();
+        var trackedViewTextStyle = new SBSDKBarcodeTrackingOverlayStyle();
 
         // To disable the info view
         trackedViewTextStyle.TextDrawingEnabled = false;
 
         // Set the configured info view style
-        trackingConfiguration.TextStyle = trackedViewTextStyle;
+        trackingConfiguration.SelectionStyle = trackedViewTextStyle;
 
         // Set the tracking configuration
-        scannerViewController.TrackingOverlayController.Configuration = trackingConfiguration;
+        scannerViewController.ViewModel.TrackingOverlay.TrackingOverlayConfiguration = trackingConfiguration;
 
         return scannerViewController;
     }

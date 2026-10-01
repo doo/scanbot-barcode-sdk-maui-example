@@ -8,11 +8,11 @@ public static partial class Snippets
     {
         // Retrieve the current applied general configurations and modify it
         var generalConfiguration = scannerViewController.GeneralConfiguration;
-        generalConfiguration.IsFocusLockEnabled = true;
-        generalConfiguration.FocusLockPosition = 0.1f;
+        generalConfiguration.IsTapToFocusEnabled = true;
+        generalConfiguration.FocusLockLensPosition = 0.1f;
 
         // Retrieve the current applied view finder configurations and modify it
-        var viewFinderConfiguration = scannerViewController.ViewFinderConfiguration;
+        var viewFinderConfiguration = scannerViewController.ViewModel.Configuration.ViewFinder;
         viewFinderConfiguration.IsViewFinderEnabled = true;
         viewFinderConfiguration.AspectRatio = new SBSDKAspectRatio(width: 1, height: 1);
 
@@ -20,7 +20,7 @@ public static partial class Snippets
         scannerViewController.GeneralConfiguration = generalConfiguration;
 
         // Apply the modified view finder configurations onto the scanner
-        scannerViewController.ViewFinderConfiguration = viewFinderConfiguration;
+        scannerViewController.ViewModel.Configuration.ViewFinder.ApplyFrom(viewFinderConfiguration);
 
         return scannerViewController;
     }

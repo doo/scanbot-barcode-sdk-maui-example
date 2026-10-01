@@ -51,8 +51,8 @@ namespace BarcodeSDK.NET.iOS.Controllers.ClassicComponents
             // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
             SetFlashButton(() =>
             {
-                viewController.IsFlashLightEnabled = !viewController.IsFlashLightEnabled;
-                return viewController.IsFlashLightEnabled;
+                viewController.ViewModel.Camera.IsTorchLightEnabled = !viewController.ViewModel.Camera.IsTorchLightEnabled;
+                return viewController.ViewModel.Camera.IsTorchLightEnabled;
             });
         }
 
