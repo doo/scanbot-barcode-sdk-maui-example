@@ -17,7 +17,7 @@ public partial class Snippets
             // Set the top bar mode.
             configuration.TopBar.Mode = TopBarMode.Solid;
 
-            // Set the background color which will be used as a gradient.
+            // Set the solid background color of the top bar.
             configuration.TopBar.BackgroundColor = new ColorValue("#C8193C");
 
             // Configure the status bar look. If visible - select Dark or Light according to your app's theme color.
