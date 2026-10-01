@@ -90,8 +90,8 @@ public class BarcodeClassicComponentController : BaseViewController
             proposedStyle.TextColor = UIColor.Yellow;
             proposedStyle.TextBackgroundColor = UIColor.Black;
             
-            // Update the required text over the AR overlay of detected barcodes.
-            proposedStyle.TextOverride = "Some text";
+            // Update the required text over the AR overlay of detected barcodes. By default, the text is the barcode info.
+            // proposedStyle.TextOverride = "Some text";
             
             return proposedStyle;
         }

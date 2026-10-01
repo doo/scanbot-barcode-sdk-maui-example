@@ -33,6 +33,10 @@ public partial class MainViewController
         // Or any other snippet (like MultipleScanningUseCase, FindAndPickUseCase, ArOverlay, etc.)
 
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler, out var error);
+        if (error != null)
+        {
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+        }
     }
 
     private void SingleScanningWithArOverlay(object _, EventArgs e)
@@ -57,6 +61,10 @@ public partial class MainViewController
         configuration.UseCase = usecase;
 
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler, out var error);
+        if (error != null)
+        {
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+        }
     }
 
     private void BatchBarcodeScanning(object _, EventArgs e)
@@ -83,6 +91,10 @@ public partial class MainViewController
         configuration.UseCase = usecase;
 
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler, out var error);
+        if (error != null)
+        {
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+        }
     }
 
     private void MultipleUniqueBarcodeScanning(object _, EventArgs e)
@@ -113,6 +125,10 @@ public partial class MainViewController
         configuration.UseCase = usecase;
 
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler, out var error);
+        if (error != null)
+        {
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+        }
     }
 
     private void FindAndPickScanning(object _, EventArgs e)
@@ -142,6 +158,10 @@ public partial class MainViewController
         ];
 
         SBSDKUI2BarcodeScannerViewController.PresentOn(this, configuration, BarcodeScannerResultHandler, out var error);
+        if (error != null)
+        {
+            Alert.Show(this, "Alert", error.LocalizedDescription);
+        }
     }
 
     private void BarcodeScannerResultHandler(SBSDKUI2BarcodeScannerViewController viewController, SBSDKUI2BarcodeScannerUIResult result, NSError error)
