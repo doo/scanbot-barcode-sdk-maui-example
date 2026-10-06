@@ -9,7 +9,7 @@ namespace BarcodeSDK.NET.Droid;
 
 public partial class MainActivity
 {
-    BarcodeScannerActivity.ResultContract _resultContract;
+    private readonly BarcodeScannerActivity.ResultContract _resultContract = new();
 
     private void SingleScanning(object sender, EventArgs e)
     {
@@ -18,7 +18,6 @@ public partial class MainActivity
             return;
         }
 
-        _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
             ScannerConfiguration = new IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration
@@ -55,7 +54,6 @@ public partial class MainActivity
         var useCase = new SingleScanningMode();
         useCase.ArOverlay.Visible = true;
 
-        _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
             UseCase = useCase,
@@ -81,7 +79,6 @@ public partial class MainActivity
             return;
         }
 
-        _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
             ScannerConfiguration = new IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration
@@ -116,7 +113,6 @@ public partial class MainActivity
         useCase.ArOverlay.Visible = true;
         useCase.ArOverlay.AutomaticSelectionEnabled = false;
 
-        _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, new BarcodeScannerScreenConfiguration
         {
             ScannerConfiguration = new IO.Scanbot.Sdk.Barcode.BarcodeScannerConfiguration
@@ -189,7 +185,6 @@ public partial class MainActivity
             }
         ];
 
-        _resultContract = new BarcodeScannerActivity.ResultContract();
         var intent = _resultContract.CreateIntent(this, configuration);
         StartActivityForResult(intent, BarcodeDefaultUiRequestCode);
     }
