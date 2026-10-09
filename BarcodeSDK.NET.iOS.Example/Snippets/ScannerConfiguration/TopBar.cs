@@ -16,7 +16,7 @@ public static partial class Snippets
             // Set the top bar mode.
             configuration.TopBar.Mode = SBSDKUI2TopBarMode.Solid;
 
-// Set the solid background color.
+            // Set the solid background color.
             configuration.TopBar.BackgroundColor = new SBSDKUI2Color("#C8193C");
 
             // Configure the status bar look. If visible - select Dark or Light according to your app's theme color.
