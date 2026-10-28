@@ -12,7 +12,6 @@
         <RootNamespace>BarcodeSDK.NET.Droid</RootNamespace>
         <CreatePackage>false</CreatePackage>
         <MtouchLink>SdkOnly</MtouchLink>
-        <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
     </PropertyGroup>
     
     <!-- Speeds up debug builds -->

@@ -84,9 +84,6 @@ Library description: Android Navigation-Fragment:
 .NET for Android and MAUI bindings for the Android Java library 'androidx.navigation:navigation-runtime'.
 
 Library description: Android Navigation-Runtime: 
-.NET for Android and MAUI bindings for the Android Java library 'androidx.navigation:navigation-runtime'.
-
-Library description: Android Navigation-Runtime: 
 .NET for Android and MAUI bindings for the Android Java library 'androidx.navigation:navigation-ui'.
 
 Library description: Android Navigation-UI: 
