@@ -11,7 +11,7 @@
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            ScanbotSDK.iOS.ScanbotSDKGlobal.SetLoggingEnabled(true);
+            ScanbotSDK.iOS.ScanbotSDKGlobal.LoggingEnabled = true;
 
             if (!string.IsNullOrEmpty(LicenseKey))
             {

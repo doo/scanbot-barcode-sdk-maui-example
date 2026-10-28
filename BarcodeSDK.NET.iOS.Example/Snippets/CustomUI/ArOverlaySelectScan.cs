@@ -4,23 +4,33 @@ namespace BarcodeSDK.NET.iOS;
 
 public static partial class Snippets
 {
-    public static SBSDKBarcodeScannerViewController EnableSelectScanArOverlay(SBSDKBarcodeScannerViewController scannerViewController)
+    public static void EnableSelectScanArOverlay(SBSDKBarcodeScannerViewController scannerViewController)
     {
         // Enable the selection overlay (AR Overlay) to show the contours of detected barcodes
-        scannerViewController.IsTrackingOverlayEnabled = true;
+        scannerViewController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         // Configure AR tracking overlay for the scanner
-        scannerViewController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
-        scannerViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonColor = UIColor.Yellow;
-        scannerViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundColor = UIColor.Yellow.ColorWithAlpha(0.25f);
-        scannerViewController.TrackingOverlayController.Configuration.TextStyle.TextColor = UIColor.Yellow;
-        scannerViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundColor = UIColor.Black;
+        var trackingConfiguration = new SBSDKBarcodeTrackingOverlayConfiguration();
 
-        scannerViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonSelectedColor = UIColor.Red;
-        scannerViewController.TrackingOverlayController.Configuration.PolygonStyle.PolygonBackgroundSelectedColor = UIColor.Red.ColorWithAlpha(0.25f);
-        scannerViewController.TrackingOverlayController.Configuration.TextStyle.HighlightedTextColor = UIColor.Red;
-        scannerViewController.TrackingOverlayController.Configuration.TextStyle.TextBackgroundHighlightedColor = UIColor.Black;
+        // To configure tracked barcodes info view
+        var proposedStyle = new SBSDKBarcodeTrackingOverlayStyle();
 
-        return scannerViewController;
+        // Set the polygon style
+        proposedStyle.PolygonColor = UIColor.Yellow;
+        proposedStyle.PolygonBackgroundColor = UIColor.Clear;
+        proposedStyle.PolygonDrawingEnabled = true;
+        
+        // Set the text style
+        proposedStyle.TextColor = UIColor.Yellow;
+        proposedStyle.TextBackgroundColor = UIColor.Black;
+        proposedStyle.TextDrawingEnabled = true;
+        
+        // Update the required text over the AR overlay of detected barcodes.
+        proposedStyle.TextOverride = "Some text";
+        
+        trackingConfiguration.SelectionStyle = proposedStyle;
+
+        // Set the tracking configuration
+        scannerViewController.ViewModel.TrackingOverlay.TrackingOverlayConfiguration = trackingConfiguration;
     }
 }

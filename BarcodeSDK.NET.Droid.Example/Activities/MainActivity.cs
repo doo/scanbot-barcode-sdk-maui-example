@@ -128,7 +128,7 @@ namespace BarcodeSDK.NET.Droid
             {
                 case BarcodeDefaultUiRequestCode:
                 {
-                    var parsedResult = _resultContract.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
+                    var parsedResult = _resultContract?.ParseBarcodeResult((int)resultCode, data)?.Get<BarcodeScannerUiResult>();
                     if (parsedResult == null) return;
                     
                     var barcodes = parsedResult.Items.Select(item => item.Barcode).ToList();
