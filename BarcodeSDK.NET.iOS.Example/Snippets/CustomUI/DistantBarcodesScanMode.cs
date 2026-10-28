@@ -11,7 +11,7 @@ public static partial class Snippets
         zoomConfiguration.InitialZoomFactor = 1.0f;
 
         // Retrieve the current applied view finder configurations and modify it
-        var viewFinderConfiguration = scannerViewController.ViewFinderConfiguration;
+        var viewFinderConfiguration = scannerViewController.ViewModel.Configuration.ViewFinder;
         viewFinderConfiguration.IsViewFinderEnabled = true;
         viewFinderConfiguration.AspectRatio = new SBSDKAspectRatio(width: 1, height: 1);
 
@@ -19,7 +19,7 @@ public static partial class Snippets
         scannerViewController.ZoomConfiguration = zoomConfiguration;
 
         // Apply the modified view finder configurations onto the scanner
-        scannerViewController.ViewFinderConfiguration = viewFinderConfiguration;
+        scannerViewController.ViewModel.Configuration.ViewFinder.ApplyFrom(viewFinderConfiguration);
 
         return scannerViewController;
     }

@@ -29,17 +29,16 @@ public class BarcodeClassicComponentController : BaseViewController
         };
 
         _scannerController = new SBSDKBarcodeScannerViewController(this, View, config);
-        _scannerController.IsTrackingOverlayEnabled = true;
-        _scannerController.TrackingOverlayController.Configuration.TextStyle.TrackingOverlayTextFormat = SBSDKBarcodeOverlayFormat.Code;
+        _scannerController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled = true;
 
         _scannerController.Delegate = new BarcodeDetectionDelegate(NavigationController);
-        _scannerController.TrackingOverlayController.Delegate = new BarcodeSelectionDelegate(NavigationController);
+        _scannerController.ViewModel.TrackingOverlay.Delegate = new BarcodeSelectionDelegate(NavigationController);
 
         // Sets the flash button to RightBarButtonItem. Updates the flash color based on flash status.
         SetFlashButton(() =>
         {
-            _scannerController.IsFlashLightEnabled = !_scannerController.IsFlashLightEnabled;
-            return _scannerController.IsFlashLightEnabled;
+            _scannerController.ViewModel.Camera.IsTorchLightEnabled = !_scannerController.ViewModel.Camera.IsTorchLightEnabled;
+            return _scannerController.ViewModel.Camera.IsTorchLightEnabled;
         });
     }
 
@@ -52,7 +51,7 @@ public class BarcodeClassicComponentController : BaseViewController
                 return;
             }
 
-            var shouldHandleBarcode = !barcodeController.IsTrackingOverlayEnabled;
+            var shouldHandleBarcode = !barcodeController.ViewModel.TrackingOverlay.IsTrackingOverlayEnabled;
 
             if (!shouldHandleBarcode)
             {
@@ -80,27 +79,21 @@ public class BarcodeClassicComponentController : BaseViewController
             navigationController.PopViewController(animated: false);
             navigationController.PushViewController(resultsController, animated: true);
         }
-
-        public override SBSDKBarcodeTrackedViewPolygonStyle PolygonStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewPolygonStyle proposedStyle)
+        
+        public override SBSDKBarcodeTrackingOverlayStyle StyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeTrackingOverlayItem item, SBSDKBarcodeTrackingOverlayStyle proposedStyle)
         {
             // Explore this object for more parameters
             proposedStyle.PolygonColor = UIColor.Yellow;
             proposedStyle.PolygonBackgroundColor = UIColor.Clear;
-            return proposedStyle;
-        }
-
-        public override SBSDKBarcodeTrackedViewTextStyle TextStyleFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, SBSDKBarcodeTrackedViewTextStyle proposedStyle)
-        {
+            
             // Explore this object for more parameters
             proposedStyle.TextColor = UIColor.Yellow;
             proposedStyle.TextBackgroundColor = UIColor.Black;
+            
+            // Update the required text over the AR overlay of detected barcodes. By default, the text is the barcode info.
+            // proposedStyle.TextOverride = "Some text";
+            
             return proposedStyle;
-        }
-
-        public override string OverrideTextFor(SBSDKBarcodeTrackingOverlayController controller, SBSDKBarcodeItem barcode, string proposedString)
-        {
-            // Update the required text over the AR overlay of detected barcodes.
-            return proposedString;
         }
     }
 }

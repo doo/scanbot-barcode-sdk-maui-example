@@ -2,7 +2,7 @@
 
 namespace BarcodeSDK.NET.iOS
 {
-    public class MainView : UIView
+    public class MainView : UIScrollView
     {
         private readonly Dictionary<EventHandler, UIButton> buttons = new Dictionary<EventHandler, UIButton>();
         private readonly List<UIView> sorting = new List<UIView>();
@@ -18,7 +18,7 @@ namespace BarcodeSDK.NET.iOS
 
             nfloat x = 0;
             nfloat y = 0;
-            nfloat w = Frame.Width;
+            nfloat w = Bounds.Width;
             nfloat h = 50;
             
             foreach (var control in sorting)
@@ -32,6 +32,8 @@ namespace BarcodeSDK.NET.iOS
                 }
                 y += h + 2;
             }
+
+            ContentSize = new CGSize(w, y);
         }
 
         public UITextView CreateHeader(string text)
@@ -53,6 +55,7 @@ namespace BarcodeSDK.NET.iOS
             label.Editable = false;
             AddSubview(label);
             sorting.Add(label);
+            SetNeedsLayout();
             
             return label;
         }
@@ -76,6 +79,7 @@ namespace BarcodeSDK.NET.iOS
             button.TouchUpInside += action;
             buttons.Add(action, button);
             sorting.Add(button);
+            SetNeedsLayout();
 
             return button;
         }
